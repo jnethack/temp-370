@@ -46,6 +46,9 @@
 #else
 #include "patchlevel.h"
 #endif
+#if 1 /*JP*/
+#include "../japanese/jpatchlevel.h"
+#endif
 
 
 /* Windowing systems...
