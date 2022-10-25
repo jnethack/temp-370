@@ -70,28 +70,28 @@ des.door("locked",24,14)
 des.door("closed",31,14)
 des.door("locked",49,14)
 -- Lord Carnarvon
-des.monster({ id = "Lord Carnarvon", coord = {25, 10}, inventory = function()
-   des.object({ id = "fedora", spe = 5 });
-   des.object({ id = "bullwhip", spe = 4 });
+des.monster({ id = "カーナボン卿", coord = {25, 10}, inventory = function()
+   des.object({ id = "フィドーラ", spe = 5 });
+   des.object({ id = "鞭", spe = 4 });
 end })
 -- The treasure of Lord Carnarvon
-des.object("chest", 25, 10)
+des.object("宝箱", 25, 10)
 -- student guards for the audience chamber
-des.monster("student", 26, 09)
-des.monster("student", 27, 09)
-des.monster("student", 28, 09)
-des.monster("student", 26, 10)
-des.monster("student", 28, 10)
-des.monster("student", 26, 11)
-des.monster("student", 27, 11)
-des.monster("student", 28, 11)
+des.monster("学生", 26, 09)
+des.monster("学生", 27, 09)
+des.monster("学生", 28, 09)
+des.monster("学生", 26, 10)
+des.monster("学生", 28, 10)
+des.monster("学生", 26, 11)
+des.monster("学生", 27, 11)
+des.monster("学生", 28, 11)
 -- city watch guards in the antechambers
-des.monster("watchman", 50, 06)
-des.monster("watchman", 50, 14)
+des.monster("見張り", 50, 06)
+des.monster("見張り", 50, 14)
 -- Eels in the moat
-des.monster("giant eel", 20, 10)
-des.monster("giant eel", 45, 04)
-des.monster("giant eel", 33, 16)
+des.monster("巨大ウナギ", 20, 10)
+des.monster("巨大ウナギ", 45, 04)
+des.monster("巨大ウナギ", 33, 16)
 -- Non diggable walls
 des.non_diggable(selection.area(00,00,75,19))
 -- Random traps

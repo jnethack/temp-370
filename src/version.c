@@ -4,6 +4,11 @@
 /* NetHack may be freely redistributed.  See license for details. */
 
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 #include "dlb.h"
 
@@ -29,6 +34,15 @@ version_string(char *buf, size_t bufsz)
               : mdlib_version_string(buf, ".")));
     return buf;
 }
+
+#if 1 /*JP*/
+char *
+version_string_j(char *buf, size_t bufsz)
+{
+    Snprintf(buf, bufsz, "%d.%d", JVERSION_MAJOR, JVERSION_MINOR);
+    return buf;
+}
+#endif
 
 /* fill and return the given buffer with the long nethack version string */
 char *
@@ -161,6 +175,9 @@ doversion(void)
         return doextversion();
 
     pline("%s", getversionstring(buf, sizeof buf));
+#if 1 /*JP*/
+    pline("%s", version_string_j(buf, sizeof buf));
+#endif
     return ECMD_OK;
 }
 
@@ -202,6 +219,11 @@ doextversion(void)
         *--p = ' ';
         putstr(win, 0, p);
     }
+
+#if 1 /*JP*/
+    (void) version_string_j(buf, sizeof buf);
+    putstr(win, 0, buf);
+#endif
 
     if (use_dlb) {
         f = dlb_fopen(OPTIONS_USED, "r");

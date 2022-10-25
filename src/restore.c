@@ -3,6 +3,11 @@
 /*-Copyright (c) Michael Allison, 2009. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 #include "tcap.h" /* for TERMLIB and ASCIIGRAPH */
 
@@ -118,7 +123,10 @@ inven_inuse(boolean quietly)
         otmp2 = otmp->nobj;
         if (otmp->in_use) {
             if (!quietly)
+/*JP
                 pline("Finishing off %s...", xname(otmp));
+*/
+                pline("%sを使い終えた．．．", xname(otmp));
             useup(otmp);
         }
     }
@@ -544,7 +552,10 @@ restgamestate(NHFILE *nhfp)
         if (!gc.converted_savefile_loaded)
             /* for wizard mode, issue a reminder; for others, treat it
              * as an attempt to cheat and refuse to restore this file */
+/*JP
             pline("Saved game was not yours.");
+*/
+            pline("セーブされたゲームはあなたのものではない．");
         if (wizard || gc.converted_savefile_loaded) {
             if (gc.converted_savefile_loaded)
                 gc.converted_savefile_loaded = FALSE;
@@ -630,7 +641,11 @@ restgamestate(NHFILE *nhfp)
 #endif
     if (u.uhp <= 0 && (!Upolyd || u.mh <= 0)) {
         u.ux = u.uy = 0; /* affects pline() [hence You()] */
+#if 0 /*JP:T*/
         You("were not healthy enough to survive restoration.");
+#else
+        You("再開できるほど健康ではなかった．");
+#endif
         /* wiz1_level.dlevel is used by mklev.c to see if lots of stuff is
          * uninitialized, so we only have to set it and not the other stuff.
          */
@@ -855,10 +870,17 @@ dorecover(NHFILE *nhfp)
         clear_nhwindow(WIN_MAP);
 #endif
     clear_nhwindow(WIN_MESSAGE);
+#if 0 /*JP:T*/
     You("return to level %d in %s%s.", depth(&u.uz),
         svd.dungeons[u.uz.dnum].dname,
         flags.debug ? " while in debug mode"
                     : flags.explore ? " while in explore mode" : "");
+#else
+    You("%s%sの地下%d階に戻ってきた．",
+        flags.debug ? "ウィザードモード中の"
+                    : flags.explore ? "探検モード中の" : "",
+        svd.dungeons[u.uz.dnum].dname, depth(&u.uz));
+#endif
     curs(WIN_MAP, 1, 1);
     dotcnt = 0;
     dotrow = 2;
@@ -1034,9 +1056,18 @@ rest_levl(NHFILE *nhfp)
 void
 trickery(char *reason)
 {
+/*JP
     pline("Strange, this map is not as I remember it.");
+*/
+    pline("妙だ，この地図は私が覚えていたものと違う．");
+/*JP
     pline("Somebody is trying some trickery here...");
+*/
+    pline("だれかがここでいかさまをしようとしたようだ．．．");
+/*JP
     pline("This game is void.");
+*/
+    pline("このゲームは無効となる．");
     Strcpy(svk.killer.name, reason ? reason : "");
     done(TRICKED);
 }
@@ -1559,7 +1590,11 @@ restore_menu(
                 add_menu_str(tmpwin, copyright_banner_line(k));
             add_menu_str(tmpwin, "");
         }
+#if 0 /*JP:T*/
         add_menu_str(tmpwin, "Select one of your saved games");
+#else
+        add_menu_str(tmpwin, "セーブしたゲームを一つ選んでください");
+#endif
         /* if all the save files have a playmode of '-' then we'll just list
            their character name-role-race-gend-algn values, but if any are
            'X' or 'D', we'll list playmode along with name-role-&c values
@@ -1584,13 +1619,23 @@ restore_menu(
         clet = (k <= 'n' - 'a') ? 'n'      /* new game */
                : (k <= 26 + 'N' - 'A') ? 'N' : 0;
         any.a_int = -1;                    /* not >= 0 */
+#if 0 /*JP:T*/
         add_menu(tmpwin, &nul_glyphinfo, &any, clet, 'N', ATR_NONE, clr,
                  "Start a new character", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(tmpwin, &nul_glyphinfo, &any, clet, 'N', ATR_NONE, clr,
+                 "新しいキャラクターで始める", MENU_ITEMFLAGS_NONE);
+#endif
         clet = (k + 1 <= 'q' - 'a' && clet == 'n') ? 'q'  /* quit */
                : (k + 1 <= 26 + 'Q' - 'A' && clet == 'N') ? 'Q' : 0;
         any.a_int = -2;
+#if 0 /*JP:T*/
         add_menu(tmpwin, &nul_glyphinfo, &any, clet, 'Q', ATR_NONE, clr,
                  "Never mind (quit)", MENU_ITEMFLAGS_SELECTED);
+#else
+        add_menu(tmpwin, &nul_glyphinfo, &any, clet, 'Q', ATR_NONE, clr,
+                 "抜ける", MENU_ITEMFLAGS_SELECTED);
+#endif
         /* no prompt on end_menu, as we've done our own at the top */
         end_menu(tmpwin, (char *) 0);
         if (select_menu(tmpwin, PICK_ONE, &chosen_game) > 0) {

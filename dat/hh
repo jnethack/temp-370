@@ -1,160 +1,160 @@
-y k u   7 8 9   Move commands:
- \|/     \|/            yuhjklbn: go one step in specified direction
-h-.-l   4-.-6           YUHJKLBN: go in specified direction until you
- /|\     /|\                        hit a wall or run into something
-b j n   1 2 3           g<dir>:   run in direction <dir> until something
-      numberpad                     interesting is seen
-                        G<dir>,   same, except a branching corridor isn't
- <  up                  ^<dir>:     considered interesting (the ^ in this
-                                    case means the Control key, not a caret)
- >  down                m<dir>:   move without picking up objects/fighting
-                        F<dir>:   fight even if you don't sense a monster
-                If the number_pad option is set, the digit keys move instead.
-                Depending on the platform, Shift digit (on the numberpad),
-                Meta digit, or Alt digit will invoke the YUHJKLBN commands.
-                Control <dir> may or may not work when number_pad is enabled,
-                depending on the platform's capabilities.
-                Digit '5' acts as 'G' prefix, unless number_pad is set to 2
-                in which case it acts as 'g' instead.
-                If number_pad is set to 3, the roles of 1,2,3 and 7,8,9 are
-                reversed; when set to 4, behaves same as 3 combined with 2.
-                If number_pad is set to -1, alphabetic movement commands are
-                used but 'y' and 'z' are swapped.
+y k u   7 8 9   移動:
+ \|/     \|/            yuhjklbn: 指定方向に，一歩歩く
+h-.-l   4-.-6           YUHJKLBN: 指定方向に，何かにぶつかるまで歩く，
+ /|\     /|\                      または何かの中へ入る．
+b j n   1 2 3           g<dir>:   指定方向に，何かが見えるまで歩く
+      numberpad                   
+                        G<dir>:   同じ; ただし，通路の分岐で止まらない．
+ <  up                  ^<dir>:   上に同じ．(ここでの^はキャレットではなく
+                                  コントロールキー)
+ >  down                m<dir>:   何もせずに移動する．
+                        F<dir>:   怪物がいるのが分からなくても戦う．
+                number_pad オプションをセットすると，テンキーで移動できる．
+                プラットフォームによっては，Shift+数字，Meta-数字，Alt+数字で
+                YUHJKLBNコマンドを発動するものもある．
+                Control <方向> は number_pad オプションがセットされている場合
+                はプラットフォームによって動いたり動かなかったりする．
+                数字の '5' は 'G' 接頭辞のように働くが，number_pad が 2 の時は
+                'g' のように働く．
+                number_pad が 3 なら 1,2,3 と 7,8,9 の役割は逆になる; 4 なら
+                3 と 2 の組み合わせのように振る舞う．
+                number_pad が -1 なら，英字の移動コマンドを使うが，'y' と
+                'z' が入れ替わる．
 
-General commands:
-?     help      display one of several informative texts
-#quit quit      end the game without saving current game
-S     save      save the game (to be continued later) and exit
-                [to restore, play again and use the same character name;
-                use #quit to quit without saving]
-!     sh        escape to some SHELL (if allowed; 'exit' to resume play)
-^Z    suspend   suspend the game (independent of your current suspend char)
-                [on UNIX(tm)-based systems, use the 'fg' command to resume]
-O     options   set options
-/     what-is   tell what a map symbol represents
-\     known     display list of what's been discovered
-|     perminv   interact with persistent inventory window instead of hero+map
-v     chronicle display a list of important events
-V     version   display version number
-^A    again     redo the previous command
-^R    redraw    redraw the screen
-^P    prevmsg   repeat previous message (consecutive ^P's repeat earlier ones)
-#               introduces an extended command (#? for a list of them)
-&     what-does describe the command a keystroke invokes
+一般:
+?     help      ヘルプ文章の表示
+#quit quit      現在のゲームを保存せずにゲームをやめる
+S     save      ゲームを(後で続けるために)保存して終了する
+                [復元するには，再びプレイして同じキャラクター名を使う;
+                保存せずに抜けるには #quit を使う]
+!     sh        (もしできるなら)シェルを実行する．(再開するには'exit')
+^Z    suspend   ゲームを中断する．(現在の中断文字に依存しない)
+                [UNIX(tm) ベースのシステムでは、再開するには'fg']
+O     options   オプションを設定する．
+/     what-is   画面の記号が何かを知る．
+\     known     今までに発見した道具の一覧を表示する．
+|     perminv   プレイヤーと地図ではなく，固定持ち物ウィンドウを使う
+v     chronicle 重要な出来事の一覧を表示する
+V     version   バージョンを表示する
+^A    again     1つ前のコマンドを再実行する．
+^R    redraw    画面を書きなおす．
+^P    prevmsg   前のメッセージを見る．(^Pを繰り返すとさらに前のメッセージ)
+#               拡張コマンド(#?でヘルプ)
+&     what-does キーを押して起動するコマンドを説明する．
 
-Control characters are depicted as '^' followed by a letter.  Depress Ctrl
-or Control like a shift key then type the letter.  Control characters are
-case-insensitive; ^D is the same as ^d, Ctrl+d is same as Ctrl+Shift+d.
-There are a few non-letter control characters; nethack uses ^[ as a synonym
-for Escape (or vice versa) and ^_ for #retravel but none of the others.
+制御文字は，'^' に引き続く一文字で表される． Ctrl または Control キーを
+シフトキーのように押し下げて、文字を打つ．制御文字は大文字小文字の区別がない;
+^D は ^d と同じで、Ctrl+d は Ctrl+Shift+d と同じ．
+英字でない制御文字もいくつかある; jnethack は ^[ を Escape の，
+^_ を #retravel の別名として使う (またはその逆) が、他のものはない．
 
-Game commands:
-^D    kick      kick (a door, or something else)
-^T    Tport     teleport (if you can)
-^X    show      show your attributes
-a     apply     apply or use a tool (pick-axe, key, camera, etc.)
-A     takeoffall  choose multiple items of armor, accessories, and weapons
-                to take off, remove, unwield (uses same amount of game time
-                as removing them individually with T,R,w- would take)
-c     close     close a door
-C     call      name a monster, an individual object, or a type of object
-d     drop      drop an object.  d7a:  drop seven items of object 'a'
-D     Drop      drop selected types of objects
-e     eat       eat something
-E     engrave   write a message in the dust on the floor  (E-  use fingers)
-f     fire      fire ammunition from quiver
-F     fight     followed by direction, fight a monster
-i     invent    list your inventory (all objects you are carrying)
-I     Invent    list selected parts of your inventory; for example
-                  I(  list all tools, or  I"  list all amulets
-                  IB  list all items known to be blessed
-                  IU  uncursed, or  IC  cursed, or  IX  unknown bless state
-                  Iu  when in a shop, list unpaid objects being carried
-                  Ix  in a shop, list any fees and used-up shop-owned items
-o     open      open a door
-p     pay       pay your bill (in a shop)
-P     puton     put on an accessory (ring, amulet, etc; can be used to wear
-                armor too, but armor items aren't listed as likely candidates)
-q     quaff     drink something (potion, water, etc)
-Q     quiver    select ammunition for quiver (use '#quit' to quit)
-r     read      read a scroll or spellbook
-R     remove    remove an accessory (ring, amulet, etc; can be used to take
-                off armor too)
-s     search    search for secret doors, hidden traps and monsters
-t     throw     throw or shoot a weapon
-T     takeoff   take off some armor; can be used to remove accessories too,
-                but those aren't listed as likely candidates)
-w     wield     wield a weapon  (w-  wield nothing to unwield current weapon)
-W     wear      wear an item of armor; can be used to put on accessories too,
-                but those aren't listed as likely candidates)
-x     xchange   swap wielded and secondary weapons
-X     twoweapon toggle two-weapon combat if role allows that
-z     zap       zap a wand  (use y instead of z if number_pad is -1)
-Z     Zap       cast a spell  (use Y instead of Z if number_pad is -1)
-<     up        go up the stairs
->     down      go down the stairs
-^     trap_id   identify a previously found trap
-),[,=,",(       show current items of specified symbol in use
-*               show combination of ),[,=,",( all at once
-$     gold      count your gold
-+     spells    list the spells you know; also rearrange them if desired
-`     classkn   display known items for one class of objects
-_     travel    move via a shortest-path algorithm to a point on the map
-^_    retravel  resume travelling toward previously specified destination
-.     rest      wait a moment
-,     pickup    pick up all you can carry
-@               toggle "pickup" (auto pickup) option on and off
-:     look      look at what is here
-;     farlook   look at what is somewhere else by selecting a map location
-                (for a monster on top of one or more objects, only describes
-                that monster; for a pile of objects, only describes top one)
+ゲーム:
+^D    kick      蹴る．(扉等)
+^T    'port     瞬間移動．(可能なら)
+^X    show      属性を表示する
+a     apply     道具を使う．(つるはし，鍵，カメラ等)
+A     takeoffall  防具，アクセサリ，武器を複数選んで、まとめて外す
+                  (T,R,w- で個々に外すのと同じだけの
+                  ゲーム内時間を使う)
+c     close     扉を閉める．
+C     call      特定の怪物，個々のアイテム，アイテムの種類に名前をつける．
+d     drop      物を置く．  d7a：aなるものを7個置く．
+D     Drop      種類を選んで物を置く．
+e     eat       何かを食べる．
+E     engrave   床のほこりに文字を書く．(E-  指を使って)
+f     fire      装填されているものを射る．
+F     fight     方向を指定し戦う．
+i     invent    あなたの持ち物一覧．(あなたが持っているもの全て)
+I     Invent    種類を選択して持ち物一覧．; 例えば
+                I(  全ての道具一覧， I"  全ての魔除け一覧
+                IB  祝福されていると分かっている物の一覧
+                IU  呪われていない物， IC 呪われている物， IX 状態不明の物
+                Iu: 未払いの物一覧．
+                Ix: 未払いだが使いはたした物一覧．
+o     open      扉を開ける．
+p     pay       勘定を払う．(店の中で)
+P     puton     アクセサリを身につける．(指輪，魔除けなど; 防具にも使えるが，
+                防具は候補には出ない)
+q     quaff     何かを飲む(水薬, 水, など)
+Q     quiver    装填するものを選択する．(終了は'#quit')
+r     read      巻物や魔法の本を読む．
+R     remove    アクセサリをはずす．(指輪，魔除けなど; 防具も
+                外せる)
+s     search    秘密の扉，隠れた罠，怪物を探す．
+t     throw     武器を投げる，撃つ，射る．
+T     takeoff   防具を脱ぐ; アクセサリにも使えるが，
+                アクセサリは候補には出ない)
+w     wield     武器を装備する．(w-  現在の武器を外すために何も装備しない)
+W     wear      鎧を着る; アクセサリにも使えるが，
+                アクセサリは候補には出ない)
+x     xchange   左右の武器を交換する．
+X     twoweapon 職業が許せば二刀流を切り替える．
+z     zap       杖を振りかざす．(number_pad が -1 なら z ではなく y)
+Z     Zap       呪文を唱える．(number_pad が -1 なら Z ではなく Y)
+<     up        階段を昇る．
+>     down      階段を降りる．
+^     trap_id   罠を調べる．
+),[,=,",(       現在装備している記号に対応したものを表示
+*               装備しているものを表示
+$     gold      お金を数える．
++     spells    唱えることのできる魔法の一覧．
+`     classkn   一つの種類の中で発見した物を表示する
+_     travel    マップで示された点に最小経路アルゴリズムで移動する．
+^_    retravel  前回指定した目的地への移動を再開する．
+.     rest      休む．
+,     pickup    物を拾う．
+@               `pickup'(自動pickup)のオプションを切り替える．
+:     look      何があるかを見る．
+;     farlook   地図上の位置を選択して他に何があるか調べる．
+                (物の上に怪物がいる場合、怪物だけが表示される;
+                複数の物がある場合、一番上の物だけが表示される)
 
-Keyboards that have a meta key (some use Alt for that, so typing Alt as a
-shift plus 'e' would generate 'M-e') can also use these extended commands
-via the meta modifier as an alternative to using the # prefix.  Unlike
-control characters, meta characters are case-sensitive so M-a is different
-from M-A.  Type the latter with two keys used as shifts, Meta+Shift+a.
+メタキーのあるキーボードでは (Alt キーがある場合は、Alt を押しながら
+'e' を押すと 'M-e' になる) 以下の拡張コマンドを # のかわりにメタキー
+を押しながら実行できる． 制御文字と異なり、メタ文字は大文字小文字の
+区別があるので、M-a は M-A とことなる。
+この場合 Meta+Shift+a と入力する。
 
-M-?             display extended command help (if the platform allows this)
-M-2   twoweapon toggle two-weapon combat (unless number_pad is enabled)
-M-a   adjust    adjust inventory letters
-M-A   annotate  add a one-line note to the current dungeon level (see M-O)
-M-c   chat      talk to someone
-M-C   conduct   view optional challenges
-M-d   dip       dip an object into something
-M-e   enhance   show weapon and spell skills, can improve them if eligible
-M-f   force     force a lock
-M-g   genocided list genocided and extinct monster types, if any
-M-i   invoke    invoke an object's special powers
-M-j   jump      jump to another location
-M-l   loot      loot a box on the floor
-M-m   monster   when polymorphed, use monster's special ability
-M-n   name      name a monster, an individual object, or a type of object
-M-N   name      synonym for M-n  (both are the same as C)
-M-o   offer     offer a sacrifice to the gods
-M-O   overview  display information about visited levels and annotations
-M-p   pray      pray to the gods for help
-M-q   quit      stop playing without saving game (use S to save and exit)
-M-r   rub       rub a lamp or a stone
-M-R   ride      mount or dismount saddled steed
-M-s   sit       sit down
-M-t   turn      turn undead if role allows that
-M-T   tip       upend a container to dump out its contents
-M-u   untrap    untrap something
-M-V   vanquished list number and type of vanquished monsters
-M-v   version   print compile time options for this version
-M-w   wipe      wipe off your face
-M-X   explore   switch from regular play to non-scoring explore mode
+M-?             拡張コマンドヘルプの表示 (プラットフォームが許せば)
+M-2   twoweapon 二刀流の切り替え (number_pad が無効なら)
+M-a   adjust    持ち物一覧の調整
+M-A   annotate  現在の階に1行メモを追加する(M-O参照)
+M-c   chat      誰かと話す
+M-C   conduct   自発的挑戦を表示する
+M-d   dip       何かに物を浸す
+M-e   enhance   武器の技量を高めるまたは見る，準備ができていれば向上できる
+M-f   force     鍵をこじあける
+M-g   genocided 虐殺および絶滅させた怪物の種類があれば一覧表示する
+M-i   invoke    物の特別な力を使う
+M-j   jump      他の位置に飛びうつる
+M-l   loot      床の上の箱の中身を略奪する
+M-m   monster   変化中，怪物の特別能力を使う
+M-n   name      特定の怪物，個々のアイテム，アイテムの種類に名前をつける
+M-N   name      M-nの別名 (どちらも C と同じ)
+M-o   offer     神に供物を捧げる
+M-O   overview  訪れた階に関する情報とメモを表示する
+M-p   pray      神に祈る
+M-q   quit      ゲームを保存せずにゲームをやめる (保存して終了するには S)
+M-r   rub       ランプをこする
+M-R   ride      騎乗するまたは騎乗をやめる
+M-s   sit       座る
+M-t   turn      職業が許せば，不死の怪物を土に返す
+M-T   tip       入れ物をひっくり返す
+M-u   untrap    罠をはずす
+M-V   vanquished 倒した怪物の種類と数を一覧表示する
+M-v   version   コンパイル時のオプションを表示する
+M-w   wipe      顔を拭う
+M-X   explore   スコアが記録されない探索モードに切り替える
 
-If the 'number_pad' option is on, keys usually used for movement can be
-used for various commands:
+'number_pad'のオプションがオンなら，通常は移動に使われているキーを
+様々なコマンドに使える:
 
-n               followed by number of times to repeat the next command
-h     help      display one of several informative texts, like '?'
-j     jump      jump to another location
-k     kick      kick something (usually a door)
-l     loot      loot a box on the floor
-N     name      name an item or type of object
-u     untrap    untrap something (usually a trapped object)
+n               これに続く数字だけ次のコマンドを実行する．
+h       help    '?' と同様ヘルプ文章の一つを表示
+j       jump    他の位置に飛びうつる．
+k       kick    蹴る．(扉等)
+l       loot    床の上の箱の中身を略奪する．
+N       name    アイテムや物に名前をつける．
+u       untrap  罠をはずす．(通常はしかけられた物)
 
-Additional commands are available in debug mode (also known as wizard mode).
+デバッグモード(またの名をウィザードモード)では追加のコマンドが使える．

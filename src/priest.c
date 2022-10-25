@@ -2,6 +2,11 @@
 /* Copyright (c) Izchak Miller, Steve Linhart, 1989.              */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 #include "mfndpos.h"
 
@@ -127,8 +132,13 @@ move_special(struct monst *mtmp, boolean in_his_shop, schar appr,
 #if 0 /* dead code; maybe someday someone will track down why... */
         if (ib) {
             if (cansee(mtmp->mx, mtmp->my))
+#if 0 /*JP:T*/
                 pline("%s picks up %s.", Monnam(mtmp),
                       distant_name(ib, doname));
+#else
+                pline("%sは%sを拾った．", Monnam(mtmp),
+                      distant_name(ib, doname));
+#endif
             obj_extract_self(ib);
             (void) mpickobj(mtmp, ib);
         }
@@ -198,7 +208,10 @@ pri_move(struct monst *priest)
         || (Conflict && !resist_conflict(priest))) {
         if (monnear(priest, u.ux, u.uy)) {
             if (Displaced)
+/*JP
                 Your("displaced image doesn't fool %s!", mon_nam(priest));
+*/
+                Your("幻影は%sをだませなかった！", mon_nam(priest));
             (void) mattacku(priest);
             return 0;
         } else if (strchr(u.urooms, temple)) {
@@ -316,10 +329,16 @@ priestname(
 
     /* for high priest(ess), "high" (or "grand" for poohbah) will be inserted
        [this was done near the end but we want 'what' to be updated sooner] */
+#if 0 /*JP:T*/
     if (mon->ispriest || aligned_priest || high_priest)
         what = do_hallu ? "poohbah" : mon->female ? "priestess" : "priest";
+#else
+    if (mon->ispriest || aligned_priest || high_priest)
+        what = do_hallu ? "無能官僚" : mon->female ? "尼僧" : "僧侶";
+#endif
 
     *pname = '\0';
+#if 0 /*JP*//*日本語では冠詞を使わない*/
     if (article != ARTICLE_NONE && (!do_hallu || !bogon_is_pname(whatcode))) {
         if (article == ARTICLE_YOUR || (article == ARTICLE_A && high_priest))
             article = ARTICLE_THE;
@@ -333,29 +352,60 @@ priestname(
             (void) just_an(pname, what);
         }
     }
+#endif
     /* pname[] contains "" or {"a ","an ","the "} */
     if (mon->minvis) {
+#if 0 /*JP*//*日本語では冠詞を使わない*/
         /* avoid "a invisible priest" */
         if (!strcmp(pname, "a "))
             Strcpy(pname, "an ");
+#endif
+/*JP
         Strcat(pname, "invisible ");
+*/
+        Strcat(pname, "透明な");
     }
     if (mon->isminion && EMIN(mon)->renegade) {
+#if 0 /*JP*//*日本語では冠詞を使わない*/
         /* avoid "an renegade Angel" */
         if (!strcmp(pname, "an ") && !mon->minvis)
             Strcpy(pname, "a ");
+#endif
+/*JP
         Strcat(pname, "renegade ");
+*/
+        Strcat(pname, "裏切り者の");
     }
 
+#if 1 /*JP*//*属性はここで付ける*/
+    if (do_hallu || !high_priest || reveal_high_priest
+        || !Is_astralevel(&u.uz)
+        || m_next2u(mon) || program_state.gameover) {
+        Strcat(pname, halu_gname(mon_aligntyp(mon)));
+        Strcat(pname, "の");
+    }
+#endif
     if (mon->ispriest || aligned_priest) {
         if (high_priest)
+#if 0 /*JP*/
             Strcat(pname, do_hallu ? "grand " : "high ");
+#else /*頭に付けるのではなく、名前自体を変える*/
+            what = do_hallu ? "無能高級官僚"
+                   : mon->female ? "女法王" : "法王";
+#endif
     } else {
+/*JP
         if (mon->mtame && !strcmpi(what, "Angel"))
+*/
+        if (mon->mtame && !strcmpi(what, "天使"))
+/*JP
             Strcat(pname, "guardian ");
+*/
+            Strcat(pname, "警護");
     }
 
     Strcat(pname, what);
+#if 0 /*JP*//*属性はすでに付けている*/
     /* same as distant_monnam(), more or less... */
     if (do_hallu || !high_priest || reveal_high_priest
         || !Is_astralevel(&u.uz)
@@ -363,6 +413,7 @@ priestname(
         Strcat(pname, " of ");
         Strcat(pname, halu_gname(mon_aligntyp(mon)));
     }
+#endif
     return pname;
 }
 
@@ -437,8 +488,13 @@ intemple(int roomno)
                Moloch so suppress the "of Moloch" for him here too */
             if (sanctum && !Hallucination)
                 priest->ispriest = 0;
+#if 0 /*JP:T*/
             pline("%s intones:",
                   canseemon(priest) ? Monnam(priest) : "A nearby voice");
+#else
+            pline("%sが詠唱した：",
+                  canseemon(priest) ? Monnam(priest) : "近くで誰か");
+#endif
             priest->ispriest = save_priest;
             epri_p->intone_time = svm.moves + (long) d(10, 500); /* ~2505 */
             /* make sure that we don't suppress entry message when
@@ -449,18 +505,32 @@ intemple(int roomno)
         if (sanctum && Is_sanctum(&u.uz)) {
             if (priest->mpeaceful) {
                 /* first time inside */
+/*JP
                 msg1 = "Infidel, you have entered Moloch's Sanctum!";
+*/
+                msg1 = "異端者よ！ここは，モーロックの聖域だ！";
+/*JP
                 msg2 = "Be gone!";
+*/
+                msg2 = "立ち去れ！";
                 priest->mpeaceful = 0;
                 /* became angry voluntarily; no penalty for attacking him */
                 set_malign(priest);
             } else {
                 /* repeat visit, or attacked priest before entering */
+/*JP
                 msg1 = "You desecrate this place by your presence!";
+*/
+                msg1 = "おまえはこの神聖な場所を汚している！";
             }
         } else if (svm.moves >= epri_p->enter_time) {
+#if 0 /*JP:T*/
             Sprintf(buf, "Pilgrim, you enter a %s place!",
                     !shrined ? "desecrated" : "sacred");
+#else
+            Sprintf(buf, "巡礼者よ，おまえは%s地にいる！",
+                    !shrined ? "不浄の" : "神聖なる");
+#endif
             msg1 = buf;
         }
         if (msg1 && can_speak && !Deaf) {
@@ -473,13 +543,25 @@ intemple(int roomno)
         if (!sanctum) {
             if (!shrined || !p_coaligned(priest)
                 || u.ualign.record <= ALGN_SINNED) {
+/*JP
                 msg1 = "have a%s forbidding feeling...";
+*/
+                msg1 = "%s近づきがたい気持がした．．．";
+/*JP
                 msg2 = (!shrined || !p_coaligned(priest)) ? "" : " strange";
+*/
+                msg2 = (!shrined || !p_coaligned(priest)) ? "" : "奇妙な";
                 this_time = &epri_p->hostile_time;
                 other_time = &epri_p->peaceful_time;
             } else {
+/*JP
                 msg1 = "experience %s sense of peace.";
+*/
+                msg1 = "%s満ち足りた気持ちになった．";
+/*JP
                 msg2 = (u.ualign.record >= ALGN_DEVOUT) ? "a" : "an unusual";
+*/
+                msg2 = (u.ualign.record >= ALGN_DEVOUT) ? "" : "いつになく";
                 this_time = &epri_p->peaceful_time;
                 other_time = &epri_p->hostile_time;
             }
@@ -503,13 +585,22 @@ intemple(int roomno)
 
         switch (rn2(4)) {
         case 0:
+/*JP
             You("have an eerie feeling...");
+*/
+            You("ぞっとした．．．");
             break;
         case 1:
+/*JP
             You_feel("like you are being watched.");
+*/
+            You("見つめられているような気がした．");
             break;
         case 2:
+/*JP
             pline("A shiver runs down your %s.", body_part(SPINE));
+*/
+            pline("あなたの%sを震えが走った．", body_part(SPINE));
             break;
         default:
             break; /* no message; unfortunately there's no
@@ -521,18 +612,36 @@ intemple(int roomno)
                    != 0) {
             int ngen = svm.mvitals[PM_GHOST].born;
             if (canspotmon(mtmp))
+#if 0 /*JP:T*/
                 pline("A%s ghost appears next to you%c",
                       ngen < 5 ? "n enormous" : "",
                       ngen < 10 ? '!' : '.');
+#else
+                pline("%s幽霊があなたのすぐそばに現われた%s",
+                      ngen < 5 ? "巨大な" : "",
+                      ngen < 10 ? "！" : "．");
+#endif
             else
+/*JP
                 You("sense a presence close by!");
+*/
+                You("すぐそばに何かがいるのを感じた！");
             mtmp->mpeaceful = 0;
             set_malign(mtmp);
             if (flags.verbose)
+/*JP
                 You("are frightened to death, and unable to move.");
+*/
+                You("まっさおになって驚き，動けなくなった．");
             nomul(-3);
+/*JP
             gm.multi_reason = "being terrified of a ghost";
+*/
+            gm.multi_reason = "幽霊に恐怖している時に";
+/*JP
             gn.nomovemsg = "You regain your composure.";
+*/
+            gn.nomovemsg = "あなたは平静を取り戻した．";
         }
     }
 }
@@ -575,7 +684,10 @@ priest_talk(struct monst *priest)
                        mon_nam(priest));
 
     if (priest->mflee || (!priest->ispriest && coaligned && strayed)) {
+/*JP
         pline("%s doesn't want anything to do with you!", Monnam(priest));
+*/
+        pline("%sはあなたに構いたくないようだ！", Monnam(priest));
         priest->mpeaceful = 0;
         return;
     }
@@ -583,14 +695,27 @@ priest_talk(struct monst *priest)
     /* priests don't chat unless peaceful and in their own temple */
     if (!inhistemple(priest) || !priest->mpeaceful || helpless(priest)) {
         static const char *const cranky_msg[3] = {
+/*JP
             "Thou wouldst have words, eh?  I'll give thee a word or two!",
+*/
+            "汝言葉を望むのか？",
+/*JP
             "Talk?  Here is what I have to say!",
+*/
+            "話す？何を言えばよいのだ！",
+/*JP
             "Pilgrim, I would speak no longer with thee."
+*/
+            "巡礼者よ，汝に語ることなどない．"
         };
 
         if (helpless(priest)) {
+#if 0 /*JP:T*/
             pline("%s breaks out of %s reverie!", Monnam(priest),
                   mhis(priest));
+#else
+            pline("%sは瞑想を中断した！", Monnam(priest));
+#endif
             priest->mfrozen = priest->msleeping = 0;
             priest->mcanmove = 1;
         }
@@ -605,7 +730,10 @@ priest_talk(struct monst *priest)
         && !has_shrine(priest)) {
         SetVoice(priest, 0, 80, 0);
         verbalize(
+/*JP
               "Begone!  Thou desecratest this holy place with thy presence.");
+*/
+              "立ち去れ！汝はこの神聖なる場所を汚している．");
         priest->mpeaceful = 0;
         return;
     }
@@ -613,18 +741,29 @@ priest_talk(struct monst *priest)
         if (coaligned && !strayed) {
             long pmoney = money_cnt(priest->minvent);
             if (pmoney > 0L) {
+#if 0 /*JP:T*/
                 const char *bits;
                 bits = (Hallucination) ? currency(pmoney)
                                        : (pmoney == 1L) ? "bit" : "bits";
                 /* Note: two bits is actually 25 cents.  Hmm. */
                 pline("%s gives you %s%s for an ale.", Monnam(priest),
                       (pmoney == 1L) ? "one " : "two ", bits);
+#else
+                pline("%sはあなたがエール酒を飲めるように，金貨%ld枚を与えた．", Monnam(priest),
+                      (pmoney == 1L) ? 1L : 2L);
+#endif
                 money2u(priest, pmoney > 1L ? 2 : 1);
             } else
+/*JP
                 pline("%s preaches the virtues of poverty.", Monnam(priest));
+*/
+                pline("%sは清貧の美徳について説教した．", Monnam(priest));
             exercise(A_WIS, TRUE);
         } else
+/*JP
             pline("%s is not interested.", Monnam(priest));
+*/
+            pline("%sは興味を示さない．", Monnam(priest));
         return;
     } else {
         /* there's now some randomization in how much you need to donate, but
@@ -642,40 +781,63 @@ priest_talk(struct monst *priest)
         if (quan < 1)
             quan = 1;
 
+#if 0 /*JP:T*/
         Sprintf(buf, "How much will you offer (suggested: %ld or %ld)?",
                 suggested * quan, suggested * quan * 2);
+#else
+        Sprintf(buf, "いくら寄贈しますか？(おすすめ: %ld か %ld)",
+                suggested * quan, suggested * quan * 2);
+#endif
 
         if (flags.debug)
             pline("%s asks you for a contribution for the temple (base %ld).",
                   Monnam(priest), suggested);
         else
+/*JP
             pline("%s asks you for a contribution for the temple.",
+*/
+            pline("%sはあなたに寺院への寄贈を求めた．",
                   Monnam(priest));
         if ((offer = bribe(priest, buf)) == 0) {
             SetVoice(priest, 0, 80, 0);
+/*JP
             verbalize("Thou shalt regret thine action!");
+*/
+            verbalize("汝の行為は神を冒涜するものなり！");
             if (coaligned)
                 adjalign(-1);
             if (cheapskate) ++*cheapskate;
         } else if (offer < suggested * quan) {
             if (money_cnt(gi.invent) > (offer * 2L)) {
                 SetVoice(priest, 0, 80, 0);
+/*JP
                 verbalize("Cheapskate.");
+*/
+                verbalize("ケチめ．");
                 if (cheapskate) ++*cheapskate;
             } else {
                 SetVoice(priest, 0, 80, 0);
+/*JP
                 verbalize("I thank thee for thy contribution.");
+*/
+                verbalize("汝の寄贈に報いようぞ．");
                 /* give player some token */
                 exercise(A_WIS, TRUE);
             }
         } else if (offer < suggested * quan * 2) {
             SetVoice(priest, 0, 80, 0);
+/*JP
             verbalize("Thou art indeed a pious individual.");
+*/
+            verbalize("汝，まさに敬虔なり．");
             if (money_cnt(gi.invent) < (offer * 2L)) {
                 if (coaligned && u.ualign.record <= ALGN_SINNED)
                     adjalign(1);
             }
+/*JP
             verbalize("I bestow upon thee a blessing.");
+*/
+            verbalize("汝に祝福を．");
             incr_itimeout(&HClairvoyant, rn1(500 * offer / suggested,
                                              500 * offer / suggested));
         } else if (offer < suggested * quan * 3) {
@@ -699,13 +861,22 @@ priest_talk(struct monst *priest)
             }
             SetVoice(priest, 0, 80, 0);
             if (u.ublessed > orig_ublessed) {
+/*JP
                 verbalize("Thou hast been rewarded for thy devotion.");
+*/
+                verbalize("汝が献身に報わん．");
             } else {
+/*JP
                 verbalize("Thy selfless generosity is deeply appreciated.");
+*/
+                verbalize("汝自身の真価は大いに認められた．");
             }
         } else {
             SetVoice(priest, 0, 80, 0);
+/*JP
             verbalize("Thy selfless generosity is deeply appreciated.");
+*/
+            verbalize("汝自身の真価は大いに認められた．");
             /* money_cnt check is preserved for futureproofing but probably
                can't fail in the current code */
             if (money_cnt(gi.invent) < (offer * 2L) && coaligned) {
@@ -849,15 +1020,26 @@ ghod_hitsu(struct monst *priest)
 
     switch (rn2(3)) {
     case 0:
+/*JP
         pline("%s roars in anger:  \"Thou shalt suffer!\"",
+*/
+        pline("%sは怒りの声をあげた：「汝，苦しむがよい！」",
               a_gname_at(ax, ay));
         break;
     case 1:
+#if 0 /*JP:T*/
         pline("%s voice booms:  \"How darest thou harm my servant!\"",
               s_suffix(a_gname_at(ax, ay)));
+#else
+        pline("%sの声が響いた：「よくもわが下僕を傷つけたな！」",
+              a_gname_at(ax, ay));
+#endif
         break;
     default:
+/*JP
         pline("%s roars:  \"Thou dost profane my shrine!\"",
+*/
+        pline("%sの声が聞こえる：「汝，我が聖堂を汚したり！」",
               a_gname_at(ax, ay));
         break;
     }
