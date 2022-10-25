@@ -1292,5 +1292,21 @@ struct const_globals {
 extern const struct const_globals cg;
 
 extern struct obj hands_obj;
+extern char do_random_str;
+#if 1 /*JP*/
+struct trans_verb {
+    const char *en;
+    const char *what;
+    const char *particle;
+    const char *jp;
+};
+
+/* hcolor()は形容詞を返すので副詞に変換する */
+#define hcolor_adv(x) jconj_adj(hcolor((x)))
+/* 固定文字列用strncmp */
+#define STRNCMP2(x, y) strncmp(x, y, strlen(y))
+#endif
+
+#undef E
 
 #endif /* DECL_H */
