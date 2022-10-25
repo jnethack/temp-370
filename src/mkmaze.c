@@ -3,6 +3,11 @@
 /*-Copyright (c) Pasi Kallinen, 2018. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 #include "sp_lev.h"
 
@@ -1510,7 +1515,11 @@ fumaroles(void)
         }
     }
     if (snd && !Deaf)
+#if 0 /*JP:T*/
         Norep("You hear a %swhoosh!", loud ? "loud " : "");  /* Deaf-aware */
+#else
+        Norep("%sシューという音を聞いた！", loud ? "大きな" : "");  /* Deaf-aware */
+#endif
 }
 
 /*
@@ -1716,7 +1725,10 @@ water_friction(void)
         eff = TRUE;
     }
     if (eff)
+/*JP
         pline("Water turbulence affects your movements.");
+*/
+        pline("水の流れがあなたの動きに影響を与えた．");
 }
 
 void

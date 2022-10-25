@@ -61,25 +61,25 @@ des.door("closed",15,10)
 des.door("locked",19,10)
 des.door("locked",20,10)
 -- Neferet the Green, the quest leader
-des.monster({ id = "Neferet the Green", coord = {23, 05}, inventory = function()
-   des.object({ id = "elven cloak", spe = 5 });
-   des.object({ id = "quarterstaff", spe = 5 });
+des.monster({ id = "緑のネフェレト", coord = {23, 05}, inventory = function()
+   des.object({ id = "エルフのクローク", spe = 5 });
+   des.object({ id = "六尺棒", spe = 5 });
 end })
 -- The treasure of the quest leader
-des.object("chest", 24, 05)
+des.object("宝箱", 24, 05)
 -- apprentice guards for the audience chamber
-des.monster("apprentice", 30, 07)
-des.monster("apprentice", 24, 06)
-des.monster("apprentice", 15, 06)
-des.monster("apprentice", 15, 12)
-des.monster("apprentice", 26, 11)
-des.monster("apprentice", 27, 11)
-des.monster("apprentice", 19, 09)
-des.monster("apprentice", 20, 09)
+des.monster("実習生", 30, 07)
+des.monster("実習生", 24, 06)
+des.monster("実習生", 15, 06)
+des.monster("実習生", 15, 12)
+des.monster("実習生", 26, 11)
+des.monster("実習生", 27, 11)
+des.monster("実習生", 19, 09)
+des.monster("実習生", 20, 09)
 -- Eels in the pond
-des.monster("giant eel", 62, 14)
-des.monster("giant eel", 69, 15)
-des.monster("giant eel", 67, 17)
+des.monster("巨大ウナギ", 62, 14)
+des.monster("巨大ウナギ", 69, 15)
+des.monster("巨大ウナギ", 67, 17)
 -- Non diggable walls
 des.non_diggable(selection.area(00,00,75,19))
 -- Random traps

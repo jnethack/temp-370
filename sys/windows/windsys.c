@@ -115,6 +115,12 @@ VA_DECL(const char *, fmt)
 }
 #endif  /* WIN32CON */
 
+#if 1 /*JP*/
+#ifdef WIN32CON
+extern int orig_icp;
+#endif
+#endif /*JP*/
+
 char
 switchar(void)
 {

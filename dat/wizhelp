@@ -1,13 +1,13 @@
-Debug-Mode Quick Reference:
+デバッグモード：
 
-^E  ==  detect secret doors and traps nearby
-^F  ==  map level; reveals traps and secret corridors but not secret doors
-^G  ==  create monster by name or class
-^I  ==  identify items in pack
-^T  ==  do intra-level teleport
-^V  ==  do trans-level teleport; '?' yields menu of special destinations
-^W  ==  make a wish for an item or a trap or a limited subset of terrain
-^X  ==  show status, attributes, and characteristics (extended enlightenment)
+^E  ==  近くにある秘密のドアや罠を調べる
+^F  ==  魔法の地図
+^G  ==  怪物を造る
+^I  ==  持ち物を識別する
+^T  ==  その階での瞬間移動
+^V  ==  違う階への瞬間移動; '?'で特別な行先へのメニュー
+^W  ==  望みをかなえる(物か罠か一部の地形)
+^X  ==  属性を見る(拡張された啓蒙)
 
 #debugfuzzer    == set game to run on autopilot; keeps going until failure;
                    escalates impossible warnings to panic
