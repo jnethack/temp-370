@@ -172,10 +172,7 @@ extern unsigned char *sj2e(unsigned char *s);
 **
 */
 static char *
-jconjsub( tab, jverb, sfx )
-     struct _jconj_tab *tab;
-     char *jverb;
-     char *sfx;
+jconjsub(struct _jconj_tab *tab,char *jverb,char *sfx)
 {
     int len;
     unsigned char *p;
@@ -316,9 +313,7 @@ jconjsub( tab, jverb, sfx )
 
 /* 動詞の変化 */
 const char *
-jconj( jverb, sfx )
-     const char *jverb;
-     const char *sfx;
+jconj(const char *jverb,const char *sfx)
 {
     struct _jconj_tab *tab;
     int len;
@@ -345,8 +340,7 @@ jconj( jverb, sfx )
 
 /* 可能 */
 const char *
-jcan(jverb)
-     const char *jverb;
+jcan(const char *jverb)
 {
     const char *ret;
     static char tmp[1024];
@@ -364,8 +358,7 @@ jcan(jverb)
 
 /* 不可能 */
 const char *
-jcannot(jverb)
-     const char *jverb;
+jcannot(const char *jverb)
 {
     static char tmp[1024];
 
@@ -381,16 +374,14 @@ jcannot(jverb)
 
 /* 過去 */
 const char *
-jpast(jverb)
-     const char *jverb;
+jpast(const char *jverb)
 {
     return jconj(jverb, "た");
 }
 
 /* 敬体 */
 const char *
-jpolite(jverb)
-     const char *jverb;
+jpolite(const char *jverb)
 {
     return jconj(jverb, "ます");
 }
@@ -408,8 +399,7 @@ jpolite(jverb)
 **      綺麗だ          -> 綺麗に       (形容動詞)
 */
 const char *
-jconj_adj( jadj )
-     const char *jadj;
+jconj_adj(const char *jadj)
 {
     int len;
     static unsigned char tmp[1024];
@@ -443,7 +433,7 @@ unsigned char
 }
 
 void
-main()
+main(void)
 {
     struct _jconj_tab *tab;
 
