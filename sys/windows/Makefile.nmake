@@ -172,6 +172,7 @@ SUBM    = ..\submodules  # NetHack git submodules
 SndWavDir = ..\sound\wav # sound files that get integrated
 BinDir = ..\binary
 PkgDir = ..\package
+JP      = ..\japanese    # JP
 
 #==============================================================================
 # Sanity checks for prerequisite Lua and pdcursesmod
@@ -657,7 +658,9 @@ LUAOBJTTY = $(OTTY)nhlua.o    $(OTTY)nhlsel.o    $(OTTY)nhlobj.o
 VVOBJTTY  = $(OTTY)version.o
 
 SOBJTTY   = $(OTTY)windmain.o $(OTTY)windsys.o $(OTTY)win10.o \
-		$(OTTY)safeproc.o
+		$(OTTY)safeproc.o $(SOUNDTTY)
+
+JOBJTTY   = $(OTTY)jlib.o     $(OTTY)jconj.o
 
 TTYOBJ = $(OTTY)topl.o $(OTTY)getline.o  $(OTTY)wintty.o
 
@@ -700,7 +703,7 @@ OBJSTTY   = $(MDLIBTTY) \
 	$(VTTYOBJ26) $(VTTYOBJ27) $(VTTYOBJ28) $(VTTYOBJ29) $(VTTYOBJ30) \
 	$(REGEXTTY)
 
-ALLOBJTTY  = $(SOBJTTY) $(DLBOBJTTY) $(OBJSTTY) $(VVOBJTTY) $(LUAOBJTTY)
+ALLOBJTTY  = $(SOBJTTY) $(DLBOBJTTY) $(OBJSTTY) $(VVOBJTTY) $(LUAOBJTTY) $(JOBJTTY)
 
 #
 # - GUI
@@ -720,6 +723,8 @@ DLBOBJGUI = $(OGUI)dlb.o
 REGEXGUI  = $(OGUI)cppregex.o
 LUAOBJGUI = $(OGUI)nhlua.o    $(OGUI)nhlsel.o   $(OGUI)nhlobj.o
 VVOBJGUI  = $(OGUI)version.o
+
+JOBJGUI   = $(OGUI)jlib.o     $(OGUI)jconj.o
 
 SOBJGUI   = $(OGUI)windmain.o $(OGUI)windsys.o $(OGUI)win10.o \
 		$(OGUI)safeproc.o
@@ -768,7 +773,7 @@ OBJSGUI   = $(MDLIBGUI) \
 	$(VGUIOBJ26) $(VGUIOBJ27) $(VGUIOBJ28) $(VGUIOBJ29) $(VGUIOBJ30) \
 	$(REGEXGUI)
 
-ALLOBJGUI  = $(SOBJGUI) $(DLBOBJGUI) $(OBJSGUI) $(VVOBJGUI) $(LUAOBJGUI)
+ALLOBJGUI  = $(SOBJGUI) $(DLBOBJGUI) $(OBJSGUI) $(VVOBJGUI) $(LUAOBJGUI) $(JOBJGUI)
 
 #
 # - other
@@ -1072,7 +1077,7 @@ ccommon= -c -nologo -D"_CRT_NONSTDC_NO_DEPRECATE" -D"_CRT_SECURE_NO_DEPRECATE" \
 	-DCRTAPI1=_cdecl -DCRTAPI2=_cdecl -D"NDEBUG" -D"YY_NO_UNISTD_H" \
 	-DHAS_STDINT_H -DHAS_INLINE $(RUNTIMEOPTDEF) \
 	-EHsc -fp:precise -Gd -GF -GS -Gy \
-	$(CL_RECENT) -WX- -Zc:forScope -Zc:wchar_t -Zi
+	$(CL_RECENT) -WX- -Zc:forScope -Zc:wchar_t -Zi /source-charset:utf-8 /execution-charset:shift-jis
 cdebug= -analyze- -D"_DEBUG" -MTd -RTC1 -Od $(ASAN)
 crelease= -analyze- -D"_MBCS" -errorReport:prompt -MT -O2 -Ot -Ox -Oy
 
@@ -1199,6 +1204,15 @@ DLB =
 	$(Q)$(CC) $(CFLAGS) $(GUIDEF) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
 
 {$(SRC)}.c{$(OBJUTIL)}.o:
+	$(Q)$(CC) $(CFLAGS) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
+
+{$(JP)}.c{$(OBJTTY)}.o:
+	$(Q)$(CC) $(CFLAGS) $(TTYDEF) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
+
+{$(JP)}.c{$(OBJGUI)}.o:
+	$(Q)$(CC) $(CFLAGS) $(GUIDEF) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
+
+{$(JP)}.c{$(OBJUTIL)}.o:
 	$(Q)$(CC) $(CFLAGS) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
 
 #==========================================
@@ -1353,6 +1367,13 @@ DLB =
 
 {$(FMODDIR)}.c{$(OBJGUI)}.o:
 	$(Q)$(CC) $(CFLAGS) $(FMODFLAGS) -I$(WSHR) $(GUIDEF) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
+
+#==========================================
+# Rules for files in japanese
+#==========================================
+
+{$(JP)}.c{$(OBJ)}.o:
+	$(cc) $(cflagsBuild) -Fo$@ $<
 
 #==========================================
 #=============== TARGETS ==================
@@ -2868,6 +2889,8 @@ $(OTTY)worm.o: worm.c $(HACK_H)
 $(OTTY)worn.o: worn.c $(HACK_H)
 $(OTTY)write.o: write.c $(HACK_H)
 $(OTTY)zap.o: zap.c $(HACK_H)
+$(OTTY)jlib.o:    $(JP)\jlib.c $(HACK_H)
+$(OTTY)jconj.o:   $(JP)\jconj.c $(HACK_H)
 #
 #$(OGUI)cppregex.o: ..\sys\share\cppregex.cpp $(CONFIG_H)
 #	$(TARGET_CXX) $(TARGET_CXXFLAGS) -Fo$@ ..\sys\share\cppregex.cpp
@@ -3242,6 +3265,8 @@ $(OGUI)worn.o: worn.c $(HACK_H)
 $(OGUI)write.o: write.c $(HACK_H)
 $(OGUI)zap.o: zap.c $(HACK_H)
 
+$(OGUI)jlib.o:    $(JP)\jlib.c $(HACK_H)
+$(OGUI)jconj.o:   $(JP)\jconj.c $(HACK_H)
 
 qt_kde0.moc: $(QTn_H) ..\win\Qt\qt_kde0.h
 	$(MOCPATH) ..\win\Qt\qt_kde0.h
@@ -3265,5 +3290,6 @@ qt_xcmd.moc: $(QTn_H) ..\win\Qt\qt_xcmd.h
 	$(MOCPATH) ..\win\Qt\qt_xcmd.h
 qt_yndlg.moc: $(QTn_H) ..\win\Qt\qt_yndlg.h
 	$(MOCPATH) ..\win\Qt\qt_yndlg.h
+
 # DEPENDENCIES MUST END AT END OF FILE
 # IF YOU PUT STUFF HERE IT WILL GO AWAY
