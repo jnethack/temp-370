@@ -37,7 +37,7 @@ local asmo1 = des.map({ halign = "half-left", valign = "center", map = [[
    -- Entire main area
    des.region(selection.area(01,01,20,10),"unlit")
    -- The fellow in residence
-   des.monster("Asmodeus",12,07)
+   des.monster("アスモデウス",12,07)
    -- Some random weapons and armor.
    des.object("[")
    des.object("[")
@@ -58,8 +58,8 @@ local asmo1 = des.map({ halign = "half-left", valign = "center", map = [[
    des.trap("magic")
    des.trap("magic")
    -- Random monsters.
-   des.monster("ghost",11,07)
-   des.monster("horned devil",10,05)
+   des.monster("幽霊",11,07)
+   des.monster("角のある悪魔",10,05)
    des.monster("L")
    -- Some Vampires for good measure
    des.monster("V")

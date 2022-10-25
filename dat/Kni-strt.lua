@@ -62,24 +62,24 @@ des.door("closed",45,03)
 des.door("closed",04,12)
 des.door("closed",45,12)
 -- King Arthur
-des.monster({ id = "King Arthur", coord = {09, 07}, inventory = function()
-   des.object({ id = "long sword", spe = 4, buc = "blessed", name = "Excalibur" });
-   des.object({ id = "plate mail", spe = 4 });
+des.monster({ id = "アーサー王", coord = {09, 07}, inventory = function()
+   des.object({ id = "長剣", spe = 4, buc = "blessed", name = "エクスカリバー" });
+   des.object({ id = "鋼鉄の鎧", spe = 4 });
 end })
 -- The treasure of King Arthur
-des.object("chest", 09, 07)
+des.object("宝箱", 09, 07)
 -- knight guards for the watchrooms
-des.monster({ id = "knight", x=04, y=02, peaceful = 1 })
-des.monster({ id = "knight", x=04, y=13, peaceful = 1 })
-des.monster({ id = "knight", x=45, y=02, peaceful = 1 })
-des.monster({ id = "knight", x=45, y=13, peaceful = 1 })
+des.monster({ id = "騎士", x=04, y=02, peaceful = 1 })
+des.monster({ id = "騎士", x=04, y=13, peaceful = 1 })
+des.monster({ id = "騎士", x=45, y=02, peaceful = 1 })
+des.monster({ id = "騎士", x=45, y=13, peaceful = 1 })
 -- page guards for the audience chamber
-des.monster("page", 16, 06)
-des.monster("page", 18, 06)
-des.monster("page", 20, 06)
-des.monster("page", 16, 09)
-des.monster("page", 18, 09)
-des.monster("page", 20, 09)
+des.monster("小姓", 16, 06)
+des.monster("小姓", 18, 06)
+des.monster("小姓", 20, 06)
+des.monster("小姓", 16, 09)
+des.monster("小姓", 18, 09)
+des.monster("小姓", 20, 09)
 -- Non diggable walls
 des.non_diggable(selection.area(00,00,49,15))
 -- Random traps
@@ -90,20 +90,20 @@ des.trap()
 des.trap()
 des.trap()
 -- Monsters on siege duty.
-des.monster({ id = "quasit", x=14, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=16, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=18, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=20, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=22, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=24, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=26, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=28, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=30, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=32, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=34, y=00, peaceful=0 })
-des.monster({ id = "quasit", x=36, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=14, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=16, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=18, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=20, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=22, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=24, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=26, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=28, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=30, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=32, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=34, y=00, peaceful=0 })
+des.monster({ id = "クアシト", x=36, y=00, peaceful=0 })
 
 -- Some warhorses
 for i = 1, 2 + nh.rn2(3) do
-    des.monster({ id = "warhorse", peaceful = 1, inventory = function() if percent(50) then des.object("saddle"); end end });
+    des.monster({ id = "戦闘用の馬", peaceful = 1, inventory = function() if percent(50) then des.object("鞍"); end end });
 end

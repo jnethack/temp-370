@@ -5,7 +5,7 @@
 -- The dungeon description file.
 dungeon = {
    {
-      name = "The Dungeons of Doom",
+      name = "運命の大迷宮",
       bonetag = "D",
       base = 25,
       range = 5,
@@ -13,37 +13,37 @@ dungeon = {
       themerooms = "themerms.lua",
       branches = {
          {
-            name = "The Gnomish Mines",
+            name = "ノームの鉱山",
             base = 2,
             range = 3
          },
          {
-            name = "Sokoban",
+            name = "倉庫番",
             chainlevel = "oracle",
             base = 1,
             direction = "up"
          },
          {
-            name = "The Quest",
+            name = "クエスト",
             chainlevel = "oracle",
             base = 6,
             range = 2,
             branchtype = "portal"
          },
          {
-            name = "Fort Ludios",
+            name = "ローディオス砦",
             base = 18,
             range = 4,
             branchtype = "portal"
          },
          {
-            name = "Gehennom",
+            name = "ゲヘナ",
             chainlevel = "castle",
             base = 0,
             branchtype = "no_down"
          },
          {
-            name = "The Elemental Planes",
+            name = "精霊界",
             base = 1,
             branchtype = "no_down",
             direction = "up"
@@ -86,7 +86,7 @@ dungeon = {
       }
    },
    {
-      name = "Gehennom",
+      name = "ゲヘナ",
       bonetag = "G",
       base = 20,
       range = 5,
@@ -95,7 +95,7 @@ dungeon = {
       alignment = "noalign",
       branches = {
          {
-            name = "Vlad's Tower",
+            name = "ヴラド侯の塔",
             base = 9,
             range = 5,
             direction = "up"
@@ -167,7 +167,7 @@ dungeon = {
       }
    },
    {
-      name = "The Gnomish Mines",
+      name = "ノームの鉱山",
       bonetag = "M",
       base = 8,
       range = 2,
@@ -193,7 +193,7 @@ dungeon = {
       }
    },
    {
-      name = "The Quest",
+      name = "クエスト",
       bonetag = "Q",
       base = 5,
       range = 2,
@@ -216,7 +216,7 @@ dungeon = {
       }
    },
    {
-      name = "Sokoban",
+      name = "倉庫番",
       base = 4,
       alignment = "neutral",
       flags = { "mazelike" },
@@ -245,7 +245,7 @@ dungeon = {
       }
    },
    {
-      name = "Fort Ludios",
+      name = "ローディオス砦",
       base = 1,
       bonetag = "K",
       flags = { "mazelike" },
@@ -259,7 +259,7 @@ dungeon = {
       }
    },
    {
-      name = "Vlad's Tower",
+      name = "ヴラド侯の塔",
       base = 3,
       bonetag = "T",
       protofile = "tower",
@@ -282,7 +282,7 @@ dungeon = {
       }
    },
    {
-      name = "The Elemental Planes",
+      name = "精霊界",
       bonetag = "E",
       base = 6,
       alignment = "unaligned",
@@ -316,7 +316,7 @@ dungeon = {
       }
    },
    {
-      name = "The Tutorial",
+      name = "チュートリアル",
       base = 2,
       flags = { "mazelike", "unconnected" },
       levels = {

@@ -56,7 +56,7 @@ des.room({ type = "ordinary", lit=1, x=3, y=3,
                  des.room({ type = "ordinary", x=22,y=0, w=2,h=2,
                             contents = function()
                                des.door({ state="closed", wall="south" })
-                               des.monster("gnome")
+                               des.monster("ノーム")
                             end
                  })
               end
@@ -89,7 +89,7 @@ des.room({ type = "ordinary", lit=1, x=3, y=3,
                  des.room({ type = "ordinary", x=8,y=5, w=2,h=2,
                             contents = function()
                                des.door({ state="locked", wall="north" })
-                               des.monster("gnome")
+                               des.monster("ノーム")
                             end
                  })
               end
@@ -122,7 +122,7 @@ des.room({ type = "ordinary", lit=1, x=3, y=3,
                  des.room({ type = "ordinary", lit=0, x=7,y=10, w=3,h=3,
                             contents = function()
                                des.door({ state="locked", wall="north" })
-                               des.monster("gnome")
+                               des.monster("ノーム")
                             end
                  });
               end
@@ -131,8 +131,8 @@ des.room({ type = "ordinary", lit=1, x=3, y=3,
                          contents = function()
                             des.door({ state="closed", wall="north" })
                             des.altar({ x=02, y=02, align=align[1],type="shrine" })
-                            des.monster("gnomish wizard")
-                            des.monster("gnomish wizard")
+                            des.monster("ノームの魔法使い")
+                            des.monster("ノームの魔法使い")
                          end
               });
 
@@ -140,17 +140,17 @@ des.room({ type = "ordinary", lit=1, x=3, y=3,
                  des.room({ type = "ordinary", lit=1, x=18,y=10, w=4,h=3,
                             contents = function()
                                des.door({ state="locked", wall="west" })
-                               des.monster("gnome lord")
+                               des.monster("ノームの貴族")
                             end
                  });
               end
 
               -- The Town Watch
-              des.monster({ id = "watchman", peaceful = 1 })
-              des.monster({ id = "watchman", peaceful = 1 })
-              des.monster({ id = "watchman", peaceful = 1 })
-              des.monster({ id = "watchman", peaceful = 1 })
-              des.monster({ id = "watch captain", peaceful = 1 })
+              des.monster({ id = "見張り", peaceful = 1 })
+              des.monster({ id = "見張り", peaceful = 1 })
+              des.monster({ id = "見張り", peaceful = 1 })
+              des.monster({ id = "見張り", peaceful = 1 })
+              des.monster({ id = "見張りの隊長", peaceful = 1 })
            end
 });
 
@@ -162,19 +162,19 @@ des.room({ contents = function()
 des.room({ contents = function()
               des.stair("down")
               des.trap()
-              des.monster("gnome")
-              des.monster("gnome")
+              des.monster("ノーム")
+              des.monster("ノーム")
                       end
 });
 
 des.room({ contents = function()
-              des.monster("dwarf")
+              des.monster("ドワーフ")
                       end
 });
 
 des.room({ contents = function()
               des.trap()
-              des.monster("gnome")
+              des.monster("ノーム")
                       end
 });
 

@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2013. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn void m_lose_armor(struct monst *, struct obj *, boolean) NONNULLPTRS;
@@ -543,19 +548,35 @@ mon_adjust_speed(
         && !(mon->mfrozen || mon->msleeping) && canseemon(mon)) {
         /* fast to slow (skipping intermediate state) or vice versa */
         const char *howmuch =
+/*JP
             (mon->mspeed + oldspeed == MFAST + MSLOW) ? "much " : "";
+*/
+            (mon->mspeed + oldspeed == MFAST + MSLOW) ? "すごく" : "";
 
         if (petrify) {
             /* mimic the player's petrification countdown; "slowing down"
                even if fast movement rate retained via worn speed boots */
             if (flags.verbose)
+/*JP
                 pline_mon(mon, "%s is slowing down.", Monnam(mon));
+*/
+                pline_mon(mon, "%sはのろくなった．", Monnam(mon));
         } else if (adjust > 0 || mon->mspeed == MFAST)
+#if 0 /*JP:T*/
             pline_mon(mon, "%s is suddenly moving %sfaster.",
                       Monnam(mon), howmuch);
+#else
+            pline_mon(mon, "%sの動きは突然%sすばやくなった．",
+                      Monnam(mon), howmuch);
+#endif
         else
+#if 0 /*JP:T*/
             pline_mon(mon, "%s seems to be moving %sslower.",
                       Monnam(mon), howmuch);
+#else
+            pline_mon(mon, "%sの動きは%sのろくなったように見える．",
+                      Monnam(mon), howmuch);
+#endif
 
         /* might discover an object if we see the speed change happen */
         if (obj != 0)
@@ -929,7 +950,10 @@ m_dowear_type(
                uses accessory verbs for armor but we can live with that */
             if (old) {
                 Strcpy(oldarm, distant_name(old, doname));
+/*JP
                 Snprintf(buf, sizeof buf, " removes %s and", oldarm);
+*/
+                Snprintf(buf, sizeof buf, "%sをはずして", oldarm);
             } else {
                 buf[0] = oldarm[0] = '\0';
             }
@@ -947,11 +971,21 @@ m_dowear_type(
                     (void) strsubst(newarm, "an ", "another ");
                 newarm[BUFSZ - 1] = '\0';
             }
+#if 0 /*JP:T*/
             pline_mon(mon, "%s%s puts on %s.", Monnam(mon), buf, newarm);
+#else
+            pline_mon(mon, "%sは%s%sを身につけた．", Monnam(mon), buf, newarm);
+#endif
             if (autocurse)
+#if 0 /*JP:T*/
                 pline("%s %s %s %s for a moment.", s_suffix(Monnam(mon)),
                       simpleonames(best), otense(best, "glow"),
                       hcolor(NH_BLACK));
+#else
+                pline("%sの%sはしばらく%s輝いた．", Monnam(mon),
+                      simpleonames(best),
+                      hcolor_adv(NH_BLACK));
+#endif
         } /* can see it */
         m_delay += objects[best->otyp].oc_delay;
         mon->mfrozen = m_delay;
@@ -978,22 +1012,43 @@ m_dowear_type(
             const char *adesc = arti_light_description(best);
 
             if (sawmon) /* could already see monster */
+#if 0 /*JP:T*/
                 pline("%s %s to shine %s.", Yname2(best),
                       otense(best, "begin"), adesc);
+#else
+                pline("%sは%s輝きはじめた！", Yname2(best),
+                      adesc);
+#endif
             else if (canseemon(mon)) /* didn't see it until new light */
+#if 0 /*JP:T*/
                 pline("%s %s shining %s.", Yname2(best),
                       otense(best, "are"), adesc);
+#else
+                pline("%sは%s輝いている．", Yname2(best),
+                      adesc);
+#endif
             else if (sawloc) /* saw location but not invisible monster */
+#if 0 /*JP:T*/
                 pline("%s begins to shine %s.", Something, adesc);
+#else
+                pline("%sは%s輝きはじめた．", Something, adesc);
+#endif
             else /* didn't see location until new light */
+#if 0 /*JP:T*/
                 pline("%s is shining %s.", Something, adesc);
+#else
+                pline("%sは%s輝いている．", Something, adesc);
+#endif
         }
     }
     update_mon_extrinsics(mon, best, TRUE, creation);
     /* if couldn't see it but now can, or vice versa */
     if (!creation && (sawmon ^ canseemon(mon))) {
         if (mon->minvis && !See_invisible) {
+/*JP
             pline("Suddenly you cannot see %s.", nambuf);
+*/
+            pline("突然%sが見えなくなった．", nambuf);
             makeknown(best->otyp);
         /* } else if (!mon->minvis) {
          *     pline("%s suddenly appears!", Amonnam(mon)); */
@@ -1181,7 +1236,9 @@ mon_break_armor(struct monst *mon, boolean polyspot)
     boolean vis = cansee(mon->mx, mon->my),
             handless_or_tiny = (nohands(mdat) || verysmall(mdat)),
             noride = FALSE;
+#if 0 /*JP*//*使わない*/
     const char *pronoun = mhim(mon), *ppronoun = mhis(mon);
+#endif
 
     if (breakarm(mdat)) {
         if ((otmp = which_armor(mon, W_ARM)) != 0) {
@@ -1193,10 +1250,18 @@ mon_break_armor(struct monst *mon, boolean polyspot)
             } else {
                 Soundeffect(se_cracking_sound, 100);
                 if (vis)
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s breaks out of %s armor!",
                               Monnam(mon), ppronoun);
+#else
+                    pline_mon(mon, "%sは鎧をやぶり出た！",
+                              Monnam(mon));
+#endif
                 else
+/*JP
                     You_hear("a cracking sound.");
+*/
+                    You_hear("バリバリという音を聞いた．");
             }
             m_useup(mon, otmp);
         }
@@ -1205,25 +1270,46 @@ mon_break_armor(struct monst *mon, boolean polyspot)
             && (otmp->otyp != MUMMY_WRAPPING || !WrappingAllowed(mdat))) {
             if (otmp->oartifact) {
                 if (vis)
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s %s falls off!", s_suffix(Monnam(mon)),
                           cloak_simple_name(otmp));
+#else
+                    pline_mon(mon, "%sの%sは落ちた！", Monnam(mon),
+                          cloak_simple_name(otmp));
+#endif
                 m_lose_armor(mon, otmp, polyspot);
             } else {
                 Soundeffect(se_ripping_sound, 100);
                 if (vis)
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s %s tears apart!", s_suffix(Monnam(mon)),
                           cloak_simple_name(otmp));
+#else
+                    pline_mon(mon, "%sの%sはずたずたになった！", Monnam(mon),
+                          cloak_simple_name(otmp));
+#endif
                 else
+/*JP
                     You_hear("a ripping sound.");
+*/
+                    You_hear("ビリッという音を聞いた．");
                 m_useup(mon, otmp);
             }
         }
         if ((otmp = which_armor(mon, W_ARMU)) != 0) {
             if (vis)
+#if 0 /*JP:T*/
                 pline_mon(mon, "%s shirt rips to shreds!",
                           s_suffix(Monnam(mon)));
+#else
+                pline_mon(mon, "%sのシャツはずたずたになった！",
+                          Monnam(mon));
+#endif
             else
+/*JP
                 You_hear("a ripping sound.");
+*/
+                You_hear("ビリッという音を聞いた．");
             m_useup(mon, otmp);
         }
     } else if (sliparm(mdat)) {
@@ -1233,10 +1319,18 @@ mon_break_armor(struct monst *mon, boolean polyspot)
         if ((otmp = which_armor(mon, W_ARM)) != 0) {
             Soundeffect(se_thud, 50);
             if (vis)
+#if 0 /*JP:T*/
                 pline_mon(mon, "%s armor falls around %s!",
                           s_suffix(Monnam(mon)), pronoun);
+#else
+                pline_mon(mon, "%sの鎧が周りに落ちた！",
+                          Monnam(mon));
+#endif
             else
+/*JP
                 You_hear("a thud.");
+*/
+                You_hear("ドシンという音を聞いた．");
             m_lose_armor(mon, otmp, polyspot);
         }
         if ((otmp = which_armor(mon, W_ARMC)) != 0
@@ -1244,23 +1338,44 @@ mon_break_armor(struct monst *mon, boolean polyspot)
             && (otmp->otyp != MUMMY_WRAPPING || !WrappingAllowed(mdat))) {
             if (vis) {
                 if (is_whirly(mon->data))
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s %s falls, unsupported!",
                               s_suffix(Monnam(mon)), cloak_simple_name(otmp));
+#else
+                    pline_mon(mon, "%sの%sは支えきれずに落ちた！",
+                              Monnam(mon), cloak_simple_name(otmp));
+#endif
                 else
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s shrinks out of %s %s!",
                               Monnam(mon), ppronoun,
                               cloak_simple_name(otmp));
+#else
+                    pline_mon(mon, "%sは%sより縮んだ！",
+                              Monnam(mon),
+                              cloak_simple_name(otmp));
+#endif
             }
             m_lose_armor(mon, otmp, polyspot);
         }
         if ((otmp = which_armor(mon, W_ARMU)) != 0) {
             if (vis) {
                 if (passes_thru_clothes)
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s seeps right through %s shirt!",
                               Monnam(mon), ppronoun);
+#else
+                    pline_mon(mon, "%sは自分のシャツを通り抜けた！",
+                              Monnam(mon));
+#endif
                 else
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s becomes much too small for %s shirt!",
                           Monnam(mon), ppronoun);
+#else
+                    pline_mon(mon, "%sは自分のシャツよりずっと小さくなった！",
+                          Monnam(mon));
+#endif
             }
             m_lose_armor(mon, otmp, polyspot);
         }
@@ -1269,18 +1384,32 @@ mon_break_armor(struct monst *mon, boolean polyspot)
         /* [caller needs to handle weapon checks] */
         if ((otmp = which_armor(mon, W_ARMG)) != 0) {
             if (vis)
+#if 0 /*JP:T*/
                 pline_mon(mon, "%s drops %s gloves%s!",
                           Monnam(mon), ppronoun,
                           MON_WEP(mon) ? " and weapon" : "");
+#else
+                pline_mon(mon, "%sは小手%sを落した！",
+                          Monnam(mon),
+                          MON_WEP(mon) ? "と武器" : "");
+#endif
             m_lose_armor(mon, otmp, polyspot);
         }
         if ((otmp = which_armor(mon, W_ARMS)) != 0) {
             Soundeffect(se_clank, 50);
             if (vis)
+#if 0 /*JP:T*/
                 pline_mon(mon, "%s can no longer hold %s shield!",
                           Monnam(mon), ppronoun);
+#else
+                pline_mon(mon, "%sはもはや盾を持つことができない！",
+                          Monnam(mon));
+#endif
             else
+/*JP
                 You_hear("a clank.");
+*/
+                You_hear("カランという音を聞いた．");
             m_lose_armor(mon, otmp, polyspot);
         }
     }
@@ -1289,10 +1418,18 @@ mon_break_armor(struct monst *mon, boolean polyspot)
             /* flimsy test for horns matches polyself handling */
             && (handless_or_tiny || !is_flimsy(otmp))) {
             if (vis)
+#if 0 /*JP:T*/
                 pline_mon(mon, "%s helmet falls to the %s!",
                           s_suffix(Monnam(mon)), surface(mon->mx, mon->my));
+#else
+                pline_mon(mon, "%sの兜は%sへ落ちた！",
+                          Monnam(mon), surface(mon->mx, mon->my));
+#endif
             else
+/*JP
                 You_hear("a clank.");
+*/
+                You_hear("ガチャンという音を聞いた．");
             m_lose_armor(mon, otmp, polyspot);
         }
     }
@@ -1300,12 +1437,23 @@ mon_break_armor(struct monst *mon, boolean polyspot)
         if ((otmp = which_armor(mon, W_ARMF)) != 0) {
             if (vis) {
                 if (is_whirly(mon->data))
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s boots fall away!",
                               s_suffix(Monnam(mon)));
+#else
+                    pline_mon(mon, "%sの靴はぬげ落ちた！",
+                              Monnam(mon));
+#endif
                 else
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s boots %s off %s feet!",
                               s_suffix(Monnam(mon)),
                           verysmall(mdat) ? "slide" : "are pushed", ppronoun);
+#else
+                    pline_mon(mon, "%sの靴は足から%s！",
+                              Monnam(mon),
+                          verysmall(mdat) ? "滑り落ちた" : "押し出された");
+#endif
             }
             m_lose_armor(mon, otmp, polyspot);
         }
@@ -1314,19 +1462,33 @@ mon_break_armor(struct monst *mon, boolean polyspot)
         if ((otmp = which_armor(mon, W_SADDLE)) != 0) {
             m_lose_armor(mon, otmp, polyspot);
             if (vis)
+/*JP
                 pline_mon(mon, "%s saddle falls off.", s_suffix(Monnam(mon)));
+*/
+                pline_mon(mon, "%sから鞍が落ちた．", Monnam(mon));
         }
         if (mon == u.usteed)
             noride = TRUE;
     }
     if (noride || (mon == u.usteed && !can_ride(mon))) {
+/*JP
         You("can no longer ride %s.", mon_nam(mon));
+*/
+        You("もう%sに乗っていられない．", mon_nam(mon));
         if (touch_petrifies(u.usteed->data) && !Stone_resistance && rnl(3)) {
             char buf[BUFSZ];
 
+/*JP
             You("touch %s.", mon_nam(u.usteed));
+*/
+            You("%sに触った．", mon_nam(u.usteed));
+#if 0 /*JP:T*/
             Sprintf(buf, "falling off %s",
                     an(pmname(u.usteed->data, Mgender(u.usteed))));
+#else
+            Sprintf(buf, "%sから落ちて",
+                    pmname(u.usteed->data, Mgender(u.usteed)));
+#endif
             instapetrify(buf);
         }
         dismount_steed(DISMOUNT_FELL);

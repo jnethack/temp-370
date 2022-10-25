@@ -26,7 +26,7 @@ shuffle(niches);
 
 des.ladder("down", 11,05)
 -- The lord and his court
-des.monster("Vlad the Impaler", 06, 05)
+des.monster("吸血鬼ヴラド", 06, 05)
 des.monster("V",niches[1])
 des.monster("V",niches[2])
 des.monster("V",niches[3])
@@ -42,9 +42,9 @@ local Vnames = { nil, nil, nil };
 if (not Vgenod) then
    Vnames = { "Madame", "Marquise", "Countess" };
 end
-des.monster({ id="vampire lady", coord=niches[4], name=Vnames[1], waiting=1 })
-des.monster({ id="vampire lady", coord=niches[5], name=Vnames[2], waiting=1 })
-des.monster({ id="vampire lady", coord=niches[6], name=Vnames[3], waiting=1 })
+des.monster({ id="吸血鬼の貴族", coord=niches[4], name=Vnames[1], waiting=1 })
+des.monster({ id="吸血鬼の貴族", coord=niches[5], name=Vnames[2], waiting=1 })
+des.monster({ id="吸血鬼の貴族", coord=niches[6], name=Vnames[3], waiting=1 })
 -- The doors
 des.door("closed",08,03)
 des.door("closed",10,03)
@@ -54,20 +54,20 @@ des.door("locked",08,07)
 des.door("locked",10,07)
 des.door("closed",03,06)
 -- treasures
-des.object("chest", 07,05)
+des.object("宝箱", 07,05)
 
-des.object("chest",niches[6])
-des.object("chest",niches[1])
-des.object("chest",niches[2])
-des.object("chest",niches[3])
-des.object({ id = "chest", coord=niches[4],
+des.object("宝箱",niches[6])
+des.object("宝箱",niches[1])
+des.object("宝箱",niches[2])
+des.object("宝箱",niches[3])
+des.object({ id = "宝箱", coord=niches[4],
              contents = function()
-                des.object({ id = "wax candle", quantity=math.random(4,8) })
+                des.object({ id = "蜜蝋のろうそく", quantity=math.random(4,8) })
              end
 });
-des.object({ id = "chest", coord=niches[5],
+des.object({ id = "宝箱", coord=niches[5],
              contents = function()
-                des.object({ id = "tallow candle", quantity=math.random(4,8) })
+                des.object({ id = "獣脂のろうそく", quantity=math.random(4,8) })
              end
 });
 -- We have to protect the tower against outside attacks
