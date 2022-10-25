@@ -43,6 +43,20 @@
 #define COPYRIGHT_BANNER_C nomakedefs.copyright_banner_c
 #define COPYRIGHT_BANNER_D "         See license for details."
 
+#if 1 /*JP*/
+#define JA_COPYRIGHT_BANNER_A \
+"NetHack[日本語版], Copyright 1993 - 1996"
+
+#define JA_COPYRIGHT_BANNER_B \
+"         By I. Numata , S. Miyashita and N. Hamada."
+
+#define JA_COPYRIGHT_BANNER_C \
+"    for 3.4-,  Copyright 2002 -"
+
+#define JA_COPYRIGHT_BANNER_D \
+"         By K.Shirakata."
+#endif
+
 /*
  * If two or more successive releases have compatible data files, define
  * this with the version number of the oldest such release so that the
