@@ -76,8 +76,7 @@ static iconv_t  input_dsc = 0;
  * 引数が漢字(の1文字目)かどうかを調べる
  */
 int
-is_kanji(c)
-     unsigned c;
+is_kanji(unsigned c)
 {
     if(IC == EUC)
       return (c & 0x80);
@@ -87,8 +86,7 @@ is_kanji(c)
 }
 
 void
-setkcode(c)
-     int c;
+setkcode(int c)
 {
     if(c == 'E' || c == 'e' )
       output_kcode = EUC;
@@ -133,8 +131,7 @@ setkcode(c)
 */
 
 unsigned char *
-e2sj(s)
-     unsigned char *s;
+e2sj(unsigned char *s)
 {
     unsigned char h,l;
     static unsigned char sw[2];
@@ -151,8 +148,7 @@ e2sj(s)
 **      SJIS->EUC
 */
 unsigned char *
-sj2e(s)
-     unsigned char *s;
+sj2e(unsigned char *s)
 {
     unsigned int h,l;
     static unsigned char sw[2];
@@ -175,8 +171,7 @@ sj2e(s)
 **      translate string to internal kcode
 */
 const char *
-str2ic(s)
-     const char *s;
+str2ic(const char *s)
 {
     static unsigned char buf[1024];
     const unsigned char *up;
@@ -479,8 +474,7 @@ cputchar(int c)
 }
 
 void
-jputs(s)
-     const char *s;
+jputs(const char *s)
 {
     while(*s)
       jputchar((unsigned char)*s++);
@@ -488,9 +482,7 @@ jputs(s)
 }
 
 int
-is_kanji2(s, pos)
-     const char *s;
-     int pos;
+is_kanji2(const char *s,int pos)
 {
     unsigned char *str;
 
@@ -512,9 +504,7 @@ is_kanji2(s, pos)
 }
 
 int
-is_kanji1(s, pos)
-     const char *s;
-     int pos;
+is_kanji1(const char *s,int pos)
 {
     unsigned char *str;
 
@@ -539,9 +529,7 @@ is_kanji1(s, pos)
  * 漢字の先頭位置まで何バイト戻る必要があるかを計算する
  */
 int
-offset_in_kanji(s, pos)
-     const unsigned char *s;
-     int pos;
+offset_in_kanji(const unsigned char *s,int pos)
 {
     static int mask[7] = {
         0,
@@ -587,8 +575,7 @@ offset_in_kanji(s, pos)
 ** 8ビットスルーなisspace()
 */
 int
-isspace_8(c)
-     int c;
+isspace_8(int c)
 {
     unsigned int *up;
 
@@ -600,11 +587,7 @@ isspace_8(c)
 ** str1, str2.
 */
 void
-split_japanese( str, str1, str2, pos )
-     char *str;
-     char *str1;
-     char *str2;
-     int pos;
+split_japanese(char *str,char *str1,char *str2,int pos)
 {
     int len, i, j, k, mlen;
     char *pstr;
@@ -716,8 +699,7 @@ found:
 }
 
 void 
-jrndm_replace(c)
-     char *c;
+jrndm_replace(char *c)
 {
     unsigned char cc[3];
 
@@ -782,9 +764,7 @@ jrndm_replace(c)
  * "put off"を対象によって適切に和訳する
  */
 const char *
-joffmsg(otmp, joshi)
-register struct obj *otmp;
-const char **joshi;
+joffmsg(register struct obj *otmp,const char **joshi)
 {
     static char buf[BUFSZ];
 
@@ -815,9 +795,7 @@ const char **joshi;
  * "put on"を対象によって適切に和訳する
  */
 const char *
-jonmsg(otmp, joshi)
-register struct obj *otmp;
-const char **joshi;
+jonmsg(register struct obj *otmp,const char **joshi)
 {
     static char buf[BUFSZ];
 
@@ -853,8 +831,7 @@ const char **joshi;
  * 数詞を返す
  */
 const char *
-numeral(obj)
-register struct obj *obj;
+numeral(register struct obj *obj)
 {
     switch(obj->oclass){
       case WEAPON_CLASS:
@@ -1365,8 +1342,7 @@ static const char *ro2 =
  * 漢字交じり文の文字を消す
  */
 static int
-kanji2index(c1, c2)
-unsigned char c1, c2;
+kanji2index(unsigned char c1,unsigned char c2)
 {
     if (IC == SJIS) {
         /* SJIS */
@@ -1383,11 +1359,7 @@ unsigned char c1, c2;
 }
 
 int
-jrubout(engr, nxt, use_rubout, select_rnd)
-     char *engr;
-     int nxt;
-     int use_rubout;
-     int select_rnd;
+jrubout(char *engr,int nxt,int use_rubout,int select_rnd)
 {
     int j;
     unsigned char *s;
@@ -1459,7 +1431,8 @@ static struct trans_verb dummyverb =
 ;
 
 struct trans_verb
-*trans_verb(const char *en){
+*trans_verb(const char *en)
+{
     struct trans_verb *list = trans_verb_list;
 
     if(!strcmp(en, wield.en)){
