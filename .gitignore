@@ -95,3 +95,4 @@ bundle/*
 util/*.lib
 util/*.exp
 submodules/CHKSUMS.tmp
+.vscode/
