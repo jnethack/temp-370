@@ -89,6 +89,9 @@ typedef struct {
     int color256idx;
     const char *bkcolorseq;
     const char *colorseq;
+#if 1 /*JP*/
+    int     iskanji;
+#endif
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
 } cell_t;
 
@@ -97,10 +100,17 @@ cell_t clear_cell = { CONSOLE_CLEAR_CHARACTER, CONSOLE_CLEAR_ATTRIBUTE };
 cell_t undefined_cell = { CONSOLE_UNDEFINED_CHARACTER,
                           CONSOLE_UNDEFINED_ATTRIBUTE };
 #else /* VIRTUAL_TERMINAL_SEQUENCES */
+#if 0 /*JP*/
 cell_t clear_cell = { { CONSOLE_CLEAR_CHARACTER, 0, 0, 0, 0, 0, 0 },
                         CONSOLE_CLEAR_CHARACTER, 0, 0L, 0, "\x1b[0m" };
 cell_t undefined_cell = { { CONSOLE_UNDEFINED_CHARACTER, 0, 0, 0, 0, 0, 0 },
                             CONSOLE_UNDEFINED_CHARACTER, 0, 0L, 0, (const char *) 0 };
+#else
+cell_t clear_cell = { { CONSOLE_CLEAR_CHARACTER, 0, 0, 0, 0, 0, 0 },
+                        CONSOLE_CLEAR_CHARACTER, 0, 0L, 0, 0, "\x1b[0m", 0 };
+cell_t undefined_cell = { { CONSOLE_UNDEFINED_CHARACTER, 0, 0, 0, 0, 0, 0 },
+                            CONSOLE_UNDEFINED_CHARACTER, 0, 0L, 0, 0, (const char *) 0, 0 };
+#endif
 static const uint8 empty_utf8str[MAX_UTF8_SEQUENCE] = { 0 };
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
 
@@ -127,6 +137,9 @@ static BOOL CtrlHandler(DWORD);
 static void xputc_core(char);
 #else /* VIRTUAL_TERMINAL_SEQUENCES */
 static void xputc_core(int);
+#if 1 /*JP*/
+static void xputc2_core(const unsigned char *);
+#endif
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
 void cmov(int, int);
 void nocmov(int, int);
@@ -772,6 +785,18 @@ enum did_flags {
     did_bkcolorseq   = 0x20,
 };
 
+#if 1 /*JP*/
+static void back_buffer_clear_cell(COORD pos)
+{
+    DWORD unused;
+    static char buf[1] = {CONSOLE_CLEAR_CHARACTER};
+
+    emit_default_color();
+    WriteConsoleOutputCharacterA(console.hConOut, buf,
+                                1, pos, &unused);
+}
+#endif
+
 static void
 back_buffer_flip(void)
 {
@@ -788,6 +813,16 @@ back_buffer_flip(void)
     for (pos.Y = 0; pos.Y < console.height; pos.Y++) {
         for (pos.X = 0; pos.X < console.width; pos.X++) {
             boolean pos_set = FALSE;
+#if 1 /*JP*/
+            if (back->iskanji == 2) {
+                /* 完全なマルチバイト文字でないので空白 */
+                back_buffer_clear_cell(pos);
+                *front = *back;
+                back++;
+                front++;
+                continue;
+            }
+#endif
             do_anything = did_anything = 0U;
             if (back->color24 != front->color24)
                 do_anything |= do_color24;
@@ -880,6 +915,19 @@ back_buffer_flip(void)
                     pos_set = TRUE;
                 }
                 emit_return_to_default();
+#if 1 /*JP*/
+                /* 漢字の1バイト目だった場合、
+                   2バイト目をクリアして確実に更新する */
+                if (front->iskanji == 1) {
+                    (front + 1)->wcharacter = '\0';
+                }
+#endif
+                *front = *back;
+            }
+            if (back->iskanji == 1) {
+                back++;
+                front++;
+                pos.X++;
                 *front = *back;
             }
             back++;
@@ -1246,6 +1294,96 @@ nocmov(int x, int y)
     set_console_cursor(x, y);
 }
 
+#if 1 /*JP*/
+void
+xputc2_core(const unsigned char *str)
+{
+    nhassert(console.cursor.X >= 0 && console.cursor.X < console.width);
+    nhassert(console.cursor.Y >= 0 && console.cursor.Y < console.height);
+
+#ifndef VIRTUAL_TERMINAL_SEQUENCES
+    boolean inverse = FALSE;
+#endif
+    cell_t cell;
+    wchar_t wbuf[1];
+
+    /* xputc_core()からのコピー */
+        /* this causes way too much performance degradation */
+        /* cell.color24 = customcolors[console.current_nhcolor]; */
+        cell.colorseq = esc_seq_colors[console.current_nhcolor];
+        cell.bkcolorseq = esc_seq_bkcolors[console.current_nhbkcolor];
+        cell.attr = console.attr;
+        // if (console.color24)
+        //    __debugbreak();
+        cell.color24 = 0L;
+        cell.color256idx = 0;
+
+    /* 右端に1バイト分しか空きがない場合 */
+    if (console.cursor.X == console.width - 2) {
+        /* 空白表示 */
+        cell.wcharacter = ' ';
+        cell.iskanji = 0;
+        buffer_write(console.back_buffer, &cell, console.cursor);
+        console.cursor.X++;
+        if (console.cursor.Y < console.height - 1) {
+            /* 次の行に */
+            console.cursor.X = 1;
+            console.cursor.Y++;
+        } else {
+            /* 既に下端の場合はなにもしない */
+            return;
+        }
+    }
+
+    int ret = MultiByteToWideChar(
+        CP_ACP,
+        MB_PRECOMPOSED,
+        (const char *)str,
+        strlen((const char *)str),
+        wbuf,
+        1);
+
+    if (ret == 0) {
+        impossible("xputc_core: %s", str);
+    }
+
+    /* 左側にワイド文字情報を詰める */
+    cell.wcharacter = wbuf[0];
+    cell.iskanji = 1;
+    buffer_write(console.back_buffer, &cell, console.cursor);
+    console.cursor.X++;
+
+    /* 右側はダミー */
+    cell.wcharacter = 255;
+    cell.iskanji = 2;
+    buffer_write(console.back_buffer, &cell, console.cursor);
+
+    if (console.cursor.X == console.width - 1) {
+        if (console.cursor.Y < console.height - 1) {
+            console.cursor.X = 1;
+            console.cursor.Y++;
+        }
+    } else {
+        console.cursor.X++;
+    }
+
+    nhassert(console.cursor.X >= 0 && console.cursor.X < console.width);
+    nhassert(console.cursor.Y >= 0 && console.cursor.Y < console.height);
+}
+
+void
+xputc2(const unsigned char *str)
+{
+    /* wintty.c では 1 バイト毎に curx を加算するが、ここは
+       n バイトたまってから呼び出されるので、n-1 文字分先に進んで
+      しまっている。従って n-1 を引く。 */
+    console.cursor.X = ttyDisplay->curx - (strlen((const char *)str) - 1);
+    console.cursor.Y = ttyDisplay->cury;
+
+    xputc2_core(str);
+}
+#endif
+
 void
 xputs(const char *s)
 {
@@ -1348,6 +1486,9 @@ xputc_core(int ch)
             cell.utf8str[0] = ch;
             cell.utf8str[1] = 0;
         }
+#if 1 /*JP*//*常に1バイト文字*/
+        cell.iskanji = 0;
+#endif
 #else /* VIRTUAL_TERMINAL_SEQUENCES */
         inverse = (console.current_nhattr[ATR_INVERSE] && iflags.wc_inverse);
         console.attr = (inverse) ? ttycolors_inv[console.current_nhcolor]
@@ -1440,6 +1581,9 @@ g_putch(int in_ch)
         cell.utf8str[1] = 0;
         ccount = 2;
     }
+#if 1 /*JP*//*常に1バイト文字*/
+    cell.iskanji = 0;
+#endif
 #endif
     buffer_write(console.back_buffer, &cell, console.cursor);
 }
@@ -2095,6 +2239,7 @@ void
 check_and_set_font(void)
 {
 #ifndef VIRTUAL_TERMINAL_SEQUENCES
+#if 0 /*JP*//* コードページは変更しない。932を仮定する。*/
     if (!check_font_widths()) {
         if (wizard) {
             const char *msg = "WARNING: glyphs too wide in console font."
@@ -2107,6 +2252,7 @@ check_and_set_font(void)
         }
         set_known_good_console_font();
     }
+#endif
 #endif
 }
 
@@ -2604,6 +2750,7 @@ void nethack_enter_consoletty(void)
     GetConsoleMode(console.hConOut, &console.out_cmode);
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
 
+#if 0 /*JP*//* 日本語ではnhdefkeyしか使わない */
     /* load default keyboard handler */
     HKL keyboard_layout = GetKeyboardLayout(0);
     DWORD primary_language = (UINT_PTR) keyboard_layout & 0x3f;
@@ -2618,6 +2765,10 @@ void nethack_enter_consoletty(void)
             set_altkeyhandling("ray");
         }
     }
+#else
+    set_altkeyhandling("default");
+#endif
+
 #ifdef VIRTUAL_TERMINAL_SEQUENCES
     init_custom_colors();
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
@@ -2652,7 +2803,20 @@ VA_DECL(const char *, fmt)
             raw_clear_screen();
             set_console_cursor(1, 0);
         }
+#if 0 /*JP*/
         xputs(buf);
+#else
+        if(ttyDisplay){
+            console.cursor.X = ttyDisplay->curx;
+            console.cursor.Y = ttyDisplay->cury;
+        }
+        {
+            char *str = buf;
+            while(*str){
+                jbuffer(*(str++), NULL, (void (__cdecl *)(unsigned int))xputc_core, xputc2_core);
+            }
+        }
+#endif
         if (ttyDisplay)
             curs(BASE_WINDOW, console.cursor.X + 1, console.cursor.Y);
 #else
@@ -2981,6 +3145,7 @@ default_processkeystroke(
         else
             ch = M(tolower((uchar) keycode));
     }
+#if 0 /*JP*//*全角文字が通るようにする*/
     /* Attempt to work better with international keyboards. */
     else {
         WORD chr[2];
@@ -3000,6 +3165,11 @@ default_processkeystroke(
                 *valid = FALSE;
             }
     }
+#else
+    if (ch != 0) {
+        *valid = TRUE;
+    }
+#endif
     if (ch == '\r')
         ch = '\n';
 #ifdef PORT_DEBUG
