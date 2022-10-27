@@ -709,8 +709,10 @@ extern char *Amonnam(struct monst *) NONNULLARG1;
 extern char *a_monnam(struct monst *) NONNULLARG1;
 extern char *distant_monnam(struct monst *, int, char *) NONNULLARG1;
 extern char *mon_nam_too(struct monst *, struct monst *) NONNULLPTRS;
+#if 0 /*JP*//*unused*/
 extern char *monverbself(struct monst *, char *,
                          const char *, const char *) NONNULLARG123;
+#endif
 extern char *minimal_monnam(struct monst *, boolean);
 extern char *bogusmon(char *, char *) NONNULLARG1;
 extern char *rndmonnam(char *);
@@ -1901,6 +1903,9 @@ extern int big_to_little(int);
 extern boolean big_little_match(int, int);
 extern const char *locomotion(const struct permonst *, const char *) NONNULLARG12;
 extern const char *stagger(const struct permonst *, const char *) NONNULLARG12;
+#if 1 /*JP:T*/
+extern const char *jumpedthrough(const struct permonst *, const char *) NONNULLARG12;
+#endif
 extern const char *on_fire(struct permonst *, struct attack *) NONNULLARG12;
 extern const char *msummon_environ(struct permonst *, const char **) NONNULLARG12;
 extern const struct permonst *raceptr(struct monst *) NONNULLARG1;
@@ -4037,6 +4042,49 @@ extern void get_nhuuid(void);
 extern void free_nhuuid(void);
 
 #endif /* !MAKEDEFS_C && !MDLIB_C */
+
+#if 1 /*JP*/
+
+/* ### jlib.c  ### */
+
+extern int is_kanji(unsigned int);
+extern void setkcode(int);
+extern unsigned char *e2sj(unsigned char *);
+extern unsigned char *sj2e(unsigned char *);
+extern const char *utf8toic(const char *);
+extern const char *str2ic(const char *);
+extern int charlen(unsigned int c);
+extern int displen(const char *s);
+extern int jbuffer(unsigned int, unsigned int *, void (*)(unsigned int), void (*)(unsigned char *));
+extern int cbuffer(unsigned int);
+extern void cputchar(int);
+extern void jputchar(int);
+extern void jputstr(const char *);
+extern void jputs(const char *);
+extern int is_kanji2(const char *,int);
+extern int is_kanji1(const char *,int);
+extern int offset_in_kanji(const char *, int);
+extern void truncate_japanese(char *, int);
+extern void strscpy_japanese(char *, const char *, size_t);
+extern int isspace_8(int);
+extern void split_japanese(char *,char *,char *,int);
+extern void jrndm_replace(char *);
+extern const char *joffmsg(struct obj *, const char **);
+extern const char *jonmsg(struct obj *, const char **);
+extern const char *numeral(struct obj *);
+extern struct trans_verb *trans_verb(const char *);
+
+/* ### jconj.c  ### */
+
+extern const char *jconj(const char *,const char *);
+extern const char *jcan(const char *);
+extern const char *jcannot(const char *);
+extern const char *jpast(const char *);
+extern const char *jpolite(const char *);
+extern const char *jconj_adj(const char *);
+extern int jrubout(char *, int, int, int);
+
+#endif
 
 #endif /* EXTERN_H */
 
