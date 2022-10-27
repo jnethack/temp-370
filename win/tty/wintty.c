@@ -2,6 +2,11 @@
 /* Copyright (c) David Cohrs, 1991                                */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata 1994-2000                                      */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-2022            */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 /*
  * Neither a standard out nor character-based control codes should be
  * part of the "tty look" windowing implementation.
@@ -576,6 +581,13 @@ tty_init_nhwindows(int *argcp UNUSED, char **argv UNUSED)
     for (i = 1; i <= 4; ++i)
         tty_putstr(BASE_WINDOW, 0, copyright_banner_line(i));
     tty_putstr(BASE_WINDOW, 0, "");
+#if 0 /*JP*//*JPTB reversed*/
+    tty_putstr(BASE_WINDOW, 0, JA_COPYRIGHT_BANNER_A);
+    tty_putstr(BASE_WINDOW, 0, JA_COPYRIGHT_BANNER_B);
+    tty_putstr(BASE_WINDOW, 0, JA_COPYRIGHT_BANNER_C);
+    tty_putstr(BASE_WINDOW, 0, JA_COPYRIGHT_BANNER_D);
+    tty_putstr(BASE_WINDOW, 0, "");
+#endif
     tty_display_nhwindow(BASE_WINDOW, FALSE);
 
     /* Move to a default location for the "Shall I pick .." player
@@ -656,8 +668,14 @@ tty_player_selection(void)
 void
 tty_askname(void)
 {
+/*JP
     static const char who_are_you[] = "Who are you? ";
+*/
+    static const char who_are_you[] = "あなたは誰？ ";
     int c, ct, tryct = 0;
+#if 1 /*JP*/
+    char ptmpname[PL_NSIZ];
+#endif
 
 #ifdef SELECTSAVED
     if (iflags.wc2_selectsaved && !iflags.renameinprogress)
@@ -678,7 +696,11 @@ tty_askname(void)
             if (tryct > 10)
                 bail("Giving up after 10 tries.\n");
             tty_curs(BASE_WINDOW, 1, wins[BASE_WINDOW]->cury - 1);
+#if 0 /*JP*/
             tty_putstr(BASE_WINDOW, 0, "Enter a name for your character...");
+#else
+            tty_putstr(BASE_WINDOW, 0, "あなたのキャラクタの名前は？");
+#endif
             /* erase previous prompt (in case of ESC after partial response) */
             tty_curs(BASE_WINDOW, 1, wins[BASE_WINDOW]->cury), cl_end();
         }
@@ -701,6 +723,9 @@ tty_askname(void)
 #endif
             /* some people get confused when their erase char is not ^H */
             if (c == '\b' || c == '\177') {
+#if 1 /*JP*/
+            moreback:
+#endif
                 if (ct) {
                     ct--;
 #ifdef WIN32CON
@@ -720,9 +745,14 @@ tty_askname(void)
                     (void) putchar('\b');
 #endif
                 }
+#if 1 /*JP*/
+                if(is_kanji2(ptmpname, ct))
+                  goto moreback;
+#endif
                 continue;
             }
 #if defined(UNIX) || defined(VMS)
+# if 0 /*JP*/
             if (c != '-' && c != '@')
                 if (!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')
                     /* reject leading digit but allow digits elsewhere
@@ -730,29 +760,51 @@ tty_askname(void)
                        appended to uid to construct save file name) */
                     && !(c >= '0' && c <= '9' && ct > 0))
                     c = '_';
+# endif /*JP*/
 #endif
             if (ct < (int) (sizeof svp.plname) - 1) {
 #if defined(MICRO)
 #if defined(MSDOS)
                 if (iflags.grmode) {
+#  if 0 /*JP*/
                     (void) putchar(c);
+#  else
+                    (void) cputchar(c);
+#  endif
                 } else
 #endif
+/*JP
                     msmsg("%c", c);
+*/
+                    (void) putchar(c);
 #else
+/*JP
                 (void) putchar(c);
+*/
+                (void) jputchar(c);
 #endif
+#if 0 /*JP*/
                 svp.plname[ct++] = c;
+#else
+                ptmpname[ct++] = c;
+#endif
 #ifdef WIN32CON
                 ttyDisplay->curx++;
 #endif
             }
         }
+#if 0 /*JP*/
         svp.plname[ct] = 0;
+#else
+        ptmpname[ct] = 0;
+#endif
     } while (ct == 0);
 
     /* move to next line to simulate echo of user's <return> */
     tty_curs(BASE_WINDOW, 1, wins[BASE_WINDOW]->cury + 1);
+#if 1 /*JP*/
+    Strcpy(svp.plname, str2ic(ptmpname));
+#endif
 
     /* since we let user pick an arbitrary name now, he/she can pick
        another one during role selection */
@@ -772,6 +824,9 @@ getret(void)
     getreturn("to continue");
 #else
     HUPSKIP();
+#if 1 /*JP*/
+    jputchar('\0');
+#endif
     xputs("\n");
     if (flags.standout)
         standoutbeg();
@@ -1172,8 +1227,21 @@ dmore(
              (int) ttyDisplay->cury);
     if (flags.standout)
         standoutbeg();
+#if 0 /*JP*/
     xputs(prompt);
     ttyDisplay->curx += strlen(prompt);
+#else
+    jputchar('\0'); /* reset */
+    {
+      const char *p;
+      p = prompt;
+        while(*p){
+            jputchar(*(p++));
+            ttyDisplay->curx++;
+        }
+    }
+/*    jputs(prompt);*/
+#endif
     if (flags.standout)
         standoutend();
 
@@ -1195,7 +1263,10 @@ set_item_state(
     term_start_attr(item->attr);
     if (item->color != NO_COLOR)
         term_start_color(item->color);
+/*JP
     (void) putchar(ch);
+*/
+    (void) jputchar(ch);
     ttyDisplay->curx++;
     if (item->color != NO_COLOR)
         term_end_color();
@@ -1427,7 +1498,11 @@ process_menu_window(winid window, struct WinDesc *cw)
                     if (cw->offx)
                         cl_end();
 
+#if 0 /*JP*/
                     (void) putchar(' ');
+#else
+                    (void) jputchar(' ');
+#endif
                     ++ttyDisplay->curx;
 
                     attr = curr->attr;
@@ -1468,11 +1543,23 @@ process_menu_window(winid window, struct WinDesc *cw)
                             && curr->identifier.a_void != 0
                             && curr->selected) {
                             if (curr->count == -1L)
+#if 0 /*JP*/
                                 (void) putchar('+'); /* all selected */
+#else
+                                (void) jputchar('+'); /* all selected */
+#endif
                             else
+#if 0 /*JP*/
                                 (void) putchar('#'); /* count selected */
+#else
+                                (void) jputchar('#'); /* count selected */
+#endif
                         } else
+#if 0 /*JP*/
                             (void) putchar(*cp);
+#else
+                            (void) jputchar(*cp);
+#endif
                     } /* for *cp */
                     if (n > attr_n && (color != NO_COLOR || attr != ATR_NONE))
                         toggle_menu_attr(FALSE, color, attr);
@@ -1524,8 +1611,13 @@ process_menu_window(winid window, struct WinDesc *cw)
             Strcat(resp, default_menu_cmds);
 
             if (cw->npages > 1)
+#if 0 /*JP*/
                 Sprintf(cw->morestr, "(%d of %d)", curr_page + 1,
                         (int) cw->npages);
+#else
+                Sprintf(cw->morestr, "(%d/%d)", curr_page + 1,
+                        (int) cw->npages);
+#endif
             else if (msave)
                 Strcpy(cw->morestr, msave);
             else
@@ -1759,7 +1851,9 @@ static void
 process_text_window(winid window, struct WinDesc *cw)
 {
     int i, n, attr;
+#if 0 /*JP*/
     boolean linestart;
+#endif
     char *cp;
 
     for (n = 0, i = 0; i < cw->maxrow; i++) {
@@ -1789,11 +1883,19 @@ process_text_window(winid window, struct WinDesc *cw)
         if (cw->data[i]) {
             attr = cw->data[i][0] - 1;
             if (cw->offx) {
+#if 0 /*JP*/
                 (void) putchar(' ');
+#else
+                (void) jputchar(' ');
+#endif
                 ++ttyDisplay->curx;
             }
             term_start_attr(attr);
+#if 0 /*JP*/
             for (cp = &cw->data[i][1], linestart = TRUE;
+#else
+            for (cp = &cw->data[i][1];
+#endif
 #ifndef WIN32CON
                  *cp && (int) ++ttyDisplay->curx < (int) ttyDisplay->cols;
                  cp++
@@ -1804,6 +1906,7 @@ process_text_window(winid window, struct WinDesc *cw)
                  ) {
                 /* message recall for msg_window:full/combination/reverse
                    might have output from '/' in it (see redotoplin()) */
+#if 0 /*JP*/
                 if (linestart) {
                     if (SYMHANDLING(H_UTF8)) {
                         /* FIXME: what is actually in that line? is it the \GNNNNNNNN or UTF-8? */
@@ -1818,6 +1921,9 @@ process_text_window(winid window, struct WinDesc *cw)
                 } else {
                     (void) putchar(*cp);
                 }
+#else
+                (void) jputchar(*cp);
+#endif
             }
             term_end_attr(attr);
         }
@@ -2130,7 +2236,11 @@ tty_curs(
         nocmov(x, y);
 #ifndef NO_TERMS
     } else if ((x <= 3 && cy <= 3) || (!nh_CM && x < cx)) {
+# if 0 /*JP*/
         (void) putchar('\r');
+# else
+        (void) cputchar('\r');
+# endif
         ttyDisplay->curx = 0;
         nocmov(x, y);
     } else if (!nh_CM) {
@@ -2165,7 +2275,15 @@ tty_putsym(winid window, int x, int y, char ch)
     case NHW_MAP:
     case NHW_BASE:
         tty_curs(window, x, y);
+#if 0 /*JP*/
         (void) putchar(ch);
+#else
+        if(cw->type!=NHW_MAP)
+          (void) jputchar(ch);
+        else {
+          (void) cputchar(ch);
+        }
+#endif
         ttyDisplay->curx++;
         cw->curx++;
         break;
@@ -2217,12 +2335,19 @@ tty_putstr(winid window, int attr, const char *str)
 #ifndef STATUS_HILITES
     const char *nb;
     long j;
+#if 1 /*JP*/
+    int kchar2 = 0;             /* if 1, kanji 2nd byte */
+#endif
 #endif
 
     HUPSKIP();
     /* Assume there's a real problem if the window is missing --
      * probably a panic message
      */
+#if 1 /*JP*/
+    jputchar('\0');     /* RESET */
+#endif
+
     if (window == WIN_ERR || (cw = wins[window]) == (struct WinDesc *) 0) {
         tty_raw_print(str);
         return;
@@ -2307,6 +2432,46 @@ tty_putstr(winid window, int attr, const char *str)
                 }
                 break;
             }
+#if 0 /*JP*/
+#else /* this code updates all status line at any time */
+# if 0
+/* check 2-bytes character for Japanese */
+/* by issei 93/12/2                     */
+            uc = *((unsigned char *)nb);
+            if((!(uc & 0x80) && *ob != *nb) || kflg){
+              tty_putsym(WIN_STATUS, i, cw->cury, *nb);
+            }
+            else{
+              if(*ob != *nb || *(ob+1)!= *(nb+1)){
+                tty_putsym(WIN_STATUS, i, cw->cury, *nb);
+                kflg = 1;
+              }
+            }
+# endif /* 0 */
+#define ismbchar(c)     (((unsigned char)(c)) & 0x80)
+#define KANJI2  1
+#define KUPDATE 2
+            if (kchar2)                 /* kanji 2nd byte */
+            {
+                if (kchar2 & KUPDATE)
+                    tty_putsym(WIN_STATUS, i, cw->cury, *nb);
+                kchar2 = 0;
+            }
+            else if (ismbchar(*nb))     /* kanji 1st byte */
+            {
+                kchar2 = KANJI2;
+                /* Kanji char must be checked as 2-bytes pair. */
+                /* check i to prevent putting only kanji 1st byte at last. */
+                if ((*nb != *ob || *(nb+1) != *(ob+1)) && i < n0-1)
+                {
+                    tty_putsym(WIN_STATUS, i, cw->cury, *nb);
+                    kchar2 |= KUPDATE;  /* must do update */
+                }
+                /* else nb is the same char as old, so need not to update */
+            }
+            /* not kanji char */
+            else
+#endif
             if (*ob != *nb)
                 tty_putsym(WIN_STATUS, i, cw->cury, *nb);
             if (*ob)
@@ -2323,7 +2488,11 @@ tty_putstr(winid window, int attr, const char *str)
         tty_curs(window, cw->curx + 1, cw->cury);
         term_start_attr(attr);
         while (*str && (int) ttyDisplay->curx < (int) ttyDisplay->cols - 1) {
+#if 0 /*JP*/
             (void) putchar(*str);
+#else
+            (void) cputchar(*str);
+#endif
             str++;
             ttyDisplay->curx++;
         }
@@ -2340,7 +2509,11 @@ tty_putstr(winid window, int attr, const char *str)
                 cw->cury++;
                 tty_curs(window, cw->curx + 1, cw->cury);
             }
+#if 0 /*JP*/
             (void) putchar(*str);
+#else
+            (void) jputchar(*str);
+#endif
             str++;
             ttyDisplay->curx++;
         }
@@ -2404,6 +2577,9 @@ tty_putstr(winid window, int attr, const char *str)
         }
         break;
     }
+#if 1 /*JP*/
+    jputchar('\0');     /* RESET */
+#endif
     return;
 }
 
@@ -3723,13 +3899,21 @@ g_putch(int in_ch)
         || (iflags.eight_bit_tty && (!SYMHANDLING(H_DEC)
                                      || (in_ch & 0x7f) < 0x60))) {
         /* IBM-compatible displays don't need other stuff */
+#   if 0 /*JP*/
         (void) putchar(ch);
+#   else
+        (void) cputchar(ch);
+#   endif
     } else if (ch & 0x80) {
         if (!GFlag || HE_resets_AS) {
             graph_on();
             GFlag = TRUE;
         }
+# if 0 /*JP*/
         (void) putchar((ch ^ 0x80)); /* Strip 8th bit */
+# else
+        (void) cputchar((ch ^ 0x80)); /* Strip 8th bit */
+# endif
     } else {
         if (GFlag
 #ifdef DECgraphicsOptimization
@@ -3744,7 +3928,11 @@ g_putch(int in_ch)
             graph_off();
             GFlag = FALSE;
         }
+# if 0 /*JP*/
         (void) putchar(ch);
+# else
+        (void) jputchar(ch);
+# endif
     }
 
 #else
@@ -3852,7 +4040,11 @@ tty_print_glyph(
 
 #ifndef NO_TERMS
     if (ul_hack && ch == '_') { /* non-destructive underscore */
+# if 0 /*JP*/
         (void) putchar((char) ' ');
+# else
+        (void) cputchar((char) ' ');
+# endif
         backsp();
     }
 #endif
@@ -3980,7 +4172,11 @@ tty_raw_print(const char *str)
 #if defined(MICRO) || defined(WIN32CON)
     msmsg("%s\n", str);
 #else
+# if 0 /*JP*/
     puts(str);
+# else
+    jputs(str);
+# endif
     (void) fflush(stdout);
 #endif
 }
@@ -3998,13 +4194,19 @@ tty_raw_print_bold(const char *str)
 #if defined(MICRO) || defined(WIN32CON)
     msmsg("%s", str);
 #else
+# if 0 /*JP*/
     (void) fputs(str, stdout);
+# else
+    (void) jputs(str);
+# endif
 #endif
     term_end_raw_bold();
 #if defined(MICRO) || defined(WIN32CON)
     msmsg("\n");
 #else
+# if 0 /*JP*/
     puts("");
+# endif
     (void) fflush(stdout);
 #endif
 }
@@ -4233,9 +4435,15 @@ static int hpbar_percent, hpbar_crit_hp;
 extern const struct conditions_t conditions[CONDITION_COUNT];
 
 static const char *const encvals[3][6] = {
+#if 0 /*JP*/
     { "", "Burdened", "Stressed", "Strained", "Overtaxed", "Overloaded" },
     { "", "Burden",   "Stress",   "Strain",   "Overtax",   "Overload"   },
     { "", "Brd",      "Strs",     "Strn",     "Ovtx",      "Ovld"       }
+#else
+    { "", "よろめき", "圧迫", "限界", "荷重", "超過" },
+    { "", "よろ",     "圧迫", "限界", "荷重", "超過" },
+    { "", "よ",       "圧",   "限",   "重",   "超"   },
+#endif
 };
 #define blPAD BL_FLUSH
 #define MAX_PER_ROW 16
@@ -4780,7 +4988,11 @@ tty_putstatusfield(const char *text, int x, int y)
         for (i = 0; i < lth; ++i) {
             n = i + x;
             if (n < ncols && *text) {
+#if 0 /*JP*/
                 (void) putchar(*text);
+#else
+                (void) jputchar(*(unsigned char *)text);
+#endif
                 ttyDisplay->curx++;
                 cw->curx++;
                 cw->data[y][n - 1] = *text;
