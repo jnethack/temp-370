@@ -1094,6 +1094,7 @@ typedef struct nh_file NHFILE;
 #define UNDEFINED_PTR NULL
 
 /* The UNDEFINED_ROLE macro is used to initialize Role variables */
+#if 0 /*JP*/
 #define UNDEFINED_ROLE \
     {                                           \
       /* role name, set of rank names */        \
@@ -1116,8 +1117,25 @@ typedef struct nh_file NHFILE;
       {0}, {0}, {0}, {0}, 0, 0,                 \
       /* spell statistics */                    \
       0, 0, 0, 0, 0, 0, 0 }
+#else
+#define UNDEFINED_ROLE \
+    { { 0 }, { 0 }, { { 0 } },     \
+      /* strings */                \
+      NULL, NULL, NULL,            \
+      NULL, NULL, NULL,            \
+      /* indices */                \
+      0, 0, 0, 0, 0, 0, 0,         \
+      0, 0, 0,                     \
+      /* Bitmasks */               \
+      0,                           \
+      /* Attributes */             \
+      {0}, {0}, {0}, {0}, 0, 0,    \
+      /* spell statistics */       \
+      0, 0, 0, 0, 0, 0, 0 }
+#endif
 
 /* The UNDEFINED_RACE macro is used to initialize Race variables */
+#if 0 /*JP*/
 #define UNDEFINED_RACE \
     {                                           \
       /* strings */                             \
@@ -1131,6 +1149,20 @@ typedef struct nh_file NHFILE;
       /* Level change HP and Pw adjustments */  \
       {0}, {0}                                  \
     }
+#else
+#define UNDEFINED_RACE \
+    {                              \
+      /* strings */                \
+      NULL, NULL, NULL, NULL, NULL, {0}, \
+      /* Indices */                \
+      0, 0, 0,                     \
+      /* Bitmasks */               \
+      0, 0, 0, 0,                  \
+      /* Attributes */             \
+      {0}, {0}, {0}, {0}           \
+      /* Properties */             \
+    }
+#endif
 
 #define MATCH_WARN_OF_MON(mon) \
     (Warn_of_mon                                                        \
