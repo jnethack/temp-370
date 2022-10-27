@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-2022            */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 /*** Table of all roles ***/
@@ -26,6 +31,7 @@
  */
 const struct Role roles[NUM_ROLES+1] = {
     { { "Archeologist", 0 },
+#if 0 /*JP:T*/
       { { "Digger", 0 },
         { "Field Worker", 0 },
         { "Investigator", 0 },
@@ -36,9 +42,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Collector", 0 },
         { "Curator", 0 } },
       "Quetzalcoatl", "Camaxtli", "Huhetotl", /* Central American */
+#else
+      { "考古学者", 0 },
+      { { "鉱員", 0 },
+        { "労働者", 0 },
+        { "調査者", 0 },
+        { "発掘者", 0 },
+        { "掘削者", 0 },
+        { "探検者", 0 },
+        { "洞窟学者", 0 },
+        { "美術収集者", 0 },
+        { "館長", 0 } },
+      "ケツアルカトル", "カマキシトリ", "フヘトトル", /* Central American */
+#endif
       "Arc",
+#if 0 /*JP:T*/
       "the College of Archeology",
       "the Tomb of the Toltec Kings",
+#else
+      "考古学大学",
+      "トルテカ王家の墓",
+#endif
       PM_ARCHEOLOGIST,
       NON_PM,
       PM_LORD_CARNARVON,
@@ -67,6 +91,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_MAGIC_MAPPING,
       -4 },
     { { "Barbarian", 0 },
+#if 0 /*JP:T*/
       { { "Plunderer", "Plunderess" },
         { "Pillager", 0 },
         { "Bandit", 0 },
@@ -77,9 +102,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Chieftain", "Chieftainess" },
         { "Conqueror", "Conqueress" } },
       "Mitra", "Crom", "Set", /* Hyborian */
+#else
+      { "野蛮人", 0 },
+      { { "盗賊", 0 },
+        { "略奪者", 0 },
+        { "悪漢", 0 },
+        { "山賊", 0 },
+        { "侵略者", 0 },
+        { "強盗", 0 },
+        { "殺戮者", 0 },
+        { "首領", 0 },
+        { "征服者", 0 } },
+      "ミトラ", "クロム", "セト", /* Hyborian */
+#endif
       "Bar",
+#if 0 /*JP:T*/
       "the Camp of the Duali Tribe",
       "the Duali Oasis",
+#else
+      "デュアリ族のキャンプ",
+      "デュアリ族のオアシス",
+#endif
       PM_BARBARIAN,
       NON_PM,
       PM_PELIAS,
@@ -108,6 +151,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_HASTE_SELF,
       -4 },
     { { "Caveman", "Cavewoman" },
+#if 0 /*JP:T*/
       { { "Troglodyte", 0 },
         { "Aborigine", 0 },
         { "Wanderer", 0 },
@@ -118,9 +162,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Rover", 0 },
         { "Pioneer", 0 } },
       "Anu", "_Ishtar", "Anshar", /* Babylonian */
+#else
+      { "洞窟人", 0 },
+      { { "穴居人", 0 },
+        { "原住民", 0 },
+        { "放浪者", 0 },
+        { "浮浪者", 0 },
+        { "旅行者", 0 },
+        { "放遊者", 0 },
+        { "遊牧民", 0 },
+        { "流浪者", 0 },
+        { "先駆者", 0 } },
+      "アヌ", "_イシュタル", "アンシャル", /* Babylonian */
+#endif
       "Cav",
+#if 0 /*JP:T*/
       "the Caves of the Ancestors",
       "the Dragon's Lair",
+#else
+      "太古の洞窟",
+      "竜の隠れ家",
+#endif
       PM_CAVE_DWELLER,
       PM_LITTLE_DOG,
       PM_SHAMAN_KARNOV,
@@ -149,6 +211,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_DIG,
       -4 },
     { { "Healer", 0 },
+#if 0 /*JP:T*/
       { { "Rhizotomist", 0 },
         { "Empiric", 0 },
         { "Embalmer", 0 },
@@ -159,9 +222,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Physician", 0 },
         { "Chirurgeon", 0 } },
       "_Athena", "Hermes", "Poseidon", /* Greek */
+#else
+      { "薬師", 0 },
+      { { "見習い", 0 },
+        { "医師見習い", 0 },
+        { "看護師", "看護婦" },
+        { "医師助手", 0 },
+        { "薬物主任", 0 },
+        { "漢方医", 0 },
+        { "医師主任", 0 },
+        { "内科医", 0 },
+        { "外科医", 0 } },
+      "_アテナ", "ヘルメス", "ポセイドン", /* Greek */
+#endif
       "Hea",
+#if 0 /*JP:T*/
       "the Temple of Epidaurus",
       "the Temple of Coeus",
+#else
+      "エピダウロス寺院",
+      "コイオス寺院",
+#endif
       PM_HEALER,
       NON_PM,
       PM_HIPPOCRATES,
@@ -189,6 +270,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_CURE_SICKNESS,
       -4 },
     { { "Knight", 0 },
+#if 0 /*JP:T*/
       { { "Gallant", 0 },
         { "Esquire", 0 },
         { "Bachelor", 0 },
@@ -199,9 +281,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Seignieur", "Dame" },
         { "Paladin", 0 } },
       "Lugh", "_Brigit", "Manannan Mac Lir", /* Celtic */
+#else
+      { "騎士", 0 },
+      { { "見習い", 0 },
+        { "歩兵", 0 },
+        { "戦士", 0 },
+        { "騎兵", 0 },
+        { "重戦士", 0 },
+        { "騎士", 0 },
+        { "重騎士", 0 },
+        { "勲騎士", 0 },
+        { "聖騎士", 0 } },
+      "ルーフ", "_ブリジット", "マナンナン・マクリール", /* Celtic */
+#endif
       "Kni",
+#if 0 /*JP:T*/
       "Camelot Castle",
       "the Isle of Glass",
+#else
+      "キャメロット城",
+      "ガラスの島",
+#endif
       PM_KNIGHT,
       PM_PONY,
       PM_KING_ARTHUR,
@@ -229,6 +329,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_TURN_UNDEAD,
       -4 },
     { { "Monk", 0 },
+#if 0 /*JP:T*/
       { { "Candidate", 0 },
         { "Novice", 0 },
         { "Initiate", 0 },
@@ -239,9 +340,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Student of Fire", 0 },
         { "Master", 0 } },
       "Shan Lai Ching", "Chih Sung-tzu", "Huan Ti", /* Chinese */
+#else
+      { "武闘家", 0 },
+      { { "入門希望者", 0 },
+        { "初心者", 0 },
+        { "入門者伝", 0 },
+        { "土の習い手", 0 },
+        { "水の習い手", 0 },
+        { "金の習い手", 0 },
+        { "木の習い手", 0 },
+        { "火の習い手", 0 },
+        { "免許皆伝", 0 } },
+      "山雷精", "赤松子", "黄帝", /* Chinese */
+#endif
       "Mon",
+#if 0 /*JP:T*/
       "the Monastery of Chan-Sune",
       "the Monastery of the Earth-Lord",
+#else
+      "チャン・スー修道院",
+      "地王の修道院",
+#endif
       PM_MONK,
       NON_PM,
       PM_GRAND_MASTER,
@@ -270,6 +389,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_RESTORE_ABILITY,
       -4 },
     { { "Priest", "Priestess" },
+#if 0 /*JP:T*/
       { { "Aspirant", 0 },
         { "Acolyte", 0 },
         { "Adept", 0 },
@@ -280,9 +400,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Patriarch", "Matriarch" },
         { "High Priest", "High Priestess" } },
       0, 0, 0, /* deities from a randomly chosen other role will be used */
+#else
+      { "僧侶", "尼僧" },
+      { { "修道者", "修道女" },
+        { "侍者", 0 },
+        { "侍祭", 0 },
+        { "僧侶", "尼僧" },
+        { "助任司祭", 0 },
+        { "聖者", "聖女" },
+        { "司教", 0 },
+        { "大司教", 0 },
+        { "大僧上", 0 } },
+      0, 0, 0, /* deities from a randomly chosen other role will be used */
+#endif
       "Pri",
+#if 0 /*JP:T*/
       "the Great Temple",
       "the Temple of Nalzok",
+#else
+      "偉大なる寺院",
+      "ナルゾク寺院",
+#endif
       PM_CLERIC,
       NON_PM,
       PM_ARCH_PRIEST,
@@ -313,6 +451,7 @@ const struct Role roles[NUM_ROLES+1] = {
     /* Note:  Rogue precedes Ranger so that use of `-R' on the command line
        retains its traditional meaning. */
     { { "Rogue", 0 },
+#if 0 /*JP:T*/
       { { "Footpad", 0 },
         { "Cutpurse", 0 },
         { "Rogue", 0 },
@@ -323,9 +462,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Magsman", "Magswoman" },
         { "Thief", 0 } },
       "Issek", "Mog", "Kos", /* Nehwon */
+#else
+      { "盗賊", 0 },
+      { { "追いはぎ", 0 },
+        { "ひったくり", 0 },
+        { "スリ", 0 },
+        { "ごろつき", 0 },
+        { "こそどろ", 0 },
+        { "空巣", 0 },
+        { "泥棒", 0 },
+        { "強盗", 0 },
+        { "大泥棒", 0 } },
+      "イセック", "モグ", "コス", /* Nehwon */
+#endif
       "Rog",
+#if 0 /*JP:T*/
       "the Thieves' Guild Hall",
       "the Assassins' Guild Hall",
+#else
+      "盗賊ギルド",
+      "暗殺者ギルド",
+#endif
       PM_ROGUE,
       NON_PM,
       PM_MASTER_OF_THIEVES,
@@ -353,6 +510,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_DETECT_TREASURE,
       -4 },
     { { "Ranger", 0 },
+#if 0 /*JP:T*/
       {
 #if 0 /* OBSOLETE */
         {"Edhel",   "Elleth"},
@@ -377,9 +535,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Sharpshooter", 0 },
         { "Marksman", "Markswoman" } },
       "Mercury", "_Venus", "Mars", /* Roman/planets */
+#else
+      { "レンジャー", 0 },
+      { { "新米", 0 },
+        { "見張り", 0 },
+        { "先導", 0 },
+        { "偵察", 0 },
+        { "斥候", 0 },
+        { "弓兵", 0 }, /* One skilled at crossbows */
+        { "中級弓兵", 0 },
+        { "上級弓兵", 0 },
+        { "上級弓兵", 0 } },
+      "マーキュリー", "_ビーナス", "マーズ", /* Roman/planets */
+#endif
       "Ran",
+#if 0 /*JP:T*/
       "Orion's camp",
       "the cave of the wumpus",
+#else
+      "オリオンのキャンプ",
+      "ワンパスの洞窟",
+#endif
       PM_RANGER,
       PM_LITTLE_DOG /* Orion & canis major */,
       PM_ORION,
@@ -408,6 +584,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_INVISIBILITY,
       -4 },
     { { "Samurai", 0 },
+#if 0 /*JP:T*/
       { { "Hatamoto", 0 },       /* Banner Knight */
         { "Ronin", 0 },          /* no allegiance */
         { "Ninja", "Kunoichi" }, /* secret society */
@@ -418,9 +595,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Kuge", 0 },           /* Noble of the Court */
         { "Shogun", 0 } },       /* supreme commander, warlord */
       "_Amaterasu Omikami", "Raijin", "Susanowo", /* Japanese */
+#else
+      { "侍", 0 },
+      { { "旗本", 0 },       /* Banner Knight */
+        { "浪人", 0 },          /* no allegiance */
+        { "忍者", "くノ一" }, /* secret society */
+        { "城主", 0 },          /* heads a castle */
+        { "領主", 0 },         /* has a territory */
+        { "領主", 0 },        /* heads a province */
+        { "大名", "腰元" },         /* a samurai lord */
+        { "公家", 0 },           /* Noble of the Court */
+        { "公家", "大奥" } },       /* supreme commander, warlord */
+      "_天照大神", "雷神", "須佐之男", /* Japanese */
+#endif
       "Sam",
+#if 0 /*JP:T*/
       "the Castle of the Taro Clan",
       "the Shogun's Castle",
+#else
+      "太郎一族の城",
+      "将軍の城",
+#endif
       PM_SAMURAI,
       PM_LITTLE_DOG,
       PM_LORD_SATO,
@@ -448,6 +643,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_CLAIRVOYANCE,
       -4 },
     { { "Tourist", 0 },
+#if 0 /*JP:T*/
       { { "Rambler", 0 },
         { "Sightseer", 0 },
         { "Excursionist", 0 },
@@ -458,9 +654,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Explorer", 0 },
         { "Adventurer", 0 } },
       "Blind Io", "_The Lady", "Offler", /* Discworld */
+#else
+      { "観光客", 0 },
+      { { "プー太郎", "プー子" },
+        { "観光客", 0 },
+        { "周遊旅行者", 0 },
+        { "遍歴者", 0 },
+        { "旅行者", 0 },
+        { "旅人", 0 },
+        { "航海者", 0 },
+        { "探検家", 0 },
+        { "冒険者", 0 } },
+      "盲目のイオ", "_＜女神＞", "オフラー", /* Discworld */
+#endif
       "Tou",
+#if 0 /*JP:T*/
       "Ankh-Morpork",
       "the Thieves' Guild Hall",
+#else
+      "アンクモルポーク",
+      "盗賊ギルド",
+#endif
       PM_TOURIST,
       NON_PM,
       PM_TWOFLOWER,
@@ -488,6 +702,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_CHARM_MONSTER,
       -4 },
     { { "Valkyrie", 0 },
+#if 0 /*JP:T*/
       { { "Stripling", 0 },
         { "Skirmisher", 0 },
         { "Fighter", 0 },
@@ -498,9 +713,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Champion", 0 },
         { "Lord", "Lady" } },
       "Tyr", "Odin", "Loki", /* Norse */
+#else
+      { "ワルキューレ", 0 },
+      { { "見習い", 0 },
+        { "歩兵", 0 },
+        { "戦士", 0 },
+        { "騎兵", 0 },
+        { "戦闘兵", 0 },
+        { "攻撃兵", 0 },
+        { "英雄", 0 },
+        { "先導者", 0 },
+        { "ロード", "レディ" } },
+      "チュール", "オーディン", "ロキ", /* Norse */
+#endif
       "Val",
+#if 0 /*JP:T*/
       "the Shrine of Destiny",
       "the cave of Surtur",
+#else
+      "運命の聖堂",
+      "スルトの洞窟",
+#endif
       PM_VALKYRIE,
       NON_PM /*PM_WINTER_WOLF_CUB*/,
       PM_NORN,
@@ -528,6 +761,7 @@ const struct Role roles[NUM_ROLES+1] = {
       SPE_CONE_OF_COLD,
       -4 },
     { { "Wizard", 0 },
+#if 0 /*JP:T*/
       { { "Evoker", 0 },
         { "Conjurer", 0 },
         { "Thaumaturge", 0 },
@@ -538,9 +772,27 @@ const struct Role roles[NUM_ROLES+1] = {
         { "Wizard", 0 },
         { "Mage", 0 } },
       "Ptah", "Thoth", "Anhur", /* Egyptian */
+#else
+      { "魔法使い", 0 },
+      { { "手品師", 0 },
+        { "奇術師", 0 },
+        { "占い師", 0 },
+        { "霊感師", 0 },
+        { "召喚師", 0 },
+        { "妖術師", 0 },
+        { "魔術師", 0 },
+        { "魔法使い", 0 },
+        { "大魔法使い", 0 } },
+      "プタハ", "トート", "アンフル", /* Egyptian */
+#endif
       "Wiz",
+#if 0 /*JP:T*/
       "the Lonely Tower",
       "the Tower of Darkness",
+#else
+      "孤高の塔",
+      "暗黒の塔",
+#endif
       PM_WIZARD,
       PM_KITTEN,
       PM_NEFERET_THE_GREEN,
@@ -576,10 +828,20 @@ const struct Role roles[NUM_ROLES+1] = {
 const struct Race races[] = {
     {
         "human",
+#if 0 /*JP:T*/
         "human",
         "humanity",
+#else
+        "人間",
+        "人間の",
+        "人間",
+#endif
         "Hum",
+#if 0 /*JP:T*/
         { "man", "woman" },
+#else
+        { "男", "女" },
+#endif
         PM_HUMAN,
         PM_HUMAN_MUMMY,
         PM_HUMAN_ZOMBIE,
@@ -597,8 +859,14 @@ const struct Race races[] = {
     },
     {
         "elf",
+#if 0 /*JP:T*/
         "elven",
         "elvenkind",
+#else
+        "エルフ",
+        "エルフの",
+        "エルフ",
+#endif
         "Elf",
         { 0, 0 },
         PM_ELF,
@@ -617,8 +885,14 @@ const struct Race races[] = {
     },
     {
         "dwarf",
+#if 0 /*JP:T*/
         "dwarven",
         "dwarvenkind",
+#else
+        "ドワーフ",
+        "ドワーフの",
+        "ドワーフ",
+#endif
         "Dwa",
         { 0, 0 },
         PM_DWARF,
@@ -637,8 +911,14 @@ const struct Race races[] = {
     },
     {
         "gnome",
+#if 0 /*JP:T*/
         "gnomish",
         "gnomehood",
+#else
+        "ノーム",
+        "ノームの",
+        "ノーム",
+#endif
         "Gno",
         { 0, 0 },
         PM_GNOME,
@@ -657,8 +937,14 @@ const struct Race races[] = {
     },
     {
         "orc",
+#if 0 /*JP:T*/
         "orcish",
         "orcdom",
+#else
+        "オーク",
+        "オークの",
+        "オーク",
+#endif
         "Orc",
         { 0, 0 },
         PM_ORC,
@@ -703,6 +989,9 @@ staticfn int race_alignmentcount(int);
 
 /* used by str2XXX() */
 static char NEARDATA randomstr[] = "random";
+#if 1 /*JP*/
+static char NEARDATA randomstrj[] = "ランダム";
+#endif
 
 boolean
 validrole(int rolenum)
