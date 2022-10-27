@@ -1097,6 +1097,7 @@ typedef struct nh_file NHFILE;
 #define UNDEFINED_PTR NULL
 
 /* The UNDEFINED_ROLE macro is used to initialize Role variables */
+#if 0 /*JP*/
 #define UNDEFINED_ROLE \
     {                                           \
       /* role name, set of rank names */        \
@@ -1119,8 +1120,33 @@ typedef struct nh_file NHFILE;
       {0}, {0}, {0}, {0}, 0, 0,                 \
       /* spell statistics */                    \
       0, 0, 0, 0, 0, 0, 0 }
+#else
+#define UNDEFINED_ROLE                          \
+    {                                           \
+      /* role name, set of rank names */        \
+      { NULL, NULL }, { NULL, NULL }, { { NULL, NULL } }, \
+      /* strings: pantheon deity names */       \
+      NULL, NULL, NULL,                         \
+      /* file code, quest home+goal names */    \
+      NULL, NULL, NULL,                         \
+      /* indices: base mon type, pet */         \
+      NON_PM, NON_PM,                           \
+      /* quest leader, guardians, nemesis */    \
+      NON_PM, NON_PM, NON_PM,                   \
+      /* quest enemy types (index, symbol) */   \
+      NON_PM, NON_PM, '\0', '\0',               \
+      /* quest artifact object index */         \
+      STRANGE_OBJECT,                           \
+      /* Bitmasks */                            \
+      0,                                        \
+      /* Attributes */                          \
+      {0}, {0}, {0}, {0}, 0, 0,                 \
+      /* spell statistics */                    \
+      0, 0, 0, 0, 0, 0, 0 }
+#endif
 
 /* The UNDEFINED_RACE macro is used to initialize Race variables */
+#if 0 /*JP*/
 #define UNDEFINED_RACE \
     {                                           \
       /* strings */                             \
@@ -1134,6 +1160,20 @@ typedef struct nh_file NHFILE;
       /* Level change HP and Pw adjustments */  \
       {0}, {0}                                  \
     }
+#else
+#define UNDEFINED_RACE \
+    {                              \
+      /* strings */                \
+      NULL, NULL, NULL, NULL, NULL, {0}, \
+      /* Indices */                \
+      0, 0, 0,                     \
+      /* Bitmasks */               \
+      0, 0, 0, 0,                  \
+      /* Attributes */             \
+      {0}, {0}, {0}, {0}           \
+      /* Properties */             \
+    }
+#endif
 
 #define MATCH_WARN_OF_MON(mon) \
     (Warn_of_mon                                                        \
