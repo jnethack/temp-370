@@ -645,8 +645,8 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
         Strcpy(default_window_sys, "curses");
 #endif /* CURSES */
 #endif /* TTY */
-        if (iflags.windowtype_deferred && gc.chosen_windowtype[0])
-            windowtype = gc.chosen_windowtype;
+//        if (iflags.windowtype_deferred && gc.chosen_windowtype[0])
+//            windowtype = gc.chosen_windowtype;
     }
     choose_windows(windowtype);
 #if defined(SND_LIB_FMOD)
