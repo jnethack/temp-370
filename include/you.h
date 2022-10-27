@@ -169,6 +169,9 @@ struct u_roleplay {
 /*** Unified structure containing role information ***/
 struct Role {
     /*** Strings that name various things ***/
+#if 1 /*JP*/
+    struct RoleName opt;     /* オプション指定文字列 */
+#endif
     struct RoleName name;    /* the role's name (from u_init.c) */
     struct RoleName rank[9]; /* names for experience levels (from botl.c) */
     const char *lgod, *ngod, *cgod; /* god names (from pray.c) */
@@ -243,6 +246,9 @@ extern const struct Role roles[]; /* table of available roles */
 
 struct Race {
     /*** Strings that name various things ***/
+#if 1 /*JP*/
+    const char *opt;      /* オプション指定文字列 */
+#endif
     const char *noun;           /* noun ("human", "elf") */
     const char *adj;            /* adjective ("human", "elven") */
     const char *coll;           /* collective ("humanity", "elvenkind") */
