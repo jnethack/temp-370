@@ -125,12 +125,14 @@ redotoplin(const char *str)
 
     home();
     if (!ttyDisplay->topl_utf8) {
+#if 0 /*JP*/
         if (ttyDisplay->mixed && (*str & 0x80)) {
             /* kludge for the / command, the only time we ever want a */
             /* graphics character on the top line */
             g_putch((int) *str++);
             ttyDisplay->curx++;
         }
+#endif
         end_glyphout(); /* in case message printed during graphics output */
     }
     putsyms(str);
@@ -247,10 +249,39 @@ more(void)
     ttyDisplay->inmore = 0;
 }
 
+#if 1 /*JP*/
+static const char *
+folding_japanese(
+     const char *str,
+     int pos)
+{
+    char ss[1024], s1[1024], s2[1024];
+    static char newstr[1024];             /* may be enough */
+
+    if (strlen(str) > BUFSZ) /*安全のため*/
+        return str;
+
+    newstr[0] = '\0';
+    Strcpy(ss, str);
+    while(1){
+        split_japanese(ss, s1, s2, pos);
+        Strcat(newstr, s1);
+        if(!*s2)
+            break;
+        Strcat(newstr, "\n");
+        Strcpy(ss,s2);
+    }
+
+    return newstr;
+}
+#endif
+
 void
 update_topl(const char *bp)
 {
+#if 0 /*JP*/
     char *tl, *otl;
+#endif
     int n0;
     int notdied = 1;
     struct WinDesc *cw = wins[WIN_MESSAGE];
@@ -278,6 +309,7 @@ update_topl(const char *bp)
         }
     }
     remember_topl();
+#if 0 /*JP*/
     (void) strncpy(gt.toplines, bp, TBUFSZ);
     gt.toplines[TBUFSZ - 1] = 0;
 
@@ -295,6 +327,12 @@ update_topl(const char *bp)
         *tl++ = '\n';
         n0 = strlen(tl);
     }
+#else
+    if (n0 < CO)
+      Strcpy(gt.toplines, bp);
+    else
+      Strcpy(gt.toplines, folding_japanese(bp, CO - 2));
+#endif
     if (!notdied) /* double negative => "You die"; avoid suppressing mesg */
         cw->flags &= ~WIN_STOP, skip = FALSE;
     if (!skip)
@@ -305,6 +343,9 @@ static void
 topl_putsym(char c)
 {
     struct WinDesc *cw = wins[WIN_MESSAGE];
+#if 1 /*JP*/
+    unsigned char uc = (unsigned char)c;
+#endif
 
     if (cw == (struct WinDesc *) 0)
         panic("Putsym window MESSAGE nonexistent");
@@ -320,26 +361,43 @@ topl_putsym(char c)
         return;
     case '\n':
         cl_end();
+#if 1 /*JP*/
+        (void) jputchar('\r'); /* raw mode で必要? */
+        (void) jputchar('\n');
+#endif
         ttyDisplay->curx = 0;
+        cw->curx = 0;
         ttyDisplay->cury++;
         cw->cury = ttyDisplay->cury;
+#if 0 /*JP*/
 #ifdef WIN32CON
         (void) putchar(c);
+#endif
 #endif
         break;
     default:
         if (ttyDisplay->curx == CO - 1)
             topl_putsym('\n'); /* 1 <= curx < CO; avoid CO */
+#if 0 /*JP*/            
 #ifdef WIN32CON
         (void) putchar(c);
 #endif
+#endif
+#if 1 /*JP*/
+        cw->curx = ttyDisplay->curx;
+        if(cw->curx == 0) cl_end();
+        (void) jputchar((unsigned char)uc);
+        cw->curx++;
+#endif
         ttyDisplay->curx++;
     }
+#if 0 /*JP*/            
     cw->curx = ttyDisplay->curx;
     if (cw->curx == 0)
         cl_end();
 #ifndef WIN32CON
     (void) putchar(c);
+#endif
 #endif
 }
 
