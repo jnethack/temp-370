@@ -836,9 +836,15 @@ welcome(boolean new_game) /* false => restoring an old game */
             (currentgend && gu.urole.name.f) ? gu.urole.name.f
                                              : gu.urole.name.m);
 
+#if 0 /*JP*/
     pline(new_game ? "%s %s, welcome to NetHack!  You are a%s."
                    : "%s %s, the%s, welcome back to NetHack!",
           Hello((struct monst *) 0), svp.plname, buf);
+#else
+    pline(new_game ? "%s %s, welcome to NetHack!  この世界では%s."
+                   : "%s %s, the%s, welcome back to NetHack!",
+          Hello((struct monst *) 0), svp.plname, buf);
+#endif
 
     if (new_game) {
         /* guarantee that 'major' event category is never empty */
