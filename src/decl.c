@@ -123,6 +123,9 @@ const char *ARGV0;
 
 static const struct Role urole_init_data = {
     { "Undefined", 0 },
+#if 1 /*JP*/
+    { "Undefined", 0 },
+#endif
     { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 },
       { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
     "L", "N", "C",
@@ -147,6 +150,9 @@ static const struct Role urole_init_data = {
 };
 
 static const struct Race urace_init_data = {
+#if 1 /*JP*/
+    "something",
+#endif
     "something",
     "undefined",
     "something",
