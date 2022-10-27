@@ -3896,6 +3896,43 @@ extern void port_insert_pastebuf(char *);
 
 #endif /* !MAKEDEFS_C && !MDLIB_C */
 
+#if 1 /*JP*/
+
+/* ### jlib.c  ### */
+
+extern int is_kanji(unsigned int);
+extern void setkcode(int);
+extern unsigned char *e2sj(unsigned char *);
+extern unsigned char *sj2e(unsigned char *);
+extern const char *str2ic(const char *);
+extern int jbuffer(unsigned int, unsigned int *, void (*)(unsigned int), void (*)(unsigned char *));
+extern int cbuffer(unsigned int);
+extern void cputchar(int);
+extern void jputchar(int);
+extern void jputs(const char *);
+extern int is_kanji2(const char *,int);
+extern int is_kanji1(const char *,int);
+extern int offset_in_kanji(const unsigned char *, int);
+extern int isspace_8(int);
+extern void split_japanese(char *,char *,char *,int);
+extern void jrndm_replace(char *);
+extern const char *joffmsg(struct obj *, const char **);
+extern const char *jonmsg(struct obj *, const char **);
+extern const char *numeral(struct obj *);
+extern struct trans_verb *trans_verb(const char *);
+
+/* ### jconj.c  ### */
+
+extern const char *jconj(const char *,const char *);
+extern const char *jcan(const char *);
+extern const char *jcannot(const char *);
+extern const char *jpast(const char *);
+extern const char *jpolite(const char *);
+extern const char *jconj_adj(const char *);
+extern int jrubout(char *, int, int, int);
+
+#endif
+
 #endif /* EXTERN_H */
 
 /*extern.h*/
