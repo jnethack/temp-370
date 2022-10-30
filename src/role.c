@@ -966,20 +966,38 @@ const struct Race races[] = {
 };
 
 /* Table of all genders */
+/*JP:
+  steed.c kick_steed() He[] に値がコピーされるので長さを変えたときには
+  該当部も要修正。
+*/
 const struct Gender genders[] = {
+#if 0 /*JP:T*/
     { "male", "he", "him", "his", "Mal", ROLE_MALE },
     { "female", "she", "her", "her", "Fem", ROLE_FEMALE },
     { "neuter", "it", "it", "its", "Ntr", ROLE_NEUTER },
     /* used by pronoun_gender() when hallucinating */
     { "group", "they", "them", "their", "Grp", 0 },
+#else
+    { "男性", "彼", "彼", "彼の", "Mal", "male", ROLE_MALE },
+    { "女性", "彼女", "彼女", "彼女の", "Fem", "female", ROLE_FEMALE },
+    { "中性", "それ", "それ", "その", "Ntr", "neuter", ROLE_NEUTER },
+    { "集団", "それら", "それら", "それらの", "Grp", "group", 0 },
+#endif
 };
 
 /* Table of all alignments */
 const struct Align aligns[] = {
+#if 0 /*JP:T*/
     { "law", "lawful", "Law", ROLE_LAWFUL, A_LAWFUL },
     { "balance", "neutral", "Neu", ROLE_NEUTRAL, A_NEUTRAL },
     { "chaos", "chaotic", "Cha", ROLE_CHAOTIC, A_CHAOTIC },
     { "evil", "unaligned", "Una", 0, A_NONE }
+#else
+    { "秩序", "秩序の", "Law", "lawful", ROLE_LAWFUL, A_LAWFUL },
+    { "中立", "中立の", "Neu", "neutral", ROLE_NEUTRAL, A_NEUTRAL },
+    { "混沌", "混沌の", "Cha", "chaotic", ROLE_CHAOTIC, A_CHAOTIC },
+    { "無心", "無心の", "Una", "unaligned", 0, A_NONE },
+#endif
 };
 
 staticfn int randrole_filtered(void);
