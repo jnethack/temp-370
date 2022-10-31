@@ -216,6 +216,9 @@ extern void addtopl(const char *);
 extern void more(void);
 extern void update_topl(const char *);
 extern void putsyms(const char *);
+#if 1 /*JP*/
+extern void raw_putsyms(const char*);
+#endif
 
 /* ### wintty.c ### */
 
