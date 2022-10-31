@@ -40,15 +40,32 @@ tty_getlin(const char *query, char *bufp)
 }
 
 static void
+#if 0 /*JP*/
 hooked_tty_getlin(
     const char *query,
     char *bufp,
     getlin_hook_proc hook)
+#else
+hooked_tty_getlin(
+    const char *query,
+    register char *bfp,
+    getlin_hook_proc hook)
+#endif
 {
+#if 1 /*JP*/
+    char tmp[BUFSZ];
+    char *bufp = tmp;
+#endif
     char *obufp = bufp;
+/*JP
+    int c;
+*/
     int c;
     struct WinDesc *cw = wins[WIN_MESSAGE];
     boolean doprev = FALSE;
+#if 1 /*JP*/
+    unsigned int uc;
+#endif
 
     if (ttyDisplay->toplin == TOPLINE_NEED_MORE && !(cw->flags & WIN_STOP))
         more();
@@ -82,6 +99,10 @@ hooked_tty_getlin(
         term_curs_set(1);
         c = pgetchar();
         term_curs_set(0);
+#if 1 /*JP*/
+        uc = (*((unsigned int *)&c));
+        uc &= 0377;
+#endif
         if (c == '\033' || c == EOF) {
             if (c == '\033' && obufp[0] != '\0') {
                 obufp[0] = '\0';
@@ -138,6 +159,9 @@ hooked_tty_getlin(
             addtopl(obufp);
         }
         if (c == erase_char || c == '\b') {
+#if 1 /*JP*/
+        moreback:
+#endif
             if (bufp != obufp) {
 #ifdef NEWAUTOCOMP
                 char *i;
@@ -156,12 +180,27 @@ hooked_tty_getlin(
 #endif                            /* NEWAUTOCOMP */
             } else
                 tty_nhbell();
+#if 1 /*JP*/
+            {
+                int n;
+                n = offset_in_kanji((unsigned char *)tmp, bufp - tmp);
+                if (n > 0) {
+                    /* 後で1バイト引かれるのでその分はここでは引かない */
+                    bufp = bufp - (n - 1);
+                    goto moreback;
+                }
+            }
+#endif
         } else if (c == '\n' || c == '\r') {
 #ifndef NEWAUTOCOMP
             *bufp = 0;
 #endif /* not NEWAUTOCOMP */
             break;
+#if 0 /*JP*/
         } else if (' ' <= (unsigned char) c && c != '\177'
+#else
+        } else if (' ' <= uc && uc < 255
+#endif
                    /* avoid isprint() - some people don't have it
                       ' ' is not always a printing char */
                    && (bufp - obufp < BUFSZ - 1 && bufp - obufp < COLNO)) {
@@ -171,10 +210,18 @@ hooked_tty_getlin(
 #endif /* NEWAUTOCOMP */
             *bufp = c;
             bufp[1] = 0;
+#if 0 /*JP*/
             putsyms(bufp);
+#else
+            raw_putsyms(bufp);
+#endif
             bufp++;
             if (hook && (*hook)(obufp)) {
+#if 0 /*JP*/
                 putsyms(bufp);
+#else
+                raw_putsyms(bufp);
+#endif
 #ifndef NEWAUTOCOMP
                 bufp = eos(bufp);
 #else  /* NEWAUTOCOMP */
@@ -211,6 +258,9 @@ hooked_tty_getlin(
     ttyDisplay->toplin = TOPLINE_NON_EMPTY;
     ttyDisplay->inread--;
     clear_nhwindow(WIN_MESSAGE); /* clean up after ourselves */
+#if 1 /*JP*/
+    Strcpy(bfp, str2ic(tmp));
+#endif
 
     if (suppress_history) {
         /* prevent next message from pushing current query+answer into
@@ -315,7 +365,11 @@ tty_get_ext_cmd(void)
               : extcmds_match(buf, ECM_IGNOREAC | ECM_EXACTMATCH, &ecmatches);
     if (nmatches != 1) {
         if (nmatches != -1)
+#if 0 /*JP*/
             pline("%s%.60s: unknown extended command.",
+#else
+            pline("%s:拡張コマンドエラー",
+#endif
                   visctrl(extcmd_char[0]), buf);
         return -1;
     }
