@@ -2618,7 +2618,10 @@ genl_player_setup(int screenheight)
                     role_menu_extra(RS_ALGNMNT, win, FALSE);
                     role_menu_extra(RS_filter, win, FALSE);
                     role_menu_extra(ROLE_NONE, win, FALSE); /* quit */
+/*JP
                     Strcpy(pbuf, "Pick a role or profession");
+*/
+                    Strcpy(pbuf, "職業を選んでください");
                     end_menu(win, pbuf);
                     n = select_menu(win, PICK_ONE, &selected);
                     /*
@@ -2712,7 +2715,10 @@ genl_player_setup(int screenheight)
                         role_menu_extra(RS_ALGNMNT, win, FALSE);
                         role_menu_extra(RS_filter, win, FALSE);
                         role_menu_extra(ROLE_NONE, win, FALSE); /* quit */
+/*JP
                         Strcpy(pbuf, "Pick a race or species");
+*/
+                        Strcpy(pbuf, "種族を選んでください");
                         end_menu(win, pbuf);
                         n = select_menu(win, PICK_ONE, &selected);
                         if (n > 0) {
@@ -2800,7 +2806,10 @@ genl_player_setup(int screenheight)
                         role_menu_extra(RS_ALGNMNT, win, FALSE);
                         role_menu_extra(RS_filter, win, FALSE);
                         role_menu_extra(ROLE_NONE, win, FALSE); /* quit */
+/*JP
                         Strcpy(pbuf, "Pick a gender or sex");
+*/
+                        Strcpy(pbuf, "性別を選んでください");
                         end_menu(win, pbuf);
                         n = select_menu(win, PICK_ONE, &selected);
                         if (n > 0) {
@@ -2886,7 +2895,10 @@ genl_player_setup(int screenheight)
                         role_menu_extra(RS_GENDER, win, FALSE);
                         role_menu_extra(RS_filter, win, FALSE);
                         role_menu_extra(ROLE_NONE, win, FALSE); /* quit */
+/*JP
                         Strcpy(pbuf, "Pick an alignment or creed");
+*/
+                        Strcpy(pbuf, "属性を選んでください");
                         end_menu(win, pbuf);
                         n = select_menu(win, PICK_ONE, &selected);
                         if (n > 0) {
@@ -2954,21 +2966,40 @@ genl_player_setup(int screenheight)
         any = cg.zeroany; /* zero out all bits */
         /* [ynaq] menu choices */
         any.a_int = 1;
+#if 0 /*JP*/
         add_menu(win, &nul_glyphinfo, &any, 'y', 0,
                  ATR_NONE, clr, "Yes; start game", MENU_ITEMFLAGS_SELECTED);
+#else
+        add_menu(win, &nul_glyphinfo, &any, 'y', 0,
+                 ATR_NONE, clr, "はい; ゲームを始める", MENU_ITEMFLAGS_SELECTED);
+#endif
         any.a_int = 2;
+#if 0 /*JP*/
         add_menu(win, &nul_glyphinfo, &any, 'n', 0,
                  ATR_NONE, clr, "No; choose role again", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(win, &nul_glyphinfo, &any, 'n', 0,
+                 ATR_NONE, clr, "いいえ; 職業を選び直す", MENU_ITEMFLAGS_NONE);
+#endif
         if (iflags.renameallowed) {
             any.a_int = 3;
+#if 0 /*JP*/
             add_menu(win, &nul_glyphinfo, &any, 'a', 0, ATR_NONE,
                      clr, "Not yet; choose another name",
                      MENU_ITEMFLAGS_NONE);
+#else
+            add_menu(win, &nul_glyphinfo, &any, 'a', 0, ATR_NONE,
+                     clr, "まだ; 名前を変える", MENU_ITEMFLAGS_NONE);
+#endif
         }
         any.a_int = -1;
         add_menu(win, &nul_glyphinfo, &any, 'q', 0,
                  ATR_NONE, clr, "Quit", MENU_ITEMFLAGS_NONE);
+#if 0 /*JP*/
         Sprintf(pbuf, "Is this ok? [yn%sq]", iflags.renameallowed ? "a" : "");
+#else
+        Sprintf(pbuf, "これでよい？ [yn%sq]", iflags.renameallowed ? "a" : "");
+#endif
         end_menu(win, pbuf);
         n = select_menu(win, PICK_ONE, &selected);
         /* [pick-one menus with a preselected entry behave oddly...] */
@@ -3111,24 +3142,47 @@ plsel_startmenu(int ttyrows, int aspect)
        Samurai => Human+lawful, Valkyrie => female) */
     rigid_role_checks();
 
+#if 0 /*JP*/
     rolename = (ROLE < 0) ? "<role>"
                : (GEND == 1 && roles[ROLE].name.f) ? roles[ROLE].name.f
                  : roles[ROLE].name.m;
+#else
+    rolename = (ROLE < 0) ? "<職業>"
+               : (GEND == 1 && roles[ROLE].name.f) ? roles[ROLE].name.f
+                 : roles[ROLE].name.m;
+#endif
     if (!svp.plname[0] || ROLE < 0 || RACE < 0 || GEND < 0 || ALGN < 0) {
         /* "<role> <race.noun> <gender> <alignment>" */
+#if 0 /*JP*/
         Sprintf(qbuf, "%.20s %.20s %.20s %.20s",
                 rolename,
                 (RACE < 0) ? "<race>" : races[RACE].noun,
                 (GEND < 0) ? "<gender>" : genders[GEND].adj,
                 (ALGN < 0) ? "<alignment>" : aligns[ALGN].adj);
+#else
+        Sprintf(qbuf, "%.20s%.20s%.20sの%.20s",
+                rolename,
+                (RACE < 0) ? "<種族>" : races[RACE].noun,
+                (GEND < 0) ? "<性別>" : genders[GEND].adj,
+                (ALGN < 0) ? "<属性>" : aligns[ALGN].adj);
+#endif
     } else {
         /* "<name> the <alignment> <gender> <race.adjective> <role>" */
+#if 0 /*JP*/
         Sprintf(qbuf, "%.20s the %.20s %.20s %.20s %.20s",
                 svp.plname,
                 aligns[ALGN].adj,
                 genders[GEND].adj,
                 races[RACE].adj,
                 rolename);
+#else
+        Sprintf(qbuf, "%.20s, %.20s%.20sの%.20s%.20s",
+                gp.plname,
+                aligns[ALGN].adj,
+                genders[GEND].adj,
+                races[RACE].adj,
+                rolename);
+#endif
     }
 
     win = create_nhwindow(NHW_MENU);
@@ -3174,7 +3228,10 @@ setup_rolemenu(
             any.a_int = i + 1;
         else
             any.a_string = roles[i].name.m;
+/*JP
         thisch = lowc(*roles[i].name.m);
+*/
+        thisch = lowc(*roles[i].filecode);
         if (thisch == lastch)
             thisch = highc(thisch);
         Strcpy(rolenamebuf, roles[i].name.m);
@@ -3223,7 +3280,10 @@ setup_racemenu(
             any.a_int = i + 1;
         else
             any.a_string = races[i].noun;
+/*JP
         this_ch = *races[i].noun;
+*/
+        this_ch = lowc(*races[i].filecode);
         /* filtering: picking race, so choose by first letter, with
            capital letter as unseen accelerator;
            !filtering: resetting filter rather than picking, choose by
@@ -3261,7 +3321,10 @@ setup_gendmenu(
             any.a_int = i + 1;
         else
             any.a_string = genders[i].adj;
+/*JP
         this_ch = *genders[i].adj;
+*/
+        this_ch = lowc(*genders[i].filecode);
         /* (see setup_racemenu for explanation of selector letters
            and setup_rolemenu for preselection) */
         add_menu(win, &nul_glyphinfo, &any,
@@ -3296,16 +3359,31 @@ setup_algnmenu(
         if (filtering)
             any.a_int = i + 1;
         else
+/*JP
             any.a_string = aligns[i].adj;
+*/
+            any.a_string = aligns[i].noun;
+/*JP
         this_ch = *aligns[i].adj;
+*/
+        this_ch = lowc(*aligns[i].filecode);
         /* (see setup_racemenu for explanation of selector letters
            and setup_rolemenu for preselection) */
+#if 0 /*JP*/
         add_menu(win, &nul_glyphinfo, &any,
                  filtering ? this_ch : highc(this_ch),
                  filtering ? highc(this_ch) : 0,
                  ATR_NONE, clr, aligns[i].adj,
                  (!filtering && !algn_ok)
                     ? MENU_ITEMFLAGS_SELECTED : MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(win, &nul_glyphinfo, &any,
+                 filtering ? this_ch : highc(this_ch),
+                 filtering ? highc(this_ch) : 0,
+                 ATR_NONE, clr, aligns[i].noun,
+                 (!filtering && !algn_ok)
+                    ? MENU_ITEMFLAGS_SELECTED : MENU_ITEMFLAGS_NONE);
+#endif
     }
 }
 
