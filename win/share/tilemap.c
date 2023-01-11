@@ -197,13 +197,16 @@ struct conditionals_t {
 const char *
 tilename(int set, const int file_entry, int gend UNUSED)
 {
+#if 0 /*JP*//*タイル名作成は一旦コメントアウト*/
     int i, k, cmap, condnum, tilenum, gendnum;
+#endif
     static char buf[BUFSZ];
 #if 0
     int offset;
 #endif
     (void) def_char_to_objclass(']');
 
+#if 0 /*JP*//*タイル名作成は一旦コメントアウト*/
     condnum = tilenum = gendnum = 0;
 
     buf[0] = '\0';
@@ -536,6 +539,9 @@ tilename(int set, const int file_entry, int gend UNUSED)
     } /* OTH_GLYPH */
     Sprintf(buf, "unknown %d %d", set, file_entry);
     return buf;
+#else
+    return "(TBT)";
+#endif
 }
 #endif /* TILETEXT || OBTAIN_TILEMAP */
 
@@ -1084,11 +1090,19 @@ init_tilemap(void)
             precheck((offset + i), "swallows");
             tilemap[offset + i].tilenum = swallowbase + i;
 #if defined(OBTAIN_TILEMAP)
+#if 0 /*JP*/
             Snprintf(tilemap[offset + i].name,
                      sizeof tilemap[0].name,
                      "%s %s (cmap=%d)",
                      swallow_text[i],
                      mons[k].pmnames[NEUTRAL], cmap);
+#else
+            Snprintf(tilemap[offset + i].name,
+                     sizeof tilemap[0].name,
+                     "%s %s (cmap=%d)",
+                     swallow_text[i],
+                     "mon", cmap);
+#endif
             add_tileref(swallowbase + i, offset + i,
                         other_file, file_entry + i,
                         tilemap[offset + i].name, "");

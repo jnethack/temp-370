@@ -222,11 +222,13 @@ read_txttile(FILE *txtfile, pixel (*pixels)[TILE_X])
             (tile_set == OTHER_SET
              && !acceptable_tilename(tile_set, tile_set_indx, buf, p));
 
+#if 0 /*JP*/
         if (tile_set != OTHER_SET || other_mismatch) {
             Fprintf(stderr, "warning: for tile %d (numbered %d) of %s,\n",
                     tile_set_indx, i, text_sets[tile_set]);
             Fprintf(stderr, "\tfound '%s' while expecting '%s'\n", buf, p);
         }
+#endif
     }
     tile_set_indx++;
 
