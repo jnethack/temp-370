@@ -296,6 +296,9 @@ struct Gender {
     const char *him;      /* him/her/it */
     const char *his;      /* his/her/its */
     const char *filecode; /* file code */
+#if 1 /*JP*/
+    const char *opt;      /* オプション指定文字列 */
+#endif
     short allow;          /* equivalent ROLE_ mask */
 };
 #define ROLE_GENDERS 2    /* number of permitted player genders
@@ -327,6 +330,9 @@ struct Align {
     const char *noun;     /* law/balance/chaos */
     const char *adj;      /* lawful/neutral/chaotic */
     const char *filecode; /* file code */
+#if 1 /*JP*/
+    const char *opt;      /* オプション指定文字列 */
+#endif
     short allow;          /* equivalent ROLE_ mask */
     aligntyp value;       /* equivalent A_ value */
 };
