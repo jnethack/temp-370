@@ -172,7 +172,7 @@ extern unsigned char *sj2e(unsigned char *s);
 **
 */
 static char *
-jconjsub(struct _jconj_tab *tab,char *jverb,char *sfx)
+jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
 {
     int len;
     unsigned char *p;
