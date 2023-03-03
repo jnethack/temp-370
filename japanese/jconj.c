@@ -6,16 +6,8 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "hack.h"
 
-#define EUC     0
-#define SJIS    1
-#define JIS     2
-
-/* internal kcode */
-/* IC=0 EUC */
-/* IC=1 SJIS */
-#define IC ((unsigned char)("漢"[0])==0x8a)
+#define STRNCMP2(x, y) strncmp(x, y, strlen(y))
 
 #define J_A     0
 #define J_KA    (1*5)
@@ -34,22 +26,29 @@
 #define J_BA    (13*5)
 #define J_PA    (14*5)
 
-static unsigned char hira_tab[][2]={
-    {0xa4, 0xa2}, {0xa4, 0xa4}, {0xa4, 0xa6}, {0xa4, 0xa8}, {0xa4, 0xaa}, 
-    {0xa4, 0xab}, {0xa4, 0xad}, {0xa4, 0xaf}, {0xa4, 0xb1}, {0xa4, 0xb3}, 
-    {0xa4, 0xb5}, {0xa4, 0xb7}, {0xa4, 0xb9}, {0xa4, 0xbb}, {0xa4, 0xbd}, 
-    {0xa4, 0xbf}, {0xa4, 0xc1}, {0xa4, 0xc4}, {0xa4, 0xc6}, {0xa4, 0xc8}, 
-    {0xa4, 0xca}, {0xa4, 0xcb}, {0xa4, 0xcc}, {0xa4, 0xcd}, {0xa4, 0xce}, 
-    {0xa4, 0xcf}, {0xa4, 0xd2}, {0xa4, 0xd5}, {0xa4, 0xd8}, {0xa4, 0xdb}, 
-    {0xa4, 0xde}, {0xa4, 0xdf}, {0xa4, 0xe0}, {0xa4, 0xe1}, {0xa4, 0xe2}, 
-    {0xa4, 0xe4}, {0xa4, 0xa4}, {0xa4, 0xe6}, {0xa4, 0xa8}, {0xa4, 0xe8}, 
-    {0xa4, 0xe9}, {0xa4, 0xea}, {0xa4, 0xeb}, {0xa4, 0xec}, {0xa4, 0xed}, 
-    {0xa4, 0xef}, {0xa4, 0xa4}, {0xa4, 0xa6}, {0xa4, 0xa8}, {0xa4, 0xaa}, 
-    {0xa4, 0xac}, {0xa4, 0xae}, {0xa4, 0xb0}, {0xa4, 0xb2}, {0xa4, 0xb4}, 
-    {0xa4, 0xb6}, {0xa4, 0xb8}, {0xa4, 0xba}, {0xa4, 0xbc}, {0xa4, 0xbe}, 
-    {0xa4, 0xc0}, {0xa4, 0xc2}, {0xa4, 0xc5}, {0xa4, 0xc7}, {0xa4, 0xc9}, 
-    {0xa4, 0xd0}, {0xa4, 0xd3}, {0xa4, 0xd6}, {0xa4, 0xd9}, {0xa4, 0xdc}, 
-    {0xa4, 0xd1}, {0xa4, 0xd4}, {0xa4, 0xd7}, {0xa4, 0xda}, {0xa4, 0xdd},
+static int cl = /* 全角ひらがなのバイト数 */
+#ifdef ICUTF8
+    3;
+#else
+    2;
+#endif
+
+static const char *hira_tab[] = {
+    "あ", "い", "う", "え", "お", 
+    "か", "き", "く", "け", "こ",
+    "さ", "し", "す", "せ", "そ",
+    "た", "ち", "つ", "て", "と",
+    "な", "に", "ぬ", "ね", "の",
+    "は", "ひ", "ふ", "へ", "ほ",
+    "ま", "み", "む", "め", "も",
+    "や", "い", "ゆ", "え", "よ",
+    "ら", "り", "る", "れ", "ろ",
+    "わ", "い", "う", "え", "お",
+    "が", "ぎ", "ぐ", "げ", "ご",
+    "ざ", "じ", "ず", "ぜ", "ぞ",
+    "だ", "ぢ", "づ", "で", "ど",
+    "ば", "び", "ぶ", "べ", "ぼ",
+    "ぱ", "ぴ", "ぷ", "ぺ", "ぽ",
 };
 
 #define FIFTH   0 /* 五段 */
@@ -59,8 +58,8 @@ static unsigned char hira_tab[][2]={
 #define KAHEN   4 /* カ変 */
 
 #define NORMAL  0 /* あける→～た */
-#define SOKUON  1 /* 刻む→～んだ */
-#define HATSUON 2 /* 打つ→～った */
+#define HATSUON 1 /* 刻む→～んだ */
+#define SOKUON  2 /* 打つ→～った */
 #define ION     3 /* 浮く→～いた */
 
 struct _jconj_tab {
@@ -68,7 +67,7 @@ struct _jconj_tab {
     int column;
 /* 0: fifth conj. 1:upper conj. 2:lower conj. 3:SAHEN 4:KAHEN */
     int katsuyo_type;
-/* 0: normal 1: sokuon 2: hatson 3: ion */
+/* 0: normal 1: hatsuon 2: sokuon 3: ion */
     int onbin_type;
 } jconj_tab[] = {
 /* あ */
@@ -77,7 +76,8 @@ struct _jconj_tab {
     {"いれる", J_RA, LOWER, NORMAL},
     {"入れる", J_RA, LOWER, NORMAL},
     {"浮く", J_KA, FIFTH, ION},
-    {"打つ", J_TA, FIFTH, HATSUON},
+    {"動く", J_KA, FIFTH, ION},
+    {"打つ", J_TA, FIFTH, SOKUON},
     {"置く", J_KA, FIFTH, ION},
     {"納める", J_MA, LOWER, NORMAL},
     {"落ちる", J_TA, UPPER, NORMAL},
@@ -87,72 +87,73 @@ struct _jconj_tab {
     {"輝く", J_KA, FIFTH, ION},
     {"書く", J_KA, FIFTH, ION},
     {"かける", J_KA, UPPER, NORMAL},
-    {"かぶる", J_RA, FIFTH, HATSUON},
+    {"かぶる", J_RA, FIFTH, SOKUON},
     {"構える", J_A, LOWER, NORMAL},
     {"噛みつく", J_KA, FIFTH, ION},
-    {"刻む", J_MA, FIFTH, SOKUON},
+    {"刻む", J_MA, FIFTH, HATSUON},
     {"着る", J_KA, UPPER, NORMAL},
     {"来る", J_KA, KAHEN, NORMAL}, 
     {"砕く", J_KA, FIFTH, ION}, 
     {"加える", J_A, LOWER, NORMAL},
-    {"こする", J_RA, FIFTH, HATSUON},
+    {"こする", J_RA, FIFTH, SOKUON},
     {"こます", J_SA, FIFTH, NORMAL},
-    {"込む", J_MA, FIFTH, SOKUON},
+    {"込む", J_MA, FIFTH, HATSUON},
     {"殺す", J_SA, FIFTH, NORMAL},
     {"壊す", J_SA, FIFTH, NORMAL},
 /* さ */
     {"捧げる", J_KA, LOWER, NORMAL},
     {"錆びる", J_BA, UPPER, NORMAL},
-    {"死ぬ", J_NA, FIFTH, SOKUON},
-    {"滑る", J_RA, FIFTH, HATSUON},
+    {"死ぬ", J_NA, FIFTH, HATSUON},
+    {"滑る", J_RA, FIFTH, SOKUON},
     {"する", J_SA, SAHEN, NORMAL}, 
 /* た */
     {"たじろぐ", J_GA, FIFTH, ION},
     {"出す", J_SA, FIFTH, NORMAL},
     {"食べる", J_HA, LOWER, NORMAL}, 
-    {"使う", J_WA, FIFTH, HATSUON},
+    {"使う", J_WA, FIFTH, SOKUON},
     {"つける", J_KA, LOWER, NORMAL},
     {"つまずく", J_KA, FIFTH, ION},
     {"出る", J_NA, LOWER, NORMAL},
     {"解く", J_KA, FIFTH, ION},
     {"溶ける", J_KA, LOWER, NORMAL},
     {"とばす", J_SA, FIFTH, NORMAL},
-    {"飛ぶ", J_BA, FIFTH, SOKUON},
-    {"取る", J_RA, FIFTH, HATSUON},
+    {"飛ぶ", J_BA, FIFTH, HATSUON},
+    {"取る", J_RA, FIFTH, SOKUON},
 /* な */
     {"投げる", J_GA, LOWER, NORMAL},
     {"名づける", J_KA, LOWER, NORMAL},
-    {"握る", J_RA, FIFTH, HATSUON},
+    {"握る", J_RA, FIFTH, SOKUON},
+    {"にじみ出る", J_DA, LOWER, NORMAL},
     {"脱ぐ", J_GA, FIFTH, ION},
     {"濡らす", J_SA, FIFTH, NORMAL},
-    {"塗る", J_RA, FIFTH, HATSUON},
-    {"飲む", J_MA, FIFTH, SOKUON},
+    {"塗る", J_RA, FIFTH, SOKUON},
+    {"飲む", J_MA, FIFTH, HATSUON},
 /* は */
-    {"はいずる", J_RA, FIFTH, HATSUON},
+    {"はいずる", J_RA, FIFTH, SOKUON},
     {"履く", J_KA, FIFTH, ION},
-    {"はさむ", J_MA, FIFTH, SOKUON},
+    {"はさむ", J_MA, FIFTH, HATSUON},
     {"はずす", J_SA, FIFTH, NORMAL},
     {"外す", J_SA, FIFTH, NORMAL},
     {"はめる", J_MA, UPPER, NORMAL},
-    {"光る", J_RA, FIFTH, HATSUON},
+    {"光る", J_RA, FIFTH, SOKUON},
     {"浸す", J_SA, FIFTH, NORMAL},
     {"ひっかける", J_KA, LOWER, NORMAL},
-    {"拾う", J_WA, FIFTH, HATSUON},
-    {"踏む", J_MA, FIFTH, SOKUON},
+    {"拾う", J_WA, FIFTH, SOKUON},
+    {"踏む", J_MA, FIFTH, HATSUON},
     {"振りかざす", J_SA, FIFTH, NORMAL},
     {"震える", J_A, LOWER, NORMAL},
-    {"掘る", J_RA, FIFTH, HATSUON},
+    {"掘る", J_RA, FIFTH, SOKUON},
 /* ま */
     {"巻く", J_KA, FIFTH, ION},
     {"またたく", J_KA, FIFTH, ION},
-    {"守る", J_RA, FIFTH, HATSUON},
+    {"守る", J_RA, FIFTH, SOKUON},
     {"回す", J_SA, FIFTH, NORMAL},
     {"身につける", J_KA, LOWER, NORMAL},
-    {"持つ", J_TA, FIFTH, HATSUON},
+    {"持つ", J_TA, FIFTH, SOKUON},
 /* や */
     {"焼く", J_KA, FIFTH, ION},
-    {"呼ぶ", J_BA, FIFTH, SOKUON},
-    {"読む", J_MA, FIFTH, SOKUON},
+    {"呼ぶ", J_BA, FIFTH, HATSUON},
+    {"読む", J_MA, FIFTH, HATSUON},
     {"よろめく", J_KA, FIFTH, ION},
 /* ら */
 /* わ */
@@ -172,13 +173,20 @@ extern unsigned char *sj2e(unsigned char *s);
 **
 */
 static char *
-jconjsub(struct _jconj_tab *tab,char *jverb,char *sfx)
+jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
 {
     int len;
     unsigned char *p;
     static unsigned char tmp[1024];
 
+    /* tabはjconj_tabの内容のみを受け取り、
+     * jconj_tabの内容はこれ以上変更しないため、
+     * tabの内容によってバッファオーバーフローすることはない
+     */
+
     len = strlen(jverb);
+    if (len > 800 || strlen(sfx) > 100) /* 安全用 */
+        return jverb;
     strcpy((char *)tmp, jverb );
 
     if(!STRNCMP2(sfx, "と")){
@@ -188,120 +196,83 @@ jconjsub(struct _jconj_tab *tab,char *jverb,char *sfx)
 
     switch( tab->katsuyo_type ){
       case FIFTH:
-        p = tmp + (len - 2);
+        p = tmp + (len - cl);
         if(!STRNCMP2(sfx, "な")){
-            if(!IC){
-                p[0] = 0xa4;
-                p[1] = hira_tab[tab->column][1];
-            } else {
-              memcpy(p, e2sj(hira_tab[tab->column]), 2);
-            }
+            memcpy(p, hira_tab[tab->column], cl);
 
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
             break;
         }
         else if(!STRNCMP2(sfx, "た") || !STRNCMP2(sfx, "て")){
             switch( tab->onbin_type ){
               case NORMAL:
-                if(!IC){
-                    p[1] = hira_tab[tab->column + 1][1];
-                } else {
-                    memcpy(p, e2sj(hira_tab[tab->column + 1]), 2);
-                }
-                break;
-              case SOKUON:
-                if(!IC){
-                    p[1] = 0xf3;
-                } else {
-                    memcpy(p, "ん", 2);
-                }
+                memcpy(p, hira_tab[tab->column + 1], cl);
                 break;
               case HATSUON:
-                if(!IC){
-                    p[1] = 0xc3;
-                } else {
-                    memcpy(p, "っ", 2);
-                }
+                memcpy(p, "ん", cl);
+                break;
+              case SOKUON:
+                memcpy(p, "っ", cl);
                 break;
               case ION:
-                if(!IC){
-                    p[1] = 0xa4;
-                } else {
-                    memcpy(p, "い", 2);
-                }
+                memcpy(p, "い", cl);
                 break;
             }
-            strcpy((char *)p + 2, sfx);
-            if(tab->onbin_type == SOKUON ||
+            strcpy((char *)p + cl, sfx);
+            if(tab->onbin_type == HATSUON ||
                (tab->onbin_type == ION && tab->column >= J_GA)){
-                if(!IC){
-                  ++p[3];
-                } else {
-                  ++p[3];
-                }
-/*        memcpy(p+2, e2sj(sj2e(p+2)+1), 2);*//* sj2e() returns ptr to char* */
+                  /*
+                   * 2文字目を濁音にする。
+                   * 清音の次が濁音であることに依存している。
+                   * EUC-JP, SJIS, UTF-8 とも満たしている。
+                   */
+                  ++p[cl * 2 - 1];
             }
             break;
         }
         else if(!STRNCMP2(sfx, "ば")){
-            if(!IC){
-                p[1] = hira_tab[tab->column + 3][1];
-            } else {
-                memcpy(p, e2sj(hira_tab[tab->column + 3]), 2);
-            }
-            strcpy((char *)p + 2, sfx);
+            memcpy(p, hira_tab[tab->column + 3], cl);
+            strcpy((char *)p + cl, sfx);
         }
         else if(!STRNCMP2(sfx, "れ")){
-            if(!IC){
-                p[1]=hira_tab[tab->column + 3][1];
-            } else {
-                memcpy(p, e2sj(hira_tab[tab->column + 3]), 2);
-            }
-            strcpy((char *)p + 2, sfx + 2);
+            memcpy(p, hira_tab[tab->column + 3], cl);
+            strcpy((char *)p + cl, sfx + cl);
         }
         else if(!STRNCMP2(sfx, "ま")) {
-            if(!IC){
-                p[1] = hira_tab[tab->column + 1][1];
-            } else {
-                memcpy(p, e2sj(hira_tab[tab->column + 1]), 2);
-            }
-            strcpy((char *)p + 2, sfx);
+            memcpy(p, hira_tab[tab->column + 1], cl);
+            strcpy((char *)p + cl, sfx);
             break;
         }
         else if(!STRNCMP2(sfx, "よ")) {
-            if(!IC){
-                p[1] = hira_tab[tab->column + 4][1];
-            } else {
-                memcpy(p, e2sj(hira_tab[tab->column + 4]), 2);
-            }
-            strcpy((char *)p + 2, sfx + 2);
+            memcpy(p, hira_tab[tab->column + 4], cl);
+            strcpy((char *)p + cl, sfx + cl);
             break;
         }
         break;
       case LOWER:
       case UPPER:
       case KAHEN:
-        p = tmp + (len - 2);
+        p = tmp + (len - cl);
         if(!STRNCMP2(sfx, "ば")){
             strcpy((char *)p, "れ");
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
         }
         else if(!STRNCMP2(sfx, "れ") && tab->katsuyo_type == LOWER){
             strcpy((char *)p, "ら");
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
         }
         else
           strcpy((char *)p, sfx);
         break;
       case SAHEN:
-        p = tmp + (len - 4);
+        p = tmp + (len - cl * 2);
         if(!STRNCMP2(sfx, "な") ||
            !STRNCMP2(sfx, "ま") ||
            !STRNCMP2(sfx, "た") ||
            !STRNCMP2(sfx, "て") ||
            !STRNCMP2(sfx, "よ")){
             strcpy((char *)p, "し");
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
         }
         else if(!STRNCMP2(sfx, "ば") || !STRNCMP2(sfx, "れば")){
             strcpy((char *)p, "すれば");
@@ -326,14 +297,14 @@ jconj(const char *jverb,const char *sfx)
     }
 
     for( tab = jconj_tab; tab->main != (void*)0; ++tab){
-        if(len - strlen(tab->main) > 0 &&
+        if(len > strlen(tab->main) &&
            !strcmp(jverb + (len - strlen(tab->main)), tab->main)){
             return jconjsub(tab, jverb, sfx);
         }
     }
 
 #ifdef JAPANESETEST
-    fprintf( stderr, "I don't know such word \"%s\"\n");
+    fprintf( stderr, "I don't know such word \"%s\"\n", jverb);
 #endif
     return jverb;
 }
@@ -346,9 +317,12 @@ jcan(const char *jverb)
     static char tmp[1024];
 
     int len = strlen(jverb);
-    if(!strcmp(jverb + len - 4, "する")){
-        strncpy(tmp, jverb, len - 4);
-        strcpy(tmp + len - 4, "できる");
+    if (len > 800) /* 安全用 */
+        return jverb;
+    int prev = len - cl * 2; /* 2文字前 */
+    if(prev >= 0 && !strcmp(jverb + prev, "する")){
+        strncpy(tmp, jverb, prev);
+        strcpy(tmp + prev, "できる");
         return tmp;
     } else {
         ret = jconj(jverb, "れる");
@@ -363,9 +337,12 @@ jcannot(const char *jverb)
     static char tmp[1024];
 
     int len = strlen(jverb);
-    if(!strcmp(jverb + len - 4, "する")){
-        strncpy(tmp, jverb, len-4);
-        strcpy(tmp +len-4, "できない");
+    if (len > 800) /* 安全用 */
+        return jverb;
+    int prev = len - cl * 2; /* 2文字前 */
+    if(prev >= 0 && !strcmp(jverb + prev, "する")){
+        strncpy(tmp, jverb, prev);
+        strcpy(tmp + prev, "できない");
         return tmp;
     } else {
         return jconj(jverb, "れない");
@@ -404,15 +381,17 @@ jconj_adj(const char *jadj)
     int len;
     static unsigned char tmp[1024];
 
+    len = strlen(jadj);
+    if (len < cl || len > 800) /* 安全用 */
+        return jadj;
     strcpy((char *)tmp, jadj);
-    len = strlen((char *)tmp);
 
-    if(!strcmp((char *)tmp + len - 2, "い")){
-        strcpy((char *)tmp + len - 2, "く");
-    } else if(!strcmp((char *)tmp + len - 2, "だ") ||
-              !strcmp((char *)tmp + len - 2, "な") ||
-              !strcmp((char *)tmp + len - 2, "の")){
-        strcpy((char *)tmp + len - 2, "に");
+    if(!strcmp((char *)tmp + len - cl, "い")){
+        strcpy((char *)tmp + len - cl, "く");
+    } else if(!strcmp((char *)tmp + len - cl, "だ") ||
+              !strcmp((char *)tmp + len - cl, "な") ||
+              !strcmp((char *)tmp + len - cl, "の")){
+        strcpy((char *)tmp + len - cl, "に");
     }
 
     return (char *)tmp;
@@ -420,19 +399,7 @@ jconj_adj(const char *jadj)
 
 
 #ifdef JAPANESETEST
-unsigned char
-*e2sj(unsigned char *s)
-{
-    return *s;
-}
-
-unsigned char
-*sj2e(unsigned char *s)
-{
-    return *s;
-}
-
-void
+int
 main(void)
 {
     struct _jconj_tab *tab;
@@ -452,5 +419,6 @@ main(void)
     printf("%s\n", jconj("徹夜でnethackの翻訳をする", "た"));
     printf("%s\n", jconj("徹夜でnethackの翻訳をする", "れば"));
     printf("%s\n", jconj("徹夜でnethackの翻訳をする", "とき"));
+    return 0;
 }
 #endif
