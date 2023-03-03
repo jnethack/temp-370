@@ -5,14 +5,24 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#ifdef JAPANESETEST
+#ifdef _MSC_VER
+#include <windows.h>
+#endif
+#else
+#ifdef WIN32
+#include "win32api.h"
+#endif
 #include "hack.h"
+#endif
 #ifdef POSIX_ICONV
 #include <iconv.h>
 #endif
 
+#ifndef JAPANESETEST
 int xputc(CHAR_P);
-int xputc2(unsigned char *);
-
+int xputc2(const unsigned char *);
+#endif
 
 #define EUC     0
 #define SJIS    1
@@ -41,7 +51,7 @@ static const char* ccode_alt[]={
 
 /* default input kcode */
 #ifndef INPUT_KCODE
-# if defined(MSDOS) || defined(WIN32)
+# if (defined(MSDOS) || defined(WIN32)) && !defined(ICUTF8)
 #  define INPUT_KCODE SJIS
 # else
 #  define INPUT_KCODE UTF8
@@ -68,6 +78,13 @@ static iconv_t  output_dsc = 0;
 static iconv_t  input_dsc = 0;
 #endif
 
+#ifdef JAPANESETEST
+int rn2(int max)
+{
+  return 0;
+}
+#endif
+
 /*
 **      Kanji code library....
 */
@@ -78,11 +95,11 @@ static iconv_t  input_dsc = 0;
 int
 is_kanji(unsigned c)
 {
-    if(IC == EUC)
-      return (c & 0x80);
-    else
+    if(IC == SJIS)
       return ((unsigned int)c>=0x81 && (unsigned int)c<=0x9f)
         || ((unsigned int)c>=0xe0 && (unsigned int)c<=0xfc);
+    else
+      return (c & 0x80);
 }
 
 void
@@ -115,6 +132,8 @@ setkcode(int c)
         output_dsc = iconv_open(ccode[output_kcode], ccode_alt[IC]);
     if (output_dsc == (iconv_t)-1)
         output_dsc = iconv_open(ccode_alt[output_kcode], ccode_alt[IC]);
+    if (output_dsc == (iconv_t)-1)
+        output_dsc = 0;
     if(input_dsc)
         iconv_close(input_dsc);
     input_dsc = iconv_open(ccode[IC] ,ccode[input_kcode]);
@@ -124,6 +143,8 @@ setkcode(int c)
         input_dsc = iconv_open(ccode[IC] ,ccode_alt[input_kcode]);
     if (input_dsc == (iconv_t)-1)
         input_dsc = iconv_open(ccode_alt[IC] ,ccode_alt[input_kcode]);
+    if (input_dsc == (iconv_t)-1)
+        input_dsc = 0;
 #endif
 }
 /*
@@ -167,6 +188,7 @@ sj2e(unsigned char *s)
     sw[1] = l | 0x80;
     return sw;
 }
+
 /*
 **      translate string to internal kcode
 */
@@ -176,9 +198,6 @@ str2ic(const char *s)
     static unsigned char buf[1024];
     const unsigned char *up;
     unsigned char *p;
-#ifndef POSIX_ICONV
-    unsigned char *pp;
-#endif
 
     if(!s)
       return s;
@@ -186,7 +205,8 @@ str2ic(const char *s)
     buf[0] = '\0';
 
     if( IC==input_kcode ){
-        strcpy((char *)buf, s);
+        strncpy((char *)buf, s, sizeof(buf) - 1);
+        buf[sizeof(buf) - 1] = '\0';
         return (char *)buf;
     }
 
@@ -196,39 +216,73 @@ str2ic(const char *s)
         size_t src_len, dst_len;
         up = (unsigned char *)s;
         src_len = strlen(s);
-        dst_len = sizeof(buf);
+        dst_len = sizeof(buf) - 1;
         if (iconv(input_dsc, (char**)&up, &src_len,
                 (char**)&p, &dst_len) == (size_t)-1){
-            strcpy((char *)buf, s);
+            strncpy((char *) buf, s, sizeof(buf) - 1);
+            buf[sizeof(buf) - 1] = '\0';
             return (char *)buf;
         }
-        *(p++) = '\0';
+        *p = '\0';
         return (char *)buf;
     } else {
-        strcpy((char *)buf, s);
+        strncpy((char *) buf, s, sizeof(buf) - 1);
+        buf[sizeof(buf) - 1] = '\0';
         return (char *)buf;
     }
-#else
-    if( IC==EUC && input_kcode == SJIS ){
-        while(*s){
-            up = (unsigned char *)s;
-            if(is_kanji(*up)){
-                pp = sj2e((unsigned char *)s);
-                *(p++) = pp[0];
-                *(p++) = pp[1];
-                s += 2;
-            }
-            else
-              *(p++) = (unsigned char)*(s++);
-        }
-        *(p++) = '\0';
-        return (char *)buf;
-    } else {
-        strcpy((char *)buf, s);
+#else /*WIN32*/
+    {
+        wchar_t wbuf[1024];
+        memset(buf, 0, 1024);
+        int len = MultiByteToWideChar(
+            CP_UTF8,
+            0,
+            s,
+            strlen(s),
+            wbuf,
+            1024);
+        int len2 = WideCharToMultiByte(
+            CP_ACP,
+            0,
+            wbuf,
+            len,
+            (LPSTR)buf,
+            1024,
+            NULL,
+            NULL);
         return (char *)buf;
     }
 #endif
+}
 
+/* UTF8文字列を内部コードに */
+const char *
+utf8toic(const char *s)
+{
+  /* 入力コードをUTF8に固定してstr2icを使う */
+  int k = input_kcode;
+  const char *ret;
+#ifdef POSIX_ICONV
+  iconv_t d = input_dsc;
+  input_dsc = iconv_open(ccode[IC], ccode[UTF8]);
+  if (input_dsc == (iconv_t)-1)
+      input_dsc = iconv_open(ccode_alt[IC], ccode[UTF8]);
+  if (input_dsc == (iconv_t)-1)
+      input_dsc = iconv_open(ccode[IC], ccode_alt[UTF8]);
+  if (input_dsc == (iconv_t)-1)
+      input_dsc = iconv_open(ccode_alt[IC], ccode_alt[UTF8]);
+  if (input_dsc == (iconv_t)-1)
+      input_dsc = 0;
+#endif
+  input_kcode = UTF8;
+  ret = str2ic(s);
+  input_kcode = k;
+#ifdef POSIX_ICONV
+  if (input_dsc)
+      iconv_close(input_dsc);
+  input_dsc = d;
+#endif
+  return ret;
 }
 
 /*
@@ -262,15 +316,18 @@ tty_cputc2(unsigned char *str)
 /*
   1文字の長さを返す
   */
-static int
+int
 charlen(unsigned int c)
 {
 #ifdef ICUTF8
     if(c >= 0xf0){
       return 4;
     }
-    if(c >= 0xc0){
+    if(c >= 0xe0){
       return 3;
+    }
+    if(c >= 0xc0){
+      return 2;
     }
 #endif
     if(c >= 0x80){
@@ -280,10 +337,33 @@ charlen(unsigned int c)
 }
 
 /*
+ * 文字列の表示長を計算する
+ * 多バイト文字は2文字分としてカウントする
+ */
+int
+displen(const char *s)
+{
+    int len = 0;
+    const unsigned char *p = (const unsigned char *)s;
+    int maxlen = strlen(s);
+
+    for (int i = 0; i < maxlen; ) {
+        int l = charlen(p[i]);
+        if (l >= 2) {
+            len += 2;
+        } else {
+            len++;
+        }
+        i += l;
+    }
+
+    return len;
+}
+
+/*
  *  2バイト文字をバッファリングしながら出力する
  *  漢字コード変換も行う
  */
-#ifdef ICUTF8
 int
 jbuffer(
      unsigned int c,
@@ -291,12 +371,12 @@ jbuffer(
      void (*f1)(unsigned int),
      void (*f2)(unsigned char *))
 {
+#ifdef ICUTF8
     static unsigned char ibuf[8];
     static int bufcnt = 0;
     static int buflen;
     int cnt;
 
-    if(!buf) buf = ibuf;
     if(!f1) f1 = tty_cputc;
     if(!f2) f2 = tty_cputc2;
 
@@ -321,15 +401,8 @@ jbuffer(
     ibuf[bufcnt] = '\0';
     f2(ibuf);
     bufcnt = 0;
-}
+    return buflen;
 #else
-int
-jbuffer(
-     unsigned int c,
-     unsigned int *buf,
-     void (*f1)(unsigned int),
-     void (*f2)(unsigned char *))
-{
     static unsigned int ibuf[2];
     unsigned int c1, c2;
 #ifndef POSIX_ICONV
@@ -353,8 +426,8 @@ jbuffer(
         c1 = buf[1];
         c2 = c;
 
-        if(IC == output_kcode)
 #ifdef POSIX_ICONV
+        if(IC == output_kcode)
         {
             f2buf[0] = c1;
             f2buf[1] = c2;
@@ -379,34 +452,8 @@ jbuffer(
                 while(*dst) f1(*(dst++));
             }
         }
-#else
-          ;
-        else if(IC == EUC){
-            switch(output_kcode){
-              case SJIS:
-                uc[0] = c1;
-                uc[1] = c2;
-                p = e2sj(uc);
-                c1 = p[0];
-                c2 = p[1];
-                break;
-              default:
-                impossible("Unknown kcode!");
-                break;
-            }
-        }
-        else if(IC == SJIS){
-            uc[0] = c1;
-            uc[1] = c2;
-            p = sj2e(uc);
-            switch(output_kcode){
-              case EUC:
-                break;
-              default:
-                impossible("Unknown kcode!");
-                break;
-            }
-        }
+#else /*WIN32*/
+        /* SJIS to SJIS only */
         f2buf[0] = c1;
         f2buf[1] = c2;
         f2buf[2] = '\0';
@@ -420,8 +467,8 @@ jbuffer(
         return 1;
     }
     return -1;
-}
 #endif
+}
 
 /*
  *  2バイト文字をバッファリングしながら出力する
@@ -529,7 +576,7 @@ is_kanji1(const char *s,int pos)
  * 漢字の先頭位置まで何バイト戻る必要があるかを計算する
  */
 int
-offset_in_kanji(const unsigned char *s,int pos)
+offset_in_kanji(const unsigned char *s, int pos)
 {
     static int mask[7] = {
         0,
@@ -540,7 +587,7 @@ offset_in_kanji(const unsigned char *s,int pos)
         0xfc,
         0xfe,
     };
-    if (output_kcode == UTF8) {
+    if (IC == UTF8) {
         int c = 1;
         int i;
 
@@ -561,7 +608,7 @@ offset_in_kanji(const unsigned char *s,int pos)
             c++;
         }
 
-        if (s[i] < mask[c]) {
+        if (i < 0 || c > 6 || s[i] < mask[c]) {
             return 0;
         } else {
             return c;
@@ -582,6 +629,33 @@ isspace_8(int c)
     up = (unsigned int *)&c;
     return *up<0x80 ? isspace(*up) : 0;
 }
+
+static void
+split_japanese_utf8(
+    char *str,
+    char *str1,
+    char *str2,
+    int pos)
+{
+    int i = 0;
+    int width = 0; /* 表示上の位置 */
+    unsigned char *s = (unsigned char *)str;
+
+    while (s[i]) {
+        int cl = charlen(s[i]);
+        int w = (cl >= 2) ? 2 : 1;
+        if (width + w > pos)
+            break;
+        i += cl;
+        width += w;
+    }
+
+    memcpy(str1, str, i);
+    str1[i] = '\0';
+    strcpy(str2, str + i);
+}
+
+
 /*
 ** split string(str) including japanese before pos and return to
 ** str1, str2.
@@ -594,6 +668,9 @@ split_japanese(char *str,char *str1,char *str2,int pos)
     char *pnstr;
     int sq_brac;
 
+#ifdef ICUTF8
+    split_japanese_utf8(str, str1, str2, pos);
+#else
 retry:
     len = strlen((char *)str);
 
@@ -696,12 +773,16 @@ found:
     for( ; str[k] ; ++k )
       *(pnstr++) = *(pstr++);
     *(pnstr++) = '\0';
+#endif
 }
 
 void 
 jrndm_replace(char *c)
 {
     unsigned char cc[3];
+
+    if (IC == UTF8)
+      return;
 
     if(IC==SJIS)
       memcpy(cc, (char *)sj2e((unsigned char *)c), 2);
@@ -720,7 +801,7 @@ jrndm_replace(char *c)
           cc[1] = rn2(10) + 0x30;
         else if(cc[1] <= 0x5A) /* Ａ～Ｚ */
           cc[1] = rn2(26) + 0x41;
-        else if(cc[2] <= 0x7A) /* ａ～ｚ */
+        else if(cc[1] <= 0x7A) /* ａ～ｚ */
           cc[1] = rn2(26) + 0x61;
         break;
       case 0x24:
@@ -746,7 +827,7 @@ jrndm_replace(char *c)
         cc[1] = rn2(4) + 0x21; /* 堯 槇 遙 瑤 の4文字*/
         break;
       default:
-        if(cc[0] >= 0x30 && cc[1] <= 0x74)
+        if(cc[0] >= 0x30 && cc[0] <= 0x74)
           cc[1] = rn2(94) + 0x21;
         break;
     }
@@ -760,6 +841,7 @@ jrndm_replace(char *c)
       memcpy(c, cc, 2);
 }
 
+#ifndef JAPANESETEST
 /*
  * "put off"を対象によって適切に和訳する
  */
@@ -886,6 +968,7 @@ numeral(register struct obj *obj)
         }
     }
 }
+#endif
 
 /*-------------------------------------------------------------------------
         全角文字のかすれパターン
@@ -1342,7 +1425,9 @@ static const char *ro2 =
  * 漢字交じり文の文字を消す
  */
 static int
-kanji2index(unsigned char c1,unsigned char c2)
+kanji2index(
+    unsigned char c1,
+    unsigned char c2)
 {
     if (IC == SJIS) {
         /* SJIS */
@@ -1359,11 +1444,25 @@ kanji2index(unsigned char c1,unsigned char c2)
 }
 
 int
-jrubout(char *engr,int nxt,int use_rubout,int select_rnd)
+jrubout(
+    char *engr,
+    int nxt,
+    int use_rubout,
+    int select_rnd)
 {
     int j;
     unsigned char *s;
     const unsigned char *p;
+
+    if (IC == UTF8) {
+        int offset = offset_in_kanji(engr, nxt);
+        /* 非漢字の場合 */
+        if (offset == 0 && !is_kanji(engr[nxt])) {
+            return 0;
+        }
+        /*JP:TODO:漢字はそのまま通す*/
+        return 1;
+    }
 
     if(is_kanji2(engr, nxt)){
         return 1;
@@ -1390,6 +1489,7 @@ jrubout(char *engr,int nxt,int use_rubout,int select_rnd)
     return 1;
 }
 
+#ifndef JAPANESETEST
 static struct trans_verb trans_verb_list[] = {
     {"adjust",  "どれ", "を", "調整する"},
     {"call",    "どれ", "を", "呼ぶ"},
@@ -1453,3 +1553,4 @@ struct trans_verb
 
     return &dummyverb;;
 }
+#endif
