@@ -11,7 +11,7 @@
 #endif
 
 int xputc(CHAR_P);
-int xputc2(unsigned char *);
+int xputc2(const unsigned char *);
 
 
 #define EUC     0
