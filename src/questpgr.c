@@ -590,9 +590,17 @@ com_pager_core(
     }
 
     if (output == 0 || output == 1)
+#if 0 /*JP*/
         deliver_by_pline(text);
+#else
+        deliver_by_pline(utf8toic(text));
+#endif
     else
+#if 0 /*JP*/
         deliver_by_window(text, (output == 3) ? NHW_MENU : NHW_TEXT);
+#else
+        deliver_by_window(utf8toic(text), (output == 3) ? NHW_MENU : NHW_TEXT);
+#endif
 
     if (synopsis) {
         char in_line[BUFSZ], out_line[BUFSZ];
@@ -603,7 +611,11 @@ com_pager_core(
 #else
         Strcpy(in_line, synopsis);
 #endif
+#if 0 /*JP*/
         convert_line(in_line, out_line);
+#else
+        convert_line(utf8toic(in_line), out_line);
+#endif
         /* bypass message delivery but be available for ^P recall */
         putmsghistory(out_line, FALSE);
     }
