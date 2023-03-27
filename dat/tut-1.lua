@@ -102,7 +102,7 @@ des.door({ coord = { 18,13 }, state = "closed" });
 
 des.engraving({ coord = { 19,13 }, type = "engrave", text = "Pick up items with '" .. nh.eckey("pickup") .. "'", degrade = false });
 
-local armor = (u.role == "Monk") and "leather gloves" or "leather armor";
+local armor = (u.role == "Monk") and "革の手袋" or "革鎧";
 
 des.object({ id = armor, spe = 0, buc = "cursed", coord = { 19,14} });
 

@@ -125,11 +125,11 @@ themeroom_fills = {
    function(rm)
       local diff = nh.level_difficulty()
       -- start with [1..4] for low difficulty
-      local zombifiable = { "kobold", "gnome", "orc", "dwarf" };
+      local zombifiable = { "コボルド", "ノーム", "オーク", "ドワーフ" };
       if diff > 3 then          -- medium difficulty
-         zombifiable[5], zombifiable[6] = "elf", "human";
+         zombifiable[5], zombifiable[6] = "エルフ", "人間";
          if diff > 6 then       -- high difficulty (relatively speaking)
-            zombifiable[7], zombifiable[8] = "ettin", "giant";
+            zombifiable[7], zombifiable[8] = "エティン", "巨人";
          end
       end
       for i = 1, (rm.width * rm.height) / 2 do
@@ -143,14 +143,14 @@ themeroom_fills = {
 
    -- Massacre
    function(rm)
-      local mon = { "apprentice", "warrior", "ninja", "thug",
-                    "hunter", "acolyte", "abbot", "page",
-                    "attendant", "neanderthal", "chieftain",
-                    "student", "wizard", "valkyrie", "tourist",
-                    "samurai", "rogue", "ranger", "priestess",
-                    "priest", "monk", "knight", "healer",
-                    "cavewoman", "caveman", "barbarian",
-                    "archeologist" };
+      local mon = { "実習生", "戦士", "忍者", "ちんぴら",
+                    "ハンター", "侍者", "師範", "小姓",
+                    "随行員", "ネアンデルタール人", "首領",
+                    "学生", "魔法使い", "ワルキューレ", "観光客",
+                    "侍", "盗賊", "レンジャー", "尼僧",
+                    "僧侶", "武闘家", "騎士", "薬師",
+                    "洞窟人", "洞窟人", "野蛮人",
+                    "考古学者" };
       local idx = math.random(#mon);
       for i = 1, d(5,5) do
          if (percent(10)) then idx = math.random(#mon); end
