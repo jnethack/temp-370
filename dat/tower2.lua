@@ -46,13 +46,13 @@ des.object("水上歩行の靴",place[7])
 des.object("水晶の鎧",place[8])
 
 local spbooks = {
-   "spellbook of invisibility",
-   "spellbook of cone of cold",
-   "spellbook of create familiar",
-   "spellbook of clairvoyance",
-   "spellbook of charm monster",
-   "spellbook of stone to flesh",
-   "spellbook of polymorph"
+   "透明の魔法書",
+   "冷気の魔法書",
+   "造魔の魔法書",
+   "千里眼の魔法書",
+   "魅了の魔法書",
+   "軟化の魔法書",
+   "変化の魔法書"
 }
 shuffle(spbooks);
 des.object(spbooks[1],place[9])
