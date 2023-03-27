@@ -5,6 +5,9 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#ifdef WIN32
+#include "win32api.h"
+#endif
 #include "hack.h"
 #ifdef POSIX_ICONV
 #include <iconv.h>
@@ -167,6 +170,7 @@ sj2e(unsigned char *s)
     sw[1] = l | 0x80;
     return sw;
 }
+
 /*
 **      translate string to internal kcode
 */
@@ -209,6 +213,29 @@ str2ic(const char *s)
         return (char *)buf;
     }
 #else
+#ifdef WIN32
+    {
+        wchar_t wbuf[1024];
+        memset(buf, 0, 1024);
+        int len = MultiByteToWideChar(
+            CP_UTF8,
+            MB_PRECOMPOSED,
+            s,
+            strlen(s),
+            wbuf,
+            1024);
+        int len2 = WideCharToMultiByte(
+            CP_ACP,
+            0,
+            wbuf,
+            len,
+            (LPSTR)buf,
+            1024,
+            NULL,
+            NULL);
+        return (char *)buf;
+    }
+#else
     if( IC==EUC && input_kcode == SJIS ){
         while(*s){
             up = (unsigned char *)s;
@@ -228,7 +255,20 @@ str2ic(const char *s)
         return (char *)buf;
     }
 #endif
+#endif
+}
 
+/* UTF8文字列を内部コードに */
+const char *
+utf8toic(const char *s)
+{
+  /* 入力コードをUTF8に固定してstr2icを使う */
+  int k = input_kcode;
+  const char *ret;
+  input_kcode = UTF8;
+  ret = str2ic(s);
+  input_kcode = k;
+  return ret;
 }
 
 /*
