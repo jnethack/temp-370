@@ -3142,7 +3142,11 @@ get_table_montype(lua_State *L, int *mgender)
     int ret = NON_PM;
 
     if (s) {
+#if 0 /*JP*/
         ret = find_montype(L, s, mgender);
+#else
+        ret = find_montype(L, utf8toic(s), mgender);
+#endif
         Free(s);
         if (ret == NON_PM)
             nhl_error(L, "Unknown monster id");
@@ -3222,7 +3226,11 @@ lspo_monster(lua_State *L)
             tmpmons.id = NON_PM;
         } else {
             tmpmons.class = -1;
+#if 0 /*JP*/
             tmpmons.id = find_montype(L, paramstr, &mgend);
+#else
+            tmpmons.id = find_montype(L, utf8toic(paramstr), &mgend);
+#endif
             tmpmons.female = (mgend == FEMALE) ? FEMALE
                                 : (mgend == MALE) ? MALE : rn2(2);
         }
@@ -3237,7 +3245,11 @@ lspo_monster(lua_State *L)
             tmpmons.id = NON_PM;
         } else {
             tmpmons.class = -1;
+#if 0 /*JP*/
             tmpmons.id = find_montype(L, paramstr, &mgend);
+#else
+            tmpmons.id = find_montype(L, utf8toic(paramstr), &mgend);
+#endif
             tmpmons.female = (mgend == FEMALE) ? FEMALE
                                 : (mgend == MALE) ? MALE : rn2(2);
         }
@@ -3253,7 +3265,11 @@ lspo_monster(lua_State *L)
             tmpmons.id = NON_PM;
         } else {
             tmpmons.class = -1;
+#if 0 /*JP*/
             tmpmons.id = find_montype(L, paramstr, &mgend);
+#else
+            tmpmons.id = find_montype(L, utf8toic(paramstr), &mgend);
+#endif
             tmpmons.female = (mgend == FEMALE) ? FEMALE
                                 : (mgend == MALE) ? MALE : rn2(2);
         }
@@ -3490,7 +3506,11 @@ staticfn int
 get_table_objtype(lua_State *L)
 {
     char *s = get_table_str_opt(L, "id", NULL);
+#if 0 /*JP*/
     int ret = find_objtype(L, s);
+#else
+    int ret = find_objtype(L, utf8toic(s));
+#endif
 
     Free(s);
     return ret;
@@ -3548,7 +3568,11 @@ lspo_object(lua_State *L)
             tmpobj.id = STRANGE_OBJECT;
         } else {
             tmpobj.class = -1;
+#if 0 /*JP*/
             tmpobj.id = find_objtype(L, paramstr);
+#else
+            tmpobj.id = find_objtype(L, utf8toic(paramstr));
+#endif
         }
     } else if (argc == 2 && lua_type(L, 1) == LUA_TSTRING
                && lua_type(L, 2) == LUA_TTABLE) {
@@ -3561,7 +3585,11 @@ lspo_object(lua_State *L)
             tmpobj.id = STRANGE_OBJECT;
         } else {
             tmpobj.class = -1;
+#if 0 /*JP*/
+            tmpobj.id = find_objtype(L, utf8toic(paramstr));
+#else
             tmpobj.id = find_objtype(L, paramstr);
+#endif
         }
     } else if (argc == 3 && lua_type(L, 2) == LUA_TNUMBER
                && lua_type(L, 3) == LUA_TNUMBER) {
@@ -3575,7 +3603,11 @@ lspo_object(lua_State *L)
             tmpobj.id = STRANGE_OBJECT;
         } else {
             tmpobj.class = -1;
+#if 0 /*JP*/
             tmpobj.id = find_objtype(L, paramstr);
+#else
+            tmpobj.id = find_objtype(L, utf8toic(paramstr));
+#endif
         }
     } else {
         lcheck_param_table(L);
@@ -3618,9 +3650,22 @@ lspo_object(lua_State *L)
         struct permonst *pm = NULL;
         boolean nonpmobj = FALSE;
         int i;
+#if 0 /*JP*/
         char *montype = get_table_str_opt(L, "montype", NULL);
+#else
+        /* get_table_str_opt()の返り値はfree()する必要がある。
+         * montypeが使われている場所が多いので返り値の方を
+         * 別変数にする。
+         */
+        char *montypef = get_table_str_opt(L, "montype", NULL);
+#endif
 
+#if 0 /*JP*/
         if (montype) {
+#else
+        if (montypef) {
+            const char *montype = utf8toic(montypef);
+#endif
             if ((tmpobj.id == TIN && (!strcmpi(montype, "spinach")
                 /* id="tin",montype="empty" produces an empty tin */
                                       || !strcmpi(montype, "empty")))
@@ -3645,7 +3690,11 @@ lspo_object(lua_State *L)
                         break;
                     }
             }
+#if 0 /*JP*/
             free((genericptr_t) montype);
+#else
+            free((genericptr_t) montypef);
+#endif
             if (pm)
                 tmpobj.corpsenm = monsndx(pm);
             else if (!nonpmobj)
