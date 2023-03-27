@@ -3904,6 +3904,7 @@ extern int is_kanji(unsigned int);
 extern void setkcode(int);
 extern unsigned char *e2sj(unsigned char *);
 extern unsigned char *sj2e(unsigned char *);
+extern const char *utf8toic(const char *);
 extern const char *str2ic(const char *);
 extern int jbuffer(unsigned int, unsigned int *, void (*)(unsigned int), void (*)(unsigned char *));
 extern int cbuffer(unsigned int);
