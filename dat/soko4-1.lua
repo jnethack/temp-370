@@ -59,18 +59,18 @@ des.non_diggable(selection.area(00,00,13,12))
 des.non_passwall(selection.area(00,00,13,12))
 
 -- Boulders
-des.object("boulder",02,02)
-des.object("boulder",02,03)
+des.object("岩",02,02)
+des.object("岩",02,03)
 --
-des.object("boulder",10,02)
-des.object("boulder",09,03)
-des.object("boulder",10,04)
+des.object("岩",10,02)
+des.object("岩",09,03)
+des.object("岩",10,04)
 --
-des.object("boulder",08,07)
-des.object("boulder",09,08)
-des.object("boulder",09,09)
-des.object("boulder",08,10)
-des.object("boulder",10,10)
+des.object("岩",08,07)
+des.object("岩",09,08)
+des.object("岩",09,09)
+des.object("岩",08,10)
+des.object("岩",10,10)
 
 -- prevent monster generation over the (filled) pits
 des.exclusion({ type = "monster-generation", region = { 01,06, 07,11 } });
@@ -86,8 +86,8 @@ des.trap("pit",06,10)
 des.trap("pit",07,10)
 
 -- A little help
-des.object("scroll of earth",02,11)
-des.object("scroll of earth",03,11)
+des.object("大地の巻物",02,11)
+des.object("大地の巻物",03,11)
 
 -- Random objects
 des.object({ class = "%" });

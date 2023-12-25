@@ -38,10 +38,10 @@ des.room({ type="ordinary", lit=1, x=3,y=3,
               if percent(75) then
                  des.room({ type="ordinary", lit=1, x=10,y=2, w=3,h=4,
                             contents = function()
-                               des.monster("gnome")
-                               des.monster("monkey")
-                               des.monster("monkey")
-                               des.monster("monkey")
+                               des.monster("ノーム")
+                               des.monster("猿")
+                               des.monster("猿")
+                               des.monster("猿")
                                des.door({ state = "closed", wall="south" })
                             end
                  })
@@ -68,7 +68,7 @@ des.room({ type="ordinary", lit=1, x=3,y=3,
                  des.room({ type="ordinary", lit=0, x=19,y=2, w=2,h=2,
                             contents = function()
                                des.door({ state = "locked", wall="east" })
-                               des.monster("gnome king")
+                               des.monster("ノームの王")
                             end
                  })
               end
@@ -147,22 +147,22 @@ des.room({ type="ordinary", lit=1, x=3,y=3,
                          contents = function()
                             des.door({ state = "closed", wall = "west" })
                             des.altar({ x=02, y=01, align=align[1], type="shrine" })
-                            des.monster("gnomish wizard")
-                            des.monster("gnomish wizard")
+                            des.monster("ノームの魔法使い")
+                            des.monster("ノームの魔法使い")
                          end
               })
 
-              des.monster({ id = "watchman", peaceful = 1 })
-              des.monster({ id = "watchman", peaceful = 1 })
-              des.monster({ id = "watchman", peaceful = 1 })
-              des.monster({ id = "watchman", peaceful = 1 })
-              des.monster({ id = "watch captain", peaceful = 1 })
-              des.monster("gnome")
-              des.monster("gnome")
-              des.monster("gnome")
-              des.monster("gnome lord")
-              des.monster("monkey")
-              des.monster("monkey")
+              des.monster({ id = "見張り", peaceful = 1 })
+              des.monster({ id = "見張り", peaceful = 1 })
+              des.monster({ id = "見張り", peaceful = 1 })
+              des.monster({ id = "見張り", peaceful = 1 })
+              des.monster({ id = "見張りの隊長", peaceful = 1 })
+              des.monster("ノーム")
+              des.monster("ノーム")
+              des.monster("ノーム")
+              des.monster("ノームの貴族")
+              des.monster("猿")
+              des.monster("猿")
 
            end
 })
@@ -177,21 +177,21 @@ des.room({ type="ordinary",
            contents = function()
               des.stair("down")
               des.trap()
-              des.monster("gnome")
-              des.monster("gnome")
+              des.monster("ノーム")
+              des.monster("ノーム")
            end
 })
 
 des.room({ type="ordinary",
            contents = function()
-              des.monster("dwarf")
+              des.monster("ドワーフ")
            end
 })
 
 des.room({ type="ordinary",
            contents = function()
               des.trap()
-              des.monster("gnome")
+              des.monster("ノーム")
            end
 })
 

@@ -48,9 +48,9 @@ local place = { {33,0}, {0,12}, {25,20}, {75,05} }
 shuffle(place)
 
 des.stair({ dir = "down", coord = place[1] })
-des.monster({ id = "giant mimic", coord = place[2], appear_as = "ter:staircase down" })
-des.monster({ id = "large mimic", coord = place[3], appear_as = "ter:staircase down" })
-des.monster({ id = "small mimic", coord = place[4], appear_as = "ter:staircase down" })
+des.monster({ id = "巨大なミミック", coord = place[2], appear_as = "ter:staircase down" })
+des.monster({ id = "大きなミミック", coord = place[3], appear_as = "ter:staircase down" })
+des.monster({ id = "小さなミミック", coord = place[4], appear_as = "ter:staircase down" })
 -- Portal arrival point
 des.levregion({ region = {19,09,19,09}, type="branch" })
 -- Doors (secret)
@@ -103,25 +103,25 @@ des.door("closed",  6,18)
 des.door("closed", 65,18)
 des.door("closed", 68,18)
 -- Master of Thieves
-des.monster({ id = "Master of Thieves", coord = {36, 11}, inventory = function()
-   des.object({ id = "leather armor", spe = 5 });
-   des.object({ id = "silver dagger", spe = 4 });
-   des.object({ id = "dagger", spe = 2, quantity = d(2,4), buc = "not-cursed" });
+des.monster({ id = "盗賊の頭領", coord = {36, 11}, inventory = function()
+   des.object({ id = "革鎧", spe = 5 });
+   des.object({ id = "銀の短剣", spe = 4 });
+   des.object({ id = "短剣", spe = 2, quantity = d(2,4), buc = "not-cursed" });
 end })
 -- The treasure of Master of Thieves
-des.object("chest", 36, 11)
+des.object("宝箱", 36, 11)
 -- thug guards, room #1
-des.monster("thug", 28, 10)
-des.monster("thug", 29, 11)
-des.monster("thug", 30, 09)
-des.monster("thug", 31, 07)
+des.monster("ちんぴら", 28, 10)
+des.monster("ちんぴら", 29, 11)
+des.monster("ちんぴら", 30, 09)
+des.monster("ちんぴら", 31, 07)
 -- thug guards, room #2
-des.monster("thug", 31, 13)
-des.monster("thug", 33, 14)
-des.monster("thug", 30, 15)
+des.monster("ちんぴら", 31, 13)
+des.monster("ちんぴら", 33, 14)
+des.monster("ちんぴら", 30, 15)
 --thug guards, room #3
-des.monster("thug", 35, 09)
-des.monster("thug", 36, 13)
+des.monster("ちんぴら", 35, 09)
+des.monster("ちんぴら", 36, 13)
 -- Non diggable walls
 des.non_diggable(selection.area(00,00,75,20))
 -- Random traps
@@ -145,22 +145,22 @@ des.trap()
 -- Monsters to get in the way.
 --
 -- West exit
-des.monster({ id = "leprechaun", x=01, y=12, peaceful=0 })
-des.monster({ id = "water nymph", x=02, y=12, peaceful=0 })
+des.monster({ id = "レプラコーン", x=01, y=12, peaceful=0 })
+des.monster({ id = "水のニンフ", x=02, y=12, peaceful=0 })
 -- North exit
-des.monster({ id = "water nymph", x=33, y=01, peaceful=0 })
-des.monster({ id = "leprechaun", x=33, y=02, peaceful=0 })
+des.monster({ id = "水のニンフ", x=33, y=01, peaceful=0 })
+des.monster({ id = "レプラコーン", x=33, y=02, peaceful=0 })
 -- East exit
-des.monster({ id = "water nymph", x=74, y=05, peaceful=0 })
-des.monster({ id = "leprechaun", x=74, y=04, peaceful=0 })
+des.monster({ id = "水のニンフ", x=74, y=05, peaceful=0 })
+des.monster({ id = "レプラコーン", x=74, y=04, peaceful=0 })
 -- South exit
-des.monster({ id = "leprechaun", x=25, y=19, peaceful=0 })
-des.monster({ id = "water nymph", x=25, y=18, peaceful=0 })
+des.monster({ id = "レプラコーン", x=25, y=19, peaceful=0 })
+des.monster({ id = "水のニンフ", x=25, y=18, peaceful=0 })
 -- Wandering the streets.
 for i=1,4 + math.random(1 - 1,1*3)  do
-   des.monster({ id = "water nymph", coord = streets:rndcoord(1), peaceful=0 })
-   des.monster({ id = "leprechaun", coord = streets:rndcoord(1), peaceful=0 })
+   des.monster({ id = "水のニンフ", coord = streets:rndcoord(1), peaceful=0 })
+   des.monster({ id = "レプラコーン", coord = streets:rndcoord(1), peaceful=0 })
 end
 for i=1,7 + math.random(1 - 1,1*3)  do
-   des.monster({ id = "chameleon", coord = streets:rndcoord(1), peaceful=0 })
+   des.monster({ id = "カメレオン", coord = streets:rndcoord(1), peaceful=0 })
 end

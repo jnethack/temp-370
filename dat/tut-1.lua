@@ -108,14 +108,14 @@ des.object({ id = armor, spe = 0, buc = "cursed", coord = { 19,14} });
 
 des.engraving({ coord = { 19,15 }, type = "engrave", text = "Wear armor with '" .. nh.eckey("wear") .. "'", degrade = false });
 
-des.object({ id = "dagger", spe = 0, buc = "not-cursed", coord = { 21,15} });
+des.object({ id = "短剣", spe = 0, buc = "not-cursed", coord = { 21,15} });
 
 des.engraving({ coord = { 21,14 }, type = "engrave", text = "Wield weapons with '" .. nh.eckey("wield") .. "'", degrade = false });
 
 
 des.engraving({ coord = { 22,13 }, type = "engrave", text = "Hit monsters by walking into them.", degrade = false });
 
-des.monster({ id = "lichen", coord = { 23,15 }, waiting = true, countbirth = false });
+des.monster({ id = "苔の怪物", coord = { 23,15 }, waiting = true, countbirth = false });
 
 --
 
@@ -127,7 +127,7 @@ des.trap({ type = "magic portal", coord = { 27,16 }, seen = true });
 --
 
 des.engraving({ coord = { 25,13 }, type = "engrave", text = "Push boulders by moving into them", degrade = false });
-des.object({ id = "boulder", coord = {25,12} });
+des.object({ id = "岩", coord = {25,12} });
 
 --
 
@@ -135,7 +135,7 @@ des.engraving({ coord = { 27,9 }, type = "engrave", text = "Take off armor with 
 
 --
 
-des.object({ class = "?", id = "remove curse", buc = "blessed", coord = {23,11} })
+des.object({ class = "?", id = "解呪の巻物", buc = "blessed", coord = {23,11} })
 des.engraving({ coord = { 22,11 }, type = "engrave", text = "Some items have shuffled descriptions, different each game", degrade = false });
 des.engraving({ coord = { 23,11 }, type = "engrave", text = "Pick up this scroll, read it with '" .. nh.eckey("read") .. "', and try to remove the armor again", degrade = false });
 
@@ -147,12 +147,12 @@ des.trap({ type = "magic portal", coord = { 19,11 }, seen = true });
 --
 
 -- rock fall
-des.object({ coord = {14, 5}, id = "rock", quantity = math.random(50,99) });
-des.object({ coord = {15, 5}, id = "rock", quantity = math.random(10,30) });
-des.object({ coord = {14, 4}, id = "rock", quantity = math.random(10,30) });
-des.object({ coord = {15, 6}, id = "rock", quantity = math.random(30,60) });
-des.object({ coord = {14, 6}, id = "rock", quantity = math.random(30,60) });
-des.object({ coord = {14, 6}, id = "boulder" });
+des.object({ coord = {14, 5}, id = "石", quantity = math.random(50,99) });
+des.object({ coord = {15, 5}, id = "石", quantity = math.random(10,30) });
+des.object({ coord = {14, 4}, id = "石", quantity = math.random(10,30) });
+des.object({ coord = {15, 6}, id = "石", quantity = math.random(30,60) });
+des.object({ coord = {14, 6}, id = "石", quantity = math.random(30,60) });
+des.object({ coord = {14, 6}, id = "岩" });
 
 des.door({ coord = { 20,3 }, state = percent(50) and "open" or "closed" });
 
@@ -162,7 +162,7 @@ des.engraving({ coord = { 22,4 }, type = "engrave", text = "You can drop partial
 
 --
 
-des.monster({ id = "yellow mold", coord = { 26,2 }, waiting = true, countbirth = false });
+des.monster({ id = "黄色モールド", coord = { 26,2 }, waiting = true, countbirth = false });
 
 des.engraving({ coord = { 25,5 }, type = "engrave", text = "Throw items with '" .. nh.eckey("throw") .. "'", degrade = false });
 
@@ -170,11 +170,11 @@ des.trap({ type = "magic portal", coord = { 21,1 }, seen = true });
 
 --
 
-des.monster({ id = "wolf", coord = { 29,2 }, peaceful = 0, waiting = true, countbirth = false });
+des.monster({ id = "狼", coord = { 29,2 }, peaceful = 0, waiting = true, countbirth = false });
 
 des.engraving({ coord = { 37,4 }, type = "engrave", text = "Missiles, such as rocks, work better when fired from appropriate launcher", degrade = false });
 
-des.object({ coord = { 37,3 }, id = "sling", buc = "not-cursed", spe = 9 });
+des.object({ coord = { 37,3 }, id = "スリング", buc = "not-cursed", spe = 9 });
 des.engraving({ coord = { 37,3 }, type = "engrave", text = "Wield the sling", degrade = false });
 des.engraving({ coord = { 36,1 }, type = "engrave", text = "Use '" .. nh.eckey("fire") .. "' to fire missiles with the wielded launcher", degrade = false });
 
@@ -189,9 +189,9 @@ des.door({ coord = { 38,6 }, state = "closed" });
 
 des.engraving({ coord = { 39,6 }, type = "engrave", text = "You loot containers with '" .. nh.eckey("loot") .. "'", degrade = false });
 
-des.object({ coord = { 42,6 }, id = "large box", broken = true,
+des.object({ coord = { 42,6 }, id = "大箱", broken = true,
              contents = function(obj)
-                des.object({ id = "secret door detection", class = "/", spe = 30 }); end
+                des.object({ id = "扉探索の杖", class = "/", spe = 30 }); end
 });
 
 des.engraving({ coord = { 45,6 }, type = "engrave", text = "Magic wands are used with '" .. nh.eckey("zap") .. "'", degrade = false });
@@ -214,10 +214,10 @@ des.trap({ type = "magic portal", coord = { 27,14 }, seen = true });
 
 des.engraving({ coord = { 48,1 }, type = "burn", text = "Use '" .. nh.eckey("eat") .. "' to eat edible things", degrade = false });
 
-des.object({ coord = { 50,3 }, id = "apple", buc = "not-cursed"  });
-des.object({ coord = { 50,3 }, id = "candy bar", buc = "not-cursed"  });
+des.object({ coord = { 50,3 }, id = "りんご", buc = "not-cursed"  });
+des.object({ coord = { 50,3 }, id = "キャンディ", buc = "not-cursed"  });
 
-local otmp = des.object({ coord = { 50,3 }, id = "corpse", montype = "newt", buc = "not-cursed" });
+local otmp = des.object({ coord = { 50,3 }, id = "死体", montype = "イモリ", buc = "not-cursed" });
 otmp:stop_timer("rot-corpse");
 
 --
@@ -225,8 +225,8 @@ otmp:stop_timer("rot-corpse");
 des.door({ coord = { 46,11 }, state = "closed" });
 
 des.engraving({ coord = { 43,11 }, type = "burn", text = "Use '" .. nh.eckey("twoweapon") .. "' to use two weapons at once", degrade = false });
-des.object({ coord = { 43,13 }, id = "knife", buc = "uncursed" });
-des.object({ coord = { 43,14 }, id = "dagger", buc = "blessed" });
+des.object({ coord = { 43,13 }, id = "ナイフ", buc = "uncursed" });
+des.object({ coord = { 43,14 }, id = "短剣", buc = "blessed" });
 
 des.engraving({ coord = { 43,16 }, type = "burn", text = "Swap weapons quickly with '" .. nh.eckey("swap") .. "'", degrade = false });
 
@@ -234,7 +234,7 @@ des.door({ coord = { 40,15 }, state = "random" });
 
 --
 
-des.object({ coord = { 48,7 }, id = "ring of levitation", buc = "not-cursed" });
+des.object({ coord = { 48,7 }, id = "浮遊の指輪", buc = "not-cursed" });
 
 des.engraving({ coord = { 48,10 }, type = "burn", text = "Put on accessories with '" .. nh.eckey("puton") .. "'", degrade = false });
 
@@ -267,5 +267,5 @@ des.trap({ type = "magic portal", coord = { 66,2 }, seen = true });
 -- temporary stuff here
 -- des.trap({ type = "magic portal", coord = { 9,5 }, seen = true });
 -- des.trap({ type = "magic portal", coord = { 9,1 }, seen = true });
--- des.object({ id = "leather armor", spe = 0, coord = { 9,2} });
+-- des.object({ id = "革鎧", spe = 0, coord = { 9,2} });
 

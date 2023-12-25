@@ -124,7 +124,7 @@ function hell_tweaks(protected_area)
       bwalls = bwalls & prot;
       bwalls:iterate(function (x,y)
             des.terrain(x, y, ".");
-            des.object("boulder", x, y);
+            des.object("岩", x, y);
       end);
    end
 

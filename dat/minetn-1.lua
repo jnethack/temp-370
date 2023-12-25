@@ -75,43 +75,43 @@ local place = { {05,04},{09,05},{13,04},{26,04},{31,05},{30,14},{05,14},{10,13},
 shuffle(place);
 
 -- scatter some bodies
-des.object({ id = "corpse", x=20,y=12, montype="aligned cleric" })
-des.object({ id = "corpse", coord = place[1], montype="shopkeeper" })
-des.object({ id = "corpse", coord = place[2], montype="shopkeeper" })
-des.object({ id = "corpse", coord = place[3], montype="shopkeeper" })
-des.object({ id = "corpse", coord = place[4], montype="shopkeeper" })
-des.object({ id = "corpse", coord = place[5], montype="shopkeeper" })
-des.object({ id = "corpse", montype="watchman" })
-des.object({ id = "corpse", montype="watchman" })
-des.object({ id = "corpse", montype="watchman" })
-des.object({ id = "corpse", montype="watchman" })
-des.object({ id = "corpse", montype="watch captain" })
+des.object({ id = "死体", x=20,y=12, montype="僧侶" })
+des.object({ id = "死体", coord = place[1], montype="店主" })
+des.object({ id = "死体", coord = place[2], montype="店主" })
+des.object({ id = "死体", coord = place[3], montype="店主" })
+des.object({ id = "死体", coord = place[4], montype="店主" })
+des.object({ id = "死体", coord = place[5], montype="店主" })
+des.object({ id = "死体", montype="見張り" })
+des.object({ id = "死体", montype="見張り" })
+des.object({ id = "死体", montype="見張り" })
+des.object({ id = "死体", montype="見張り" })
+des.object({ id = "死体", montype="見張りの隊長" })
 
 -- Rubble!
 for i=1,9 + math.random(2 - 1,2*5) do
   if percent(90) then
-    des.object("boulder")
+    des.object("岩")
   end
-  des.object("rock")
+  des.object("石")
 end
 
 -- Guarantee 7 candles since we won't have Izchak available
-des.object({ id = "wax candle", coord = place[4], quantity = math.random(1,2) })
+des.object({ id = "蜜蝋のろうそく", coord = place[4], quantity = math.random(1,2) })
 
-des.object({ id = "wax candle", coord = place[1], quantity = math.random(2,4) })
-des.object({ id = "wax candle", coord = place[2], quantity = math.random(1,2) })
-des.object({ id = "tallow candle", coord = place[3], quantity = math.random(1,3) })
-des.object({ id = "tallow candle", coord = place[2], quantity = math.random(1,2) })
-des.object({ id = "tallow candle", coord = place[4], quantity = math.random(1,2) })
+des.object({ id = "蜜蝋のろうそく", coord = place[1], quantity = math.random(2,4) })
+des.object({ id = "蜜蝋のろうそく", coord = place[2], quantity = math.random(1,2) })
+des.object({ id = "獣脂のろうそく", coord = place[3], quantity = math.random(1,3) })
+des.object({ id = "獣脂のろうそく", coord = place[2], quantity = math.random(1,2) })
+des.object({ id = "獣脂のろうそく", coord = place[4], quantity = math.random(1,2) })
 
 -- go ahead and leave a lamp next to one corpse to be suggestive
 -- and some empty wands...
-des.object("oil lamp",place[2])
-des.object({ id = "wand of striking", coord = place[1], buc="uncursed", spe=0 })
-des.object({ id = "wand of striking", coord = place[3], buc="uncursed", spe=0 })
-des.object({ id = "wand of striking", coord = place[4], buc="uncursed", spe=0 })
-des.object({ id = "wand of magic missile", coord = place[4], buc="uncursed", spe=0 })
-des.object({ id = "wand of magic missile", coord = place[5], buc="uncursed", spe=0 })
+des.object("オイルランプ",place[2])
+des.object({ id = "衝撃の杖", coord = place[1], buc="uncursed", spe=0 })
+des.object({ id = "衝撃の杖", coord = place[3], buc="uncursed", spe=0 })
+des.object({ id = "衝撃の杖", coord = place[4], buc="uncursed", spe=0 })
+des.object({ id = "矢の杖", coord = place[4], buc="uncursed", spe=0 })
+des.object({ id = "矢の杖", coord = place[5], buc="uncursed", spe=0 })
 
 -- the Orcish Army
 
@@ -125,21 +125,21 @@ for i=1,5 + math.random(1 - 1,1*10) do
       if percent(80) then
          des.monster({ id = "Uruk-hai", coord = inside:rndcoord(1), peaceful=0 })
       else
-         des.monster({ id = "Mordor orc", coord = inside:rndcoord(1), peaceful=0 })
+         des.monster({ id = "モルドールのオーク", coord = inside:rndcoord(1), peaceful=0 })
       end
    end
 end
 -- shamans can be hanging out in/near the temple
 for i=1,math.random(2 - 1,2*3) do
-   des.monster({ id = "orc shaman", coord = near_temple:rndcoord(0), peaceful=0 });
+   des.monster({ id = "オークの呪術師", coord = near_temple:rndcoord(0), peaceful=0 });
 end
 -- these are not such a big deal
 -- to run into outside the bars
 for i=1,9 + math.random(2 - 1,2*5) do
    if percent(90) then
-      des.monster({ id = "hill orc", peaceful = 0 })
+      des.monster({ id = "丘のオーク", peaceful = 0 })
    else
-      des.monster({ id = "goblin", peaceful = 0 })
+      des.monster({ id = "ゴブリン", peaceful = 0 })
    end
 end
 

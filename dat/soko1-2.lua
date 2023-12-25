@@ -37,28 +37,28 @@ des.non_diggable(selection.area(00,00,25,16));
 des.non_passwall(selection.area(00,00,25,16));
 
 -- Boulders
-des.object("boulder",04,04);
-des.object("boulder",02,06);
-des.object("boulder",03,06);
-des.object("boulder",04,07);
-des.object("boulder",05,07);
-des.object("boulder",02,08);
-des.object("boulder",05,08);
-des.object("boulder",03,09);
-des.object("boulder",04,09);
-des.object("boulder",03,10);
-des.object("boulder",05,10);
-des.object("boulder",06,12);
+des.object("岩",04,04);
+des.object("岩",02,06);
+des.object("岩",03,06);
+des.object("岩",04,07);
+des.object("岩",05,07);
+des.object("岩",02,08);
+des.object("岩",05,08);
+des.object("岩",03,09);
+des.object("岩",04,09);
+des.object("岩",03,10);
+des.object("岩",05,10);
+des.object("岩",06,12);
 --
-des.object("boulder",07,14);
+des.object("岩",07,14);
 --
-des.object("boulder",11,05);
-des.object("boulder",12,06);
-des.object("boulder",10,07);
-des.object("boulder",11,07);
-des.object("boulder",10,08);
-des.object("boulder",12,09);
-des.object("boulder",11,10);
+des.object("岩",11,05);
+des.object("岩",12,06);
+des.object("岩",10,07);
+des.object("岩",11,07);
+des.object("岩",10,08);
+des.object("岩",12,09);
+des.object("岩",11,10);
 
 -- prevent monster generation over the (filled) holes
 des.exclusion({ type = "monster-generation", region = { 05,01, 22,01 } });
@@ -82,8 +82,8 @@ des.trap("hole",20,01)
 des.trap("hole",21,01)
 des.trap("hole",22,01)
 
-des.monster({ id = "giant mimic", appear_as = "obj:boulder" });
-des.monster({ id = "giant mimic", appear_as = "obj:boulder" });
+des.monster({ id = "巨大なミミック", appear_as = "obj:boulder" });
+des.monster({ id = "巨大なミミック", appear_as = "obj:boulder" });
 
 -- Random objects
 des.object({ class = "%" });
@@ -102,11 +102,11 @@ des.region({ region={18,09, 22,15}, lit = 1, type = "zoo", filled = 1, irregular
 
 local pt = selection.rndcoord(place);
 if percent(25) then
-   des.object({ id="bag of holding", coord=pt,
+   des.object({ id="軽量化の鞄", coord=pt,
 		buc="not-cursed", achievement=1 });
 else
-   des.object({ id="amulet of reflection", coord=pt,
+   des.object({ id="反射の魔除け", coord=pt,
 		buc="not-cursed", achievement=1 });
 end
 des.engraving({ coord = pt, type = "burn", text = "Elbereth" });
-des.object({ id = "scroll of scare monster", coord = pt, buc = "cursed" });
+des.object({ id = "怪物を怯えさせる巻物", coord = pt, buc = "cursed" });

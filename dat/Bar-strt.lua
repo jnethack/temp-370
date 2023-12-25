@@ -69,31 +69,31 @@ des.door("open",23,13)
 des.door("open",25,10)
 des.door("open",28,05)
 -- Elder
-des.monster({ id = "Pelias", coord = {10, 07}, inventory = function()
-   des.object({ id = "runesword", spe = 5 });
-   des.object({ id = "chain mail", spe = 5 });
+des.monster({ id = "ペリアス", coord = {10, 07}, inventory = function()
+   des.object({ id = "ルーンの剣", spe = 5 });
+   des.object({ id = "鎖かたびら", spe = 5 });
 end })
 -- The treasure of Pelias
-des.object("chest", 09, 05)
+des.object("宝箱", 09, 05)
 -- chieftain guards for the audience chamber
-des.monster("chieftain", 10, 05)
-des.monster("chieftain", 10, 09)
-des.monster("chieftain", 11, 05)
-des.monster("chieftain", 11, 09)
-des.monster("chieftain", 14, 05)
-des.monster("chieftain", 14, 09)
-des.monster("chieftain", 16, 05)
-des.monster("chieftain", 16, 09)
+des.monster("首領", 10, 05)
+des.monster("首領", 10, 09)
+des.monster("首領", 11, 05)
+des.monster("首領", 11, 09)
+des.monster("首領", 14, 05)
+des.monster("首領", 14, 09)
+des.monster("首領", 16, 05)
+des.monster("首領", 16, 09)
 -- Non diggable walls
 des.non_diggable(selection.area(00,00,75,19))
 -- One trap to keep the ogres at bay.
 des.trap("spiked pit",37,07)
 -- Eels in the river
-des.monster("giant eel", 36, 01)
-des.monster("giant eel", 37, 09)
-des.monster("giant eel", 39, 15)
+des.monster("巨大ウナギ", 36, 01)
+des.monster("巨大ウナギ", 37, 09)
+des.monster("巨大ウナギ", 39, 15)
 -- Monsters on siege duty.
 local ogrelocs = selection.floodfill(37,7) & selection.area(40,03, 45,20)
 for i = 0, 11 do
-   des.monster({ id = "ogre", coord = ogrelocs:rndcoord(1), peaceful = 0 })
+   des.monster({ id = "オーガ", coord = ogrelocs:rndcoord(1), peaceful = 0 })
 end

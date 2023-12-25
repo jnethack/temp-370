@@ -14,7 +14,7 @@ des.non_diggable();
 
 function replace_wall_boulder(x,y)
    des.terrain(x, y, ".");
-   des.object("boulder", x, y);
+   des.object("岩", x, y);
 end
 
 -- replace horizontal and vertical walls
