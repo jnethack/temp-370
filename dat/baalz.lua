@@ -34,7 +34,7 @@ des.mazewalk(00,06,"west")
 des.stair("down", 44,06)
 des.door("locked",00,06)
 -- The fellow in residence
-des.monster("Baalzebub",35,06)
+des.monster("ベルゼブブ",35,06)
 -- Some random weapons and armor.
 des.object("[")
 des.object("[")
@@ -55,9 +55,9 @@ des.trap("fire")
 des.trap("magic")
 des.trap("magic")
 -- Random monsters.
-des.monster("ghost",37,07)
-des.monster("horned devil",32,05)
-des.monster("barbed devil",38,07)
+des.monster("幽霊",37,07)
+des.monster("角のある悪魔",32,05)
+des.monster("棘の悪魔",38,07)
 des.monster("L")
 -- Some Vampires for good measure
 des.monster("V")
