@@ -57,32 +57,32 @@ des.levregion({ region = {01,00,79,20}, exclude = {30,06,46,13}, type = "branch"
 -- Non diggable walls
 des.non_diggable(selection.area(30,06,46,13))
 -- Objects
-des.object({ id = "statue", x=36,y=10, buc="uncursed",
-             montype="knight", historic=1, male = 1, name="Perseus",
+des.object({ id = "像", x=36,y=10, buc="uncursed",
+             montype="騎士", historic=1, male = 1, name="Perseus",
              contents = function()
                 if percent(75) then
-                   des.object({ id = "shield of reflection", buc="cursed", spe=0 })
+                   des.object({ id = "反射の盾", buc="cursed", spe=0 })
                 end
                 if percent(25) then
-                   des.object({ id = "levitation boots", spe=0 })
+                   des.object({ id = "浮遊の靴", spe=0 })
                 end
                 if percent(50) then
-                   des.object({ id = "scimitar", buc="blessed", spe=2 })
+                   des.object({ id = "シミター", buc="blessed", spe=2 })
                 end
                 if percent(50) then
-                   des.object("sack")
+                   des.object("袋")
                 end
              end
 });
 
 -- Specifying explicit contents forces them to be empty.
-des.object({ id = "statue", contents = 0 })
-des.object({ id = "statue", contents = 0 })
-des.object({ id = "statue", contents = 0 })
-des.object({ id = "statue", contents = 0 })
-des.object({ id = "statue", contents = 0 })
-des.object({ id = "statue", contents = 0 })
-des.object({ id = "statue", contents = 0 })
+des.object({ id = "像", contents = 0 })
+des.object({ id = "像", contents = 0 })
+des.object({ id = "像", contents = 0 })
+des.object({ id = "像", contents = 0 })
+des.object({ id = "像", contents = 0 })
+des.object({ id = "像", contents = 0 })
+des.object({ id = "像", contents = 0 })
 des.object()
 des.object()
 des.object()
@@ -100,15 +100,15 @@ des.trap()
 des.trap("board",38,07)
 des.trap("board",38,12)
 -- Random monsters
-des.monster({ id = "Medusa", x=36,y=10, asleep=1 })
-des.monster("giant eel",11,06)
-des.monster("giant eel",23,13)
-des.monster("giant eel",29,02)
-des.monster("jellyfish",02,02)
-des.monster("jellyfish",00,08)
-des.monster("jellyfish",04,18)
-des.monster("water troll",51,03)
-des.monster("water troll",64,11)
+des.monster({ id = "メデューサ", x=36,y=10, asleep=1 })
+des.monster("巨大ウナギ",11,06)
+des.monster("巨大ウナギ",23,13)
+des.monster("巨大ウナギ",29,02)
+des.monster("クラゲ",02,02)
+des.monster("クラゲ",00,08)
+des.monster("クラゲ",04,18)
+des.monster("水のトロル",51,03)
+des.monster("水のトロル",64,11)
 des.monster({ class = 'S', x=38, y=07 })
 des.monster({ class = 'S', x=38, y=12 })
 des.monster()
