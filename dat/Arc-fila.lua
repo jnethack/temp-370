@@ -35,7 +35,7 @@ des.room({ type = "ordinary",
               des.object()
               des.trap()
               des.monster("S")
-              des.monster("human mummy")
+              des.monster("人間のミイラ")
            end
 })
 
