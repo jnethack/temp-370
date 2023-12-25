@@ -28,23 +28,23 @@ des.non_diggable(selection.area(00,00,19,11));
 des.non_passwall(selection.area(00,00,19,11));
 
 -- Boulders
-des.object("boulder",02,02)
-des.object("boulder",03,02)
+des.object("岩",02,02)
+des.object("岩",03,02)
 --
-des.object("boulder",05,03)
-des.object("boulder",07,03)
-des.object("boulder",07,02)
-des.object("boulder",08,02)
+des.object("岩",05,03)
+des.object("岩",07,03)
+des.object("岩",07,02)
+des.object("岩",08,02)
 --
-des.object("boulder",10,03)
-des.object("boulder",11,03)
+des.object("岩",10,03)
+des.object("岩",11,03)
 --
-des.object("boulder",02,07)
-des.object("boulder",02,08)
-des.object("boulder",03,09)
+des.object("岩",02,07)
+des.object("岩",02,08)
+des.object("岩",03,09)
 --
-des.object("boulder",05,07)
-des.object("boulder",06,06)
+des.object("岩",05,07)
+des.object("岩",06,06)
 
 -- Traps
 des.trap("hole",08,09)

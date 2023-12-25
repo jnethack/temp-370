@@ -34,7 +34,7 @@ des.room({ type = "ordinary",
               des.object()
               des.trap()
               des.monster({ class = "i", peaceful=0 })
-              des.monster("vampire bat")
+              des.monster("吸血こうもり")
            end
 })
 
@@ -51,7 +51,7 @@ des.room({ type = "ordinary",
            contents = function()
               des.object()
               des.trap()
-              des.monster("vampire bat")
+              des.monster("吸血こうもり")
            end
 })
 

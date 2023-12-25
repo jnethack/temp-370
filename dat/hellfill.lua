@@ -64,7 +64,7 @@ function populatemaze()
    end
 
    for i = 1, math.random(3) do
-      des.monster({ id = "minotaur", peaceful = 0 });
+      des.monster({ id = "ミノタウロス", peaceful = 0 });
    end
 
    for i = 1, math.random(5) + 7 do

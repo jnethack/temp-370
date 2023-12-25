@@ -9,8 +9,8 @@ des.room({ type = "ordinary",
            contents = function()
               des.stair("up")
               des.object()
-              des.monster("human zombie")
-              des.monster("wraith")
+              des.monster("人間のゾンビ")
+              des.monster("レイス")
            end
 })
 
@@ -27,8 +27,8 @@ des.room({ type = "ordinary",
               des.object()
               des.trap()
               des.object()
-              des.monster("human zombie")
-              des.monster("wraith")
+              des.monster("人間のゾンビ")
+              des.monster("レイス")
            end
 })
 
@@ -46,8 +46,8 @@ des.room({ type = "ordinary",
               des.object()
               des.object()
               des.trap()
-              des.monster("human zombie")
-              des.monster("wraith")
+              des.monster("人間のゾンビ")
+              des.monster("レイス")
            end
 })
 
