@@ -15,7 +15,7 @@ xxx...xx
 xxxx.xxx
 xxxxxxxx
 ]] });
-des.object("boulder")
+des.object("岩")
 des.map({ halign = "right", valign = "top", map = [[
 xxxxxxxx
 xxxx.xxx
@@ -23,7 +23,7 @@ xxx...xx
 xx...xxx
 xxxxxxxx
 ]] });
-des.object("boulder")
+des.object("岩")
 -- lair
 des.map([[
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -63,15 +63,15 @@ des.levregion({ region = {01,00,11,20}, region_islev=1, exclude={0,0,50,17}, typ
 des.teleport_region({ region = {01,00,11,20}, region_islev=1, exclude={0,0,50,17},dir="up" })
 des.teleport_region({ region = {69,00,79,20}, region_islev=1, exclude={0,0,50,17},dir="down" })
 des.feature("fountain", place:rndcoord(1))
-des.monster({ id = "giant mimic", coord = place:rndcoord(1), appear_as = "ter:fountain" })
-des.monster({ id = "giant mimic", coord = place:rndcoord(1), appear_as = "ter:fountain" })
-des.monster({ id = "giant mimic", coord = place:rndcoord(1), appear_as = "ter:fountain" })
+des.monster({ id = "巨大なミミック", coord = place:rndcoord(1), appear_as = "ter:fountain" })
+des.monster({ id = "巨大なミミック", coord = place:rndcoord(1), appear_as = "ter:fountain" })
+des.monster({ id = "巨大なミミック", coord = place:rndcoord(1), appear_as = "ter:fountain" })
 -- The demon of the swamp
-des.monster("Juiblex",25,08)
+des.monster("ジョウビレックス",25,08)
 -- And a couple demons
-des.monster("lemure",43,08)
-des.monster("lemure",44,08)
-des.monster("lemure",45,08)
+des.monster("レムレース",43,08)
+des.monster("レムレース",44,08)
+des.monster("レムレース",45,08)
 -- Some liquids and gems
 des.object("*",43,06)
 des.object("*",45,06)
@@ -103,8 +103,8 @@ des.monster("F")
 des.monster("F")
 des.monster("m")
 des.monster("m")
-des.monster("jellyfish")
-des.monster("jellyfish")
+des.monster("クラゲ")
+des.monster("クラゲ")
 -- Some random objects
 des.object("!")
 des.object("!")
@@ -112,7 +112,7 @@ des.object("!")
 des.object("%")
 des.object("%")
 des.object("%")
-des.object("boulder")
+des.object("岩")
 -- Some traps
 des.trap("sleep gas")
 des.trap("sleep gas")

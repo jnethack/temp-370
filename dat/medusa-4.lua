@@ -78,36 +78,36 @@ des.levregion({ region = {27,00,79,20}, type="branch" });
 --
 des.non_diggable(selection.area(01,01,22,14));
 --
-des.object("crystal ball", 07,08)
+des.object("水晶玉", 07,08)
 --
 -- same spot as Medusa plus downstairs
-des.object({ id="statue", coord=medloc, buc="uncursed",
-                      montype="knight", historic=1, male=1,name="Perseus",
+des.object({ id="像", coord=medloc, buc="uncursed",
+                      montype="騎士", historic=1, male=1,name="Perseus",
                       contents = function()
                          if percent(75) then
-                            des.object({ id = "shield of reflection", buc="cursed", spe=0 })
+                            des.object({ id = "反射の盾", buc="cursed", spe=0 })
                          end
                          if percent(25) then
-                            des.object({ id = "levitation boots", spe=0 })
+                            des.object({ id = "浮遊の靴", spe=0 })
                          end
                          if percent(50) then
-                            des.object({ id = "scimitar", buc="blessed", spe=2 })
+                            des.object({ id = "シミター", buc="blessed", spe=2 })
                          end
                          if percent(50) then
-                            des.object("sack")
+                            des.object("袋")
                          end
                       end
 });
 --
 -- first random statue is in one of the designated stair rooms but not the
 -- one with Medusa plus downstairs
-des.object({ id = "statue", coord=altloc, contents=0 })
-des.object({ id = "statue", contents=0 })
-des.object({ id = "statue", contents=0 })
-des.object({ id = "statue", contents=0 })
-des.object({ id = "statue", contents=0 })
-des.object({ id = "statue", contents=0 })
-des.object({ id = "statue", contents=0 })
+des.object({ id = "像", coord=altloc, contents=0 })
+des.object({ id = "像", contents=0 })
+des.object({ id = "像", contents=0 })
+des.object({ id = "像", contents=0 })
+des.object({ id = "像", contents=0 })
+des.object({ id = "像", contents=0 })
+des.object({ id = "像", contents=0 })
 for i=1,8 do
    des.object()
 end
@@ -118,35 +118,35 @@ end
 --
 -- place Medusa before placing other monsters so that they won't be able to
 -- unintentionally steal her spot on the downstairs
-des.monster({ id = "Medusa", coord=medloc, asleep=1 })
-des.monster("kraken", 07,07)
+des.monster({ id = "メデューサ", coord=medloc, asleep=1 })
+des.monster("クラーケン", 07,07)
 --
 -- the nesting dragon
-des.monster({ id = "yellow dragon", x=05, y=04, asleep=1 })
+des.monster({ id = "黄色ドラゴン", x=05, y=04, asleep=1 })
 if percent(50) then
-   des.monster({ id = "baby yellow dragon", x=04,y=04, asleep=1 })
+   des.monster({ id = "黄色ドラゴンの子供", x=04,y=04, asleep=1 })
 end
 if percent(25) then
-   des.monster({ id = "baby yellow dragon", x=04, y=05, asleep=1 })
+   des.monster({ id = "黄色ドラゴンの子供", x=04, y=05, asleep=1 })
 end
-des.object({ id = "egg", x=05, y=04, montype="yellow dragon" });
+des.object({ id = "卵", x=05, y=04, montype="黄色ドラゴン" });
 if percent(50) then
-   des.object({ id = "egg", x=05, y=04, montype="yellow dragon" });
+   des.object({ id = "卵", x=05, y=04, montype="黄色ドラゴン" });
 end
 if percent(25) then
-   des.object({ id = "egg", x=05, y=04, montype="yellow dragon" });
+   des.object({ id = "卵", x=05, y=04, montype="黄色ドラゴン" });
 end
 --
-des.monster("giant eel")
-des.monster("giant eel")
-des.monster("jellyfish")
-des.monster("jellyfish")
+des.monster("巨大ウナギ")
+des.monster("巨大ウナギ")
+des.monster("クラゲ")
+des.monster("クラゲ")
 for i=1,14 do
    des.monster("S")
 end
 for i=1,4 do
-   des.monster("black naga hatchling")
-   des.monster("black naga")
+   des.monster("黒ナーガの雛")
+   des.monster("黒ナーガ")
 end
 
 --#medusa-4.lua
