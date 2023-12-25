@@ -71,19 +71,19 @@ des.door("closed",52,14)
 -- Unattended Altar - unaligned due to conflict - player must align it.
 des.altar({ x=28,y=09, align="noalign", type="altar" })
 -- The Grand Master
-des.monster({ id = "Grand Master", coord = {28, 10}, inventory = function()
-   des.object({ id = "robe", spe = 6 });
+des.monster({ id = "総師範", coord = {28, 10}, inventory = function()
+   des.object({ id = "ローブ", spe = 6 });
 end })
 -- No treasure chest!
 -- guards for the audience chamber
-des.monster("abbot", 32, 07)
-des.monster("abbot", 32, 08)
-des.monster("abbot", 32, 11)
-des.monster("abbot", 32, 12)
-des.monster("abbot", 33, 07)
-des.monster("abbot", 33, 08)
-des.monster("abbot", 33, 11)
-des.monster("abbot", 33, 12)
+des.monster("師範", 32, 07)
+des.monster("師範", 32, 08)
+des.monster("師範", 32, 11)
+des.monster("師範", 32, 12)
+des.monster("師範", 33, 07)
+des.monster("師範", 33, 08)
+des.monster("師範", 33, 11)
+des.monster("師範", 33, 12)
 -- Non diggable walls
 des.non_diggable(selection.area(18,03,55,16))
 -- Random traps
@@ -96,13 +96,13 @@ des.trap()
 des.trap()
 -- Monsters on siege duty.
 for i = 1, 8 do
-   des.monster("earth elemental", spacelocs:rndcoord(1))
+   des.monster("土の精", spacelocs:rndcoord(1))
 end
 for i = 1, 4 do
-   des.monster("xorn", spacelocs:rndcoord(1))
+   des.monster("ゾーン", spacelocs:rndcoord(1))
 end
 -- next to leader, so possibly tricky to pick up if not ready for quest yet;
 -- there's no protection against a xorn eating these tins; BUC state is random
-des.object({ id="tin", coord = {29, 9}, quantity=2, montype="spinach" })
+des.object({ id="缶", coord = {29, 9}, quantity=2, montype="spinach" })
 -- ensure enough vegetarian food generates for vegetarian games
-des.object({ id="food ration", coord = {46, 4}, quantity = 4})
+des.object({ id="食料", coord = {46, 4}, quantity = 4})
