@@ -29,16 +29,16 @@ for i = 1,math.random(2, 4) do
 end
 if percent(75) then
    for i = 1,math.random(1, 2) do
-      des.object("boulder")
+      des.object("岩")
    end
 end
 --
 for i = 1,math.random(6, 8) do
-   des.monster("gnome")
+   des.monster("ノーム")
 end
-des.monster("gnome lord")
-des.monster("dwarf")
-des.monster("dwarf")
+des.monster("ノームの貴族")
+des.monster("ドワーフ")
+des.monster("ドワーフ")
 des.monster("G")
 des.monster("G")
 des.monster(percent(50) and "h" or "G")
