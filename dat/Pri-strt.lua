@@ -71,21 +71,21 @@ des.door("closed",52,14)
 -- Unattended Altar - unaligned due to conflict - player must align it.
 des.altar({ x=28, y=09, align="noalign", type="altar" })
 -- High Priest
-des.monster({ id = "Arch Priest", coord = {28, 10}, inventory = function()
-   des.object({ id = "robe", spe = 4 });
-   des.object({ id = "mace", spe = 4 });
+des.monster({ id = "主席司祭", coord = {28, 10}, inventory = function()
+   des.object({ id = "ローブ", spe = 4 });
+   des.object({ id = "メイス", spe = 4 });
 end })
 -- The treasure of High Priest
-des.object("chest", 27, 10)
+des.object("宝箱", 27, 10)
 -- knight guards for the audience chamber
-des.monster("acolyte", 32, 07)
-des.monster("acolyte", 32, 08)
-des.monster("acolyte", 32, 11)
-des.monster("acolyte", 32, 12)
-des.monster("acolyte", 33, 07)
-des.monster("acolyte", 33, 08)
-des.monster("acolyte", 33, 11)
-des.monster("acolyte", 33, 12)
+des.monster("侍者", 32, 07)
+des.monster("侍者", 32, 08)
+des.monster("侍者", 32, 11)
+des.monster("侍者", 32, 12)
+des.monster("侍者", 33, 07)
+des.monster("侍者", 33, 08)
+des.monster("侍者", 33, 11)
+des.monster("侍者", 33, 12)
 -- Non diggable walls
 des.non_diggable(selection.area(18,03,55,16))
 -- Random traps
@@ -98,5 +98,5 @@ des.trap()
 des.trap()
 -- Monsters on siege duty.
 for i = 1, 12 do
-   des.monster("human zombie", spacelocs:rndcoord(1));
+   des.monster("人間のゾンビ", spacelocs:rndcoord(1));
 end
