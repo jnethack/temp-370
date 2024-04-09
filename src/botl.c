@@ -3,15 +3,32 @@
 /*-Copyright (c) Michael Allison, 2006. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 extern const char *const hu_stat[]; /* defined in eat.c */
 
 /* also used in insight.c */
 const char *const enc_stat[] = {
+#if 0 /*JP:T*/
+    "",         "Burdened",  "Stressed",
+    "Strained", "Overtaxed", "Overloaded"
+#else
+    "",         "よろめき",  "圧迫",
+    "限界",     "荷重",      "超過"
+#endif
+};
+#if 1 /*JP*/
+/*オプションのパースで英語版も必要*/
+const char *const enc_stat_opt[] = {
     "",         "Burdened",  "Stressed",
     "Strained", "Overtaxed", "Overloaded"
 };
+#endif
 
 staticfn const char *rank(void);
 staticfn void bot_via_windowport(void);
@@ -57,8 +74,16 @@ do_statusline1(void)
     Strcpy(newbot1, svp.plname);
     if ('a' <= newbot1[0] && newbot1[0] <= 'z')
         newbot1[0] += 'A' - 'a';
+#if 0 /*JP*/
     newbot1[BOTL_NSIZ] = 0;
+#else
+    truncate_japanese(newbot1, BOTL_NSIZ);
+#endif
+#if 0 /*JP*/
     Sprintf(nb = eos(newbot1), " the ");
+#else
+    Sprintf(nb = eos(newbot1), " ");
+#endif
 
     if (Upolyd) {
         char mbot[BUFSZ];
@@ -82,17 +107,34 @@ do_statusline1(void)
     if ((i - j) > 0)
         Sprintf(nb = eos(nb), "%*s", i - j, " "); /* pad with spaces */
 
+#if 0 /*JP:T*/
     Sprintf(nb = eos(nb), "St:%s Dx:%-1d Co:%-1d In:%-1d Wi:%-1d Ch:%-1d",
             get_strength_str(),
             ACURR(A_DEX), ACURR(A_CON), ACURR(A_INT), ACURR(A_WIS),
             ACURR(A_CHA));
+#else
+    Sprintf(nb = eos(nb), "強:%s 早:%-1d 耐:%-1d 知:%-1d 賢:%-1d 魅:%-1d ",
+            get_strength_str(),
+            ACURR(A_DEX), ACURR(A_CON), ACURR(A_INT), ACURR(A_WIS),
+            ACURR(A_CHA));
+#endif
+#if 0 /*JP:T*/
     Sprintf(nb = eos(nb), "%s",
             (u.ualign.type == A_CHAOTIC) ? "  Chaotic"
               : (u.ualign.type == A_NEUTRAL) ? "  Neutral"
                 : "  Lawful");
+#else
+    Sprintf(nb = eos(nb), "%s",
+            (u.ualign.type == A_CHAOTIC) ? "混沌"
+              : (u.ualign.type == A_NEUTRAL) ? "中立"
+                : "秩序");
+#endif
 #ifdef SCORE_ON_BOTL
     if (flags.showscore)
+/*JP
         Sprintf(nb = eos(nb), " S:%ld", botl_score());
+*/
+        Sprintf(nb = eos(nb), " %ld点", botl_score());
 #endif
     return newbot1;
 }
@@ -131,7 +173,10 @@ do_statusline2(void)
             (iflags.in_dumplog || iflags.invis_goldsym) ? "$"
               : encglyph(objnum_to_glyph(GOLD_PIECE)),
             min(money, 999999L));
+/*JP
     dln = strlen(dloc);
+*/
+    dln = displen(dloc);
     /* '$' encoded as \GXXXXNNNN is 9 chars longer than display will need */
     dx = strstri(dloc, "\\G") ? 9 : 0;
 
@@ -140,26 +185,48 @@ do_statusline2(void)
     hpmax = Upolyd ? u.mhmax : u.uhpmax;
     if (hp < 0)
         hp = 0;
+#if 0 /*JP:T*/
     Sprintf(hlth, "HP:%d(%d) Pw:%d(%d) AC:%-2d",
             min(hp, 9999), min(hpmax, 9999),
             min(u.uen, 9999), min(u.uenmax, 9999), u.uac);
     hln = strlen(hlth);
+#else
+    Sprintf(hlth, "体:%d(%d) 魔:%d(%d) 鎧:%-2d",
+            min(hp, 9999), min(hpmax, 9999),
+            min(u.uen, 9999), min(u.uenmax, 9999), u.uac);
+    hln = displen(hlth); /* 表示幅 */
+#endif
 
     /* experience */
     if (Upolyd)
         Sprintf(expr, "HD:%d", mons[u.umonnum].mlevel);
     else if (flags.showexp)
+/*JP
         Sprintf(expr, "Xp:%d/%-1ld", u.ulevel, u.uexp);
+*/
+        Sprintf(expr, "経験:%d/%-1ld", u.ulevel, u.uexp);
     else
+/*JP
         Sprintf(expr, "Xp:%d", u.ulevel);
+*/
+        Sprintf(expr, "経験:%d", u.ulevel);
+/*JP
     xln = strlen(expr);
+*/
+    xln = displen(expr);
 
     /* time/move counter */
     if (flags.time)
+/*JP
         Sprintf(tmmv, "T:%ld", svm.moves);
+*/
+        Sprintf(tmmv, "歩:%ld", svm.moves);
     else
         tmmv[0] = '\0';
+/*JP
     tln = strlen(tmmv);
+*/
+    tln = displen(tmmv);
 
     /* status conditions; worst ones first */
     cond[0] = '\0'; /* once non-empty, cond will have a leading space */
@@ -171,46 +238,91 @@ do_statusline2(void)
      * unusual for more than one of them to apply at a time.]
      */
     if (Stoned)
+/*JP
         Strcpy(nb = eos(nb), " Stone");
+*/
+        Strcpy(nb = eos(nb), " 石化");
     if (Slimed)
+/*JP
         Strcpy(nb = eos(nb), " Slime");
+*/
+        Strcpy(nb = eos(nb), " どろどろ");
     if (Strangled)
+/*JP
         Strcpy(nb = eos(nb), " Strngl");
+*/
+        Strcpy(nb = eos(nb), " 窒息");
     if (Sick) {
         if (u.usick_type & SICK_VOMITABLE)
+/*JP
             Strcpy(nb = eos(nb), " FoodPois");
+*/
+            Strcpy(nb = eos(nb), " 食毒");
         if (u.usick_type & SICK_NONVOMITABLE)
+/*JP
             Strcpy(nb = eos(nb), " TermIll");
+*/
+            Strcpy(nb = eos(nb), " 病気");
     }
     if (u.uhs != NOT_HUNGRY)
         Sprintf(nb = eos(nb), " %s", hu_stat[u.uhs]);
     if ((cap = near_capacity()) > UNENCUMBERED)
         Sprintf(nb = eos(nb), " %s", enc_stat[cap]);
     if (Blind)
+/*JP
         Strcpy(nb = eos(nb), " Blind");
+*/
+        Strcpy(nb = eos(nb), " 盲目");
     if (Deaf)
+/*JP
         Strcpy(nb = eos(nb), " Deaf");
+*/
+        Strcpy(nb = eos(nb), " 耳聾");
     if (Stunned)
+/*JP
         Strcpy(nb = eos(nb), " Stun");
+*/
+        Strcpy(nb = eos(nb), " 眩暈");
     if (Confusion)
+/*JP
         Strcpy(nb = eos(nb), " Conf");
+*/
+        Strcpy(nb = eos(nb), " 混乱");
     if (Hallucination)
+/*JP
         Strcpy(nb = eos(nb), " Hallu");
+*/
+        Strcpy(nb = eos(nb), " 幻覚");
     /* levitation and flying are mutually exclusive; riding is not */
     if (Levitation)
+/*JP
         Strcpy(nb = eos(nb), " Lev");
+*/
+        Strcpy(nb = eos(nb), " 浮遊");
     if (Flying)
+/*JP
         Strcpy(nb = eos(nb), " Fly");
+*/
+        Strcpy(nb = eos(nb), " 飛行");
     if (u.usteed)
+/*JP
         Strcpy(nb = eos(nb), " Ride");
+*/
+        Strcpy(nb = eos(nb), " 騎乗");
+/*JP
     cln = strlen(cond);
+*/
+    cln = displen(cond);
 
     /* version on status line, with leading space */
     if (flags.showvers)
         (void) status_version(vers, sizeof vers, TRUE);
     else
         vers[0] = '\0';
+/*JP
     vrn = strlen(vers);
+*/
+    vrn = displen(vers);
 
     /*
      * Put the pieces together.  If they all fit, keep the traditional
@@ -354,7 +466,10 @@ rank_of(int lev, short monnum, boolean female)
         return role->name.f;
     else if (role->name.m)
         return role->name.m;
+/*JP
     return "Player";
+*/
+    return "プレイヤー";
 }
 
 staticfn const char *
@@ -450,24 +565,40 @@ describe_level(
         Sprintf(buf, "%s", svd.dungeons[u.uz.dnum].dname);
         addbranch = FALSE;
     } else if (In_quest(&u.uz)) {
+/*JP
         Sprintf(buf, "Home %d", dunlev(&u.uz));
+*/
+        Sprintf(buf, "故郷 %d", dunlev(&u.uz));
     } else if (In_endgame(&u.uz)) {
         /* [3.6.2: this used to be "Astral Plane" or generic "End Game"] */
         (void) endgamelevelname(buf, depth(&u.uz));
+#if 0 /*JP*/
         if (!addbranch)
             (void) strsubst(buf, "Plane of ", ""); /* just keep <element> */
+#endif
         addbranch = FALSE;
     } else {
         /* ports with more room may expand this one */
         if (!addbranch)
+#if 0 /*JP:T*/
             Sprintf(buf, "%s:%-2d", /* "Dlvl:n" (grep fodder) */
                     In_tutorial(&u.uz) ? "Tutorial" : "Dlvl", depth(&u.uz));
+#else
+            Sprintf(buf, "%s:%-2d", /* "Dlvl:n" (grep fodder) */
+                    In_tutorial(&u.uz) ? "説明" : "地下", depth(&u.uz));
+#endif
         else
+/*JP
             Sprintf(buf, "level %d", depth(&u.uz));
+*/
+            Sprintf(buf, "地下%d階", depth(&u.uz));
         ret = 0;
     }
     if (addbranch) {
+/*JP
         Sprintf(eos(buf), ", %s", svd.dungeons[u.uz.dnum].dname);
+*/
+        Sprintf(eos(buf), ",%s", svd.dungeons[u.uz.dnum].dname);
         (void) strsubst(buf, "The ", "the ");
     }
     if (addspace)
@@ -702,25 +833,61 @@ staticfn void status_hilites_viewall(void);
  */
 static struct istat_s initblstats[MAXBLSTATS] = {
     INIT_BLSTAT("title", "%s", ANY_STR, MAXVALWIDTH, BL_TITLE),
+/*JP
     INIT_BLSTAT("strength", " St:%s", ANY_INT, 10, BL_STR),
+*/
+    INIT_BLSTAT("strength", " 強:%s", ANY_INT, 10, BL_STR),
+/*JP
     INIT_BLSTAT("dexterity", " Dx:%s", ANY_INT,  10, BL_DX),
+*/
+    INIT_BLSTAT("dexterity", " 早:%s", ANY_INT,  10, BL_DX),
+/*JP
     INIT_BLSTAT("constitution", " Co:%s", ANY_INT, 10, BL_CO),
+*/
+    INIT_BLSTAT("constitution", " 耐:%s", ANY_INT, 10, BL_CO),
+/*JP
     INIT_BLSTAT("intelligence", " In:%s", ANY_INT, 10, BL_IN),
+*/
+    INIT_BLSTAT("intelligence", " 知:%s", ANY_INT, 10, BL_IN),
+/*JP
     INIT_BLSTAT("wisdom", " Wi:%s", ANY_INT, 10, BL_WI),
+*/
+    INIT_BLSTAT("wisdom", " 賢:%s", ANY_INT, 10, BL_WI),
+/*JP
     INIT_BLSTAT("charisma", " Ch:%s", ANY_INT, 10, BL_CH),
+*/
+    INIT_BLSTAT("charisma", " 魅:%s", ANY_INT, 10, BL_CH),
     INIT_BLSTAT("alignment", " %s", ANY_STR, 20, BL_ALIGN),
+/*JP
     INIT_BLSTAT("score", " S:%s", ANY_LONG, 30, BL_SCORE),
+*/
+    INIT_BLSTAT("score", " %s点", ANY_LONG, 30, BL_SCORE),
     INIT_BLSTAT("carrying-capacity", " %s", ANY_INT, 20, BL_CAP),
     INIT_BLSTAT("gold", " %s", ANY_LONG, 40, BL_GOLD),
+/*JP
     INIT_BLSTATP("power", " Pw:%s", ANY_INT, 10, BL_ENEMAX, BL_ENE),
+*/
+    INIT_BLSTATP("power", " 魔:%s", ANY_INT, 10, BL_ENEMAX, BL_ENE),
     INIT_BLSTAT("power-max", "(%s)", ANY_INT, 10, BL_ENEMAX),
+/*JP
     INIT_BLSTATP("experience-level", " Xp:%s", ANY_INT, 10, BL_EXP, BL_XP),
+*/
+    INIT_BLSTATP("experience-level", " 経験:%s", ANY_INT, 10, BL_EXP, BL_XP),
+/*JP
     INIT_BLSTAT("armor-class", " AC:%s", ANY_INT, 10, BL_AC),
+*/
+    INIT_BLSTAT("armor-class", " 鎧:%s", ANY_INT, 10, BL_AC),
     INIT_BLSTAT("HD", " HD:%s", ANY_INT, 10, BL_HD),
+/*JP
     INIT_BLSTAT("time", " T:%s", ANY_LONG, 30, BL_TIME),
+*/
+    INIT_BLSTAT("time", " 歩:%s", ANY_LONG, 30, BL_TIME),
     /* hunger used to be 'ANY_UINT'; see note below in bot_via_windowport() */
     INIT_BLSTAT("hunger", " %s", ANY_INT, 20, BL_HUNGER),
+/*JP
     INIT_BLSTATP("hitpoints", " HP:%s", ANY_INT, 10, BL_HPMAX, BL_HP),
+*/
+    INIT_BLSTATP("hitpoints", " 体:%s", ANY_INT, 10, BL_HPMAX, BL_HP),
     INIT_BLSTAT("hitpoints-max", "(%s)", ANY_INT, 10, BL_HPMAX),
     INIT_BLSTAT("dungeon-level", "%s", ANY_STR, MAXVALWIDTH, BL_LEVELDESC),
     INIT_BLSTATP("experience", "/%s", ANY_LONG, 30, BL_EXP, BL_EXP),
@@ -780,6 +947,7 @@ static const struct condmap condition_aliases[] = {
 /* condition names and their abbreviations are used by windowport code */
 const struct conditions_t conditions[] = {
     /* ranking, mask, identifier, txt1, txt2, txt3 */
+#if 0 /*JP:T*/
     { 20, BL_MASK_BAREH,     bl_bareh,     { "Bare",     "Bar",   "Bh"  } },
     { 10, BL_MASK_BLIND,     bl_blind,     { "Blind",    "Blnd",  "Bl"  } },
     { 20, BL_MASK_BUSY,      bl_busy,      { "Busy",     "Bsy",   "By"  } },
@@ -810,7 +978,74 @@ const struct conditions_t conditions[] = {
     { 20, BL_MASK_UNCONSC,   bl_unconsc,   { "Out",      "Out",   "KO"  } },
     { 20, BL_MASK_WOUNDEDL,  bl_woundedl,  { "WLegs",    "Leg",   "Lg"  } },
     { 20, BL_MASK_HOLDING,   bl_holding,   { "UHold",    "UHld",  "UHd" } },
+#else
+    { 20, BL_MASK_BAREH,     bl_bareh,     { "素手",     "素手",  "素"  } },
+    { 10, BL_MASK_BLIND,     bl_blind,     { "盲目",     "盲目",  "盲"  } },
+    { 20, BL_MASK_BUSY,      bl_busy,      { "行動中",   "行動",  "動"  } },
+    { 10, BL_MASK_CONF,      bl_conf,      { "混乱",     "混乱",  "混"  } },
+    { 10, BL_MASK_DEAF,      bl_deaf,      { "耳聾",     "耳聾",  "聾"  } },
+    { 15, BL_MASK_ELF_IRON,  bl_elf_iron,  { "鉄毒",     "鉄毒",  "鉄"  } },
+    { 10, BL_MASK_FLY,       bl_fly,       { "飛行",     "飛行",  "飛"  } },
+    {  6, BL_MASK_FOODPOIS,  bl_foodpois,  { "食毒",     "食毒",  "毒"  } },
+    { 20, BL_MASK_GLOWHANDS, bl_glowhands, { "手の輝き", "輝き",  "輝"  } },
+    {  2, BL_MASK_GRAB,      bl_grab,      { "掴み",     "掴み",  "掴"  } },
+    { 10, BL_MASK_HALLU,     bl_hallu,     { "幻覚",     "幻覚",  "幻"  } },
+    { 20, BL_MASK_HELD,      bl_held,      { "捕獲",     "捕獲",  "捕"  } },
+    { 20, BL_MASK_ICY,       bl_icy,       { "ちくちく", "ちく",  "ち"  } },
+    {  8, BL_MASK_INLAVA,    bl_inlava,    { "溶岩内",   "溶岩",  "溶"  } },
+    { 10, BL_MASK_LEV,       bl_lev,       { "浮遊",     "浮遊",  "浮"  } },
+    { 20, BL_MASK_PARLYZ,    bl_parlyz,    { "麻痺",     "麻痺",  "痺"  } },
+    { 10, BL_MASK_RIDE,      bl_ride,      { "騎乗",     "騎乗",  "騎"  } },
+    { 20, BL_MASK_SLEEPING,  bl_sleeping,  { "睡眠",     "睡眠",  "眠"  } },
+    {  6, BL_MASK_SLIME,     bl_slime,     { "どろどろ", "どろ",  "ど"  } },
+    { 20, BL_MASK_SLIPPERY,  bl_slippery,  { "ぬるぬる", "ぬる",  "ぬ"  } },
+    {  6, BL_MASK_STONE,     bl_stone,     { "石化",     "石化",  "石"  } },
+    {  4, BL_MASK_STRNGL,    bl_strngl,    { "窒息",     "窒息",  "窒"  } },
+    { 10, BL_MASK_STUN,      bl_stun,      { "眩暈",     "眩暈",  "眩"  } },
+    { 15, BL_MASK_SUBMERGED, bl_submerged, { "水中",     "水中",  "水"  } },
+    {  6, BL_MASK_TERMILL,   bl_termill,   { "病気",     "病気",  "病"  } },
+    { 20, BL_MASK_TETHERED,  bl_tethered,  { "繋留",     "繋留",  "繋"  } },
+    { 20, BL_MASK_TRAPPED,   bl_trapped,   { "罠",       "罠",    "罠"  } },
+    { 20, BL_MASK_UNCONSC,   bl_unconsc,   { "気絶",     "気絶",  "絶"  } },
+    { 20, BL_MASK_WOUNDEDL,  bl_woundedl,  { "足怪我",   "足",    "足"  } },
+    { 20, BL_MASK_HOLDING,   bl_holding,   { "保持",     "保持",  "保"  } },
+#endif
 };
+
+#if 1 /*JP*//*オプション用*/
+const char *conditions_opt[] = {
+    "Bare",    
+    "Blind",   
+    "Busy",    
+    "Conf",    
+    "Deaf",    
+    "Iron",    
+    "Fly",     
+    "FoodPois",
+    "Glow",    
+    "Grab",    
+    "Hallu",   
+    "Held",    
+    "Icy",     
+    "InLava",  
+    "Lev",     
+    "Parlyz",  
+    "Ride",    
+    "Zzz",     
+    "Slime",   
+    "Slip",    
+    "Stone",   
+    "Strngl",  
+    "Stun",    
+    "Submrg",  
+    "TermIll", 
+    "Teth",    
+    "Trap",    
+    "Out",     
+    "WLegs",   
+    "UHold",   
+};
+#endif
 
 /* [perhaps these should all be opt_out with default of 'in';
    otherwise some players may never learn about them] */
@@ -989,15 +1224,28 @@ bot_via_windowport(void)
     Strcpy(nb = buf, svp.plname);
     nb[0] = highc(nb[0]);
     titl = !Upolyd ? rank() : pmname(&mons[u.umonnum], Ugender);
+#if 0 /*JP*/
     i = (int) (strlen(buf) + sizeof " the " + strlen(titl) - sizeof "");
+#else
+    i = (int) (displen(buf) + sizeof " " + displen(titl) - sizeof "");
+#endif
     /* if "Name the Rank/monster" is too long, we truncate the name but
        always keep at least BOTL_NSIZ characters of it; when hitpointbar is
        enabled, anything beyond 30 (long monster name) will be truncated */
     if (i > 30) {
+#if 0 /*JP*/
         i = 30 - (int) (sizeof " the " + strlen(titl) - sizeof "");
         nb[max(i, BOTL_NSIZ)] = '\0';
+#else
+        i = 30 - (int) (sizeof " " + displen(titl) - sizeof "");
+        truncate_japanese(nb, max(i, BOTL_NSIZ));
+#endif
     }
+#if 0 /*JP*/
     Strcpy(nb = eos(nb), " the ");
+#else
+    Strcpy(nb = eos(nb), " ");
+#endif
     Strcpy(nb = eos(nb), titl);
     if (Upolyd) { /* when poly'd, capitalize monster name */
         for (i = 0; nb[i]; i++)
@@ -1020,11 +1268,19 @@ bot_via_windowport(void)
     gb.blstats[idx][BL_CH].a.a_int = ACURR(A_CHA);
 
     /* Alignment */
+#if 0 /*JP:T*/
     Strcpy(gb.blstats[idx][BL_ALIGN].val, (u.ualign.type == A_CHAOTIC)
                                           ? "Chaotic"
                                           : (u.ualign.type == A_NEUTRAL)
                                                ? "Neutral"
                                                : "Lawful");
+#else
+    Strcpy(gb.blstats[idx][BL_ALIGN].val, (u.ualign.type == A_CHAOTIC)
+                                          ? "混沌"
+                                          : (u.ualign.type == A_NEUTRAL)
+                                               ? "中立"
+                                               : "秩序");
+#endif
 
     /* Score */
     gb.blstats[idx][BL_SCORE].a.a_long =
@@ -2335,10 +2591,17 @@ reset_status_hilites(void)
 staticfn boolean
 noneoftheabove(const char *hl_text)
 {
+#if 0 /*JP:T*/
     if (fuzzymatch(hl_text, "none of the above", "\" -_", TRUE)
         || fuzzymatch(hl_text, "(polymorphed)", "\"()", TRUE)
         || fuzzymatch(hl_text, "none of the above (polymorphed)",
                       "\" -_()", TRUE))
+#else
+    if (fuzzymatch(hl_text, "上のどれでもない", "\" -_", TRUE)
+        || fuzzymatch(hl_text, "(変化中)", "\"()", TRUE)
+        || fuzzymatch(hl_text, "上のどれでもない(変化中)",
+                      "\" -_()", TRUE))
+#endif
         return TRUE;
     return FALSE;
 }
@@ -2535,7 +2798,11 @@ get_hilite(
                 txtstr = gb.blstats[idx][fldidx].val;
                 if (fldidx == BL_TITLE)
                     /* "<name> the <rank-title>", skip past "<name> the " */
+#if 0 /*JP:T*/
                     txtstr += strlen(svp.plname) + sizeof " the " - sizeof "";
+#else
+                    txtstr += strlen(svp.plname) + sizeof " " - sizeof "";
+#endif
                 if (hl->rel == TXT_VALUE && hl->textmatch[0]) {
                     if (fuzzymatch(hl->textmatch, txtstr, "\" -_", TRUE)) {
                         rule = hl;
@@ -2813,7 +3080,10 @@ status_hilite_add_threshold(int fld, struct hilite_s *hilite)
 staticfn boolean
 parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
 {
+/*JP
     static const char *const aligntxt[] = { "chaotic", "neutral", "lawful" };
+*/
+    static const char *const aligntxt[] = { "混沌", "中立", "秩序" };
     /* hu_stat[] from eat.c has trailing spaces which foul up comparisons;
        for the "not hungry" case, there's no text hence no way to highlight */
     static const char *const hutxt[] = {
@@ -2900,9 +3170,15 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
                 up = TRUE;
             changed = TRUE;
         } else if (fld == BL_CAP
+#if 0 /*JP*/
                    && is_fld_arrayvalues(s[sidx], enc_stat,
                                          SLT_ENCUMBER, OVERLOADED + 1,
                                          &kidx)) {
+#else
+                   && is_fld_arrayvalues(s[sidx], enc_stat_opt,
+                                         SLT_ENCUMBER, OVERLOADED + 1,
+                                         &kidx)) {
+#endif
             txt = enc_stat[kidx];
             txtval = TRUE;
         } else if (fld == BL_ALIGN
@@ -2912,7 +3188,12 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
         } else if (fld == BL_HUNGER
                    && is_fld_arrayvalues(s[sidx], hutxt,
                                          SATIATED, STARVED + 1, &kidx)) {
+#if 0 /*JP*/
             txt = hu_stat[kidx];   /* store hu_stat[] val, not hutxt[] */
+#else
+            /*JP hu_statは翻訳されているのでhutxtを使う */
+            txt = hutxt[kidx];
+#endif
             txtval = TRUE;
         } else if (!strcmpi(s[sidx], "changed")) {
             changed = TRUE;
@@ -3125,7 +3406,11 @@ query_conditions(void)
                  clr, conditions[i].text[0], MENU_ITEMFLAGS_NONE);
     }
 
+#if 0 /*JP*/
     end_menu(tmpwin, "Choose status conditions");
+#else
+    end_menu(tmpwin, "ステータス状態を選んでください");
+#endif
 
     res = select_menu(tmpwin, PICK_ANY, &picks);
     destroy_nhwindow(tmpwin);
@@ -3157,7 +3442,7 @@ conditionbitmask2str(unsigned long ul)
     for (i = 0; i < SIZE(conditions); i++)
         if ((conditions[i].mask & ul) != 0UL) {
             Sprintf(eos(buf), "%s%s", (first) ? "" : "+",
-                    conditions[i].text[0]);
+                    conditions_opt[i]);
             first = FALSE;
         }
 
@@ -3176,7 +3461,7 @@ match_str2conditionbitmask(const char *str)
     if (str && *str) {
         /* check matches to canonical names */
         for (i = 0; i < SIZE(conditions); i++)
-            if (fuzzymatch(conditions[i].text[0], str, " -_", TRUE)) {
+            if (fuzzymatch(conditions_opt[i], str, " -_", TRUE)) {
                 mask |= conditions[i].mask;
                 nmatches++;
             }
@@ -3726,7 +4011,10 @@ status_hilite_menu_choose_behavior(int fld)
     if (fld != BL_CONDITION) {
         any = cg.zeroany;
         any.a_int = onlybeh = BL_TH_ALWAYS_HILITE;
+/*JP
         Sprintf(buf, "Always highlight %s", initblstats[fld].fldname);
+*/
+        Sprintf(buf, "%sを常にハイライト", initblstats[fld].fldname);
         add_menu(tmpwin, &nul_glyphinfo, &any, 'a', 0, ATR_NONE,
                  clr, buf, MENU_ITEMFLAGS_NONE);
         nopts++;
@@ -3735,15 +4023,23 @@ status_hilite_menu_choose_behavior(int fld)
     if (fld == BL_CONDITION) {
         any = cg.zeroany;
         any.a_int = onlybeh = BL_TH_CONDITION;
+#if 0 /*JP:T*/
         add_menu(tmpwin, &nul_glyphinfo, &any, 'b', 0, ATR_NONE,
                  clr, "Bitmask of conditions", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(tmpwin, &nul_glyphinfo, &any, 'b', 0, ATR_NONE,
+                 clr, "条件のビットマスク", MENU_ITEMFLAGS_NONE);
+#endif
         nopts++;
     }
 
     if (fld != BL_CONDITION && fld != BL_VERS) {
         any = cg.zeroany;
         any.a_int = onlybeh = BL_TH_UPDOWN;
+/*JP
         Sprintf(buf, "%s value changes", initblstats[fld].fldname);
+*/
+        Sprintf(buf, "%sの値の変更", initblstats[fld].fldname);
         add_menu(tmpwin, &nul_glyphinfo, &any, 'c', 0, ATR_NONE,
                  clr, buf, MENU_ITEMFLAGS_NONE);
         nopts++;
@@ -3753,16 +4049,26 @@ status_hilite_menu_choose_behavior(int fld)
         && (at == ANY_INT || at == ANY_LONG)) {
         any = cg.zeroany;
         any.a_int = onlybeh = BL_TH_VAL_ABSOLUTE;
+#if 0 /*JP:T*/
         add_menu(tmpwin, &nul_glyphinfo, &any, 'n', 0, ATR_NONE,
                  clr, "Number threshold", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(tmpwin, &nul_glyphinfo, &any, 'n', 0, ATR_NONE,
+                 clr, "数値の閾値", MENU_ITEMFLAGS_NONE);
+#endif
         nopts++;
     }
 
     if (initblstats[fld].idxmax >= 0) {
         any = cg.zeroany;
         any.a_int = onlybeh = BL_TH_VAL_PERCENTAGE;
+#if 0 /*JP:T*/
         add_menu(tmpwin, &nul_glyphinfo, &any, 'p', 0, ATR_NONE,
                  clr, "Percentage threshold", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(tmpwin, &nul_glyphinfo, &any, 'p', 0, ATR_NONE,
+                 clr, "割合の閾値", MENU_ITEMFLAGS_NONE);
+#endif
         nopts++;
     }
 
@@ -3780,14 +4086,22 @@ status_hilite_menu_choose_behavior(int fld)
         || fld == BL_CAP || fld == BL_HUNGER) {
         any = cg.zeroany;
         any.a_int = onlybeh = BL_TH_TEXTMATCH;
+/*JP
         Sprintf(buf, "%s text match", initblstats[fld].fldname);
+*/
+        Sprintf(buf, "%sのテキストのマッチング", initblstats[fld].fldname);
         add_menu(tmpwin, &nul_glyphinfo, &any, 't', 0, ATR_NONE,
                  clr, buf, MENU_ITEMFLAGS_NONE);
         nopts++;
     }
 
+#if 0 /*JP:T*/
     Sprintf(buf, "Select %s field hilite behavior:",
             initblstats[fld].fldname);
+#else
+    Sprintf(buf, "%sのハイライトの振る舞いを選択:",
+            initblstats[fld].fldname);
+#endif
     end_menu(tmpwin, buf);
 
     if (nopts > 1) {
@@ -3825,18 +4139,31 @@ status_hilite_menu_choose_updownboth(
 
     if (ltok) {
         if (str)
+#if 0 /*JP*/
             Sprintf(buf, "%s than %s",
                     (fld == BL_AC) ? "Better (lower)" : "Less", str);
+#else
+            Sprintf(buf, "%sより%s",
+                    str, (fld == BL_AC) ? "良い(小さい)" : "小さい");
+#endif
         else
+/*JP
             Sprintf(buf, "Value goes down");
+*/
+            Sprintf(buf, "値の低下");
         any = cg.zeroany;
         any.a_int = 10 + LT_VALUE;
         add_menu(tmpwin, &nul_glyphinfo, &any, 0, 0, ATR_NONE,
                  clr, buf, MENU_ITEMFLAGS_NONE);
 
         if (str) {
+#if 0 /*JP*/
             Sprintf(buf, "%s or %s",
                     str, (fld == BL_AC) ? "better (lower)" : "less");
+#else
+            Sprintf(buf, "%s%s",
+                    str, (fld == BL_AC) ? "より良い(以下)" : "以下");
+#endif
             any = cg.zeroany;
             any.a_int = 10 + LE_VALUE;
             add_menu(tmpwin, &nul_glyphinfo, &any, 0, 0, ATR_NONE,
@@ -3845,9 +4172,15 @@ status_hilite_menu_choose_updownboth(
     }
 
     if (str)
+/*JP
         Sprintf(buf, "Exactly %s", str);
+*/
+        Sprintf(buf, "ちょうど%s", str);
     else
+/*JP
         Sprintf(buf, "Value changes");
+*/
+        Sprintf(buf, "値の変更");
     any = cg.zeroany;
     any.a_int = 10 + EQ_VALUE;
     add_menu(tmpwin, &nul_glyphinfo, &any, 0, 0, ATR_NONE,
@@ -3855,8 +4188,13 @@ status_hilite_menu_choose_updownboth(
 
     if (gtok) {
         if (str) {
+#if 0 /*JP*/
             Sprintf(buf, "%s or %s",
                     str, (fld == BL_AC) ? "worse (higher)" : "more");
+#else
+            Sprintf(buf, "%s%s",
+                    str, (fld == BL_AC) ? "より悪い(以上)" : "以上");
+#endif
             any = cg.zeroany;
             any.a_int = 10 + GE_VALUE;
             add_menu(tmpwin, &nul_glyphinfo, &any, 0, 0, ATR_NONE,
@@ -3864,16 +4202,27 @@ status_hilite_menu_choose_updownboth(
         }
 
         if (str)
+#if 0 /*JP*/
             Sprintf(buf, "%s than %s",
                     (fld == BL_AC) ? "Worse (higher)" : "More", str);
+#else
+            Sprintf(buf, "%sより%s",
+                    str, (fld == BL_AC) ? "悪い(高い)" : "大きい");
+#endif
         else
+/*JP
             Sprintf(buf, "Value goes up");
+*/
+            Sprintf(buf, "値の上昇");
         any = cg.zeroany;
         any.a_int = 10 + GT_VALUE;
         add_menu(tmpwin, &nul_glyphinfo, &any, 0, 0, ATR_NONE, clr,
                  buf, MENU_ITEMFLAGS_NONE);
     }
+/*JP
     Sprintf(buf, "Select field %s value:", initblstats[fld].fldname);
+*/
+    Sprintf(buf, "フィールド%sの値:", initblstats[fld].fldname);
     end_menu(tmpwin, buf);
 
     res = select_menu(tmpwin, PICK_ONE, &picks);
@@ -3948,9 +4297,15 @@ status_hilite_menu_add(int origfld)
 
         lt_gt_eq = NO_LTEQGT; /* not set up yet */
         inbuf[0] = '\0';
+#if 0 /*JP*/
         Sprintf(buf, "Enter %svalue for %s threshold:",
                 percent ? "percentage " : "",
                 initblstats[fld].fldname);
+#else
+        Sprintf(buf, "%sの%sの閾値を入力してください:",
+                initblstats[fld].fldname,
+                percent ? "割合" : "値");
+#endif
         getlin(buf, inbuf);
         if (inbuf[0] == '\0' || inbuf[0] == '\033')
             goto choose_behavior;
@@ -3984,17 +4339,26 @@ status_hilite_menu_add(int origfld)
         }
         if (*inp == '%') {
             if (!percent) {
+/*JP
                 pline("Not expecting a percentage.");
+*/
+                pline("割合を想定していません．");
                 goto choose_behavior;
             }
             *inp = '\0'; /* strip '%' [this accepts trailing junk!] */
         } else if (*inp) {
             /* some random characters */
+/*JP
             pline("\"%s\" is not a recognized number.", inp);
+*/
+            pline("\"%s\"は数値として認識できません．", inp);
             goto choose_value;
         }
         if (!gotnum) {
+/*JP
             pline("Is that an invisible number?");
+*/
+            pline("これは見えない数字？");
             goto choose_value;
         }
         op = (lt_gt_eq == LT_VALUE) ? "<"
@@ -4011,7 +4375,10 @@ status_hilite_menu_add(int origfld)
         if (percent) {
             val = aval.a_int;
             if (initblstats[fld].idxmax == -1) {
+/*JP
                 pline("Field '%s' does not support percentage values.",
+*/
+                pline("フィールド'%s'は割合の値に対応していません．",
                       initblstats[fld].fldname);
                 behavior = BL_TH_VAL_ABSOLUTE;
                 goto choose_value;
@@ -4025,7 +4392,10 @@ status_hilite_menu_add(int origfld)
                 || (val == 0 && lt_gt_eq == LT_VALUE)
                 || (val == 100 && lt_gt_eq == GT_VALUE)
                 || (val > 100 && (val != 101 || lt_gt_eq != LT_VALUE))) {
+/*JP
                 pline("'%s%d%%' is not a valid percent value.", op, val);
+*/
+                pline("'%s%d%%'は有効な割合の値ではありません．", op, val);
                 goto choose_value;
             }
             /* restore suffix for use in color and attribute prompts */
@@ -4060,6 +4430,7 @@ status_hilite_menu_add(int origfld)
                 goto choose_value;
         }
 
+#if 0 /*JP*/
         Sprintf(colorqry, "Choose a color for when %s is %s%s%s:",
                 initblstats[fld].fldname,
                 (lt_gt_eq == LT_VALUE) ? "less than "
@@ -4069,6 +4440,17 @@ status_hilite_menu_add(int origfld)
                 (lt_gt_eq == LE_VALUE) ? " or less"
                   : (lt_gt_eq == GE_VALUE) ? " or more"
                     : "");
+#else
+        Sprintf(colorqry, "%sが%s%s場合の色を選んでください:",
+                initblstats[fld].fldname,
+                numstart,
+                (lt_gt_eq == LT_VALUE) ? "より小さい"
+                  : (lt_gt_eq == GT_VALUE) ? "より大きい"
+                  : (lt_gt_eq == LE_VALUE) ? "以下"
+                  : (lt_gt_eq == GE_VALUE) ? "以上"
+                  : "の");
+#endif
+#if 0 /*JP*/
         Sprintf(attrqry, "Choose attribute for when %s is %s%s%s:",
                 initblstats[fld].fldname,
                 (lt_gt_eq == LT_VALUE) ? "less than "
@@ -4078,6 +4460,16 @@ status_hilite_menu_add(int origfld)
                 (lt_gt_eq == LE_VALUE) ? " or less"
                   : (lt_gt_eq == GE_VALUE) ? " or more"
                     : "");
+#else
+        Sprintf(attrqry, "%sが%s%s場合の属性を選んでください:",
+                initblstats[fld].fldname,
+                numstart,
+                (lt_gt_eq == LT_VALUE) ? "より小さい"
+                  : (lt_gt_eq == GT_VALUE) ? "より大きい"
+                  : (lt_gt_eq == LE_VALUE) ? "以下"
+                  : (lt_gt_eq == GE_VALUE) ? "以上"
+                  : "の");
+#endif
 
         hilite.rel = lt_gt_eq;
         hilite.value = aval;
@@ -4098,16 +4490,32 @@ status_hilite_menu_add(int origfld)
                single choice, skip it altogether and just use 'changed' */
             lt_gt_eq = EQ_VALUE;
         }
+#if 0 /*JP:T*/
         Sprintf(colorqry, "Choose a color for when %s %s:",
                 initblstats[fld].fldname,
                 (lt_gt_eq == EQ_VALUE) ? "changes"
                   : (lt_gt_eq == LT_VALUE) ? "decreases"
                     : "increases");
+#else
+        Sprintf(colorqry, "%sが%sたときの色を選んでください:",
+                initblstats[fld].fldname,
+                (lt_gt_eq == EQ_VALUE) ? "変わっ"
+                  : (lt_gt_eq == LT_VALUE) ? "減っ"
+                    : "増え");
+#endif
+#if 0 /*JP*/
         Sprintf(attrqry, "Choose attribute for when %s %s:",
                 initblstats[fld].fldname,
                 (lt_gt_eq == EQ_VALUE) ? "changes"
                   : (lt_gt_eq == LT_VALUE) ? "decreases"
                     : "increases");
+#else
+        Sprintf(attrqry, "%sが%sたときの属性を選んでください:",
+                initblstats[fld].fldname,
+                (lt_gt_eq == EQ_VALUE) ? "変わっ"
+                  : (lt_gt_eq == LT_VALUE) ? "減っ"
+                    : "増え");
+#endif
         hilite.rel = lt_gt_eq;
     } else if (behavior == BL_TH_CONDITION) {
         cond = query_conditions();
@@ -4116,21 +4524,42 @@ status_hilite_menu_add(int origfld)
                 goto choose_field;
             return FALSE;
         }
+#if 0 /*JP:T*/
         Snprintf(colorqry, sizeof(colorqry),
                 "Choose a color for conditions %s:",
                 conditionbitmask2str(cond));
+#else
+        Snprintf(colorqry, sizeof(colorqry),
+                "条件%sのときの色を選んでください:",
+                conditionbitmask2str(cond));
+#endif
+#if 0 /*JP:T*/
         Snprintf(attrqry, sizeof(attrqry),
                 "Choose attribute for conditions %s:",
                 conditionbitmask2str(cond));
+#else
+        Snprintf(attrqry, sizeof(attrqry),
+                "条件%sのときの属性を選んでください:",
+                conditionbitmask2str(cond));
+#endif
     } else if (behavior == BL_TH_TEXTMATCH) {
         char qry_buf[BUFSZ];
 
+#if 0 /*JP:T*/
         Sprintf(qry_buf, "%s %s text value to match:",
                 (fld == BL_CAP
                  || fld == BL_ALIGN
                  || fld == BL_HUNGER
                  || fld == BL_TITLE) ? "Choose" : "Enter",
                 initblstats[fld].fldname);
+#else
+        Sprintf(qry_buf, "%sのテキスト値にマッチングする値を%sください:",
+                initblstats[fld].fldname,
+                (fld == BL_CAP
+                 || fld == BL_ALIGN
+                 || fld == BL_HUNGER
+                 || fld == BL_TITLE) ? "選んで" : "入力して");
+#endif
         if (fld == BL_CAP) {
             int rv = query_arrayvalue(qry_buf,
                                       enc_stat,
@@ -4140,10 +4569,17 @@ status_hilite_menu_add(int origfld)
                 goto choose_behavior;
 
             hilite.rel = TXT_VALUE;
+#if 0 /*JP:T*/
             Strcpy(hilite.textmatch, enc_stat[rv]);
+#else
+            Strcpy(hilite.textmatch, enc_stat_opt[rv]);
+#endif
         } else if (fld == BL_ALIGN) {
             static const char *const aligntxt[] = {
+/*JP
                 "chaotic", "neutral", "lawful"
+*/
+                "混沌", "中立", "秩序"
             };
             int rv = query_arrayvalue(qry_buf,
                                       aligntxt, 0, 2 + 1);
@@ -4158,7 +4594,10 @@ status_hilite_menu_add(int origfld)
                 "Satiated", (char *) 0, "Hungry", "Weak",
                 "Fainting", "Fainted", "Starved"
             };
+/*JP
             int rv = query_arrayvalue(qry_buf, hutxt, SATIATED, STARVED + 1);
+*/
+            int rv = query_arrayvalue(qry_buf, hu_stat, SATIATED, STARVED + 1);
 
             if (rv < SATIATED)
                 goto choose_behavior;
@@ -4194,7 +4633,10 @@ status_hilite_menu_add(int origfld)
                         rolelist[j++] = dupstr(obuf);
                 }
             }
+/*JP
             rolelist[j++] = dupstr("\"none of the above (polymorphed)\"");
+*/
+            rolelist[j++] = dupstr("\"上のどれでもない(変化中)\"");
 
             rv = query_arrayvalue(qry_buf, rolelist, 0, j);
             if (rv >= 0) {
@@ -4219,14 +4661,26 @@ status_hilite_menu_add(int origfld)
             else
                 return FALSE;
         }
+/*JP
         Sprintf(colorqry, "Choose a color for when %s is '%s':",
+*/
+        Sprintf(colorqry, "%sが'%s'の時の色を選んでください:",
                 initblstats[fld].fldname, hilite.textmatch);
+/*JP
         Sprintf(attrqry, "Choose attribute for when %s is '%s':",
+*/
+        Sprintf(attrqry, "%sが'%s'の時の属性を選んでください:",
                 initblstats[fld].fldname, hilite.textmatch);
     } else if (behavior == BL_TH_ALWAYS_HILITE) {
+/*JP
         Sprintf(colorqry, "Choose a color to always hilite %s:",
+*/
+        Sprintf(colorqry, "常に%sをハイライトする色を選んでください:",
                 initblstats[fld].fldname);
+/*JP
         Sprintf(attrqry, "Choose attribute to always hilite %s:",
+*/
+        Sprintf(attrqry, "常に%sをハイライトする属性を選んでください:",
                 initblstats[fld].fldname);
     }
 
@@ -4272,7 +4726,10 @@ status_hilite_menu_add(int origfld)
         tmpattr = hlattr2attrname(atr, attrbuf, BUFSZ);
         if (tmpattr)
             Sprintf(eos(clrbuf), "&%s", tmpattr);
+/*JP
         pline("Added hilite condition/%s/%s",
+*/
+        pline("ハイライト条件/%s/%sを追加した．",
               conditionbitmask2str(cond), clrbuf);
     } else {
         char *p, *q;
@@ -4286,7 +4743,10 @@ status_hilite_menu_add(int origfld)
             *p = '\0'; /* chop off " or female-rank" */
             /* new rule for male-rank */
             status_hilite_add_threshold(fld, &hilite);
+/*JP
             pline("Added hilite %s", status_hilite2str(&hilite));
+*/
+            pline("ハイライト%sを追加した．", status_hilite2str(&hilite));
             /* transfer female-rank to start of hilite.textmatch buffer */
             p += sizeof " or " - sizeof "";
             q = hilite.textmatch;
@@ -4295,7 +4755,10 @@ status_hilite_menu_add(int origfld)
             /* proceed with normal addition of new rule */
         }
         status_hilite_add_threshold(fld, &hilite);
+/*JP
         pline("Added hilite %s", status_hilite2str(&hilite));
+*/
+        pline("ハイライト%sを追加した．", status_hilite2str(&hilite));
     }
     reset_status_hilites();
     return TRUE;
@@ -4390,7 +4853,10 @@ status_hilite_menu_fld(int fld)
             hlstr = hlstr->next;
         }
     } else {
+/*JP
         Sprintf(buf, "No current hilites for %s", initblstats[fld].fldname);
+*/
+        Sprintf(buf, "%sの現在のハイライトはありません", initblstats[fld].fldname);
         add_menu_str(tmpwin, buf);
     }
 
@@ -4400,8 +4866,13 @@ status_hilite_menu_fld(int fld)
     if (count) {
         any = cg.zeroany;
         any.a_int = -1;
+#if 0 /*JP:T*/
         add_menu(tmpwin, &nul_glyphinfo, &any, 'X', 0, ATR_NONE, clr,
                  "Remove selected hilites", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(tmpwin, &nul_glyphinfo, &any, 'X', 0, ATR_NONE, clr,
+                 "選択したハイライトを削除", MENU_ITEMFLAGS_NONE);
+#endif
     }
 
 #ifndef SCORE_ON_BOTL
@@ -4416,11 +4887,19 @@ status_hilite_menu_fld(int fld)
     {
         any = cg.zeroany;
         any.a_int = -2;
+#if 0 /*JP:T*/
         add_menu(tmpwin, &nul_glyphinfo, &any, 'Z', 0, ATR_NONE,
                  clr, "Add new hilites", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(tmpwin, &nul_glyphinfo, &any, 'Z', 0, ATR_NONE,
+                 clr, "新しいハイライトを追加", MENU_ITEMFLAGS_NONE);
+#endif
     }
 
+/*JP
     Sprintf(buf, "Current %s hilites:", initblstats[fld].fldname);
+*/
+    Sprintf(buf, "現在の%sのハイライト:", initblstats[fld].fldname);
     end_menu(tmpwin, buf);
 
     acted = FALSE;
@@ -4516,9 +4995,15 @@ status_hilite_menu(void)
     if (countall) {
         any = cg.zeroany;
         any.a_int = -1;
+#if 0 /*JP:T*/
         add_menu(tmpwin, &nul_glyphinfo, &any, 0, 0, ATR_NONE,
                  clr, "View all hilites in config format",
                  MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(tmpwin, &nul_glyphinfo, &any, 0, 0, ATR_NONE,
+                 clr, "設定ファイル形式で全てのハイライトを表示",
+                 MENU_ITEMFLAGS_NONE);
+#endif
 
         add_menu_str(tmpwin, "");
     }
@@ -4541,12 +5026,18 @@ status_hilite_menu(void)
         any.a_int = fld + 1;
         Sprintf(buf, "%-18s", initblstats[i].fldname);
         if (count)
+/*JP
             Sprintf(eos(buf), " (%d defined)", count);
+*/
+            Sprintf(eos(buf), " (%d個設定中)", count);
         add_menu(tmpwin, &nul_glyphinfo, &any, 0, 0, ATR_NONE,
                  clr, buf, MENU_ITEMFLAGS_NONE);
     }
 
+/*JP
     end_menu(tmpwin, "Status hilites:");
+*/
+    end_menu(tmpwin, "ステータスハイライト:");
     if ((res = select_menu(tmpwin, PICK_ONE, &picks)) > 0) {
         fld = picks->item.a_int - 1;
         if (fld < 0) {
