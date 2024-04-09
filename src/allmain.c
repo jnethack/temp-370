@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 /* various code that was replicated in *main.c */
 
 #include "hack.h"
@@ -56,14 +61,23 @@ moveloop_preamble(boolean resuming)
     /* side-effects from the real world */
     flags.moonphase = phase_of_the_moon();
     if (flags.moonphase == FULL_MOON) {
+/*JP
         You("are lucky!  Full moon tonight.");
+*/
+        pline("ラッキー！今晩は満月だ．");
         change_luck(1);
     } else if (flags.moonphase == NEW_MOON) {
+/*JP
         pline("Be careful!  New moon tonight.");
+*/
+        pline("注意しろ！今晩は新月だ．");
     }
     flags.friday13 = friday_13th();
     if (flags.friday13) {
+/*JP
         pline("Watch out!  Bad things can happen on Friday the 13th.");
+*/
+        pline("用心しろ！１３日の金曜日にはよくないことがある．") ;
         change_luck(-1);
     }
 
@@ -614,7 +628,10 @@ regen_pw(int wtcap)
             u.uen = u.uenmax;
         disp.botl = TRUE;
         if (u.uen == u.uenmax)
+/*JP
             interrupt_multi("You feel full of energy.");
+*/
+            interrupt_multi("エネルギーが回復した．");
     }
 }
 
@@ -675,7 +692,10 @@ regen_hp(int wtcap)
     }
 
     if (reached_full)
+/*JP
         interrupt_multi("You are in full health.");
+*/
+        interrupt_multi("体力が完全回復した．");
 }
 
 #undef U_CAN_REGEN
@@ -685,7 +705,10 @@ stop_occupation(void)
 {
     if (go.occupation) {
         if (!maybe_finished_meal(TRUE))
+/*JP
             You("stop %s.", go.occtxt);
+*/
+            You("%sのを中断した．", go.occtxt);
         go.occupation = (int (*)(void)) 0;
         disp.botl = TRUE; /* in case u.uhs changed */
         nomul(0);
@@ -862,12 +885,18 @@ welcome(boolean new_game) /* false => restoring an old game */
     /* skip "welcome back" if restoring a doomed character */
     if (!new_game && Upolyd && ugenocided()) {
         /* death via self-genocide is pending */
+/*JP
         pline("You're back, but you still feel %s inside.", udeadinside());
+*/
+        pline("あなたは帰ってきたが，魂が%sままだ．", udeadinside());
         return;
     }
 
     if (Hallucination)
+/*JP
         pline("NetHack is filmed in front of an undead studio audience.");
+*/
+        pline("JNetHackはアンデッドのスタジオ観客を前にして撮影されています。");
 
     /*
      * The "welcome back" message always describes your innate form
@@ -880,7 +909,10 @@ welcome(boolean new_game) /* false => restoring an old game */
     *buf = '\0';
 #if 0
     if (new_game || u.ualignbase[A_ORIGINAL] != u.ualignbase[A_CURRENT])
+/*JP
         Sprintf(eos(buf), " %s", align_str(u.ualignbase[A_ORIGINAL]));
+*/
+        Sprintf(eos(buf), "%s", align_str(u.ualignbase[A_ORIGINAL]));
 #else
     /*
      * 2026-04-24
@@ -897,28 +929,55 @@ welcome(boolean new_game) /* false => restoring an old game */
      *  message."
      */
     if (new_game || u.ualignbase[A_ORIGINAL] != u.ualignbase[A_CURRENT] || adrift)
+#if 0 /*JP:T*/
         Sprintf(eos(buf), " %s%s",
                 adrift ? "adrift " : "",
                 adrift ? align_str(u.ualign.type)
                        : align_str(u.ualignbase[A_CURRENT]));
+#else
+        Sprintf(eos(buf), "%s%s",
+                adrift ? "さまよっている" : "",
+                adrift ? align_str(u.ualign.type)
+                       : align_str(u.ualignbase[A_CURRENT]));
+#endif
 #endif
     if (!gu.urole.name.f
         && (new_game
             ? (gu.urole.allow & ROLE_GENDMASK) == (ROLE_MALE | ROLE_FEMALE)
             : currentgend != flags.initgend))
+/*JP
         Sprintf(eos(buf), " %s", genders[currentgend].adj);
+*/
+        Sprintf(eos(buf), "%s%s", *buf ? "の" : "", genders[currentgend].adj);
+#if 0 /*JP:T*/
     Sprintf(eos(buf), " %s %s", gu.urace.adj,
             (currentgend && gu.urole.name.f) ? gu.urole.name.f
                                              : gu.urole.name.m);
+#else
+    Sprintf(eos(buf), "%s%s", gu.urace.adj,
+            (currentgend && gu.urole.name.f) ? gu.urole.name.f
+                                             : gu.urole.name.m);
+#endif
 
+#if 0 /*JP*/
     pline(new_game ? "%s %s, welcome to NetHack!  You are a%s."
                    : "%s %s, the%s, welcome back to NetHack!",
           Hello((struct monst *) 0), svp.plname, buf);
+#else
+    pline(new_game ? "%s，JNetHackの世界へ！このゲームではあなたは%sだ．"
+                   : "%s，JNetHackの世界へ！あなたは%sだ．",
+          Hello((struct monst *) 0), buf);
+#endif
 
     if (new_game) {
         /* guarantee that 'major' event category is never empty */
+#if 0 /*JP:T*/
         livelog_printf(LL_ACHIEVE, "%s the%s entered the dungeon",
                        svp.plname, buf);
+#else
+        livelog_printf(LL_ACHIEVE, "%sの%sは迷宮に入った",
+                       buf, svp.plname);
+#endif
     } else {
         /* if restoring in Gehennom, give same hot/smoky message as when
            first entering it */
