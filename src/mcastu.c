@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2011. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 #define MCASTU_ENUM
@@ -66,21 +71,42 @@ cursetxt(struct monst *mtmp, boolean undirected)
         const char *point_msg; /* spellcasting monsters are impolite */
 
         if (undirected)
+/*JP
             point_msg = "all around, then curses";
+*/
+            point_msg = "あたり一面を";
         else if ((Invis && !perceives(mtmp->data)
                   && (mtmp->mux != u.ux || mtmp->muy != u.uy))
                  || is_obj_mappear(&gy.youmonst, STRANGE_OBJECT)
                  || u.uundetected)
+/*JP
             point_msg = "and curses in your general direction";
+*/
+            point_msg = "あなたのいるあたりを";
         else if (Displaced && (mtmp->mux != u.ux || mtmp->muy != u.uy))
+/*JP
             point_msg = "and curses at your displaced image";
+*/
+            point_msg = "あなたの幻影を";
         else
+/*JP
             point_msg = "at you, then curses";
+*/
+            point_msg = "あなたを";
 
+#if 0 /*JP*/
         pline_mon(mtmp, "%s points %s.", Monnam(mtmp), point_msg);
+#else
+        pline_mon(mtmp, "%sは%s指差し，呪いをかけた．", Monnam(mtmp), point_msg);
+#endif
     } else if ((!(svm.moves % 4) || !rn2(4))) {
         if (!Deaf)
+#if 0 /*JP*/
             Norep("You hear a mumbled curse.");   /* Deaf-aware */
+#else
+            /*JP:TODO:Deaf対応*/
+            Norep("呪いの言葉をつぶやく声を聞いた．");
+#endif
     }
 }
 
@@ -197,10 +223,17 @@ castmu(
      */
     if (!foundyou && thinks_it_foundyou
         && !is_undirected_spell(spellnum)) {
+#if 0 /*JP:T*/
         pline_mon(mtmp, "%s casts a spell at %s!",
                  canseemon(mtmp) ? Monnam(mtmp) : "Something",
                  is_waterwall(mtmp->mux, mtmp->muy) ? "empty water"
                                                     : "thin air");
+#else
+        pline_mon(mtmp, "%sは何もない%sに魔法をかけた！",
+                 canseemon(mtmp) ? Monnam(mtmp) : "何者か",
+                 is_waterwall(mtmp->mux, mtmp->muy) ? "水中"
+                                                    : "空間");
+#endif
         return M_ATTK_MISS;
     }
 
@@ -209,11 +242,15 @@ castmu(
         Soundeffect(se_air_crackles, 60);
         if (canseemon(mtmp) && !Deaf) {
             set_msg_xy(mtmp->mx, mtmp->my);
+/*JP
             pline_The("air crackles around %s.", mon_nam(mtmp));
+*/
+            pline("%sの回りの空気がパチパチ音をたてている．", mon_nam(mtmp));
         }
         return M_ATTK_MISS;
     }
     if (canspotmon(mtmp) || !is_undirected_spell(spellnum)) {
+#if 0 /*JP*/
         pline_mon(mtmp, "%s casts a spell%s!",
                  canspotmon(mtmp) ? Monnam(mtmp) : "Something",
                  is_undirected_spell(spellnum) ? ""
@@ -223,6 +260,21 @@ castmu(
                    : (Displaced && !u_at(mtmp->mux, mtmp->muy))
                      ? " at your displaced image"
                      : " at you");
+#else
+        const char *who = (canspotmon(mtmp) ? Monnam(mtmp) : "何者か");
+        if(is_undirected_spell(spellnum)){
+            pline_mon(mtmp, "%sは呪文を唱えた！", who);
+        } else {
+            pline_mon(mtmp, "%sはあなた%sに魔法をかけた！",
+                  who,
+                  (Invis && !perceives(mtmp->data)
+                   && !u_at(mtmp->mux, mtmp->muy)) ?
+                  "のすぐそば" :
+                  (Displaced && !u_at(mtmp->mux, mtmp->muy)) ?
+                  "の幻影" :
+                  "");
+        }
+#endif
     }
 
     /*
@@ -251,10 +303,16 @@ castmu(
      */
     switch (mattk->adtyp) {
     case AD_FIRE:
+/*JP
         pline("You're enveloped in flames.");
+*/
+        You("炎につつまれた．");
         if (Fire_resistance) {
             shieldeff(u.ux, u.uy);
+/*JP
             pline("But you resist the effects.");
+*/
+            pline("しかし，あなたは影響を受けない．");
             monstseesu(M_SEEN_FIRE);
             dmg = 0;
         } else {
@@ -265,10 +323,16 @@ castmu(
         mon_spell_hits_spot(mtmp, AD_FIRE, u.ux, u.uy);
         break;
     case AD_COLD:
+/*JP
         pline("You're covered in frost.");
+*/
+        You("氷に覆われた．");
         if (Cold_resistance) {
             shieldeff(u.ux, u.uy);
+/*JP
             pline("But you resist the effects.");
+*/
+            pline("しかし，あなたは影響を受けない．");
             monstseesu(M_SEEN_COLD);
             dmg = 0;
         } else {
@@ -280,10 +344,16 @@ castmu(
         mon_spell_hits_spot(mtmp, AD_COLD, u.ux, u.uy);
         break;
     case AD_MAGM:
+/*JP
         You("are hit by a shower of missiles!");
+*/
+        You("魔法の矢をくらった！");
         if (Antimagic) {
             shieldeff(u.ux, u.uy);
+/*JP
             pline_The("missiles bounce off!");
+*/
+            pline("魔法の矢は反射した！");
             monstseesu(M_SEEN_MAGR);
             dmg = 0;
         } else {
@@ -309,7 +379,10 @@ m_cure_self(struct monst *mtmp, int dmg)
 {
     if (mtmp->mhp < mtmp->mhpmax) {
         if (canseemon(mtmp))
+/*JP
             pline_mon(mtmp, "%s looks better.", Monnam(mtmp));
+*/
+            pline_mon(mtmp, "%sは気分がよくなったようだ．", Monnam(mtmp));
         /* note: player healing does 6d4; this used to do 1d8 */
         healmon(mtmp, d(3, 6), 0);
         dmg = 0;
@@ -329,7 +402,10 @@ touch_of_death(struct monst *mtmp)
     /* if we get here, we know that hero isn't magic resistant and isn't
        poly'd into an undead or demon */
     You_feel("drained...");
+/*JP
     (void) death_inflicted_by(kbuf, "the touch of death", mtmp);
+*/
+    (void) death_inflicted_by(kbuf, "死の宣告で", mtmp);
 
     if (Upolyd) {
         u.mh = 0;
@@ -388,12 +464,21 @@ death_inflicted_by(
 staticfn void
 mcast_death_touch(struct monst *mtmp)
 {
+/*JP
     pline("Oh no, %s's using the touch of death!", mhe(mtmp));
+*/
+    pline("なんてこったい，%sは死の宣告を使っている！", mhe(mtmp));
     if (nonliving(gy.youmonst.data) || is_demon(gy.youmonst.data)) {
+/*JP
         You("seem no deader than before.");
+*/
+        You("これ以上死ねないようだ．");
     } else if (!Antimagic && rn2(mtmp->m_lev) > 12) {
         if (Hallucination) {
+/*JP
             You("have an out of body experience.");
+*/
+            You("幽体離脱を体験した．");
         } else {
             touch_of_death(mtmp);
         }
@@ -403,7 +488,10 @@ mcast_death_touch(struct monst *mtmp)
             shieldeff(u.ux, u.uy);
             monstseesu(M_SEEN_MAGR);
         }
+/*JP
         pline("Lucky for you, it didn't work!");
+*/
+        pline("運のよいことになんともなかった！");
     }
 }
 
@@ -411,7 +499,10 @@ staticfn void
 mcast_clone_wiz(struct monst *mtmp)
 {
     if (mtmp->iswiz && svc.context.no_of_wizards == 1) {
+/*JP
         pline("Double Trouble...");
+*/
+        pline("二重苦だ．．．");
         clonewiz();
     } else
         impossible("bad wizard cloning?");
@@ -426,23 +517,40 @@ mcast_summon_mons(struct monst *mtmp)
         ; /* nothing was created? */
     } else if (mtmp->iswiz) {
         SetVoice(mtmp, 0, 80, 0);
+/*JP
         verbalize("Destroy the thief, my pet%s!", plur(count));
+*/
+        verbalize("盗賊を殺せ！我が下僕よ！");
     } else {
         boolean one = (count == 1);
+#if 0 /*JP*/
         const char *mappear = one ? "A monster appears"
                                   : "Monsters appear";
+#endif
 
         /* messages not quite right if plural monsters created but
            only a single monster is seen */
         if (Invis && !perceives(mtmp->data)
             && (mtmp->mux != u.ux || mtmp->muy != u.uy))
+#if 0 /*JP:T*/
             pline("%s %s a spot near you!", mappear,
                   one ? "at" : "around");
+#else
+            pline("怪物があなたのすぐそばに現れた！");
+#endif
         else if (Displaced && (mtmp->mux != u.ux || mtmp->muy != u.uy))
+#if 0 /*JP:T*/
             pline("%s %s your displaced image!", mappear,
                   one ? "by" : "around");
+#else
+            pline("怪物があなたの幻影のすぐそばに現れた！");
+#endif
         else
+#if 0 /*JP:T*/
             pline("%s from nowhere!", mappear);
+#else
+                pline("怪物がどこからともなく現れた！");
+#endif
     }
 }
 
@@ -452,9 +560,15 @@ mcast_destroy_armor(void)
     if (Antimagic) {
         shieldeff(u.ux, u.uy);
         monstseesu(M_SEEN_MAGR);
+/*JP
         pline("A field of force surrounds you!");
+*/
+        pline("不思議な力があなたをとりまいた！");
     } else if (!destroy_arm()) {
+/*JP
         Your("skin itches.");
+*/
+        You("ムズムズした．");
     } else {
         /* monsters only realize you aren't magic-protected if armor is
            actually destroyed */
@@ -468,11 +582,17 @@ mcast_weaken_you(struct monst *mtmp, int dmg)
     if (Antimagic) {
         shieldeff(u.ux, u.uy);
         monstseesu(M_SEEN_MAGR);
+/*JP
         You_feel("momentarily weakened.");
+*/
+        You_feel("一瞬弱くなったような気がした．");
     } else {
         char kbuf[BUFSZ];
 
+/*JP
         You("suddenly feel weaker!");
+*/
+        You("突然弱くなったような気がした！");
         dmg = mtmp->m_lev - 6;
         if (dmg < 1) /* paranoia since only chosen when m_lev is high */
             dmg = 1;
@@ -491,8 +611,13 @@ mcast_disappear(struct monst *mtmp)
 {
     if (!mtmp->minvis && !mtmp->invis_blkd) {
         if (canseemon(mtmp))
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s suddenly %s!", Monnam(mtmp),
                       !See_invisible ? "disappears" : "becomes transparent");
+#else
+            pline_mon(mtmp, "%sは突然%s！", Monnam(mtmp),
+                      !See_invisible ? "消えた" : "透明になった");
+#endif
         mon_set_minvis(mtmp, FALSE);
         if (cansee(mtmp->mx, mtmp->my) && !canspotmon(mtmp))
             map_invisible(mtmp->mx, mtmp->my);
@@ -507,10 +632,16 @@ mcast_stun_you(int dmg)
         shieldeff(u.ux, u.uy);
         monstseesu(M_SEEN_MAGR);
         if (!Stunned)
+/*JP
             You_feel("momentarily disoriented.");
+*/
+            You("一瞬方向感覚を失った．");
         make_stunned(1L, FALSE);
     } else {
+/*JP
         You(Stunned ? "struggle to keep your balance." : "reel...");
+*/
+        You(Stunned ? "バランスを取ろうともがいた．" : "よろめいた．．．");
         dmg = d(ACURR(A_DEX) < 12 ? 6 : 4, 4);
         if (Half_spell_damage)
             dmg = (dmg + 1) / 2;
@@ -525,7 +656,10 @@ mcast_geyser(int dmg)
     /* this is physical damage (force not heat),
      * not magical damage or fire damage
      */
+/*JP
     pline("A sudden geyser slams into you from nowhere!");
+*/
+    pline("濁流がどこからともなく現れてあなたを打ちつけた！");
     dmg = d(8, 6);
     if (Half_physical_damage)
         dmg = (dmg + 1) / 2;
@@ -541,7 +675,10 @@ mcast_fire_pillar(struct monst *mtmp, int dmg)
 {
     int orig_dmg;
 
+/*JP
     pline("A pillar of fire strikes all around you!");
+*/
+    pline("あなたの周りに火柱が立った！");
     orig_dmg = dmg = d(8, 6);
     if (Fire_resistance) {
         shieldeff(u.ux, u.uy);
@@ -569,8 +706,14 @@ mcast_lightning(struct monst *mtmp, int dmg)
     boolean reflects;
 
     Soundeffect(se_bolt_of_lightning, 80);
+/*JP
     pline("A bolt of lightning strikes down at you from above!");
+*/
+    pline("あなたの真上から稲妻が降り注いだ！");
+/*JP
     reflects = ureflects("It bounces off your %s%s.", "");
+*/
+    reflects = ureflects("それはあなたの%s%sで跳ね返った．", "");
     orig_dmg = dmg = d(8, 6);
     if (reflects || Shock_resistance) {
         shieldeff(u.ux, u.uy);
@@ -610,13 +753,25 @@ mcast_psi_bolt(int dmg)
         monstunseesu(M_SEEN_MAGR);
     }
     if (dmg <= 5)
+/*JP
         You("get a slight %sache.", body_part(HEAD));
+*/
+        You("ちょっと%s痛がした．",body_part(HEAD));
     else if (dmg <= 10)
+/*JP
         Your("brain is on fire!");
+*/
+        You("怒りにつつまれた！");
     else if (dmg <= 20)
+/*JP
         Your("%s suddenly aches painfully!", body_part(HEAD));
+*/
+        You("突然%s痛におそわれた！", body_part(HEAD));
     else
+/*JP
         Your("%s suddenly aches very painfully!", body_part(HEAD));
+*/
+        You("突然激しい%s痛におそわれた！", body_part(HEAD));
     return dmg;
 }
 
@@ -631,13 +786,25 @@ mcast_open_wounds(int dmg)
         monstunseesu(M_SEEN_MAGR);
     }
     if (dmg <= 5)
+/*JP
         Your("skin itches badly for a moment.");
+*/
+        Your("皮膚は一瞬，ムズムズっとした．");
     else if (dmg <= 10)
+/*JP
         pline("Wounds appear on your body!");
+*/
+        pline("傷があなたの体に出来た！");
     else if (dmg <= 20)
+/*JP
         pline("Severe wounds appear on your body!");
+*/
+        pline("ひどい傷があなたの体に出来た！");
     else
+/*JP
         Your("body is covered with painful wounds!");
+*/
+        pline("体が傷だらけになった！");
     return dmg;
 }
 
@@ -673,7 +840,10 @@ mcast_insects(struct monst *mtmp)
 
     /* not canspotmon() which includes unseen things sensed via warning */
     seecaster = canseemon(mtmp) || tp_sensemon(mtmp) || Detect_monsters;
+/*JP
     what = (let == S_SNAKE) ? "snakes" : "insects";
+*/
+    what = (let == S_SNAKE) ? "ヘビ" : "虫";
     if (Hallucination)
         what = makeplural(bogusmon(whatbuf, (char *) 0));
 
@@ -682,7 +852,10 @@ mcast_insects(struct monst *mtmp)
         if (newseen <= oldseen || Unaware) {
             /* unseen caster fails or summons unseen critters,
                or unconscious hero ("You dream that you hear...") */
+/*JP
             You_hear("someone summoning %s.", what);
+*/
+            You_hear("誰かが%sを召喚しているのを聞いた．", what);
         } else {
             char *arg;
 
@@ -693,10 +866,18 @@ mcast_insects(struct monst *mtmp)
                                            : whatbuf;
             if (!Deaf) {
                 Soundeffect(se_someone_summoning, 100);
+#if 0 /*JP:T*/
                 You_hear("someone summoning something, and %s %s.", arg,
                          vtense(arg, "appear"));
+#else
+                You_hear("誰かが何かを召喚するのを聞いた，そして%sが現れた．",
+                         arg);
+#endif
             } else {
+/*JP
                 pline("%s %s.", upstart(arg), vtense(arg, "appear"));
+*/
+                pline("%sが現れた．", arg);
             }
         }
 
@@ -706,17 +887,32 @@ mcast_insects(struct monst *mtmp)
            words, no need to fuss with visibility or singularization;
            player is told what's happening even if hero is unconscious) */
     } else if (!success) {
+/*JP
         fmt = "%s casts at a clump of sticks, but nothing happens.%s";
+*/
+        fmt = "%sは棒切れに魔法をかけたが，なにもおこらなかった．%s";
         what = "";
     } else if (let == S_SNAKE) {
+/*JP
         fmt = "%s transforms a clump of sticks into %s!";
+*/
+        fmt = "%sは棒切れを%sに変えた！";
     } else if (Invis && !perceives(mtmp->data)
                && (mtmp->mux != u.ux || mtmp->muy != u.uy)) {
+/*JP
         fmt = "%s summons %s around a spot near you!";
+*/
+        fmt = "%sは%sをあなたのすぐそばに召喚した！";
     } else if (Displaced && (mtmp->mux != u.ux || mtmp->muy != u.uy)) {
+/*JP
         fmt = "%s summons %s around your displaced image!";
+*/
+        fmt = "%sは%sをあなたの幻影の周りに召喚した！";
     } else {
+/*JP
         fmt = "%s summons %s!";
+*/
+        fmt = "%sは%sを召喚した！";
     }
     if (fmt) {
         DISABLE_WARNING_FORMAT_NONLITERAL;
@@ -732,9 +928,13 @@ mcast_blind_you(void)
     if (!Blinded) {
         int num_eyes = eyecount(gy.youmonst.data);
 
+#if 0 /*JP:T*/
         pline("Scales cover your %s!", (num_eyes == 1)
                                        ? body_part(EYE)
                                        : makeplural(body_part(EYE)));
+#else
+        pline("鱗があなたの%sを覆った！", body_part(EYE));
+#endif
         make_blinded(Half_spell_damage ? 100L : 200L, FALSE);
         if (!Blind)
             Your1(vision_clears);
@@ -751,18 +951,27 @@ mcast_paralyze(struct monst *mtmp)
         shieldeff(u.ux, u.uy);
         monstseesu(M_SEEN_MAGR);
         if (gm.multi >= 0)
+/*JP
             You("stiffen briefly.");
+*/
+            You("一瞬硬直した．");
         dmg = 1; /* to produce nomul(-1), not actual damage */
     } else {
         if (gm.multi >= 0)
+/*JP
             You("are frozen in place!");
+*/
+            You("その場で動けなくなった！");
         dmg = 4 + (int) mtmp->m_lev;
         if (Half_spell_damage)
             dmg = (dmg + 1) / 2;
         monstunseesu(M_SEEN_MAGR);
     }
     nomul(-dmg);
+/*JP
     gm.multi_reason = "paralyzed by a monster";
+*/
+    gm.multi_reason = "怪物に麻痺させられた隙に";
     gn.nomovemsg = 0;
     return dmg;
 }
@@ -773,7 +982,10 @@ mcast_confuse_you(struct monst *mtmp)
     if (Antimagic) {
         shieldeff(u.ux, u.uy);
         monstseesu(M_SEEN_MAGR);
+/*JP
         You_feel("momentarily dizzy.");
+*/
+        You("一瞬めまいがした．");
     } else {
         boolean oldprop = !!Confusion;
         int dmg = (int) mtmp->m_lev;
@@ -782,9 +994,15 @@ mcast_confuse_you(struct monst *mtmp)
             dmg = (dmg + 1) / 2;
         make_confused(HConfusion + dmg, TRUE);
         if (Hallucination)
+/*JP
             You_feel("%s!", oldprop ? "trippier" : "trippy");
+*/
+            You("%sへろへろになった！", oldprop ? "もっと" : "");
         else
+/*JP
             You_feel("%sconfused!", oldprop ? "more " : "");
+*/
+            You("%s混乱した！", oldprop ? "もっと" : "");
         monstunseesu(M_SEEN_MAGR);
     }
 }
@@ -824,12 +1042,18 @@ mcast_spell(struct monst *mtmp, int dmg, int spellnum)
         dmg = 0;
         break;
     case MCAST_AGGRAVATION:
+/*JP
         You_feel("that monsters are aware of your presence.");
+*/
+        You_feel("怪物たちがあなたの存在に気付いたような気がした．");
         aggravate();
         dmg = 0;
         break;
     case MCAST_CURSE_ITEMS:
+/*JP
         You_feel("as if you need some help.");
+*/
+        You_feel("助けが必要な気がした．");
         rndcurse();
         dmg = 0;
         break;
@@ -1000,8 +1224,13 @@ buzzmu(struct monst *mtmp, struct attack *mattk)
     if (lined_up(mtmp) && rn2(3)) {
         nomul(0);
         if (canseemon(mtmp))
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s zaps you with a %s!", Monnam(mtmp),
                   flash_str(BZ_OFS_AD(mattk->adtyp), FALSE));
+#else
+            pline_mon(mtmp, "%sは%sをあなたに向けて放った．", Monnam(mtmp),
+                  flash_str(BZ_OFS_AD(mattk->adtyp), FALSE));
+#endif
         gb.buzzer = mtmp;
         buzz(BZ_M_SPELL(BZ_OFS_AD(mattk->adtyp)), (int) mattk->damn,
              mtmp->mx, mtmp->my, sgn(gt.tbx), sgn(gt.tby));

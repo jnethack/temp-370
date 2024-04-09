@@ -3,6 +3,11 @@
 /*-Copyright (c) Alex Smith, 2017. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 /* for UNIX, Rand #def'd to (long)lrand48() or (long)random() */
@@ -730,7 +735,10 @@ static NEARDATA const char *trap_engravings[TRAPNUM] = {
     (char *) 0,      (char *) 0,    (char *) 0,    (char *) 0, (char *) 0,
     (char *) 0,      (char *) 0,    (char *) 0,    (char *) 0,
     /* 14..16: trap door, teleport, level-teleport */
+/*JP
     "Vlad was here", "ad aerarium", "ad aerarium", (char *) 0, (char *) 0,
+*/
+    "ヴラドはここにいた", "ad aerarium", "ad aerarium", (char *) 0, (char *) 0,
     (char *) 0,      (char *) 0,    (char *) 0,    (char *) 0, (char *) 0,
     /* 24..25 */
     (char *) 0, (char *) 0,
@@ -2364,7 +2372,10 @@ mkgrave(struct mkroom *croom)
         return;
 
     /* Put a grave at <m.x,m.y> */
+/*JP
     make_grave(m.x, m.y, dobell ? "Saved by the bell!" : (char *) 0);
+*/
+    make_grave(m.x, m.y, dobell ? "ベルに救われた！" : (char *) 0);
 
     /* Possibly fill it with objects */
     if (!rn2(3)) {
@@ -2414,7 +2425,10 @@ mkinvokearea(void)
     coordxy i;
 
     /* slightly odd if levitating, but not wrong */
+/*JP
     pline_The("floor shakes violently under you!");
+*/
+    pline("あなたの下の床が突然揺れた！");
     /* decide whether to issue the crumbling walls message */
     {
         xmin = xmax = svi.inv_pos.x;
@@ -2451,7 +2465,10 @@ mkinvokearea(void)
            or if all the walls within range have been dug away; when it does
            appear, it will describe iron bars as "walls" (which is ok) */
         if (wallct)
+/*JP
             pline_The("walls around you begin to bend and crumble!");
+*/
+            pline("そしてまわりの壁がねじれ，砕けた！");
     }
     display_nhwindow(WIN_MESSAGE, TRUE);
 
@@ -2490,7 +2507,10 @@ mkinvokearea(void)
         nh_delay_output();
     }
 
+/*JP
     You("are standing at the top of a stairwell leading down!");
+*/
+    You("下に続く吹き抜け階段の上に立っている！");
     mkstairs(u.ux, u.uy, 0, (struct mkroom *) 0, FALSE); /* down */
     newsym(u.ux, u.uy);
     gv.vision_full_recalc = 1; /* everything changed */
