@@ -4,6 +4,11 @@
 /* Copyright (c) Robert Patrick Rankin, 1991                      */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h" /* for config.h+extern.h */
 
 /*=
@@ -56,6 +61,14 @@
         void            nh_snprintf     (const char *, int, char *, size_t,
                                          const char *, ...)
 =*/
+
+#if 1 /*JP*//*最小限のチェック用*/
+staticfn boolean
+_is_kanji(char c)
+{
+    return ((unsigned char)c & 0x80) != 0;
+}
+#endif
 
 /* is 'c' a digit? */
 boolean
@@ -347,6 +360,7 @@ s_suffix(const char *s)
     static char buf[BUFSZ];
 
     Strcpy(buf, s);
+#if 0 /*JP*/
     if (!strcmpi(buf, "it")) /* it -> its */
         Strcat(buf, "s");
     else if (!strcmpi(buf, "you")) /* you -> your */
@@ -355,6 +369,9 @@ s_suffix(const char *s)
         Strcat(buf, "'");
     else /* X -> X's */
         Strcat(buf, "'s");
+#else /* X -> Xの */
+    Strcat(buf, "の");
+#endif
     return buf;
 }
 
