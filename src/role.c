@@ -2682,19 +2682,19 @@ Hello(struct monst *mtmp)
 
     switch (Role_switch) {
     case PM_KNIGHT:
-        Sprintf(helo_buf, "よくぞ参った%sよ", gp.plname);
+        Sprintf(helo_buf, "よくぞ参った%sよ", svp.plname);
         break;
     case PM_SAMURAI:
-        Sprintf(helo_buf, "よくぞ参られた%sよ", gp.plname);
+        Sprintf(helo_buf, "よくぞ参られた%sよ", svp.plname);
         break;
     case PM_TOURIST:
-        Sprintf(helo_buf, "アローハ%s", gp.plname);
+        Sprintf(helo_buf, "アローハ%s", svp.plname);
         break;
     case PM_VALKYRIE:
-        Sprintf(helo_buf, "魂の守護者%sよ", gp.plname);
+        Sprintf(helo_buf, "魂の守護者%sよ", svp.plname);
         break;
     default:
-        Sprintf(helo_buf, "ようこそ%s", gp.plname);
+        Sprintf(helo_buf, "ようこそ%s", svp.plname);
         break;
     }
 
@@ -3461,7 +3461,7 @@ plsel_startmenu(int ttyrows, int aspect)
                 rolename);
 #else
         Sprintf(qbuf, "%.20s, %.20s%.20sの%.20s%.20s",
-                gp.plname,
+                svp.plname,
                 aligns[ALGN].adj,
                 genders[GEND].adj,
                 races[RACE].adj,
