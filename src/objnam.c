@@ -515,7 +515,7 @@ fruitname(
 #else
     /*日本語ではそこまでしない*/
     char *buf = nextobuf();
-    Sprintf(buf, "%s%s", gp.pl_fruit, juice ? "ジュース" : "");
+    Sprintf(buf, "%s%s", svp.pl_fruit, juice ? "ジュース" : "");
     return buf;
 #endif
 }
