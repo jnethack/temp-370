@@ -191,9 +191,6 @@ str2ic(const char *s)
     static unsigned char buf[1024];
     const unsigned char *up;
     unsigned char *p;
-#ifndef POSIX_ICONV
-    unsigned char *pp;
-#endif
 
     if(!s)
       return s;
@@ -223,8 +220,7 @@ str2ic(const char *s)
         strcpy((char *)buf, s);
         return (char *)buf;
     }
-#else
-#ifdef WIN32
+#else /*WIN32*/
 {
     wchar_t wbuf[1024];
     memset(buf, 0, 1024);
@@ -246,26 +242,6 @@ str2ic(const char *s)
         NULL);
     return (char *)buf;
 }
-#else
-    if( IC==EUC && input_kcode == SJIS ){
-        while(*s){
-            up = (unsigned char *)s;
-            if(is_kanji(*up)){
-                pp = sj2e((unsigned char *)s);
-                *(p++) = pp[0];
-                *(p++) = pp[1];
-                s += 2;
-            }
-            else
-              *(p++) = (unsigned char)*(s++);
-        }
-        *(p++) = '\0';
-        return (char *)buf;
-    } else {
-        strcpy((char *)buf, s);
-        return (char *)buf;
-    }
-#endif
 #endif
 
 }
@@ -419,7 +395,7 @@ jbuffer(
                 while(*dst) f1(*(dst++));
             }
         }
-#else
+#else /*WIN32*/
           ;
         else if(IC == EUC){
             switch(output_kcode){
