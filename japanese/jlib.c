@@ -369,8 +369,8 @@ jbuffer(
         c1 = buf[1];
         c2 = c;
 
-        if(IC == output_kcode)
 #ifdef POSIX_ICONV
+        if(IC == output_kcode)
         {
             f2buf[0] = c1;
             f2buf[1] = c2;
@@ -396,33 +396,7 @@ jbuffer(
             }
         }
 #else /*WIN32*/
-          ;
-        else if(IC == EUC){
-            switch(output_kcode){
-              case SJIS:
-                uc[0] = c1;
-                uc[1] = c2;
-                p = e2sj(uc);
-                c1 = p[0];
-                c2 = p[1];
-                break;
-              default:
-                impossible("Unknown kcode!");
-                break;
-            }
-        }
-        else if(IC == SJIS){
-            uc[0] = c1;
-            uc[1] = c2;
-            p = sj2e(uc);
-            switch(output_kcode){
-              case EUC:
-                break;
-              default:
-                impossible("Unknown kcode!");
-                break;
-            }
-        }
+        /* SJIS to SJIS only */
         f2buf[0] = c1;
         f2buf[1] = c2;
         f2buf[2] = '\0';
