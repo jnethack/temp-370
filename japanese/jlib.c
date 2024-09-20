@@ -23,7 +23,7 @@ int xputc2(const unsigned char *);
 #define SJIS    1
 #define UTF8    2
 
-/*#define ICUTF8/**/
+/*#define ICUTF8 /* 内部コードUTF-8 */
 
 #ifdef POSIX_ICONV
 static const char* ccode[]={
