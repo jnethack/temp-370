@@ -129,6 +129,10 @@ static const uint8 empty_utf8str[MAX_UTF8_SEQUENCE] = { 0 };
 #endif
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
 
+#if 1 /*JP*/
+/*#define ICUTF8 /* 内部コードUTF-8 */
+#endif
+
 /*
  * The following WIN32 Console API routines are used in this file.
  *
@@ -1291,7 +1295,11 @@ xputc2_core(const unsigned char *str)
     }
 
     int ret = MultiByteToWideChar(
+#ifdef ICUTF8
+        CP_UTF8,
+#else
         CP_ACP,
+#endif
         MB_PRECOMPOSED,
         (const char *)str,
         strlen((const char *)str),
@@ -1329,11 +1337,15 @@ xputc2_core(const unsigned char *str)
 void
 xputc2(const unsigned char *str)
 {
+    int charlen = strlen((const char *)str);
     /* wintty.c では 1 バイト毎に curx を加算するが、ここは
-       n バイトたまってから呼び出されるので、n-1 文字分先に進んで
-      しまっている。従って n-1 を引く。 */
-    console.cursor.X = ttyDisplay->curx - (strlen((const char *)str) - 1);
+       charlen バイトたまってから呼び出されるので、charlen-1 文字分先に進んで
+      しまっている。従って charlen-1 を引く。 */
+    console.cursor.X = ttyDisplay->curx - (charlen - 1);
     console.cursor.Y = ttyDisplay->cury;
+
+    /* 実際に何バイトでも移動するのは 2 バイト分 */
+    ttyDisplay->curx -= charlen - 2;
 
     xputc2_core(str);
 }
