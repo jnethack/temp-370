@@ -23,6 +23,8 @@ int xputc2(const unsigned char *);
 #define SJIS    1
 #define UTF8    2
 
+/*#define ICUTF8/**/
+
 #ifdef POSIX_ICONV
 static const char* ccode[]={
     "EUC-JP-MS",
@@ -274,7 +276,6 @@ tty_cputc2(unsigned char *str)
 #endif
 } 
 
-/*#define ICUTF8/**/
 /*
   1文字の長さを返す
   */
