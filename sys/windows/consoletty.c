@@ -129,6 +129,10 @@ static const uint8 empty_utf8str[MAX_UTF8_SEQUENCE] = { 0 };
 #endif
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
 
+#if 1 /*JP*/
+/*#define ICUTF8 /* 内部コードUTF-8 */
+#endif
+
 /*
  * The following WIN32 Console API routines are used in this file.
  *
@@ -1291,7 +1295,11 @@ xputc2_core(const unsigned char *str)
     }
 
     int ret = MultiByteToWideChar(
+#ifdef ICUTF8
+        CP_UTF8,
+#else
         CP_ACP,
+#endif
         MB_PRECOMPOSED,
         (const char *)str,
         strlen((const char *)str),
