@@ -56,11 +56,11 @@ SOUND_LIBRARIES = windsound
 #
 # Do you want console curses included?
 
-CURSES_CONSOLE = Y
+CURSES_CONSOLE = N
 
 # Do you want graphical curses included?
 
-CURSES_GRAPHICAL = Y
+CURSES_GRAPHICAL = N
 
 #
 #------------------------------------------------------------------------------
