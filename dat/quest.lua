@@ -74,3014 +74,2981 @@ questtext = {
  t suffix:	return strip_the_prefix(root);]],
       },
       angel_cuss = {
-         "\"Repent, and thou shalt be saved!\"",
-         "\"Thou shalt pay for thine insolence!\"",
-         "\"Very soon, my child, thou shalt meet thy maker.\"",
-         "\"The great %D has sent me to make you pay for your sins!\"",
-         "\"The wrath of %D is now upon you!\"",
-         "\"Thy life belongs to %D now!\"",
-         "\"Dost thou wish to receive thy final blessing?\"",
-         "\"Thou art but a godless void.\"",
-         "\"Thou art not worthy to seek the Amulet.\"",
-         "\"No one expects the Spanish Inquisition!\"",
-         "\"Judgment hath been passed upon thee, %p.\"",
-         "\"Thy reckoning is at hand, %p.\"",
-         "\"Thou shalt be brought before %D for thy crimes!\"",
-         "\"With %D as my witness, I shall strike thee down.\"",
+         "「悔いあらためよ，されば汝救われん！」",
+         "「汝，己の働きし傲慢の報いを受けるべし！」",
+         "「我が子よ，汝は己の作りたもう者にあいま見えることになろう．」",
+         "「偉大なる%Dが汝の罪の償いのため我を使わせん．」",
+         "「そなたは%Dの怒りに触れた！」",
+         "「汝の生命，いまや%Dの掌の上なり！」",
+         "「汝最後の祝福を受けることを所望するか？」",
+         "「汝，神をも信じぬ異端者以外の何者でもない．」",
+         "「汝，魔除けを探し求めるに値せず！」",
+         "「異端審問を受けることを予想する者など誰もいない！」",
+         "「%p，汝に裁きが下された．」",
+         "「%p，汝の報いは間近である．」",
+         "「汝，己が罪のために%Dの御許に引き出されるであろう！」",
+         "「%Dを我が証人とし, 我は汝を打ち倒す．」",
       },
       banished = {
          synopsis = "[You are banished from %H for betraying your allegiance to %d.]",
          output = "text",
-         text = [["You have betrayed all those who hold allegiance to %d, as you once did.
-My allegiance to %d holds fast and I cannot condone or accept what you
-have done.
+         text = [[「お前は%dを信ずる人々全てを裏切った．
+%dへの忠誠をもってすれば、お前の行いを見逃したり許したりすることはできない．
 
-Leave this place.  You shall never set foot at %H again.
-That which you seek is now lost forever, for without the Bell of Opening,
-you will never be able to enter the place where he who has the Amulet
-resides.
+この場を去れ．二度と%Hに足を踏み入れることはならぬ．
+お前の捜し求めていたものは今となっては永遠に失われた．
+開放のベルなしでは，魔除けを持つ者のいる地に入ることは出来ぬ．
 
-Go now!  You are banished from this place.]],
+さあ行け！お前はこの地から追放されたのだ．」]],
       },
       demon_cuss = {
-         "\"I first mistook thee for a statue, when I regarded thy head of stone.\"",
-         "\"Come here often?\"",
-         "\"Doth pain excite thee?  Wouldst thou prefer the whip?\"",
-         "\"Thinkest thou it shall tickle as I rip out thy lungs?\"",
-         "\"Eat slime and die!\"",
-         "\"Go ahead, fetch thy mama!  I shall wait.\"",
-         "\"Go play leapfrog with a herd of unicorns!\"",
-         "\"Hast thou been drinking, or art thou always so clumsy?\"",
-         "\"This time I shall let thee off with a spanking, but let it not happen again.\"",
-         "\"I've met smarter (and prettier) acid blobs.\"",
-         "\"Look!  Thy bootlace is undone!\"",
-         "\"Mercy!  Dost thou wish me to die of laughter?\"",
-         "\"Run away!  Live to flee another day!\"",
-         "\"Thou hadst best fight better than thou canst dress!\"",
-         "\"Twixt thy cousin and thee, Medusa is the prettier.\"",
-         "\"Methinks thou wert unnaturally stirred by yon corpse back there, eh, varlet?\"",
-         "\"Up thy nose with a rubber hose!\"",
-         "\"Verily, thy corpse could not smell worse!\"",
-         "\"Wait!  I shall polymorph into a grid bug to give thee a fighting chance!\"",
-         "\"Why search for the Amulet?  Thou wouldst but lose it, cretin.\"",
-         "\"Thou ought to be a comedian, thy skills are so laughable!\"",
-         "\"Thy gaze is so vacant, I thought thee a floating eye!\"",
-         "\"Thy head is unfit for a mind flayer to munch upon!\"",
-         "\"Only thy reflection could love thee!\"",
-         "\"Hast thou considered masking thine odour?\"",
-         "\"Hold! Thy face is a most exquisite torture!\"",
-         "\"I should fart in thy direction, but it might improve thy smell!\"",
+         "「お前の石頭を見て，お前を石像と間違えたわい．」",
+         "「ここへはよく来るのか？」",
+         "「お前は苦痛に興奮を感じるか？鞭のほうがよいかな？」",
+         "「お前のはらわたを引き裂いたら楽しいと思うか？」",
+         "「スライムでも喰らって死ねい！」",
+         "「失せろ！お前のママでも呼んできな！それまで待ってやる．」",
+         "「ユニコーンの群れと馬飛びでもして遊んでな！」",
+         "「お前は酔っぱらいか？それともそれが実力か？」",
+         "「今回は尻叩きだけで許そう．しかし二度目はそうはいかぬ.」",
+         "「お前よりずっと賢い(かつ綺麗な)酸のブロブを見たことがあるぞ．」",
+         "「見ろ！靴紐がほどけてるぞ！」",
+         "「わはは，やめてくれ！お前は私を笑い殺すつもりか？」",
+         "「逃げ失せろ！一日でも長く生き続けるがよい！」",
+         "「お前は着こなすより戦うほうがうまいな！」",
+         "「お前とお前の従兄弟より，メデューサの方がかわいいぞ．」",
+         "「見る限りでは，向こうにある己の屍に無関心なようだが，実際はどうなのだ？こわっぱ」",
+         "「鼻にゴムホースでも突っこんでろ！」",
+         "「はっきりいって，そちの屍の匂いは最悪だ！」",
+         "「おっと！グリッドバグにでも変化して戦いを楽にしてやろうか！」",
+         "「何故魔除けを探索する？お前のようなうつけではなくすだけだ．」",
+         "「お笑い芸人にでもなったらどうだ．それくらい笑えるぞ！」",
+         "「お前のにらみはうつろだな，さまよう目かと思ったぞ！」",
+         "「お前の頭はマインドフレアが吸うには向いてないな！」",
+         "「お前を愛するのはお前の影だけだ！」",
+         "「お前は自分の臭いを消すことを考えたことはあるか？」",
+         "「待て！お前の顔は拷問の極みだ！」",
+         "「お前に屁をこいてやれば、お前の臭いもましになるかもな！」",
       },
       legacy = {
          synopsis = "[%dC has chosen you to recover the Amulet of Yendor for %dI.]",
          output = "menu",
-         text = [[It is written in the Book of %d:
+         text = [[これは，%dの書に述べられているものである．
 
-    After the Creation, the cruel god Moloch rebelled
-    against the authority of Marduk the Creator.
-    Moloch stole from Marduk the most powerful of all
-    the artifacts of the gods, the Amulet of Yendor,
-    and he hid it in the dark cavities of Gehennom, the
-    Under World, where he now lurks, and bides his time.
+   天地創造の後，破壊神モーロック，創造主マルドゥークと違いして
+   反乱す．破壊神モーロック，マルドゥークの聖器のなかより，万物
+   の力の源「イェンダーの魔除け」を盗みだし，それを彼の潜む
+   世界の底，ゲヘナの闇の洞窟に隠し，時を待てり．
 
-Your %G %d seeks to possess the Amulet, and with it
-to gain deserved ascendance over the other gods.
+%G%dは「魔除け」を望み，他の神々に対し
+絶対的優勢を得ようとしている．
 
-You, a newly trained %r, have been heralded
-from birth as the instrument of %d.  You are destined
-to recover the Amulet for your deity, or die in the
-attempt.  Your hour of destiny has come.  For the sake
-of us all:  Go bravely with %d!]],
+あなたは現在，まだ%rではあるが，生まれたときから%d
+の下僕と予言されている．%Gのため，イェンダーの魔除けを発見
+するか，そのために死ぬかが運命づけらている．あなたの運命の時
+は来た！我々のために，%dの加護のあらんことを！]],
       },
 -- starting with 'pauper' option set, last paragraph differs from normal legacy
       pauper_legacy = {
          synopsis = "[%dC has chosen you to recover the Amulet of Yendor for %dI.]",
          output = "menu",
-         text = [[It is written in the Book of %d:
+         text = [[これは，%dの書に述べられているものである．
 
-    After the Creation, the cruel god Moloch rebelled
-    against the authority of Marduk the Creator.
-    Moloch stole from Marduk the most powerful of all
-    the artifacts of the gods, the Amulet of Yendor,
-    and he hid it in the dark cavities of Gehennom, the
-    Under World, where he now lurks, and bides his time.
+   天地創造の後，破壊神モーロック，創造主マルドゥークと違いして
+   反乱す．破壊神モーロック，マルドゥークの聖器のなかより，万物
+   の力の源「イェンダーの魔除け」を盗みだし，それを彼の潜む
+   世界の底，ゲヘナの闇の洞窟に隠し，時を待てり．
 
-Your %G %d seeks to possess the Amulet, and with it
-to gain deserved ascendance over the other gods.
+%G%dは「魔除け」を望み，他の神々に対し
+絶対的優勢を得ようとしている．
 
-You, an untrained %r, have been unable to adequately
-prepare to be the instrument of %d.  Nevertheless, you
-are destined to recover the Amulet for your deity, or die
-in the attempt.  Your hour of destiny has come.  For the
-sake of us all:  Go bravely with %d!]],
+あなたは訓練を受けていない%rであり，%dの下僕として適切に備える
+ことができていない．それでも，%Gのため，イェンダーの魔除けを発見
+するか，そのために死ぬかが運命づけらている．あなたの運命の時
+は来た！我々のために，%dの加護のあらんことを！]],
       },
       quest_complete_no_bell = {
-         text = [["The silver bell which was hoarded by %n will be
-essential in locating the Amulet of Yendor."]],
+         text = [[「%nの所持していた銀のベル．それは，イェンダーの
+魔除けを探し出すのに必要不可欠である．」]],
       },
       quest_portal = {
          output = "pline",
-         text = [[You receive a faint telepathic message from %l:
-Your help is urgently needed at %H!
-Look for a ...ic transporter.
-You couldn't quite make out that last message.]],
+         text = [[あなたは，%lから微かなテレパシーメッセージを受けとった：
+%Hで助けを火急に必要としている．
+魔..の..口を探す．．．．．
+あなたは最後のメッセージを完全に受けとれなかった．]],
       },
       quest_portal_again = {
-         text = "You again sense %l pleading for help.",
+         text = "あなたは，また%lが助けを求めているのを感じた．",
       },
       quest_portal_demand = {
-         text = "You again sense %l demanding your attendance.",
+         text = "あなたは，また%lがあなたを求めているのを感じた．",
       },
    },
    Arc = {
       assignquest = {
          synopsis = "[%nC has stolen %o.  Locate %i, defeat %ni, and return %O.]",
          output = "text",
-         text = [["Grave times have befallen the college, for %na has
-stolen %o.  Without it, the board of directors of
-the university will soon have no choice but to revoke our research grants.
+         text = [[「大学に暗雲がさしかかっている．実は%nが%oを
+  盗んだのだ．あれがないと直ちに大学の理事会は問答言わせず我々
+  の研究を無効にするであろう．
 
-"You must locate the entrance to %i.  Within it,
-you will find %n.
+「君は%iの入口に行かねばならない．そこに行けば，
+  %nがいるだろう．
 
-"You must then defeat %n and return %o
-to me.
+「君は%nを打ち負かさねばらなない．そして%oを取り
+  返すのだ．
 
-"Only in this way will we be able to prevent the budget cuts that could
-close this college.
+「この大学を閉鎖に導く研究費の削減を防ぐにはこれしか方法がない．
 
-"May the wisdom of %d be your guide."]],
+「%dの知識が君の助けとならんことを．」]],
       },
       badalign = {
          synopsis = "[\"%pC, you have strayed from the %a path.  Purify yourself!\"]",
          output = "text",
-         text = [["%pC!  I've heard that you've been using sloppy techniques.  Your
-results lately can hardly be called suitable for %ra!
+         text = [[「%p君！私は君がいいかげんな冒険をしていると聞いとるよ．そん
+  なんじゃ%rとはとても呼べないね．
 
-"How could you have strayed from the %a path?  Go from here, and come
-back only when you have purified yourself."]],
+「%aの道からいかにはずれているかわかるか？ここからとっとと消え
+  去り自分自身を浄化して戻ってくるがよい．」]],
       },
       badlevel = {
          synopsis = "[%pC, a mere %r is too inexperienced.]",
          output = "text",
-         text = [["%p, you are yet too inexperienced to undertake such a demanding
-quest.  A mere %r could not possibly face the rigors demanded and
-survive.  Go forth, and come here again when your adventures have further
-taught you."]],
+         text = [[「%p君，君は私のクエストを実行するにはちょっと経験が足りない
+  ようだ．単なる%rではおそらく厳しさに耐え生き残ることはできない
+  だろう．冒険が教師だ！力をつけろ，そして戻ってこい．」]],
       },
       discourage = {
-         "\"Try your best, %p.  You cannot defeat me.\"",
-         "\"I shall rend the flesh from your body whilst you still breathe!\"",
-         "\"First you, %p, then I shall destroy your mentor, %l.\"",
-         "\"Tiring yet, %p?  I draw my power from my master and cannot falter!\"",
-         "\"I shall rend thy soul from thy body and consume it!\"",
-         "\"You are far too %a -- it weakens you.  You shall die in this place.\"",
-         "\"%d has forsaken you!  You are lost now!\"",
-         "\"A mere %r cannot hope to defeat me!\"",
-         "\"If you are the best %l can send, I have nothing to fear.\"",
-         "\"Die %c!  I shall exhibit your carcass as a trophy.\"",
+         "「全力でこい%p．お前なんかにゃ殺されないさ．」",
+         "「一瞬でお前の体をひきさいてやるぜ！」",
+         "「%p！まずお前を殺して，次に師である%lを殺してやる．」",
+         "「まだやるのか%p？私は我があるじから力を得ている．決して死なない のさ！」",
+         "「お前の魂を喰ったら本当にうまそうだ！」",
+         "「%aには程遠いな．お前はこの地で死ぬのだ．」",
+         "「%dはお前を見すてたぞ！お前はここで消滅するのだ！」",
+         "「単なる%rじゃオレには勝てん！」",
+         "「%lは本当に一番強いやつを送ってきたのか？これじゃ恐れること   など何もない！」",
+         "「死ね！%cよ．お前の残骸を我がコレクションに加えよう．」",
       },
       encourage = {
-         "\"Beware, for %n is powerful and cunning.\"",
-         "\"To locate the entrance to %i, you must pass many traps.\"",
-         "\"A %nt may be vulnerable to attacks by magical cold.\"",
-         "\"Call upon %d when you encounter %n.\"",
-         "\"You must destroy %n.  It will pursue you otherwise.\"",
-         "\"%oC is a mighty talisman.  With it you can destroy %n.\"",
-         "\"Go forth with the blessings of %d.\"",
-         "\"I will have my %gP watch for your return.\"",
-         "\"Remember not to stray from the true %a path.\"",
-         "\"You may be able to sense %o when you are near.\"",
+         "「気をつけろ！%nは強い上に狡猾なやつだ．」",
+         "「%iの入口へ行くには，多くの危険な罠を通り抜けねばならない．」",
+         "「%nは冷気の魔法に弱いはずだ．」",
+         "「%nに出逢ったら，%dに祈りを求めるのだ．」",
+         "「君は%nを殺さねばならない．そいつは君を追いかけまわすのだから．」",
+         "「%oは強力な護符だ．それがあれば君も%nを打ちのめせる．」",
+         "「%dの祝福のあらんことを．」",
+         "「我%gが君の帰還を見守らんことを．」",
+         "「真実の%aの道からはずれぬようつねに注意するのだ．」",
+         "「君なら%oに近づいたときその存在を感じることができるはずだ．」",
       },
       firsttime = {
          synopsis = "[You arrive at %H, but all is not well.]",
          output = "text",
-         text = [[You are suddenly in familiar surroundings.  The buildings in the distance
-seem to be those of your old alma mater, but something is wrong.  It feels
-as if there has been a riot recently, or %H has
-been under siege.
+         text = [[あなたは突然見覚えのある場所にいた．遠方に見える建物はあなたの
+母校のようだが，しかし何かが違う．まるで最近，暴動があったか
+%Hが包囲されていたかのように見える．
 
-All of the windows are boarded up, and there are objects scattered around
-the entrance.
+全ての窓と言う窓は塞がれ，学校の入口は散らかったままだ．
 
-Strange forbidding shapes seem to be moving in the distance.]],
+恐しいほど不気味な形をしたものが遠方で動いているのが見えた．]],
       },
       goal_alt = {
-         text = "You have returned to %ns lair.",
+         text = "%nsのねぐらに帰ってきた．",
       },
       goal_first = {
          synopsis = "[This strange feeling must be the presence of %o.]",
          output = "text",
-         text = [[A strange feeling washes over you, and you think back to things you
-learned during the many lectures of %l.
+         text = [[不思議な感覚があなたを覆い，%lで教わった多くのことがよみがえってきた．
 
-You realize the feeling must be the presence of %o.]],
+あなたはこの感覚が%oの存在を示しているに違いないと感じた．]],
       },
       goal_next = {
-         text = "The familiar presence of %o is in the ether.",
+         text = "%oの存在が空気を通してつたわってきた．",
       },
       gotit = {
          synopsis = "[The power of %o flows through your body!  You must return it to %l.]",
          output = "text",
-         text = [[The power of %o flows through your body!  You feel
-as if you could now take on the Wizard of Yendor himself and win, but
-you know you must return %o to %l.]],
+         text = [[%oの力が体に注がれた！あなたは，まるでイェンダーの魔法使い自身
+を相手にして，勝利できるかのような気持になった．しかし，%oを
+持って%lのもとへ戻らねばならないことに気がついた．]],
       },
       guardtalk_after = {
-         "\"Did you see Lash LaRue in 'Song of Old Wyoming' the other night?\"",
-         "\"Hey man, got any potions of hallucination for sale?\"",
-         "\"I guess you are guaranteed to make full professor now.\"",
-         "\"So, what was worse, %n or your entrance exams?\"",
-         "\"%oC is impressive, but nothing like the bones I dug up!\"",
+         "「こないだの『古きワイオミングの歌』見た？」",
+         "「やぁ，幻覚の薬を売ってくれないかい？」",
+         "「今回，あなたが正教授になることが保障されると思います．」",
+         "「そうすると，%nとあなたの入学試験のどちらが悪かったのだろう？」",
+         "「%oCは印象的だが，私が掘り出した骨とはわけが違う！」",
       },
       guardtalk_before = {
-         "\"Did you see Lash LaRue in 'Song of Old Wyoming' the other night?\"",
-         "\"Hey man, got any potions of hallucination for sale?\"",
-         "\"Did you see the artifact %l brought back from the last dig?\"",
-         "\"So what species do *you* think we evolved from?\"",
-         "\"So you're %ls prize pupil!  I don't know what he sees in you.\"",
+         "「こないだの『古きワイオミングの歌』見た？」",
+         "「やぁ，幻覚の薬を売ってくれないかい？」",
+         "「%lがこの前の発掘調査で持ち帰った聖器を見たかい？」",
+         "「我々はいったいどのような生物から進化したんだろう？」",
+         "「君は%lの一番の生徒だが，彼が君をどのように見ていることやら．」",
       },
       hasamulet = {
          synopsis = "[Take the Amulet to the Astral Plane and sacrifice it at the altar of %d.]",
          output = "text",
-         text = [["Congratulations, %p.  I wondered if anyone could prevail against
-the Wizard and the minions of Moloch.  Now, you must embark on one
-final adventure.
+         text = [[「おめでとう%p！私は魔法使いやモーロックの使い魔に
+  打ち勝てる者がいるのかどうか疑問に思っていたのだ．今，お前は最終試練
+  に向って船出せねばならない．
 
-"Take the Amulet, and find your way onto the Astral Plane.
-There you must find the altar of %d and sacrifice the
-Amulet on that altar to fulfill your destiny.
+「魔除けを使い，天上界への道を見つけるのだ．運命を果すため，お前は
+  %dの祭壇を見つけ，魔除けを祭壇に捧げねばならない．
 
-"Remember, your path now should always be upwards."]],
+「お前の進む道は常に上に向かっていることを覚えておくのだ．」]],
       },
       killed_nemesis = {
-         text = "The body of %n dissipates in a cloud of noxious fumes.",
+         text = "%nの体は毒性の蒸気となって飛び散った．",
       },
       leader_first = {
          synopsis = "[\"You have returned, %p, to a difficult task.\"]",
          output = "text",
-         text = [["Finally you have returned, %p.  You were always
-my most promising student.  Allow me to see if you are ready for the
-most difficult task of your career."]],
+         text = [[「戻ってきたか，%p君．君は私がもっとも信頼している学生だ．
+  君の人生でもっとも困難な仕事に対する準備が出来たら，私に会うこと
+  を許そう．」]],
       },
       leader_last = {
          synopsis = "[\"%pC, you have failed us.  Begone!\"]",
          output = "text",
-         text = [["%p, you have failed us.  All of my careful training has been in
-vain.  Begone!  Your tenure at this college has been revoked!
+         text = [[「%p君，私は君に失望したよ．私は教師としての自信を失なった．
+  どこでも行きたまえ！君の大学での在職権は取り消しだ！
 
-"You are a disgrace to the profession!"]],
+  君は同業者としてまったく恥ずかしいやつだ！」]],
       },
       leader_next = {
-         text = [["Again, %p, you stand before me.
-Let me see if you have gained experience in the interim."]],
+         text = [[「また来たか，%p君．私の前に来たまえ．
+  そして，君が経験を積んだかどうか見せてくれたまえ．」]],
       },
       leader_other = {
-         text = [["Once more, %p, you have returned from the field.
-Are you finally ready for the task that must be accomplished?"]],
+         text = [[「もう一度だ，%p君．君は野原から戻ってきた．
+  君は目標を達成しなければならないと言う仕事への準備が出来たの
+  かな？」]],
       },
       locate_first = {
          synopsis = "[This foreboding edifice must hide the entrance to %i.]",
          output = "text",
-         text = [[A plain opens before you.  Beyond the plain lies a foreboding edifice.
+         text = [[あなたの前に広場が広がっていて，その向こうに予言された大きな建物がある．
 
-You have the feeling that you will soon find the entrance to
-%i.]],
+あなたはもうすぐ%iの入口を発見できるような気がした．]],
       },
       locate_next = {
-         text = "Once again, you are near the entrance to %i.",
+         text = "もう一度，あなたは%iの入口の近くまでやってきた．",
       },
       nemesis_first = {
          synopsis = "[\"Come, %p, I shall destroy you!\"]",
          output = "text",
-         text = [["So, %p, you think that you can succeed in recovering
-%o, when your teacher, %l, has already failed.
+         text = [[「け！%pよ，お前は%oを奪回できると思っているだろう，だが
+  お前の師である%lは失敗しているのだ．
 
-"Come, try your best!  I shall destroy you, and gnaw on your bones."]],
+「さあ，全力で来い！お前の骨は本当にいい味がしそうだ．」]],
       },
       nemesis_next = {
          synopsis = "[\"Again you try to best me, %p?  You shall never recover %o.\"]",
          output = "text",
-         text = [["Again you try to best me, eh %p?  Well, you shall fail again.
+         text = [[「け！また来たか！どうせまた失敗さ．
 
-"You shall never recover %o.
+「%oを取り返すなんて不可能だ．
 
-"I shall bear your soul to the Plane of Origins for my master's pleasure."]],
+「我がマスターのために，お前の魂をあの世に送ってやろう．」]],
       },
       nemesis_other = {
-         text = "\"You persist yet %p!  Good.  Now, you shall die!\"",
+         text = "「%p！まだ生きていたのか．よし，今度こそ殺してやる！」",
       },
       nemesis_wantsit = {
-         text = [["I shall have %o from you, %p, then feast
-upon your entrails!"]],
+         text = "「%p！おまえから%oを取り返し，はらわたを晩飯にしてやろう！」",
       },
       nexttime = {
-         text = "Once again, you are back at %H.",
+         text = "もう一度，あなたは%Hに戻った．",
       },
       offeredit = {
          synopsis = "[%lC instructs you to guard %o from now on.]",
          output = "text",
-         text = [[%lC touches %o briefly, gazes into it,
-then smiles at you and says:
+         text = [[%lは軽く%oに触れ，それをじっと見つめ，あなたに向って
+微笑みかけた：
 
-"Well done, %p.  You have defeated %n and
-recovered %o.  But I fear that it shall never be safe
-here.
+「%pよ．よくやった．お前は%nを倒し，%oを
+  取り戻した．しかし，ここに置くのやはり安全ではない．
 
-Please take %o with you.  You, %p, can
-guard it now far better than I.
+  %oを持っていくがよい．%pよ．お前に預けておけば安心だ．
 
-May the blessings of %d follow you and guard you."]],
+  %dの祝福と加護があらんことを．」]],
       },
       offeredit2 = {
          synopsis = "[\"Resume your search for the Amulet beyond the magic portal to %Z.\"]",
          output = "text",
-         text = [["Careful, %p!  %oC might break, and that would be
-a tragic loss.  You are its keeper now, and the time has come to
-resume your search for the Amulet.  %Z await your
-return through the magic portal that brought you here."]],
+         text = [[「気をつけろ%p！%oが壊れてしまう．
+  そうなったら大きな痛手だ．お前は%oの守護者だ．
+  魔除け探索を再開せよ．魔法の入口の向こうで，
+  %Zがお前を待っているぞ．」]],
       },
       othertime = {
-         text = [[You are back at %H.
-You have an odd feeling this may be the last time you ever come here.]],
+         text = [[あなたは%Hに戻った．
+ここに戻ってくるのは最後であるような奇妙な気がした．]],
       },
       posthanks = {
          synopsis = "[\"Have you progressed with your quest to regain the Amulet of Yendor for %d?\"]",
          output = "text",
-         text = [["Welcome back, %p.  Have you progressed with your quest to
-regain the Amulet of Yendor for %d?"]],
+         text = [[「よく戻ってきた%pよ．%dのためイェンダーの魔除けを探す旅は
+  進展したかね？」]],
       },
    },
    Bar = {
       assignquest = {
          synopsis = "[\"Find %n, defeat %ni, and return %o to us.\"]",
          output = "text",
-         text = [["The world is in great need of your assistance, %p.
+         text = [[「世界はお前の助けを必要としている，%pよ．
 
-"About six months ago, I learned that a mysterious sorcerer, known
-as %n, had begun to gather a large group of cutthroats and brigands
-about %ni.
+「半年ほど前，私は%nとして知られている神秘的な魔法使いが，
+  殺人鬼や略奪者を集めていると言うのを知った．
 
-"At about the same time, these people you once rode with `liberated' a
-potent magical talisman, %o, from a Turanian caravan.
+「またほぼ同じころ，この地の人間が強力な魔法の護符である%oを
+  ツラニアンの洞窟から持ち去った．
 
-"%nC and %nj Black Horde swept down upon %i and defeated
-the people there, driving them out into the desert.  He has taken
-%o, and seeks to bend it to %nj will.  I detected the
-subtle changes in the currents of fate, and joined these people.
-Then I sent forth a summons for you.
+「%nおよび彼の暗黒軍団は，%iに押し寄せ，そこの
+  人々を打ち負かし砂漠へ追いやった．彼は%oを手に入れ
+  彼の意のままにする方法を探している．私は運命の微妙な変化を嗅ぎとり，
+  そしてこの地の人々と合流した．そしてお前に召喚のための力を送ったのだ．
 
-"If %n can bend %o to %nj will, he will become
-almost indestructible.  He will then be able to enslave the minds of
-men across the world.  You are the only hope.  The gods smile upon you,
-and with %d behind you, you alone can defeat %n.
+「もし%nが%oを意のままにすることができたならば，
+  彼は不滅の魂を得，世界中の人間の心を奴隷にすることができるだろう．
+  お前は唯一の希望だ．神の祝福があらんことを，
+  また%dの加護があらんことを．お前だけが唯一
+  %nを倒せる．
 
-"You must go to %i.  From there, you can track down
-%n, defeat %ni, and return %o to us.  Only
-then will the world be safe."]],
+「お前は%iに行かねばならぬ．ここから%nのところ
+  まで降りて行ける．そして%oを私に戻しておくれ．それが唯一
+  世界を救う方法だ．」]],
       },
       badalign = {
          synopsis = "[\"You have wandered from the path of the %a.  Come back when you have atoned.\"]",
          output = "text",
-         text = [["%pC!  You have wandered from the path of the %a!
-If you attempt to overcome %n in this state, he will surely
-enslave your soul.  Your only hope, and ours, lies in your purification.
-Go forth, and return when you feel ready."]],
+         text = [[「%p！%aの道から外れさまよっているな！この状態で%nを
+  打ちまかそうとするなら，確実にお前の魂はとりこにされるだろう．
+  唯一の望みは自分自身の浄化だ．進め！そして準備ができたと思ったら
+  戻ってこい．」]],
       },
       badlevel = {
          synopsis = "[\"You are too inexperienced.  Come back when you are %Ra.\"]",
          output = "text",
-         text = [["%p, I fear that you are as yet too inexperienced to face
-%n.  Only %Ra with the help of %d could ever hope to
-defeat %ni."]],
+         text = [[「%pよ，%nと正対するにはちと経験不足のようだな．
+  %Rだけが%dの助けを得て%nを倒せよう．」]],
       },
       discourage = {
-         "\"My pets will dine on your carcass tonight!\"",
-         "\"You are a sorry excuse for %ra.\"",
-         "\"Run while you can, %c.  My next spell will be your last.\"",
-         "\"I shall use your very skin to bind my next grimoire.\"",
-         "\"%d cannot protect you now.  Here, you die.\"",
-         "\"Your %a nature makes you weak.  You cannot defeat me.\"",
-         "\"Come, %c.  I shall kill you, then unleash the horde on your tribe.\"",
-         "\"Once you are dead, my horde shall finish off %l, and your tribe.\"",
-         "\"Fight, %c, or are you afraid of the mighty %n?\"",
-         "\"You have failed, %c.  Now, my victory is complete.\"",
+         "「ワシのペットがお前の屍の食事を楽しみにしとるわ！」",
+         "「%rの面目まるつぶれだな．」",
+         "「全力で逃げろ，%c．次の魔法がお前の最後だ．」",
+         "「お前の皮を新しい呪文書の装丁に使うとしよう．」",
+         "「%dはお前を守ってやることなぞできない．死ね．」",
+         "「お前の%aさがお前を弱くするのだ．お前にワシは倒せない．」",
+         "「来い，%c．お前を殺してやる．そして軍団をお前の部族へ   送りこんでやる．」",
+         "「お前が死んだなら，ワシの軍団は%lや部族をすっかり片付ける   ことだろう．」",
+         "「戦え%c！それとも偉大な%nにおじけづいたか？」",
+         "「勝負あったな%c．ワシの勝利は近づいた．」",
       },
       encourage = {
-         "\"%nC is strong in the dark arts, but not immune to cold steel.\"",
-         "\"Remember that %n is a great sorcerer.  He lived in the time of Atlantis.\"",
-         "\"If you fail, %p, I will not be able to protect these people long.\"",
-         "\"To enter %i, you must be very stealthy.  The horde will be on guard.\"",
-         "\"Call upon %d in your time of need.\"",
-         "\"May %d protect you, and guide your steps.\"",
-         "\"If you can lay hands upon %o, carry it for good fortune.\"",
-         "\"I cannot stand against %ns sorcery.  But %d will help you.\"",
-         "\"Do not fear %n.  I know you can defeat %ni.\"",
-         "\"You have a great road to travel, %p, but only after you defeat %n.\"",
+         "「%nは暗黒の術には強い．しかし冷たい鋼には抵抗力がない．」",
+         "「%nは偉大な魔法使いであることを忘れるな．彼はアトランティス   の時代から生きているのだ．」",
+         "「%pよ．お前が失敗したなら私はこの地の人間を長くは守って   いられないぞ．」",
+         "「%iに入るには，よほど静かに行動しなければならぬ．軍団が守って   いるはずだ．」",
+         "「必要ならば%dを呼ぶのだ．」",
+         "「%dの加護と導きのあらんことを．」",
+         "「%oの上に手をかざすことができたならば，幸運を手に入れられる   だろう．」",
+         "「%nの魔術の前に私は無力だ．しかし%dがお前を助けて   くれよう」",
+         "「%nを恐れるな．お前なら%niを倒すことができる．」",
+         "「%pよ，お前の偉大なる冒険は%nを倒してこそ成り立つのだ．」",
       },
       firsttime = {
          synopsis = "[You reach the vicinity of %H, but sense evil magic nearby.]",
          output = "text",
-         text = [[Warily you scan your surroundings, all of your senses alert for signs
-of possible danger.  Off in the distance, you can %x the familiar shapes
-of %H.
+         text = [[ゆっくりとあなたは目蓋を開けた．ありとあらゆる感覚が危険信号を発して
+いる．遠方に%Hの懐かしい光景を%xた．
 
-But why, you think, should %l be there?
+しかし，何故か%lがそこにいる？！
 
-Suddenly, the hairs on your neck stand on end as you detect the aura of
-evil magic in the air.
+突然，空中に邪悪な魔法のオーラを感じ，あなたのうなじにむしずが走った．
 
-Without thought, you ready your weapon, and mutter under your breath:
+何も考えず，あなたは武器を構えた．そして一人言をつぶやいた：
 
-    "By %d, there will be blood spilt today."]],
+    「%dの名において血しぶきを許したまえ」]],
       },
       goal_first = {
          synopsis = "[This is surely the lair of %n.]",
          output = "text",
-         text = [[The hairs on the nape of your neck lift as you sense an energy in the
-very air around you.  You fight down a primordial panic that seeks to
-make you turn and run.  This is surely the lair of %n.]],
+         text = [[周囲のエネルギーを感じ取り，あなたのうなじの毛が逆立った．
+あなたは振り返って走り去りたいという本能的な恐怖を懸命に抑えつけた．
+ここはまさに%nのすみかなのだ．]],
       },
       goal_next = {
-         text = "Yet again you feel the air around you heavy with malevolent magical energy.",
+         text = [[あなたは再び，重くのしかかってくる
+悪意に満ちた魔法のエネルギーの存在を感じた．]],
       },
       gotit = {
          synopsis = "[You feel the power of %o flowing through your hands.]",
          output = "text",
-         text = [[As you pick up %o, you feel the power of it
-flowing through your hands.  It seems to be in two or more places
-at once, even though you are holding it.]],
+         text = [[%oを拾うと，手からパワーが伝わってくるのを感じた．
+それを握っていてさえ，何ヶ所にも存在しているような気がした．]],
       },
       guardtalk_after = {
-         "\"The battles here have been good -- our enemies' blood soaks the soil!\"",
-         "\"Remember that glory is crushing your enemies beneath your feet!\"",
-         "\"Times will be good again, now that the horde is vanquished.\"",
-         "\"You have brought our clan much honor in defeating %n.\"",
-         "\"You will be a worthy successor to %l.\"",
+         "「ここでの戦いは好調だ．敵の血が土壌に浸みこんでるぜ！」",
+         "「栄光とは足元で敵を踏み砕く事だということを忘れるな！」",
+         "「軍団は征服され，またよい時代になるだろう．」",
+         "「お前は%nを打ち破り，我々一族に多くの名誉をもたらしてくれた．」",
+         "「お前は%lのよい後継者になるだろう．」",
       },
       guardtalk_before = {
-         "\"The battles here have been good -- our enemies' blood soaks the soil!\"",
-         "\"Remember that glory is crushing your enemies beneath your feet!\"",
-         "\"There has been little treasure to loot, since the horde arrived.\"",
-         "\"The horde is mighty in numbers, but they have little courage.\"",
-         "\"%lC is a strange one, but he has helped defend us.\"",
+         "「ここでの戦いは好調だ．敵の血が土壌に浸みこんでるぜ！」",
+         "「栄光とは足元で敵を踏み砕く事だということを忘れるな！」",
+         "「軍団が来てからは，ほとんど略奪する宝箱は残っていない，」",
+         "「軍団は数の力で押してくる，なにせ，あいつらは憶病ものだからな．」",
+         "「%lと言うのは変ったやつだ，しかし彼は我々を守ってくれている．」",
       },
       hasamulet = {
          synopsis = "[\"Take the Amulet to the altar of %d on the Astral Plane and offer it.\"]",
          output = "text",
-         text = [["This is wondrous, %p.  I feared that you could not possibly
-succeed in your quest, but here you are in possession of the Amulet
-of Yendor!
+         text = [[「信じがたい！%p．お前がクエストを成功させることはできないのでは
+  ないかと心配してたのだが，今まさにイェンダーの魔除けを持っているでは
+  ないか！
 
-"I have studied the texts of the magi constantly since you left.  In
-the Book of Skelos, I found this:
+「私はお前が去ってから魔法の文献を常に読みあさっていた．そのとき
+  スケロスの書に次のような一節を見つけたのだ:
 
-    %d will cause a child to be sent into the world.  This child is to
-    be made strong by trial of battle and magic, for %d has willed it so.
-    It is said that the child of %d will recover the Amulet of Yendor
-    that was stolen from the Creator at the beginning of time.
+    %d一人の子を世界に送らん．この子%dの意思により戦いに
+    於いて強く，魔術に於いても強く作られり．%dの子世界の始めに
+    創造主より盗まれしイェンダーの魔除けを取り戻さん．
 
-"As you now possess the amulet, %p, I suspect that the Book
-speaks of you.
+「そして%pよ，今はお前が魔除けを持っている．この本はお前のことを
+  語っているのであろう．
 
-    The child of %d will take the Amulet, and travel to the Astral
-    Plane, where the Great Temple of %d is to be found.  The Amulet
-    will be sacrificed to %d, there on %dJ altar.  Then the child will
-    stand by %d as champion of all %cP for eternity.
+    %dの子魔除けを手に入れ，%dの偉大なる寺院を見つけんと
+    天上界へ旅だたん．祭壇にて魔除けを%dに献上し，その子
+    %dの前にて完壁なる永遠の%cとなれり．
 
-"This is all I know, %p.  I hope it will help you."]],
+「これが私の知る全てだ，%pよ．何らかの助けになることを
+  祈っているぞ．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC curses you, but you feel the overpowering aura of magic fading.]",
          output = "text",
-         text = [[%nC falls to the ground, and utters a last curse at you.  Then %nj
-body fades slowly, seemingly dispersing into the air around you.  You
-slowly become aware that the overpowering aura of magic in the air has
-begun to fade.]],
+         text = [[%nは地に伏し，最後の呪いを口から発した．%nj体はゆっくりと
+消えはじめ，あなたの周りの空気に溶けこんだ．あなたは周囲にはりめぐらさ
+れていた魔法のオーラが消えはじめているのになんとなく気がついた．]],
       },
       leader_first = {
          synopsis = "[\"At last you have returned.  There is a great quest you must undertake.\"]",
          output = "text",
-         text = [["Ah, %p.  You have returned at last.  The world is in dire
-need of your help.  There is a great quest you must undertake.
+         text = [[「おお！%pよ．やっと戻ってきてくれたか．この世界は至急お前の
+  助けを必要としている．お前が引き受けねばならぬ偉大なクエストが待ち構え
+  ているのだ．
 
-"But first, I must see if you are ready to take on such a challenge."]],
+「しかし，まずお前がそれを受け負うだけの力があるか調べねばならぬ．」]],
       },
       leader_last = {
          synopsis = "[\"You have betrayed %d; soon %n will destroy us.  Begone!\"]",
          output = "text",
-         text = [["Pah!  You have betrayed the gods, %p.  You will never attain
-the glory which you aspire to.  Your failure to follow the true path has
-closed this future to you.
+         text = [[「ふん！お前は%pの神を裏切った．お前が熱望する
+  名誉を得ることもないだろう．真実の道を辿りお前の失敗が未来を閉ざす
+  はずだ．
 
-"I will protect these people as best I can, but soon %n will overcome
-me and destroy all who once called you %s.  Now begone!"]],
+「私はここにいる人々を全力で守るつもりだ，しかしすぐにでも%n
+  が私を倒し，お前を一度でも%sと呼んだ人々を殺すだろう．
+  消えうせろ！」]],
       },
       leader_next = {
-         text = "\"%p, you are back.  Are you ready now for the challenge?\"",
+         text = "「%pよ．戻ってきたか．偉大な挑戦の準備は整ったかな？」",
       },
       leader_other = {
-         text = "\"Again, you stand before me, %p.  Surely you have prepared yourself.\"",
+         text = [[「%pよ．またお前は私の前に立っているのだが，準備は
+  いいかな？」]],
       },
       locate_first = {
          synopsis = "[You have located %i.]",
          output = "text",
-         text = [[The scent of water comes to you in the desert breeze.  You know that
-you have located %i.]],
+         text = [[水の匂いが砂漠の風に溶けこんでいる．あなたは%iにいることを
+実感した．]],
       },
       locate_next = {
-         text = "Yet again you have a chance to infiltrate %i.",
+         text = "また%iに潜入する機会がやってきた．",
       },
       nemesis_first = {
          synopsis = "[%nC boasts that %nh has slain many.  \"Prepare to die, %c.\"]",
          output = "text",
-         text = [["So.  This is what that second rate sorcerer %l sends to do %lj bidding.
-I have slain many before you.  You shall give me little sport.
+         text = [[「そうか，お前が二級魔法使い%lの送りこんできたやつか．
+  ワシはお前の前に随分と殺したもんだ．おまえの相手をするのもいい運動になる
+  だろう．
 
-"Prepare to die, %c."]],
+「死ぬ準備は出来たか？%cよ．」]],
       },
       nemesis_next = {
-         text = "\"I have wasted too much time on you already.  Now, you shall die.\"",
+         text = [[「お前の準備ができるまで随分と暇だったぞ．ついに，お前の死ぬときが
+  来たか．」]],
       },
       nemesis_other = {
-         text = "\"You return yet again, %c!  Are you prepared for death now?\"",
+         text = "「また来たのか%c！今度こそ死ぬ準備はできたのか？」",
       },
       nemesis_wantsit = {
-         text = [["I shall have %o back, you pitiful excuse for %ca.
-And your life as well."]],
+         text = [[「%oを取り戻してやる，哀れを乞うがよい%cよ．
+  そして，おまえの命も同様だ．」]],
       },
       nexttime = {
-         text = [[Once again, you near %H.  You know that %l
-will be waiting.]],
+         text = "もう一度%Hにやってきた．%lが待っている．",
       },
       offeredit = {
          synopsis = "[%lC tells you to guard %o, and to return when you have triumphed.]",
          output = "text",
-         text = [[When %l sees %o, he smiles, and says:
+         text = [[%lは%oを見ると微笑んで，こう言った．
 
-    Well done, %p.  You have saved the world from certain doom.
-    What, now, should be done with %o?
+  よくやった，%pよ．お前は世界を破滅から救ったのだ．
+  さて，%oは何のために使うのがよいであろう？
 
-    These people, brave as they are, cannot hope to guard it from
-    other sorcerers who will detect it, as surely as %n did.
+  この地の者達は勇敢ではある．
+  しかし仮に%oを奪おうとする者が再び現れたとき，
+  阻止出来るとはとても思えぬ．%nがそうしたようにな．
 
-    Take %o with you, %p.  It will guard you in
-    your adventures, and you can best guard it.  You embark on a
-    quest far greater than you realize.
+  %oを持ってゆくがよい．%pよ．%oは
+  お前を守ってくれるだろうし，またお前も%oの
+  よき守り手となるであろう．お前が実感しているよりはるかに偉大な
+  クエストに向けて船出するのだ．
 
-    Remember me, %p, and return when you have triumphed.  I
-    will tell you then of what you must do.  You will understand when the
-    time comes.]],
+  私を忘れるな%pよ，そして勝利のあかつきには戻って来るのだ．
+  その時にまたそなたが為すべきことを教えよう．
+  時が来ればこの意味も理解できるであろう．]],
       },
       offeredit2 = {
          synopsis = "[\"You keep %o.  Return to %Z to search for the Amulet.\"]",
          output = "text",
-         text = [[%l gazes reverently at %o, then back at you.
+         text = [[%lは%oををうやうやしく見つめ、それから視線をあなたに戻した．
 
-"You are its keeper now, and the time has come to resume your search
-for the Amulet.  %Z await your return through the
-magic portal which brought you here."]],
+「今や，お前は%oの守護者だ．
+  魔除け探索を再開せよ．魔法の入口の向こうで，
+  %Zがお前を待っているぞ．」]],
       },
       othertime = {
-         text = [[Again, and you think possibly for the last time, you approach
-%H.]],
+         text = "またやってきた．%Hに来るのは，多分これが最後であろうと思った．",
       },
       posthanks = {
-         text = "\"Tell us, %p, have you fared well on your great quest?\"",
+         text = "「%pよ．お前の偉大なクエストについて話しておくれ．」",
       },
    },
    Cav = {
       assignquest = {
          synopsis = "[Find and defeat %n, recover %o, and return with it.]",
          output = "text",
-         text = [["You are indeed ready now, %p.  I shall tell you a tale of
-great suffering among your people:
+         text = [[「ふむ．準備ができたようだな%pよ．まず，この地で起きた大いなる
+  受難の話をしよう:
 
-"Shortly after you left on your vision quest, the caves were invaded by
-the creatures sent against us by %n.
+「お前が冒険に出かけた後すぐに，この洞窟は%nが
+  我々に送ってきた生物に侵略されてしまった．
 
-"She, herself, could not attack us due to her great size, but her minions
-have harassed us ever since.  In the first attacks, many died, and the
-minions of %n managed to steal %o.
-They took it to %i and there, none of our
-%g warriors have been able to go.
+「彼女はその巨体のため自分自身では攻撃できないのだが，彼女の下僕達は
+  我々の悩みの種だ．最初の攻撃で多くが死に，%n
+  の下僕達は%oを盗んでしまった．彼らは%iに
+  持ちかえり，我ら%gの戦士は誰もそこへ行くこと
+  ができない．
 
-"You must find %i, and within it wrest
-%o from %n.  She guards it as
-jealously as she guards all treasures she attains.  But with it,
-we can make our caves safe once more.
+「お前は%iを見つけ，%nから%oを
+  もぎ取ってくるのだ．彼女は全力でそれを守っている．それを取り戻せ
+  ば我らは安泰だ．
 
-"Please, %p, recover %o for us, and return it here."]],
+「%pよ．どうか我らのために%oを取り戻し，ここへ戻ってきて
+  ほしい．」]],
       },
       badalign = {
          synopsis = "[\"You no longer follow the path of the %a.  Go, and purify yourself.\"]",
          output = "text",
-         text = [["%pC!  You have deviated from my teachings.  You no longer follow
-the path of the %a as you should.  I banish you from these caves, to
-go forth and purify yourself.  Then, you might be able to accomplish this
-quest."]],
+         text = [[「%pよ！我が教えにそむいておるな．お前は成すべき%aの
+  道から外れている．力をつけ自分自身を浄化してもらうため，お前を
+  この洞窟から追い払おう．そしてこのクエストをやりとげるくらい
+  の力をつけてくるのだ．」]],
       },
       badlevel = {
          synopsis = "[\"%rA is too inexperienced.  Come back when you have progressed.\"]",
          output = "text",
-         text = [["Alas, %p, you are as yet too inexperienced to embark upon such
-a difficult quest as that I propose to give you.
+         text = [[「あぁ%pよ．お前は私がさずける困難なクエストの旅に出るには
+  少し経験不足のようだ．
 
-"%rA could not possibly survive the rigors demanded to find
-%i, never mind to confront %n herself.
+「%rでは%iを見つけ，生きている可能性などないだろう．
+  ましていわんや%nと対面などできぬ．
 
-"Adventure some more, and you will learn the skills you will require.
-%d decrees it."]],
+「冒険を重ねよ．そして必用な技量を学んでくるがよい．
+  %dはそう命じでいる．」]],
       },
       discourage = {
-         "\"You are weak, %c.  No challenge for the Mother of all Dragons.\"",
-         "\"I grow hungry, %r.  You look like a nice appetizer!\"",
-         "\"Join me for lunch?  You're the main course, %c.\"",
-         "\"With %o, I am invincible!  You cannot succeed.\"",
-         "\"Your mentor, %l has failed.  You are nothing to fear.\"",
-         "\"You shall die here, %c.  %rA cannot hope to defeat me.\"",
-         "\"You, a mere %r challenge the might of %n?  Hah!\"",
-         "\"I am the Mother of all Dragons!  You cannot hope to defeat me.\"",
-         "\"My claws are sharp now.  I shall rip you to shreds!\"",
-         "\"%d has deserted you, %c.  This is my domain.\"",
+         "「弱ってきたようね，%c．全てのドラゴンの母へ挑戦するなど   無謀だったようですね．」",
+         "「ちょうど腹が減ってきたところよ，%r．あなたを見てると食欲が湧い   てきます．」",
+         "「昼食をいっしょにどうですか？もちろんあなたがメインディッシュです   けど，%c」",
+         "「%oにより私は無敵です．あなたが目的を達成するなど   不可能ですよ．」",
+         "「あなたの指導者である%lは失敗したのですよ．あなたも何も恐れる   ことなどないでしょう．」",
+         "「あなたはここで死ぬのです，%c．%rごときでは私を   倒すなど夢物語ですね．」",
+         "「%nの力に挑戦するとは希な%rですね．ふーん」",
+         "「私は全ドラゴンの母です！倒すなど言う馬鹿げた考えは棄てなさい．」",
+         "「今日の私の爪は鋭いですよ．ずたずたにしてあげましょう！」",
+         "「%dはあなたを見捨てたようですね，%c．ここは私の   領域なのですよ．」",
       },
       encourage = {
-         "\"%nC is immune to her own breath weapons. You should use magic upon her that she does not use herself.\"",
-         "\"When you encounter %n, call upon %d for assistance.\"",
-         "\"There will be nowhere to hide inside %ns inner sanctum.\"",
-         "\"Your best chance with %n will be to keep moving.\"",
-         "\"Do not be distracted by the great treasures in %ns lair. Concentrate on %o.\"",
-         "\"%oC is the only object that %n truly fears.\"",
-         "\"Do not be fooled by %ns size.  She is fast, and it is rumored that she uses magic.\"",
-         "\"I would send a party of %gP with you, but we will need all of our strength to defend ourselves.\"",
-         "\"Remember, be %a at all times.  This is your strength.\"",
-         "\"If only we had an amulet of reflection, this would not have happened.\"",
+         "「%nは彼女自身のブレス攻撃に対しては耐性がある．   お前は彼女の使わない魔法を用いるべきだ．」",
+         "「%nに会ったなら，%dの助けを呼ぶのだ．」",
+         "「%nの聖域内では隠れるところなどないぞ．」",
+         "「%nに対しては常に動き，チャンスをうかがえ．」",
+         "「%nの住みかの宝には目もくれるな．%oに   集中するのだ．」",
+         "「%oは%nが畏れる唯一の物体だ．」",
+         "「%nの大きさに迷わされるな．彼女は素早く，また魔法を   使うと噂されている．」",
+         "「%gの一隊を送りたいのだが，我らの精鋭はここの守りのために必要   なのだ．」",
+         "「いつでも%aの精神を忘れるな．それがお前の強さなのだ．」",
+         "「反射の魔除けさえ持っていれば，このようなことは   起こらかったであろう．」",
       },
       firsttime = {
          synopsis = "[You arrive back at %H, but something is wrong here.]",
          output = "text",
-         text = [[You descend through a barely familiar stairwell that you remember
-%l showing you when you embarked upon your vision quest.
+         text = [[あなたは見なれた階段を降りながら，冒険に旅立ったとき，%l
+があなたを見ていたのをふと思いだした．
 
-You arrive back at %H, but something seems
-wrong here.  The usual smoke and glowing light of the fires of the
-outer caves are absent, and an uneasy quiet fills the damp air.]],
+あなたは%Hに戻ってきた，しかし何かが違っているように見える．いつも
+の煙や洞窟の外の火の灯が消えうせており，何とも言えない沈黙が漂って
+いた．]],
       },
       goal_first = {
          synopsis = "[You enter a large cavern.  %nC is present.]",
          output = "text",
-         text = [[You find yourself in a large cavern, with neatly polished walls, that
-nevertheless show signs of being scorched by fire.
+         text = [[あなたは壁が丁寧に磨かれた大きな洞窟にいるのに気がついた．しかし，それ
+でも，火で焦がされた跡があちこちにある．
 
-Bones litter the floor, and there are objects scattered everywhere.
-The air is close with the stench of sulphurous fumes.
+骨が床に散乱しており，いろんなものが無造作にちらばっている．
+空気の流れは滞っており，硫黄の臭いが鼻につく．
 
-%nC is clearly visible, but %nh seems to be asleep.]],
+%nははっきりと見えている．しかし%nhは寝ているようだ．]],
       },
       goal_next = {
-         text = "Once again, you find yourself in the lair of %n.",
+         text = "もう一度，あなたは%nの住みかにいた．",
       },
       gotit = {
          synopsis = "[%oC fills you with a feeling of power.]",
          output = "text",
-         text = [[As you pick up %o it seems heavy at first, but as you
-hold it strength flows into your arms.
+         text = [[あなたは，%oを拾った．最初は重く感じたがそれを持つと力が腕に
+注がれてきた．
 
-You suddenly feel full of power, as if nothing could possibly stand
-in your path.]],
+あなたは，力が満たされたように感じ，誰も行く手を阻むことなどできないよ
+うな気がした．]],
       },
       guardtalk_after = {
-         "\"The rains have returned and the land grows lush again.\"",
-         "\"Peace has returned, give thanks to %d!\"",
-         "\"Welcome back!  Did you find %o?\"",
-         "\"So, %p, tell us the story of your fight with %n.\"",
-         "\"%lC grows old.  Perhaps you will guide us after he ascends.\"",
+         "「雨は戻り，大地は再び豊潤になるだろう．」",
+         "「平和が戻ってきた！%dのおかげだ！」",
+         "「よく戻ってきた！%oは見つかったかね？」",
+         "「おぉ，%p，おまえと%nの戦いは伝説として語り継がれるだろう．」",
+         "「%lは年老いた．彼亡き後，あなたが我々を導いてくれるだろう．」",
       },
       guardtalk_before = {
-         "\"We have not been able to gather as much food since the Giants sealed off our access to the outer world.\"",
-         "\"Since %n sent her minions, we have been constantly fighting.\"",
-         "\"I have heard your vision quest was successful.  Is this so?\"",
-         "\"So, tell me, %p, how have you fared?\"",
-         "\"%lC grows old.  We know not who will guide us after he ascends.\"",
+         "「巨人が外への出入りを封印して以来我らは十分な食料を集めることは   できないのだ．」",
+         "「%nが彼女の下僕を送ってきて以来，我らは常に   戦っているのだ．」",
+         "「私はあなたの冒険が成功しそうだと聞いているが，どうなんだ？」",
+         "「%pよ．うまくいっているかどうか教えてくれ」",
+         "「%lは年老いた．彼亡き後，誰が我らを守ってくれると言うのだ．」",
       },
       hasamulet = {
          synopsis = "[\"Take the Amulet to the altar of %d on the Astral Plane and offer it.\"]",
          output = "text",
-         text = [["You have been successful, I see, %p.
+         text = [[「成功したのか%pよ．
 
-"Now that the Amulet of Yendor is yours, here is what you must do:
+「いまや，イェンダーの魔除けはお前の手にある，何をすべきか教えて
+  しんぜよう:
 
-"Journey upwards to the open air.  The Amulet you carry will then
-take you into the Astral Planes, where the Great Temple of %d
-casts its influence throughout our world.
+「大いなる空へ旅を続けるのだ．魔除けがお前を天上界へつれて行って
+  くれるだろう．そこには世界中に影響を与えている
+  %dの大寺院がある．
 
-"Sacrifice the Amulet on the altar.  Thus shall %d become supreme!"]],
+「魔除けを献上せよ．%dが迎えてくれるだろう！」]],
       },
       killed_nemesis = {
-         text = [[%nC sinks to the ground, her heads flailing about.
-As she dies, a cloud of noxious fumes billows about her.]],
+         text = [[%nは地面に崩れ，彼女の頭がガクンとうなだれた．
+彼女が死ぬと，有毒ガスが体からたちこめた．]],
       },
       leader_first = {
          synopsis = "[\"You have returned.  We are in dire need of your help.\"]",
          output = "text",
-         text = [["You have returned from your vision quest, %p.  Thank %d.
+         text = [[「冒険から戻ってきたか%pよ．%dに感謝しよう．
 
-"We are in dire need of your help, my %S.
+「我%sよ．我らはお前の助けを必要としている．
 
-"But first, I must see if you are yet capable of the quest I would
-ask you to undertake."]],
+「しかし手始めに，私の要求するクエストを受けいれるだけの技量があるか
+  調べねばならぬ．」]],
       },
       leader_last = {
          synopsis = "[\"You have betrayed the %L.  Begone!\"]",
          output = "text",
-         text = [["%pC!  You have sealed our fate.  You seem unable to reform yourself,
-so I must select another to take your place.
+         text = [[「%p！お前は我らの運命を封印してしまった．お前は自分自身を改める
+  ことができないと見える．この任務には替りの者をたてることとしよう．
 
-"Begone from %H!  You have betrayed us by choosing
-the path of the %C over the true path of the %L.
+「%Hから去るがよい！お前は%Lの真実の道の替りに
+  %Cの道を撰択し，我らを裏切った．
 
-"You no longer live in our eyes."]],
+「我が目の前に二度と現われるな．」]],
       },
       leader_next = {
-         text = "\"Again, you return to us, %p.  Let me see if you are ready now.\"",
+         text = "「また戻ってきたか%pよ．準備が出来たかどうか見てやろう．」",
       },
       leader_other = {
-         text = "\"Ah, %p.  Are you finally ready?\"",
+         text = "「おお%p．準備はできたかな？」",
       },
       locate_first = {
          synopsis = "[You %x many large claw marks, smell carrion, and notice bones.]",
          output = "text",
-         text = [[You %x many large claw marks on the ground.  The tunnels ahead
-of you are larger than most of those in any cave complex you have
-ever been in before.
+         text = [[あなたは，地面に巨大な爪跡があるのを%xた．あなたの前方にあるトンネルは
+今迄にあなたが見たことのあるものより巨大で，複雑である．
 
-Your nose detects the smell of carrion from within, and bones litter
-the sides of the tunnels.]],
+死肉の臭いがそこから漂ってくるのを感じ，骨がトンネルの両側に散乱して
+いる．]],
       },
       locate_next = {
-         text = "Once again, you approach %i.",
+         text = "もう一度，あなたは%iに近づいた．",
       },
       nemesis_first = {
          synopsis = "[%nC threatens to eat you.]",
          output = "text",
-         text = [["So, follower of %l, you seek to invade the lair of
-%n.  Only my meals are allowed down here.  Prepare
-to be eaten!"]],
+         text = [[「%lに従う者よ．%nの住みかに侵入して何かをお捜しですか？
+  ここへは私の食料以外は入ってこれないのです．食べられる準備をしなさい！」]],
       },
       nemesis_next = {
-         text = [["So, again you face me, %c.  No one has ever before escaped me.
-Now I shall kill you."]],
+         text = [[「またお会いしましたね，%c．だれも私からは逃げられません．
+  今度こそ殺してさしあげましょう．」]],
       },
       nemesis_other = {
-         text = "\"You are getting annoying, %c.  Prepare to die.\"",
+         text = "「あなたはいらいらさせられます，%c．死ぬ準備をしなさい．」",
       },
       nemesis_wantsit = {
-         text = "\"I'll have %o from you, %c.  You shall die.\"",
+         text = "「私こそ%oを持つべきだ，%c．死ね．」",
       },
       nexttime = {
-         text = "Once again, you arrive back at %H.",
+         text = "もう一度，あなたは%Hに戻ってきた．",
       },
       offeredit = {
          synopsis = "[\"Take %o with you.  It will help in your quest for the Amulet of Yendor.\"]",
          output = "text",
-         text = [[%lC glimpses %o in your possession.
-He smiles and says:
+         text = [[%lはあなたが持っている%oをちらっと見ると，微笑み
+ながら話しかけた:
 
-    You have done it!  We are saved.  But I fear that %o
-    will always be a target for %C forces who will want it for their
-    own.
+    見事なしとげたか！我らは助かった．しかし，私は%oが
+    それを手に入れんとする者の，いつでも%cの力の脅威
+    にあることを恐れている．
 
-    To prevent further trouble, I would like you, %p,
-    to take %o away with you.  It will help you as you
-    quest for the Amulet of Yendor.]],
+    そのような問題を避けるため，私は次のようにしてはどうかと思って
+    いる．%pよ，お前が%oを持っていくのだ．
+    それはお前のイェンダーの魔除けを捜す冒険の助けになるだろう．]],
       },
       offeredit2 = {
          synopsis = "[\"You are the keeper of %o now.  Return to %Z to search for the Amulet.]",
          output = "text",
-         text = [[%l grasps %o proudly for a moment, then looks at you.
+         text = [[%lはしばらくの間%oを誇らしげに掴み，あなたを見つめた．
 
-"You are its keeper now, and the time has come to resume your search
-for the Amulet.  %Z await your return through the
-magic portal which brought you here."]],
+「今や，お前は%oの守護者だ．
+  魔除け探索を再開せよ．魔法の入口の向こうで，
+  %Zがお前を待っているぞ．」]],
       },
       othertime = {
-         text = [[For some reason, you think that this may be the last time you will
-enter %H.]],
+         text = [[なぜか，あなたは%Hに来るのはこれが最後である
+ような気がした．]],
       },
       posthanks = {
-         text = [["%pC!  Welcome back.
-How goes your quest to recover the Amulet for %d?"]],
+         text = [[「%p！戻ってきたか．
+  %dの魔除けを取り戻す冒険はどんな調子だい？」]],
       },
    },
    Hea = {
       assignquest = {
          synopsis = "[Travel to %i on your way to recover %o from %n.]",
          output = "text",
-         text = [[For the first time, you sense a smile on %ls face.
+         text = [[最初に，%lの顔に笑みが浮かんでいるのを感じた．
 
-    "You have indeed learned as much as we can teach you in preparation
-    for this task.  Let me tell you what I know of the symptoms and hope
-    that you can provide a cure.
+    「そなたは確かに我々がこの仕事の準備にと教えうる限りのことを
+      学んだ．私が知っているきざしを話し，そなたが癒しを
+      施すことを期待しよう．
 
-    "A short while ago, the dreaded %nt was fooled by the gods
-    into thinking that %nh could use %o to find a
-    cure for old age.  Think of it, eternal youth!  But %nj good
-    health is accomplished by drawing the health from those around %ni.
+    「少し前に，恐るべき%nは神々に騙されて
+      %oを用いれば老いを癒すことができると考えた．
+      永遠の若さだ！しかしやつの健康は，周囲の健康を奪うことに
+      よってなされている．
 
-    "He has exhausted %nj own supply of healthy people and now %nh seeks to
-    extend %nj influence into our world.  You must recover from %ni
-    %o and break the spell.
+    「やつは健康な人々の備えを使い尽くし，今やその影響力を
+      我らの世界にまで広げようとしている．そなたは%oを
+      やつから取り戻し，呪文を打ち破らねばならない．
 
-    "You must travel into the swamps to %i, and from there
-    follow the trail to %ns island lair.  Be careful."]],
+    「沼地を通って%iへ赴き，そこから%nの
+      隠れ家となっている島への手がかりを追うのだ．注意せよ．」]],
       },
       badalign = {
          synopsis = "[Return when you are more %a.]",
          output = "text",
-         text = [["You have learned much of the remedies that benefit, but you must also
-know which physic for which ail.  That is why %ds teachings are a
-part of your training.
+         text = [[「そなたは数多くの有益な治療法を学んだ．だがどの薬がどの病に
+  効くかも学ばねばならぬ．%dの教えがそなたの訓練の一部と
+  なっているのはそのためだ．
 
-"Return to us when you have healed thyself."]],
+「汝自身を癒したら戻って来い．」]],
       },
       badlevel = {
          synopsis = "[You are too inexperienced.  Return when you are %Ra.]",
          output = "text",
-         text = [["Alas, %p, you are yet too inexperienced to deal with the rigors
-of such a task.  You must be able to draw on the knowledge of botany,
-alchemy and veterinary practices before I can send you on this quest 
-with good conscience.
+         text = [[「ああ！%pよ，お前はまだこの様な難しい仕事をこなすに
+  はあまりにも未熟だ．安心してこの探索に送り出す前には，植物学，錬金術，
+  獣医学の知識を利用できなければならぬ．
 
-"Return when you wear %Ra's caduceus."]],
+「%Raの蛇杖を身につけたら戻って来るのだ．」]],
       },
       discourage = {
-         "\"They might as well give scalpels to wizards as to let you try to use %o!\"",
-         "\"If I could strike %l, surrounded by %lj %gP, imagine what I can do to you here by yourself.\"",
-         "\"I will put my %Rp to work making a physic out of your ashes.\"",
-         "\"As we speak, Hades gathers your patients to join you.\"",
-         "\"After I'm done with you, I'll destroy %l as well.\"",
-         "\"You will have to kill me if you ever hope to leave this place.\"",
-         "\"I will impale your head on my caduceus for all to see.\"",
-         "\"There is no materia medica in your sack which will cure you of me!\"",
-         "\"Do not fight too hard, I want your soul strong, not weakened!\"",
-         "\"You should have stopped studying at veterinary.\"",
+         "「お前に%oを使わせるとは，魔法使いにメスを   与えるようなものだ！」",
+         "「%gPに囲まれた%lを倒すことができるとはどういうことか，   想像してみたまえ．」",
+         "「お前の骸の届かぬところで%Rpに治療をさせてくれる．」",
+         "「我らが話している間にも，ハデスはお前の患者を集めて   お前の道連れにしてくれるぞ．」",
+         "「お前が済んだら，%lも同じように滅ぼしてくれるわ．」",
+         "「この地を去りたいのなら，私を殺さねばならぬ．」",
+         "「皆に見えるように，お前の頭を私の蛇杖に突き刺してやろう．」",
+         "「袋の中に，お前を直してくれるような薬品はない．」",
+         "「あまり激しく戦うな．お前の魂を強くしたいのであって，   弱くしたいのではない！」",
+         "「獣医学を勉強するのをやめるべきだ．」",
       },
       encourage = {
-         "\"Remember, %p, to always wash your hands before operating.\"",
-         "\"%nC has no real magic of %nj own.  To this %nh is vulnerable.\"",
-         "\"If you have been true to %d, you can draw on the power of %o.\"",
-         "\"Bring with you antidotes for poisons.\"",
-         "\"Remember this, %n can twist the powers of %o to hurt instead of heal.\"",
-         "\"I have sent for Chiron, but I am afraid he will come too late.\"",
-         "\"Maybe when you return the snakes will once again begin to shed.\"",
-         "\"The plague grows worse as we speak.  Hurry, %p!\"",
-         "\"Many times %n has caused trouble in these lands.  It is time that %nh was eradicated like the diseases %nh has caused.\"",
-         "\"With but one eye, %n should be easy to blind.  Remember this.\"",
+         "「忘れるな，%pよ．手術の前には必ず手を洗うのだ．」",
+         "「%nは自らの魔法を持たぬ．そこがやつの弱味だ．」",
+         "「%dに対して誠実であったのなら，   %oの力が利用できる．」",
+         "「解毒剤を持って来なさい．」",
+         "「覚えておけ，%nは%oの力を傷つけるためではなく，   癒すために使う．」",
+         "「ケイローンには使いを出した．しかし彼が来る頃にはもう   遅すぎるかもしれぬ．」",
+         "「そなたが戻って来た時，蛇は再び脱皮するかもしれぬ．」",
+         "「話している間にも疫病は一層悪くなってきている．急げ，%pよ！」",
+         "「%nは何度もこの地に禍を引き起こした．やつがもたらした病気の   ように，今度はやつが滅ぼされる番だ．」",
+         "「片目しかないがゆえに，%nは盲目になりやすい．覚えておけ．」",
       },
       firsttime = {
          synopsis = "[You arrive back at %H and must find %l.]",
          output = "text",
-         text = [[What sorcery has brought you back to %H?  The smell
-of fresh funeral pyres tells you that something is amiss with the healing
-powers that used to practice here.
+         text = [[どんな魔法があなたを%Hに連れ戻したのだ？真新しい火葬用の
+薪の匂いが，ここで開業するために使った治癒の力のどこかに不具合が生じて
+いると告げている．
 
-No rhizotomists are tending the materia medica gardens, and where are the
-common folk who used to come for the cures?
+薬用植物園へ向かう神経科医の姿もない．治療に来ていた人々はいったい
+どこに行ってしまったのだ？
 
-You know that you must quickly make your way to the collegium, and
-%ls iatreion, and find out what has happened in your absence.]],
+あなたがいない間に何が起こったのかを知るために，すぐに委員会と
+%lの医療所に出向く必要があるだろう．]],
       },
       goal_first = {
          synopsis = "[You have reached the lair of %n.  Take %o away from %ni.]",
          output = "text",
-         text = [[You stand within sight of the infamous Isle of %n.  Even
-the words of %l had not prepared you for this.
+         text = [[あなたは忌まわしき%nの島が見える場所に立った．
+%lの言葉ですらこのことを覚悟させるものではなかった．
 
-Steeling yourself against the wails of the ill that pierce your ears,
-you hurry on your task.  Maybe with %o you can
-heal them on your return, but not now.]],
+耳を貫く不吉な風の音に心を固くして，あなたは仕事を急いだ．
+%oをもってすれば，帰って彼らを癒すことが出来るかもしれぬ．
+だがそれは今ではない．]],
       },
       goal_next = {
-         text = "Once again, you %x the Isle of %n in the distance.",
+         text = "もう一度，あなたは向こうに%nの島を%xた．",
       },
       gotit = {
          synopsis = "[You feel the healing power of %o and should return it to %l.]",
          output = "text",
-         text = [[As you pick up %o, you feel its healing begin to
-warm your soul.  You curse Zeus for taking it from its rightful owner,
-but at least you hope that %l can put it to good use once
-again.]],
+         text = [[%oを拾い上げると，癒しの力があなたの魂を温め始めるのが
+感じられた．あなたはこれを正しい持ち主から奪ったゼウスを
+呪ったが，少なくとももう一度適切に使われることを望んだ．]],
       },
       guardtalk_after = {
-         "\"Did you read that new treatise on the therapeutic use of leeches?\"",
-         "\"Paint a red caduceus on your shield and monsters won't hit you.\"",
-         "\"How are you feeling?  Perhaps a good bleeding will improve your spirits.\"",
-         "\"Have you heard the absurd new theory that diseases are caused by microscopic organisms, and not ill humors?\"",
-         "\"I see that you bring %o, now you can cure this plague!\"",
+         "「ヒルの治療学的使用法に関する新しい論文は読んだか？」",
+         "「赤い蛇杖を盾に描けば，怪物は攻撃してこなくなるだろう．」",
+         "「どんな感じだい？たぶん，いい流血がおまえの魂を良くしてくれるだろうよ．」",
+         "「疾病が，悪い血ではなく微生物によって引き起こされるという ばかげた新説を聞いたかい？」",
+         "「あなたは%oを持ち帰り，この疫病を癒してくれるでしょう．」",
       },
       guardtalk_before = {
-         "\"Did you read that new treatise on the therapeutic use of leeches?\"",
-         "\"Paint a red caduceus on your shield and monsters won't hit you.\"",
-         "\"I passed handwriting so they are demoting me a rank.\"",
-         "\"I've heard that even %l has not been able to cure Chiron.\"",
-         "\"We think %n has used %nj alchemists, and %o, to unleash a new disease we call 'the cold' on Gehennom.\"",
+         "「ヒルの治療学的使用法に関する新しい論文は読んだか？」",
+         "「赤い蛇杖を盾に描けば，怪物は攻撃してこなくなるだろう．」",
+         "「筆記試験に合格したので，彼らは私を降格する．」",
+         "「%lですら，ケイローンを治療することは出来ぬと聞いたぞ．」",
+         "「我らは%nが錬金術と%oを使って，ゲヘナで   『風邪』と呼ばれる新たな病を解き放ったと考えている．」",
       },
       hasamulet = {
          synopsis = "[\"You have recovered the Amulet.  Travel to the Astral Plane and return it to %d.\"]",
          output = "text",
-         text = [["Ah, you have recovered the Amulet, %p.  Well done!
+         text = [[「おお，魔除けを取り戻したのだな，%pよ．よくやった！
 
-"Now, you should know that you must travel through the Elemental Planes
-to the Astral, and there return the Amulet to %d.  Go forth and
-may our prayers be as a wind upon your back."]],
+「今こそ，精霊界を通って天上界へと向かい，魔除けを%dに
+  戻す旅に出なければならぬ．行け，そして我らの祈りが
+  そなたの背に吹く風とならんことを．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC curses you as %nh dies.]",
          output = "text",
-         text = [[The battered body of %n slumps to the ground and gasps
-out one last curse:
+         text = [[%nの潰れた体は地面へと崩れ落ち，喘ぎながら最後の呪いを放った．
 
-    "You have defeated me, %p, but I shall have my revenge.
-    How, I shall not say, but this curse shall be like a cancer
-    on you."
+    「お前の勝ちだ，%p．だがきっと復讐してやる．
+      その方法は言わぬが，この呪いは癌のようにお前を蝕むだろう．」
 
-With that %n dies.]],
+かくして%nは死んだ．]],
       },
       leader_first = {
          synopsis = "[%l is weak from the struggle with %n.  %lH wants to examine you.]",
          output = "text",
-         text = [[Feebly, %l raises %lj head to look at you.
+         text = [[力なく，%lはあなたに顔を向けた．
 
-"It is good to see you again, %p.  I see the concern in your
-eyes, but do not worry for me.  I am not ready for Hades yet.  We have
-exhausted much of our healing powers holding off %n.
-I need your fresh strength to carry on our work.
+「再び会えて良かった，%pよ．心配そうな目だな，だが案ずるこ
+  とはない．まだハデスの世話にはならん．我らは%nを防ぐのに
+  癒しの力を使い尽くしてしまった．この仕事を続けるにはお前の若い力が
+  必要なのだ．
 
-"Come closer and let me lay hands on you, and determine if you have
-the skills necessary to accomplish this mission."]],
+「近くに寄って手を取るがいい．お前にこの任務を成し遂げる技量があるか
+  見きわめよう．」]],
       },
       leader_last = {
          synopsis = "[You are a failure as a healer.]",
          output = "text",
-         text = [["You have failed us, %p.  You are a quack!  A charlatan!
+         text = [[「お前には失望した，%pよ．お前はにせ医者だ！いんちき野郎！
 
-"Hades will be happy to hear that you are once again practicing your
-arts on the unsuspecting."]],
+「お前がまた医者を始めたと聞いたら，ハデスはさぞ喜ぶだろうよ．」]],
       },
       leader_next = {
-         text = [["Again you return to me, %p.  I sense that each trip back
-the pleurisy and maladies of our land begin to infect you.  Let us
-hope and pray to %d that you become ready for your task before
-you fall victim to the bad humors."]],
+         text = [[「また帰ってきたな，%pよ．それぞれの旅は肋膜炎と背中合わせで，
+  我らの国の病気がそなたに影響をおよぼし始めているのが感じられる．
+  %dに祈りを捧げて，そなたが悪しき気の犠牲になる前に仕事の
+  準備ができるよう期待しているぞ．」]],
       },
       leader_other = {
-         text = [["Chiron has fallen, Hermes has fallen, what else must I tell you to
-impress upon you the importance of your mission!  I hope that you
-have come prepared this time."]],
+         text = [[「ケイローンが死に，ヘルメスが死に，他に何をもってお前に任務の
+  重要性を認識させればよいのだ！もう覚悟は決めたのだろうな．」]],
       },
       locate_first = {
          synopsis = "[You have reached %i but all is not well.]",
          output = "text",
-         text = [[You stand before the entrance to %i.  Strange
-scratching noises come from within the building.
+         text = [[あなたは%iの入口の前に立った．奇妙な
+引っかく音が建物の中から聞こえてくる．
 
-The swampy ground around you seems to stink with disease.]],
+まわりの沼地は病で腐っているように見える．]],
       },
       locate_next = {
-         text = "Once again you stand at the entrance to %i.",
+         text = "もう一度あなたは%iの入口に立った．",
       },
       nemesis_first = {
          synopsis = "[\"I will take your life, then defeat %l.\"]",
          output = "text",
-         text = [["They have made a mistake in sending you, %p.
+         text = [[「やつらがお前を送り込んだのは間違いだったようだな，%pよ．
 
-"When I add your youth to mine, it will just make it easier for me
-to defeat %l."]],
+「お前の若さを手に入れれば，%lを滅ぼすのは更にたやすくなるだろう．」]],
       },
       nemesis_next = {
-         text = "\"Unlike your patients, you seem to keep coming back, %p!\"",
+         text = "「お前の患者とは違って，戻って来たようだな，%pよ！」",
       },
       nemesis_other = {
-         text = "\"Which would you like, %p?  Boils, pleurisy, convulsions?\"",
+         text = "「どれが好みだ，%p？腫れ物，腹膜炎，それとも痙攣か？」",
       },
       nemesis_wantsit = {
-         text = [["I'll have %o back from you, %r.  You are
-not going to live to escape this place."]],
+         text = [[「きっと%oを取り戻す，%rよ．この場所から逃げ出して
+  生き延びることなど出来ぬぞ．」]],
       },
       nexttime = {
-         text = [[After your last experience you expected to be here, but you certainly
-did not expect to see things so much worse.  This time you must succeed.]],
+         text = [[予想された最後の経験を終えた後でも，しかしこれほどまで
+事態が酷くなっていようとは思ってもいなかった．あなたは必ず
+成功しなければならないのだ．]],
       },
       offeredit = {
          synopsis = "[%l touches %o and tells %lj %gP to do so too, then tells you to take it with you.]",
          output = "text",
-         text = [[As soon as %l sees %o %lh summons %lj
-%gP.
+         text = [[%lは%oを見るやいなや，%ljの%gPを呼び寄せた．
 
-Gently, %l reaches out and touches %o.
-He instructs each of the assembled to do the same.  When everyone
-has finished %lh speaks to you.
+静かに，%lは手を伸ばして%oに触れた．
+彼は集まった各々に同じことをするように教えた．全てが終った後，
+彼はあなたに話しかけた．
 
-    "Now that we have been replenished we can defeat this plague.  You must
-    take %o with you and replenish the worlds you have
-    been called upon to travel next.  I wish you could ride Chiron to the
-    end of your journey, but I need him to help me spread the cure.  Go
-    now and continue your journey."]],
+    「今こそ我らは満たされ，この疫病を打ち破ることができる．
+      そなたは%oを携えて，次に旅するよう求められている世界を
+      満たさねばならぬ．ケイローンに乗って行ければよいのだが，
+      癒しの力を広めるのに彼が必要だ．行ってそなたの旅を続けるのだ．」]],
       },
       offeredit2 = {
          synopsis = "[%l tells you to keep %o and return to %Z to search for the Amulet.]",
          output = "text",
-         text = [[%l cautiously handles %o while watching you.
+         text = [[%lは%oを気をつけて掴み，あなたを見つめた．
 
-"You are its keeper now, and the time has come to resume your search
-for the Amulet.  %Z await your return through the
-magic portal which brought you here."]],
+「今や，そなたは%oの守護者だ．
+  魔除け探索を再開せよ．魔法の入口の向こうで，
+  %Zがそなたを待っているぞ．」]],
       },
       othertime = {
-         text = [[Again, you %x %H in the distance.
+         text = [[ふたたび，あなたは遠くに%Hを%xた．
 
-The smell of death and disease permeates the air.  You do not have
-to be %Ra to know that %n is on the verge of victory.]],
+死と病の匂いが空気中に立ちこめている．%Raならずとも，
+%nがまさに勝利を収めんとしていることが分かるだろう．]],
       },
       posthanks = {
-         text = [["You have again returned to us, %p.  We have done well in your
-absence, yes?  How fare you upon your quest for the Amulet?"]],
+         text = [[「再び戻って来たな，%pよ．我々はそなたのいない間も
+  うまくやっている．魔除けの探索はどうだ？」]],
       },
    },
    Kni = {
       assignquest = {
          synopsis = "[Pass through %i to reach %n.  Destroy %ni and return with %o.]",
          output = "text",
-         text = [["Ah, %p.  Thou art truly ready, as no %c before thee hath
-been.  Hear now Our words:
+         text = [[「おお，%pよ．汝の用意も整ったようだな．汝のような%cは
+  これまでいなかった．さあ，我らが命を伝えよう：
 
-"As thou noticed as thou approached %H, a great battle hath
-been fought recently in these fields.  Know thou that Merlin himself
-came to aid Us here as We battled the foul %n.  In the midst of that
-battle, %n struck Merlin a great blow, felling him.  Then, as Our
-forces were pressed back, %n stole %o.
+「汝が%Hに到着してすぐに気付いたとおり，つい最近この
+  平原で大きな戦があった．知っての通り，醜い%nと戦うために
+  マーリン自身がここに我らの手助けに来たのだ．その戦いのさなか，
+  %nの強大な一撃でマーリンは倒れてしまった．
+  そして我らが軍勢は撤退を余儀なくされ，%nに
+  %oを奪われたのだ．
 
-"We eventually turned the tide, but lost many %cP in doing so.
-Merlin was taken off by his apprentice, but hath not recovered.  We have
-been told that so long as %n possesseth %o,
-Merlin will not regain his health.
+「最終的にその一波を退けはしたが，多くの%cPを失うこととなった．
+  マーリンは彼の弟子により連れ出されたものの，いまだ回復しておらぬ．
+  %nが%oを所有している限り，マーリンがその生命力を
+  回復することは無いと聞いている．
 
-"We hereby charge thee with this most important of duties:
+「そこで我々は汝に次の極めて重大な義務を課すこととなったのだ：
 
-"Go forth from this place, to the fens, and there thou wilt find
-%i.  From there, thou must track down %n.  Destroy the
-beast, and return to Us %o.  Only then can
-We restore Merlin to health."]],
+「この場から沼地へと向かえば，汝は%iを見つけられるであろう．
+  そこから汝は%nを追跡せねばならぬ．その獣を倒し，
+  我らがもとに%oを持ち帰るのだ．その時初めて
+  マーリンは生命力を取り戻すであろう．」]],
       },
       badalign = {
          synopsis = "[Go and do penance.  Return when you are truly %a.]",
          output = "text",
-         text = [["Thou dishonourest Us, %p!  Thou hast strayed from the path of
-chivalry! Go from Our presence and do penance.  Only when thou art again
-pure mayst thou return hence."]],
+         text = [[「%pよ，汝は我らが名誉を汚しておる！汝は騎士道を踏み外したのだ！
+我らの面前から立ち去り，そして懺悔するがよい．汝が高潔なる自らの魂を
+再び取り戻せたなら，ここに戻ることを許そう．」]],
       },
       badlevel = {
          synopsis = "[You are not prepared to face %n.  Return when you are %Ra.]",
          output = "text",
-         text = [["Verily, %p, thou hast done well.  That thou hast survived thus
-far is a credit to thy valor, but thou art yet unprepared for
-the demands required as Our Champion.  %rA, no matter how
-pure, could never hope to defeat the foul %n.
+         text = [[「%pよ，実によくやった．汝がこれまでに切り抜けてきたことは
+汝の武勇伝に刻まれておる．だが，汝は我らが英雄として要求される
+水準には未だ達しておらぬ．たとえどんなに高潔であっても，
+%rAの身では卑劣な%nを打ち倒せる望みは
+皆無なのだ．
 
-"Journey forth from this place, and hone thy skills.  Return to
-Our presence when thou hast attained the noble title of %R."]],
+「この場から旅立ち，そして汝の能力を磨きたまえ．%Rの高貴な
+称号を勝ち得たら，我らが場所へ戻ってくるがいい．」]],
       },
       discourage = {
-         "\"A mere %r can never withstand me!\"",
-         "\"I shall kill thee now, and feast!\"",
-         "\"Puny %c.  What manner of death dost thou wish?\"",
-         "\"First thee, %p, then I shall feast upon %l.\"",
-         "\"Hah!  Thou hast failed, %r.  Now thou shalt die.\"",
-         "\"Die, %c.  Thou art as nothing against my might.\"",
-         "\"I shall suck the marrow from thy bones, %c.\"",
-         "\"Let's see...  Baked?  No.  Fried?  Nay.  Broiled?  Yea verily, that is the way I like my %c for dinner.\"",
-         "\"Thy strength waneth, %p.  The time of thy death draweth near.\"",
-         "\"Call upon thy precious %d, %p.  It shall not avail thee.\"",
+         "「たかが%rでは我には耐えられぬぞ！」",
+         "「汝をすぐに殺して，食ってくれよう！」",
+         "「ちっぽけな%cよ．どのような死を汝は望むのだ？」",
+         "「最初は汝だ，%p．それから%lを食らおうぞ．」",
+         "「むふふ，汝は失敗したようだな，%rよ．今こそ汝の死すべき時なり．」",
+         "「死ね，%c．汝では我の力には適わぬ．」",
+         "「汝の骨の髄まで吸ってやろうぞ，%cよ．」",
+         "「ええい，焼く方がいいか？いや，揚げるか？否，あぶってやろうか？ しかり，こうやって%cをいただくのが実に我は好きなのだ．」",
+         "「%pよ，力が抜けていくだろう．もうじき汝に死が訪れようぞ」",
+         "「高貴なる%dの名を呼んでみよ，%pよ．汝の役にはたたぬであろう．」",
       },
       encourage = {
-         "\"Remember, %p, follow always the path of %d.\"",
-         "\"Though %n is verily a mighty foe, We have confidence in thy victory.\"",
-         "\"Beware, for %n hath surrounded %niself with hordes of foul creatures.\"",
-         "\"Great treasure, 'tis said, is hoarded in the lair of %n.\"",
-         "\"If thou possessest %o, %p, %ns magic shall therewith be thwarted.\"",
-         "\"The gates of %i are guarded by forces unseen, %p. Go carefully.\"",
-         "\"Return %o to Us quickly, %p.\"",
-         "\"Destroy %n, %p, else %H shall surely fall.\"",
-         "\"Call upon %d when thou art in need.\"",
-         "\"To find %i, thou must keep thy heart pure.\"",
+         "「%pよ，常に%dの道に従うことを忘れるでない．」",
+         "「%nは実に強力な敵だが，我々は汝の勝利に自信を持っている．」",
+         "「%nはおぞましい怪物の大群を周りに従えている．気をつけよ．」",
+         "「すばらしい宝物が%nの巣に貯えられているという．」",
+         "「%pよ，もし汝が%oを手に入れているのであれば，   それによって%nの魔法をくじくことができよう．」",
+         "「%pよ，%iの門は見えない力で守られているぞ． 気を付けて行くがいい．」",
+         "「%oを直ちに我らが手に取り返すのだ，%pよ．」",
+         "「%nを倒すのだ，%pよ．さもなくば   %Hは確実に落ちよう．」",
+         "「汝が必要とするとき，%dの名を呼ぶがよい．」",
+         "「汝が%iを見つけるには，純粋な心を保たねばならない．」",
       },
       firsttime = {
          synopsis = "[Signs of battle include long gouges in the walls of %H.]",
          output = "text",
-         text = [[You materialize in the shadows of %H.  Immediately, you notice
-that something is wrong.  The fields around the castle are trampled and
-withered, as if some great battle has been recently fought.
+         text = [[あなたは%Hの影の中に現れた．が，すぐに何かが違っている
+ことに気付いた．城の周囲の草原は踏みつけられて萎れている．まるでつい
+最近なにか大きな争いがあったかのようである．
 
-Exploring further, you %x long gouges in the walls of %H.
-You know of only one creature that makes those kinds of marks...]],
+さらに調べると，%Hの壁に細長い溝があるのが見える．
+このような傷をつけられるのは唯一あの生物だけであることを，
+あなたは知っている．．．]],
       },
       goal_first = {
          synopsis = "[You %x the entrance to a cavern inside a hill.]",
          output = "text",
-         text = [[As you exit the swamps, you %x before you a huge, gaping hole in the
-side of a hill.  From within, you smell the foul stench of carrion.
+         text = [[あなたがその沼から脱出すると，目前に，大きくぱっくりと開いた穴が
+丘の側面にあるのが見えた．その中から屍肉の悪臭がただよってくる．
 
-The pools on either side of the entrance are fouled with blood, and
-pieces of rusted metal and broken weapons show above the surface.]],
+入り口の周囲の水たまりは血で汚れ，その表面には錆びた金属や壊れた
+武器が見える．]],
       },
       goal_next = {
-         text = "Again, you stand at the entrance to %ns lair.",
+         text = "再びあなたは%iのふもとに佇んでいる．",
       },
       gotit = {
          synopsis = "[You feel the magic of %o.]",
          output = "text",
-         text = [[As you pick up %o, you feel its protective fields
-form around your body.  You also feel a faint stirring in your mind, as
-if you are in two places at once, and in the second, you are waking from
-a long sleep.]],
+         text = [[あなたは%oを拾うと，あなたのまわりにその結界が生じるのを
+感じた．また，まるで同時に二ヶ所にいるような，そしてたちまち長い眠りから
+覚めたような，そんな軽い感動を覚えた．]],
       },
       guardtalk_after = {
-         "\"Hail, %p!  Verily, thou lookest well.\"",
-         "\"So, %p, didst thou find %n in the fens near %i?\"",
-         "\"Worthy %p, hast thou proven thy right purpose on the body of %n?\"",
-         "\"Verily, %l could have no better champion, %p.\"",
-         "\"Hast thou indeed recovered %o?\"",
+         "「ようこそ%pよ！汝は実に元気そうだ．」",
+         "「なぁ，%p，%nは%iの側の沼地で見つけられたのか？」",
+         "「偉大なる%pよ，まことに汝は%nの肉体の上にて正しき決意を示したということか？」",
+         "「%pよ，実に%l以上の英雄は存在せなんだ．」",
+         "「まことに汝は%oを取り戻したのだな？」",
       },
       guardtalk_before = {
-         "\"Hail, %p!  Verily, thou lookest well.\"",
-         "\"There is word, %p, that %n hath been sighted in the fens near %i.\"",
-         "\"Thou art our only hope now, %p.\"",
-         "\"Verily, %l could have no better champion, %p.\"",
-         "\"Many brave %cP died when %n attacked.\"",
+         "「ようこそ%pよ！汝は実に元気そうだ．」",
+         "「%pよ，噂では%nは%iの側の沼地で目撃されたという．」",
+         "「%pよ，汝だけが我らが最後の希望となった．」",
+         "「%pよ，実に%l以上の英雄は存在せなんだ．」",
+         "「多くの%cPが%nと戦い，そして死んでいった．」",
       },
       hasamulet = {
          synopsis = "[Take the Amulet to the Astral Plane and deliver it to %d.]",
          output = "text",
-         text = [["Thou hast succeeded, We see, %p!  Now thou art commanded to take
-the Amulet to be sacrificed to %d in the Plane of the Astral.
+         text = [[「よくやった，%pよ！汝は次は天上界の%dに捧げるべく，
+かの魔除けを持っていくのだ．
 
-"Merlin hath counseled Us that thou must travel always upwards through
-the Planes of the Elements, to achieve this goal.
+「マーリンから次の助言をうけておる．それは汝がその目的を達成するには，
+精霊界を通り抜けて上に向かわねばならないというものだ．
 
-"Go with %d, %p."]],
+「%pに%dの加護のあらんことを．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC curses you as %nh dies.]",
          output = "text",
-         text = [[As %n sinks to the ground, blood gushing from %nj open mouth, %nh
-defiantly curses you and %l:
+         text = [[%nはその開いた口から血を吹き出し地に沈んでいく一方で，挑戦的に
+あなたと%lを呪って言った：
 
-    "Thou hast not won yet, %r.  By the gods, I shall return
-    and dog thy steps to the grave!"
+    「汝はまだ勝ったわけではないぞ，%rよ．ええい口惜しい，
+      必ずや舞い戻り，汝の血で汝の名を墓に刻んでやるぞ．」
 
-%nJ tail flailing madly, %n tries to crawl towards you, but slumps
-to the ground and dies in a pool of %nj own blood.]],
+狂ったように尻尾を振り回し，%nはあなたに近づこうともがいたが，
+地面に伏して自らの血の海の中で死んだ．]],
       },
       leader_first = {
          synopsis = "[%lC checks whether you are ready for a great undertaking.]",
          output = "text",
-         text = [["Ah, %p.  We see thou hast received Our summons.
-We are in dire need of thy prowess.  But first, We must needs
-decide if thou art ready for this great undertaking."]],
+         text = [[「おお，%pよ．汝は我らが召喚に応じたのであろう．
+我らは汝の武勇を必要としておる．だがまず最初に，汝がこの偉大な
+使命に対して準備ができているかどうか見極めねばならぬ．」]],
       },
       leader_last = {
          synopsis = "[You are a disgrace as %ca.]",
          output = "text",
-         text = [["Thou disgracest this noble court with thine impure presence.  We have been
-lenient with thee, but no more.  Thy name shall be spoken no more.  We
-hereby strip thee of thy title, thy lands, and thy standing as %ca.
-Begone from Our sight!"]],
+         text = [[「汝はこの高貴なる廷をその汚らわしい存在で辱めた．我らは今まで
+汝には寛大であった．が，それもこれまでである．汝の名は二度と口
+にされるまい．我らは汝の称号，土地，そして%cとしての地位も
+剥奪することをここに宣言する。我らが目前から立ち去るがよい！」]],
       },
       leader_next = {
-         text = "\"Welcome again, %p.  We hope thou art ready now.\"",
+         text = "「よくぞ再び参った，%pよ．汝の準備が整っていることを期待するぞ．」",
       },
       leader_other = {
-         text = "\"Once again, thou standest before Us, %p.  Art thou ready now?\"",
+         text = "「またも汝は我らがもとに来た，%pよ．準備はできたか？」",
       },
       locate_first = {
          synopsis = "[You have reached %i and can %x a shrine.]",
          output = "text",
-         text = [[You stand at the foot of %i.  Atop, you can %x a shrine.
-Strange energies seem to be focused here, and the hair on the back of
-your neck stands on end.]],
+         text = [[あなたは%iのふもとに佇んでいる．その頂上にはほこらが見えた．
+怪しいエネルギーがそこに集中しているように見え，そしてあなたの後ろ髪は
+ピンと逆立った．]],
       },
       locate_next = {
-         text = "Again, you stand at the foot of %i.",
+         text = "再びあなたは%iのすそにいる．",
       },
       nemesis_first = {
          synopsis = "[%nC taunts you and issues a threat against %H.]",
          output = "text",
-         text = [["Hah!  Another puny %c seeks death.  I shall dine well tonight,
-then tomorrow, %H shall fall!"]],
+         text = [[「むふふ，またしてもおろかな%sが死を求めておる．今夜はごちそう
+  にしようぞ．そして明日は%Hが落ちるのだ！」]],
       },
       nemesis_next = {
-         text = "\"Again, thou challengest me, %r?  So be it.  Thou wilt die here.\"",
+         text = [[「またしても汝は我に挑もうというのか，%rよ？好きにするがいい．
+が，ここで死ぬことになるぞ．」]],
       },
       nemesis_other = {
-         text = "\"Thou art truly foolish, %r.  I shall dispatch thee anon.\"",
+         text = "「まったくもって汝はたわけだな，%r．さっさと汝を片付けてくれよう．」",
       },
       nemesis_wantsit = {
-         text = [["So, thou darest touch MY property!  I shall have that bauble back,
-puny %r.  Thou wilt die in agony!"]],
+         text = [[「図々しくも我が財産に触れようとは！貧弱な%rよ，我はそれを取り戻してみせよう．
+苦しみもだえて死ぬがいい！」]],
       },
       nexttime = {
-         text = "Once again you stand in the shadows of %H.",
+         text = "あなたは%Hの影の中に再び現れた．",
       },
       offeredit = {
          synopsis = "[%oC is yours now.  It will aid in your search for the Amulet.]",
          output = "text",
-         text = [[As you approach %l, %lh beams at you and says:
+         text = [[%lに近づくと，彼はあなたに微笑み，そして言った：
 
-    "Well done!  Thou art truly the Champion of %H.  We
-    have received word that Merlin is recovering, and shall soon
-    rejoin Us.
+    「よくやった！汝は%Hの真の英雄となった．
+      マーリンも回復したとの噂だ．じきに我らと合流するであろう．
 
-    "He hath instructed Us that thou art now to be the guardian of
-    %o.  He feeleth that thou mayst have need of
-    its powers in thine adventures.  It is Our wish that thou keepest
-    %o with thee as thou searchest for the fabled
-    Amulet of Yendor."]],
+    「彼は我らに，今や汝が%oの守護者として適していると
+      教えてくれた．彼は汝の冒険においてその力が必要となるであろうと
+      感じているのだ．偉大なるイェンダーの魔除けの探索の任において，
+      %oが汝とともにあることが我らの望みだ．]],
       },
       offeredit2 = {
          synopsis = "[You are the keeper of %o.  Return to %Z and find the Amulet.]",
          output = "text",
-         text = [["Careful, %p!  %oC might break, and that would
-be a tragic loss.  Thou art its keeper now, and the time hath come
-to resume thy search for the Amulet.  %Z await thy
-return through the magic portal that brought thee here."]],
+         text = [[「気をつけろ%p！%oが壊れてしまう．
+  そうなったら大きな痛手だ．汝は%oの守護者だ．
+  魔除け探索を再開せよ．魔法の入口の向こうで，
+  %Zが汝を待っているぞ．」]],
       },
       othertime = {
-         text = [[Again, you stand before %H.  You vaguely sense that this
-may be the last time you stand before %l.]],
+         text = [[あなたはまた%Hの前にいる．あなたはなんとなく，
+%lの前に立つのがこれで最後となろうことを感じていた．]],
       },
       posthanks = {
-         text = "\"Well met, %p.  How goeth thy search for the Amulet of Yendor?\"",
+         text = "「よくぞ来た，%pよ．イェンダーの魔除けの探索はどうなっておる？」",
       },
    },
    Mon = {
       assignquest = {
          synopsis = "[Find %i, then continue to %ns lair.  Defeat %ni and return with %o.]",
          output = "text",
-         text = [["Yes, %p.  You are truly ready now.  Attend to me and I shall
-tell you of what has transpired:
+         text = [[「%pよ．そなたは用意が出来ておるようだ．今から何が起こったか
+  話すので，私のいうことに耳を傾けてくれ．
 
-"During one of the Great Meditations a short time ago, %n and
-a legion of elementals invaded %H.  Many %gP
-were killed, including the one bearing %o.
+「少し前の大祭の間に，%nと，%nに引き連られた精霊の軍団が
+  %Hを攻めたのだ．%oを持っていた者を始め，多くの
+  %gが殺されたのだ． 
 
-Now, there are barely enough %gP left to keep the elementals
-at bay.
+「現在，我々のもとには軍勢を寄せつけないためにするだけの，ごく小数の%g
+  しかいないのだ．
 
-"We need you to find %i, then, from there,
-travel to %ns lair.  If you can manage to defeat %n and
-return %o here, we can then drive off the legions
-of elementals that slay our students.
+「まず最初に，%iを探し，そして，そこから%nのアジトへと向かっ
+  てもらう．もしそなたが%nを倒して，%oを持ち帰ってくることが
+  出来るのならば，我々は学生を殺している精霊どもを追い返せるのだ．
 
-"Go with %d as your guide, %p."]],
+「さあ，%dの加護のもと，行くのだ，%pよ．」]],
       },
       badalign = {
          synopsis = "[You must atone.  Come back when you are worthy of %d.]",
          output = "text",
-         text = [["This is terrible, %p.  You have deviated from the true path!
-You know that %d requires the most strident devotion of this
-order.  The %shood must stand for utmost piety.
+         text = [[「これはなんとひどいことじゃ，%p．そなたは正道から踏み外し
+  ている．そなたも存じておろう，%dは強い信仰心をこの教団に
+  求めていることを．そなたは完璧なまでの信心を見せねばならぬ．
 
-"Go from here, atone for your sins against %d.  Return only when
-you have purified yourself."]],
+  ここから出て，%dへと働いた罪を懺悔するのだ．己の身を浄めら
+  れたときのみ，ここへと戻るがよい．」]],
       },
       badlevel = {
          synopsis = "[You are not ready to face %n.  Come back when you are %Ra.]",
          output = "text",
-         text = [["Alas, %p, it is not yet to be.  A mere %r could never
-withstand the might of %n.  Go forth, again into the world, and
-return when you have attained the post of %R."]],
+         text = [[「%p，残念ながら，そちはまだ用意できておらぬようだ．
+  %rでは%nに太刀打ちすることは無理だ．また再び世の中へ出て，
+  %Rの地位をおさめることが出来たら帰ってくるがよい．」]],
       },
       discourage = {
-         "\"Submit to my will, %c, and I shall spare you.\"",
-         "\"Your puny powers are no match for me, %c.\"",
-         "\"I shall have you turned into a zombie for my pleasure!\"",
-         "\"Despair now, %r.  %d cannot help you.\"",
-         "\"I shall feast upon your soul for many days, %c.\"",
-         "\"Your death will be slow and painful.  That I promise!\"",
-         "\"You cannot defeat %n, you fool.  I shall kill you now.\"",
-         "\"Your precious %lt will be my next victim.\"",
-         "\"I feel your powers failing you, %r.  You shall die now.\"",
-         "\"With %o, nothing can stand in my way.\"",
+         "「%cよ，私に服従すれば，私はそちを生かす．」",
+         "「%cよ，そちのような猪小才では私には到底及ばぬ．」",
+         "「私の楽しみのために，そちをゾンビにでもしてやろう．」",
+         "「絶望だな，%r．%dはそちを助けることはできぬ．」",
+         "「そちの魂を何日にも渡って喰らいつづけてやろうではないか，%c．」",
+         "「そちはじわじわと苦しめて殺してくれよう．それだけ私は約束する」",
+         "「そちのようなうつけでは，%nに勝てぬのだ．殺して差し上げよう．」",
+         "「%lが私の次の餌食となるであろう．」",
+         "「そちは力を調節出来ぬようだな，%r．そちはもう死ぬ．」",
+         "「%oさえあれば，私に恐れるべきものはない．」",
       },
       encourage = {
-         "\"You can prevail, if you rely on %d.\"",
-         "\"Remember that %n has great magic at his command.\"",
-         "\"Be pure, my %S.\"",
-         "\"Beware, %i is surrounded by hordes of earth elementals.\"",
-         "\"Remember your studies, and you will prevail!\"",
-         "\"Acquire and wear %o if you can.  They will aid you against %n.\"",
-         "\"Call upon %d when your need is greatest.  You will be answered.\"",
-         "\"Remember to use the elementals' strength against them!\"",
-         "\"Do not lose faith, %p.  If you do so, %n will grow stronger.\"",
-         "\"Wear %o.  They will assist you in your efforts.\"",
+         "「%dを信ずれば，そなたは勝てる．」",
+         "「%nはすさまじい魔術を意のままに操る，ということを肝に命じておけ．」",
+         "「清くあれ，我が%Sよ．」",
+         "「%iは土の精霊の集団に囲まれておる，気をつけるように．」",
+         "「学んだことを思い出すのだ．そうすれば勝利できる！」",
+         "「できるならば%oを手にいれ，身に付けるのだ．%nに対し効力を発揮   するであろう．」",
+         "「最も困ったと思われるときには%dに助けを求めよ．   そなたの願いは受けれられるであろう．」",
+         "「元素の力を使うことを忘れるな！」",
+         "「%pよ，信仰心を忘れるな．そうなれば，%nはより強くなることであろう．」",
+         "「%oを身に付けよ．さすれば助けになるだろう．」",
       },
       firsttime = {
          synopsis = "[You have reached %H but something is wrong.  %lC needs your aid.]",
          output = "text",
-         text = [[You find yourself standing in sight of %H.
-Something is obviously wrong here.  Strange shapes lumber around
-outside %H!
+         text = [[気がつくと，あなたは%Hの前に立っていた．が，何かが違う．
+奇妙な格好をしたものが%Hの周りをうろうろしている！
 
-You realize that %l needs your assistance!]],
+あなたは%lが手助けを求めていることに気付いた！]],
       },
       goal_first = {
          synopsis = "[You are surrounded by brimstone, lava, and elementals.]",
          output = "text",
-         text = [[The stench of brimstone is all about you, and the elementals close in
-from all sides!
+         text = [[そこらじゅうが硫黄の臭いによって包まれ，精霊があらゆる方向から
+迫ってくる！
 
-Ahead, there is a small clearing amidst the bubbling pits of lava...]],
+手前の，ぐつぐつと煮えたった溶岩の狭間に，小さな空き地がある．．．]],
       },
       goal_next = {
-         text = "Again, you have invaded %ns domain.",
+         text = "あなたは再び%nの領域を襲撃した．",
       },
       gotit = {
          synopsis = "[You feel the essence of %d and realize that you should take %o to %l.]",
          output = "text",
-         text = [[As you pick up %o, you feel the essence of
-%d fill your soul.  You know now why %n stole %oi from
-%H, for with %oi, %ca of %d could
-easily defeat his plans.
+         text = [[%oを拾うと，あなたは%dの本質を感じとった．そして，
+%dの%cならば%nの野望を打ち破れるから，
+%nが%Hより%oを盗んだ，ということに気付いた．
 
-You sense a message from %d.  Though not verbal, you
-get the impression that you must return to %l as soon
-as possible.]],
+あなたは%dからのメッセージを感じ取った．それは言葉に
+よるものではないが，あなたはすぐ%lのもとへ帰らねばならない
+ことを感じた．]],
       },
       guardtalk_after = {
-         "\"Greetings, honorable %r.  It is good to see you again.\"",
-         "\"Ah, %p!  Our deepest gratitude for all of your help.\"",
-         "\"Greetings, %s.  Perhaps you will take some time to meditate with us?\"",
-         "\"With this test behind you, may %d bring you enlightenment.\"",
-         "\"May %d be with you, %s.\"",
+         "「よくぞ来た，偉大なる%rよ．そなたに再び会えて私は非常にうれしい．」",
+         "「%pよ．あなたの助けには深い感謝の念が絶えない．」",
+         "「ようこそ，我%sよ．おそらく我々との計画はある程度の時間を要するでしょう．」",
+         "「後に控えているこの試練で，%dはあなたに悟りをもたらすだろう．」",
+         "「%dがあなたとともにあらんことを．」",
       },
       guardtalk_before = {
-         "\"Greetings, honorable %r.  It is good to see you.\"",
-         "\"Ah, %p!  Surely you can help us in our hour of need.\"",
-         "\"Greetings, %s.  %lC has great need of your help.\"",
-         "\"Alas, it seems as if even %d has deserted us.\"",
-         "\"May %d be with you, %s.\"",
+         "「よくぞ来た，光栄なる%rよ．そなたに会えて私は非常にうれしい．」",
+         "「%pよ．そなたならこの重大な時期に立たされている我らを助ける   ことが出来るであろう．」",
+         "「ようこそ，我%sよ．%lがあなたに手助けを求めていらっしゃる．」",
+         "「ああ，我々は%dにも見放されてしまったのではなかろうか．」",
+         "「%dがあなたとともにあらんことを．」",
       },
       hasamulet = {
          synopsis = "[Take the Amulet to the Astral Plane and deliver it to %d.]",
          output = "text",
-         text = [["You have prevailed, %p!  %d is surely with you.  Now,
-you must take the Amulet, and sacrifice it on %ds altar on
-the Astral Plane.  I suspect that I shall never see you again in this
-life, but I hope to at %ds feet."]],
+         text = [[「%pよ，そちは打ち勝ったのだ！真に，%dはそちとともに在る．
+  さあ，そなたは魔除けを持って，これから天上界にある%dの祭壇
+  にそれを捧げるのだ．今生ではそなたに会うことはもうないだろう，
+  しかし，%dの御許でそなたに会うことを楽しみにしているぞ．」]],
       },
       killed_nemesis = {
          synopsis = "[As %n dies, %nh threatens to return.]",
          output = "text",
-         text = [[%nC gasps:
+         text = [[%nはあえいだ．
 
-    "You have only defeated this mortal body.  Know this: my spirit
-    is strong.  I shall return and reclaim what is mine!"
+  おまえはわが定命の肉体を退けたに過ぎぬ．覚えておくがよい．
+  我が魂は強大である．私は必ず戻り，我が物を取り戻す！
 
-With that, %n expires.]],
+そして，%nは死んだ．]],
       },
       leader_first = {
          synopsis = "[%lC checks whether you are ready for the great challenge.]",
          output = "text",
-         text = [["Ah, %p, my %S.  You have returned to us at last.
-A great blow has befallen our order; perhaps you can help us.
-First, however, I must determine if you are prepared for this
-great challenge."]],
+         text = [[「我が%S%pよ．そなたはやっと我々のもとへ戻ってきた．
+  我々の教団は現在重大な危機に頻しておる．これについて，そなたは我々の手
+  助けを出来るやもしれぬ．
+  しかし，まず最初に，私はそなたがこの大いなる挑戦に対する心構えが出来て
+  いるかどうか試さねばならぬ．」]],
       },
       leader_last = {
          synopsis = "[You are a heretic and have failed utterly.]",
          output = "text",
-         text = [["You are a heretic, %p!  How can you, %ra, deviate so from the
-teachings of %d?  Begone from this temple.  You are no longer
-%sa to this order.  We will pray to %d for other assistance,
-as you have failed us utterly."]],
+         text = [[「%p，この異端が！どうしたら，そなたのような%rが%d
+  の教えからそれることが出来るのだ！この寺院の内から出ていけい！そなた
+  はもうこの教団の%sではない！そなたが我々の期待に応えられなかった
+  手前，%dには他の手助けを乞うよう祈ろう．」]],
       },
       leader_next = {
-         text = "\"Again, my %S, you stand before me.  Are you ready now to help us?\"",
+         text = [[「我が%Sよ，そなたは再び私の前に現れた．我々の手助けをする
+  心構えは出来たか？」]],
       },
       leader_other = {
-         text = "\"Once more, %p, you stand within the sanctum.  Are you ready now?\"",
+         text = "「%p，そなたは再び聖域の内に現れた．準備は出来たか？」",
       },
       locate_first = {
          synopsis = "[You have reached %i.  %nC lurks further ahead.]",
          output = "text",
-         text = [[You remember the descriptions of %i, given
-to you by %l.  It is ahead that you will find
-%n's trail.]],
+         text = [[あなたは%lが教えてくれた，%iの構造を思い出した．
+前方に%nの通った跡があるようだ．]],
       },
       locate_next = {
-         text = "Again, you stand before %i.",
+         text = "あなたは再び%iの前に立った．",
       },
       nemesis_first = {
          synopsis = "[You are no %g.  You shall never regain %o.]",
          output = "text",
-         text = [["Ah, so %l has sent another %g to retrieve
-%o.
+         text = [[「ケッ！%lがまたもや%gをよこしたのか，
+  %oを取り返すために．
 
-"No, I see you are no %g.  Perhaps I shall have some fun today
-after all.  Prepare to die, %r!  You shall never regain
-%o."]],
+「いや，待て．そちは，ただの%gではないらしいな．もしかしたら，
+  今日は少し楽しめるかもしれない．死ぬ準備でもするのだな，%r！
+  そなたが%oを取り返すことなど不可能なのだからな．」]],
       },
       nemesis_next = {
-         text = "\"So, %r.  Again you challenge me.\"",
+         text = "「ほう，%r．そちはまた私に挑戦するのか．」",
       },
       nemesis_other = {
-         text = "\"Die now, %r.  %d has no power here to aid you.\"",
+         text = "「死ねい，%r．ここでは%dがそちを助けることはできぬ．」",
       },
       nemesis_wantsit = {
-         text = "\"You shall die, %r, and I will have %o back.\"",
+         text = "「%r，そちは死んで，私は%oを取り返すのだ．」",
       },
       nexttime = {
-         text = "Once again, you stand before %H.",
+         text = "もう一度，あなたは%Hの前に立っていた．",
       },
       offeredit = {
          synopsis = "[Keep %o.  %oH will help you recover the Amulet of Yendor.]",
          output = "text",
-         text = [["You have returned, %p.  And with %o, I see.
-Congratulations.
+         text = [[「%p，帰ってきたか．．しかも，%oを手にして．
+おめでとう．
 
-"I have been in meditation, and have received direction from
-a minion of %d.  %d commands that you retain
-%o.  With %oi, you must recover the Amulet
-of Yendor.
+「私はずっと瞑想していたのだが，%dの使者より命令を承った．
+%dは，そなたに%oを持ち続けるように，と命じた．そして，
+それをもって，イェンダーの魔除けを取り戻すのだ．
 
-"Go forth, and let %d guide your steps."]],
+「行くがよい．そなたの行く手に%dの加護のあらんことを．」]],
       },
       offeredit2 = {
          synopsis = "[Keep %o and return to %Z to search for the Amulet.]",
          output = "text",
-         text = [[%lC studies %o for a moment,
-then returns his gaze to you.
+         text = [[%lはしばらくの間%oを調べたあと、視線をあなたに戻した．
 
-"%oC must remain with you.  Use %oi
-as you resume your search for the Amulet.
-%Z await your return through the magic portal
-that brought you here."]],
+「%oCはそなたとともになければならない．これを使って
+  魔除け探索を再開せよ．魔法の入口の向こうで，
+  %Zがそなたを待っているぞ．」]],
       },
       othertime = {
-         text = [[Again you face %H.  Your intuition hints that this
-may be the final time you come here.]],
+         text = [[あなたは再び %H の前に立っていた．虫の知らせか，
+あなたはここに来るのがこれで最後なのかもしれないとを感じた．]],
       },
       posthanks = {
-         text = "\"Welcome back, %p.  How is your quest for the Amulet going?\"",
+         text = "「よくぞ帰ってきた，%p．魔除けを探す方はどうなっているのだ？」",
       },
    },
    Pri = {
       assignquest = {
          synopsis = "[%nC invaded %H and captured %o.  Defeat %ni and retrieve %oh.]",
          output = "text",
-         text = [["Yes, %p.  You are truly ready now.  Attend to me and I shall
-tell you of what has transpired:
+         text = [[「%pよ．そなたは用意が出来ておるようだ．今から何が起こったか
+  話すので，私のいうことに耳を傾けてくれ．
 
-"At one of the Great Festivals a short time ago, %n and a legion
-of undead invaded %H.  Many %gP were killed, including
-the one carrying %o.
+「少し前の大祭に，%nと，%nに引き連られたアンデッドの軍団が
+  %Hを攻めたのだ．%oを持っていた者を始め，多くの
+  %gが殺されたのだ． 
 
-"As a final act of vengefulness, %n desecrated the altar here.
-Without it, we could not mount a counter-attack.  Now, there are
-barely enough %gP left to keep the undead at bay.
+「そしてその後，恐れ多くも%nはここの祭壇を汚したのだ．
+  祭壇なしでは我々は逆襲することは出来ない．そして現在，我々のもとには
+  %Hに軍勢を寄せつけないためにするだけの，ごく小数の%g
+  しかいないのだ．
 
-"We need you to find %i, then, from there, travel
-to %ns lair.  If you can manage to defeat %n and return
-%o here, we can then drive off the legions of
-undead that befoul the land.
+「まず最初に，%iを探し，そして，そこから%nのアジトへと向かっ
+  てもらう．もしそなたが%nを倒して，%oを持ち帰ってくることが
+  出来るのならば，我々はこの土地を汚すアンデッド
+  どもを追い返せるのだ．
 
-"Go with %d as your guide, %p."]],
+「さあ，%dの加護のもと，行くのだ，%pよ．」]],
       },
       badalign = {
          synopsis = "[You have deviated from the path.  Return when you have purified yourself.]",
          output = "text",
-         text = [["This is terrible, %p.  You have deviated from the true path!
-You know that %d requires the most strident devotion of this
-order.  The %shood must stand for utmost piety.
+         text = [[「これはなんとひどいことじゃ，%p．そなたは正道から踏み外し
+  ている．そなたも存じておろう，%dは強い信仰心をこの教団に
+  求めていることを．そなたは完璧なまでの信心を見せねばならぬ．
 
-"Go from here, atone for your sins against %d.  Return only when
-you have purified yourself."]],
+  ここから出て，%dへと働いた罪を懺悔するのだ．己の身を浄めら
+  れたときのみ，ここへと戻るがよい．」]],
       },
       badlevel = {
          synopsis = "[%rA cannot withstand %n.  Come back when you are %Ra.]",
          output = "text",
-         text = [["Alas, %p, it is not yet to be.  A mere %r could never
-withstand the might of %n.  Go forth, again into the world, and return
-when you have attained the post of %R."]],
+         text = [[「%p，残念ながら，そちはまだ用意できておらぬようだ．
+  %rでは%n に太刀打ちすることは無理だ．また再び世の中へ出て，
+  %Rの地位をおさめることが出来たら帰ってくるがよい．」]],
       },
       discourage = {
-         "\"Submit to my will, %c, and I shall spare you.\"",
-         "\"Your puny powers are no match for me, %c.\"",
-         "\"I shall have you turned into a zombie for my pleasure!\"",
-         "\"Despair now, %r.  %d cannot help you.\"",
-         "\"I shall feast upon your soul for many days, %c.\"",
-         "\"Your death will be slow and painful.  That I promise!\"",
-         "\"You cannot defeat %n, you fool.  I shall kill you now.\"",
-         "\"Your precious %lt will be my next victim.\"",
-         "\"I feel your powers failing you, %r.  You shall die now.\"",
-         "\"With %o, nothing can stand in my way.\"",
+         "「%cよ，私に服従すれば，私はそちを生かす．」",
+         "「%cよ，そちのような猪小才では私には到底及ばぬ．」",
+         "「私の楽しみのために，そちをゾンビにでもしてやろう．」",
+         "「絶望だな，%r．%dはそちを助けることはできぬ．」",
+         "「そちの魂を何日にも渡って喰らいつづけてやろうではないか，%c．」",
+         "「そちはじわじわと苦しめて殺してくれよう．それだけ私は約束する」",
+         "「そちのようなうつけでは，%nに勝てぬのだ．殺して差し上げよう．」",
+         "「%lが私の次の餌食となるであろう．」",
+         "「そちは力を調節出来ぬようだな，%r．そちはもう死ぬ．」",
+         "「%oさえあれば，私に恐れるべきものはない．」",
       },
       encourage = {
-         "\"You can prevail, if you rely on %d.\"",
-         "\"Remember that %n has great magic at his command.\"",
-         "\"Be pure, my %S.\"",
-         "\"Beware, %i is surrounded by a great graveyard.\"",
-         "\"You may be able to affect %n with magical cold.\"",
-         "\"Acquire and wear %o if you can.  It will aid you against %n.\"",
-         "\"Call upon %d when your need is greatest.  You will be answered.\"",
-         "\"The undead legions are weakest during the daylight hours.\"",
-         "\"Do not lose faith, %p.  If you do so, %n will grow stronger.\"",
-         "\"Wear %o.  It will assist you against the undead.\"",
+         "「%dを信ずれば，そなたは勝てる．」",
+         "「%nはすさまじい魔術を意のままに操る，ということを肝に命じておけ．」",
+         "「清くあれ，我が%Sよ．」",
+         "「%iは巨大な墓地に囲まれておる，気をつけるように．」",
+         "「もしかすれば，%nを冷気の呪文で冒すことが出来るかもしれない．」",
+         "「できるならば%oを手にいれ，装着するのだ．%nに対し効力を発揮   するであろう．」",
+         "「最も困ったと思われるときには%dに助けを求めよ．   そなたの願いは受けれられるであろう．」",
+         "「アンデッドの軍団は日中，最も弱い．」",
+         "「%pよ，信仰心を忘れるな．そうなれば，%nはより強くなることであろう．」",
+         "「%oを装着せよ．さすれば，アンデッドに対し，効力を発揮する．」",
       },
       firsttime = {
          synopsis = "[You are at %H; the doors are closed.  %lC needs your help!]",
          output = "text",
-         text = [[You find yourself standing in sight of %H.  Something
-is obviously wrong here.  The doors to %H, which usually
-stand open, are closed.  Strange human shapes shamble around
-outside.
+         text = [[気がつくと，あなたは%Hの前に立っていた．が，何かが違う．
+普段開いている%Hの戸は完全に閉ざされているし，奇妙な人間
+の格好をしたものが外をよろよろと歩いている．
 
-You realize that %l needs your assistance!]],
+あなたは%lが手助けを求めていることに気付いた．]],
       },
       goal_first = {
          synopsis = "[The stench of brimstone surrounds you, the shrieks and moans are endless.]",
          output = "text",
-         text = [[The stench of brimstone is all about you, and the shrieks and moans
-of tortured souls assault your psyche.
+         text = [[そこらじゅうが硫黄の臭いによって包まれ，不具な魂供の叫びやうめきが，あ
+なたの不安をかりたてた．
 
-Ahead, there is a small clearing amidst the bubbling pits of lava...]],
+手前の，ぐつぐつと煮えたった溶岩の狭間に，小さな空き地がある．]],
       },
       goal_next = {
-         text = "Again, you have invaded %ns domain.",
+         text = "あなたは再び%nの領域を襲撃した．",
       },
       gotit = {
          synopsis = "[You feel %d as you pick up %o; return %oh to %l.]",
          output = "text",
-         text = [[As you pick up %o, you feel the essence of
-%d fill your soul.  You know now why %n stole it from
-%H, for with it, %ca of %d could
-easily defeat his plans.
+         text = [[%oを拾うと，あなたは%dの本質を感じとった．そして，
+%dの%cならば%nの野望を打ち破れるから，
+%nが%Hより%oを盗んだ，ということに気付いた．
 
-You sense a message from %d.  Though not verbal, you
-get the impression that you must return to %l as soon
-as possible.]],
+あなたは%dからのメッセージを感じ取った．それは言葉に
+よるものではないが，あなたはすぐ%lのもとへ帰らねばならない
+ことを感じた．]],
       },
       guardtalk_after = {
-         "\"Greetings, %r.  It is good to see you again.\"",
-         "\"Ah, %p!  Our deepest gratitude for all of your help.\"",
-         "\"Welcome back, %s!  With %o, no undead can stand against us.\"",
-         "\"Praise be to %d, for delivering us from %n.\"",
-         "\"May %d be with you, %s.\"",
+         "\"Greetings, %r.  It is good to see you again.\" 「よくぞ来た，%rよ．そなたに再び会えて私は非常にうれしい．」",
+         "\"Ah, %p!  Our deepest gratitude for all of your help.\" 「%pよ．あなたの助けには深い感謝の念が絶えない．」",
+         "「よく戻ってきた%sよ．%oとともにあれば，我々の通った後にはアンデッドはおるまい．」",
+         "「%dを崇めよ．%nから我々を救うものなり．」",
+         "「%dがあなたとともにあらんことを．」",
       },
       guardtalk_before = {
-         "\"Greetings, honored %r.  It is good to see you.\"",
-         "\"Ah, %p!  Surely you can help us in our hour of need.\"",
-         "\"Greetings, %s.  %lC has great need of your help.\"",
-         "\"Alas, it seems as if even %d has deserted us.\"",
-         "\"May %d be with you, %s.\"",
+         "「よくぞ来た，光栄なる%rよ．そなたに会えて私は非常にうれしい．」",
+         "「%pよ．そなたならこの重大な時期に立たされている我らを助ける   ことが出来るであろう．」",
+         "「ようこそ，我%sよ．%lがあなたに手助けを求めていらっしゃる．」",
+         "「ああ，我々は%dにも見放されてしまったのではなかろうか．」",
+         "「%dがあなたとともにあらんことを．」",
       },
       hasamulet = {
          synopsis = "[Take the Amulet to the Astral Plane and offer it on %ds altar.]",
          output = "text",
-         text = [["You have prevailed, %p!  %d is surely with you.  Now,
-you must take the amulet, and sacrifice it on %ds altar on
-the Astral Plane.  I suspect that I shall never see you again in this
-life, but I hope to at %ds feet."]],
+         text = [[「%pよ，そちは打ち勝ったのだ！真に，%dはそちとともに在る．
+さあ，そなたは魔除けを持って，これから天上界にある%dの祭壇
+にそれを捧げるのだ．今生ではそなたに会うことはもうないだろう，
+しかし，%dの御許でそなたに会うことを楽しみにしているぞ．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC dies.  Moloch is aware of you and angry at %n.]",
          output = "text",
-         text = [[You feel a wrenching shift in the ether as %ns body dissolves
-into a cloud of noxious gas.
+         text = [[%nの肉体が毒性の気体へと空気に融けこむにつれ，
+天空が響いているのに気付いた．
 
-Suddenly, a voice booms out:
+すると突然，声が轟きわたった：
 
-    "Thou hast defeated the least of my minions, %r.
-    Know now that Moloch is aware of thy presence.
-    As for thee, %n, I shall deal with thy failure
-    at my leisure."
+    「%rよ，汝は私のもっとも汚わらしい下僕を倒してくれた．
+      モーロックがそちの存在に気付いているということを肝に命じよ．
+      %nよ，汝の不首尾は私が直に裁こう．」
 
-You then hear the voice of %n, screaming in terror...]],
+そして，あなたは%nの悲鳴を聞いた．]],
       },
       leader_first = {
          synopsis = "[You have returned and we need your help.  Are you ready?]",
          output = "text",
-         text = [["Ah, %p, my %S.  You have returned to us at last.
-A great blow has befallen our order; perhaps you can help us.
-First, however, I must determine if you are prepared for this
-great challenge."]],
+         text = [[「我が%S%pよ．そなたはやっと我々のもとへ戻ってきた．
+  我々の教団は現在重大な危機に頻しておる．これについて，そなたは我々の手
+  助けを出来るやもしれぬ．
+  しかし，まず最初に，私はそなたがこの大いなる挑戦に対する心構えが出来て
+  いるかどうか試さねばならぬ．」]],
       },
       leader_last = {
          synopsis = "[You are a heretic who has deviated from the teachings of %d.]",
          output = "text",
-         text = [["You are a heretic, %p!  How can you, %ra, deviate so from the
-teachings of %d?  Begone from this temple.  You are no longer
-%sa to this order.  We will pray to %d for other assistance,
-as you have failed us utterly."]],
+         text = [[「%p，この異端が！どうしたら，そなたのような%rが%d
+  の教えからそれることが出来るのだ！この寺院の内から出ていけい！そなた
+  はもうこの教団の%sではない！そなたが我々の期待に応えられなかった
+  手前，%dには他の手助けを乞うよう祈ろう．」]],
       },
       leader_next = {
-         text = "\"Again, my %S, you stand before me.  Are you ready now to help us?\"",
+         text = [[「我が%Sよ，そなたは再び私の前に現れた．我々の手助けをする
+  心構えは出来たか？」]],
       },
       leader_other = {
-         text = "\"Once more, %p, you stand within the sanctum.  Are you ready now?\"",
+         text = "「%p，そなたは再び聖域の内に現れた．準備は出来たか？」",
       },
       locate_first = {
          synopsis = "[You have found %i.  The trail to %n lies ahead.]",
          output = "text",
-         text = [[You stand facing a large graveyard.  The sky above is filled with clouds
-that seem to get thicker closer to the center.  You sense the presence of
-undead in larger numbers than you have ever encountered before.
+         text = [[あなたは大きな墓地の前に立っている．空は中心へいくに連れてどんよりとし
+ていく雲に囲まれている．あなたは今までに遭遇したことのないほどのアンデッ
+ドの大軍の存在を察した．
 
-You remember the descriptions of %i, given to you by
-%l.  It is ahead that you will find %ns trail.]],
+あなたは%lが教えてくれた，%iの構造を思い出した．
+前方に%nの通った跡があるようだ．]],
       },
       locate_next = {
-         text = "Again, you stand before %i.",
+         text = "あなたは再び%iの前に立った．",
       },
       nemesis_first = {
          synopsis = "[%lC has sent you, but you are no %gC.  I shall destroy you.]",
          output = "text",
-         text = [["Ah, so %l has sent another %gC to retrieve
-%o.
+         text = [[「ケッ！%lがまたもや%gをよこしたのか，
+  %oを取り返すために．
 
-"No, I see you are no %gC.  Perhaps I shall have some fun today
-after all.  Prepare to die, %r!  You shall never regain
-%o."]],
+「いや，待て．そちは，ただの%gではないらしいな．もしかしたら，
+  今日は少し楽しめるかもしれない．死ぬ準備でもするのだな，%r！
+  そなたが%oを取り返すことなど不可能なのだからな．」]],
       },
       nemesis_next = {
-         text = "\"So, %r.  Again you challenge me.\"",
+         text = "「ほう，%r．そちはまた私に挑戦するのか．」",
       },
       nemesis_other = {
-         text = "\"Die now, %r.  %d has no power here to aid you.\"",
+         text = "「死ねい，%r．ここでは%dがそちを助けることはできぬ．」",
       },
       nemesis_wantsit = {
-         text = "\"You shall die, %r, and I will have %o back.\"",
+         text = "「%r，そちは死んで，私は%oを取り返すのだ．」",
       },
       nexttime = {
-         text = "Once again, you stand before %H.",
+         text = "もう一度，あなたは%Hの前に立っていた．",
       },
       offeredit = {
          synopsis = "[Congratulations, %p.  Keep %o; go and recover the Amulet.]",
          output = "text",
-         text = [["You have returned, %p.  And with %o, I see.
-Congratulations.
+         text = [[「%p，帰ってきたか．．しかも，%oを手にして．
+おめでとう．
 
-"I have been in meditation, and have received direction from
-a minion of %d.  %d commands that you retain
-%o.  With it, you must recover the Amulet
-of Yendor.
+「私はずっと瞑想していたのだが，%dの使者より命令を承った．
+%dは，そなたに%oを持ち続けるように，と命じた．そして，
+それをもって，イェンダーの魔除けを取り戻すのだ．
 
-"Go forth, and let %d guide your steps."]],
+「行くがよい．そなたの行く手に%dの加護のあらんことを．」]],
       },
       offeredit2 = {
          synopsis = "[%oC is yours now.  Return to %Z and find the Amulet.]",
          output = "text",
-         text = [[%lC reiterates that %o is yours now.
+         text = [[%lは%oがあなたのものであると繰り返した。
 
-"The time has come to resume your search for the Amulet.
-%Z await your return through the magic portal
-that brought you here."]],
+「魔除け探索を再開せよ．魔法の入口の向こうで，
+  %Zがそなたを待っているぞ．」]],
       },
       othertime = {
-         text = [[Again you face %H.  Your intuition hints that this may be
-the final time you come here.]],
+         text = [[あなたは再び %H の前に立っていた．虫の知らせか，
+あなたはここに来るのがこれで最後なのかもしれないとを感じた．]],
       },
       posthanks = {
-         text = "\"Welcome back, %p.  How is your quest for the Amulet going?\"",
+         text = "「よくぞ帰ってきた，%p．魔除けを探す方はどうなっているのだ？」",
       },
    },
    Ran = {
       assignquest = {
          synopsis = "[%nC has stolen %o.  Infiltrate %i and retrieve %oh for us.]",
          output = "text",
-         text = [["You are indeed ready, %p.  I shall tell you what has transpired,
-and why we so desperately need your help:
+         text = [[「%pよ，準備は良いようだな．まずは何が起こったのか，そして，
+なぜ我々がこんなにもお前の助けを必要としているのかを聞いて欲しい．
 
-"A short time ago, the mountain centaurs to the east invaded
-and enslaved the plains centaurs in this area.  The local
-leader is now only a figurehead, and serves %n.
+「つい最近のことだ，東方の山のケンタウロスが押し寄せてきて，
+この地方の平原のケンタウロスを奴隷にした．この地方を率いているのは
+ただの傀儡で，奴は%nに仕えている．
 
-"During our last gathering of worship here, we were beset by hordes of
-hostile centaurs, as you witnessed.  In the first onslaught a group,
-headed by %n %niself, managed to breach the grove and steal
-%o.
+「この間礼拝のために我々がここに集まっている間に，お前が目撃したように，
+我々は敵対するケンタウルスの群れに囲まれてしまった．そして最初の猛攻撃の時に，
+%n自身に率いられた一団が木立をうまく突破して%oを盗んだのだ．
 
-"Since then, we have been besieged.  We do not know how much longer
-we will be able to maintain our magical barriers.
+「それ以来，我々はずっと包囲されている．
+我々が後どれくらい魔法のバリアを維持できるかわからん．
 
-"If we are to survive, you, %p, must infiltrate
-%i.  There, you will find a pathway down, to the
-underground cavern of %n.  He has always coveted
-%o, and will surely keep it.
+「我々が生きのびるためには，%pよ，お前は%iに潜入しな
+ければならない．そこには下へ，すなわち%nの地下洞窟へ降りる
+道があるはずだ．奴はいつも%oを欲しがっていたから，
+必ず身につけているだろう．
 
-"Recover %o for us, %p!  Only then will %d be safe."]],
+「我々のために%oを取り返してくれ，%pよ！そうすれば%dは安泰だ．」]],
       },
       badalign = {
          synopsis = "[You are not sufficiently %a.  Come back when you have purified yourself.]",
          output = "text",
-         text = [["You have strayed, %p!  You know that %d requires that
-we maintain a pure devotion to things %a!
+         text = [[「正しい道からそれているようだな，%pよ．お前も知っているように，
+%dは我々に%aに対する純粋な信心を持つことを求めている．
 
-"You must go from us.  Return when you have purified yourself."]],
+我々の前から立ち去れ．そして穢れを浄めてから戻ってくるのだ．」]],
       },
       badlevel = {
          synopsis = "[You are too inexperienced.  Come back when you are %Ra.]",
          output = "text",
-         text = [["%p, you are yet too inexperienced to withstand the demands of that
-which we need you to do.  %RA might just be able to do this thing.
+         text = [[「%pよ．お前はまだ経験不足だ．
+これでは我々が要求することには耐えられないだろう．
+%Rならどうにか耐えられるかもしれん．
 
-"Return to us when you have learned more, my %S."]],
+「もっと経験を積んでから我々の元に戻ってくるが良い．わが%Sよ．」]],
       },
       discourage = {
-         "\"Your %d is nothing, %c.  You are mine now!\"",
-         "\"Run away little %c!  You can never hope to defeat %n!\"",
-         "\"My servants will rip you to shreds!\"",
-         "\"I shall display your head as a trophy.  What do you think about that wall?\"",
-         "\"I shall break your %ls grove, and destroy all the %gP!\"",
-         "\"%d has abandoned you, %c.  You are doomed.\"",
-         "\"%rA?  %lC sends a mere %r against me?  Hah!\"",
-         "\"%lC has failed, %c.  %oC will never leave here.\"",
-         "\"You really think you can defeat me, eh %c?  You are wrong!\"",
-         "\"You weaken, %c.  I shall kill you now.\"",
+         "「%c，お前の%dは役に立たんよ．   お前は今からわしのものだ！」",
+         "「ほら逃げるがいい，ちっぽけな%cよ！ %nを倒そうなどと   思わないことだな．」",
+         "「我がしもべどもがお前をずたずたに引き裂くだろう！」",
+         "「わしはお前の頭をトロフィーとして飾るつもりだ．あの壁でどうかな？」",
+         "「%lの木立を壊し，そして%gを全員殺してやる！」",
+         "「%cよ，%dはお前を見捨てたぞ．お前は   死すべき定めなのだ．」",
+         "「%r？ わしを倒すのに%rごときを送り込むとは   %lめ．愚かなやつよ！」",
+         "「%lは失敗したな，%cよ．   %oをここから持ち出すことは不可能だ．」",
+         "「%cよ，お前は本当にこのわしを倒せると思っているのか？   大きな間違いだぞ！」",
+         "「弱っているな，%cよ．今すぐ殺してやる．」",
       },
       encourage = {
-         "\"It is rumored that the Forest and Mountain Centaurs have resolved their ancient feud and now band together against us.\"",
-         "\"%nC is strong, and very smart.\"",
-         "\"Use %o, when you find it.  It will help you survive to reach us.\"",
-         "\"Remember, let %d be your guide.\"",
-         "\"Call upon %d when you face %n. The very act of doing so will infuriate him, and give you advantage.\"",
-         "\"%n and his kind have always hated us.\"",
-         "\"We cannot hold the grove much longer, %p.  Hurry!\"",
-         "\"To infiltrate %i, you must be very stealthy.\"",
-         "\"Remember that %n is a braggart.  Trust not what he says.\"",
-         "\"You can triumph, %p, if you trust in %d.\"",
+         "「噂によると森のケンタウロスと山のケンタウロスが古の確執を解消して 我々に対するために団結したらしい．」",
+         "「%nは強く，とても賢い．」",
+         "「%oを見付けたらまず使ってみるんだ． 我々の元に生還するのに役に立つだろう．」",
+         "「忘れるな，%dをお前の案内人にするのだ．」",
+         "「%nに立ち向かうときには%dに祈るんだ． その行動が奴を激怒させて，お前を有利にするだろう．」",
+         "「%nと奴の種族は常に我々を憎んでいる．」",
+         "「我々はこれ以上木立を支えていけそうにない．%pよ，急いでくれ！」",
+         "「%iに潜入するには，人目を盗む能力が必要だ．」",
+         "「%nがほら吹きであることを覚えておくんだ．   奴の言うことを信用するなよ．」",
+         "「%pよ，もしお前が%dを信じるのなら，勝利を得ることが   できるだろう．」",
       },
       firsttime = {
          synopsis = "[The ancient forest grove is surrounded by centaurs.]",
          output = "text",
-         text = [[You arrive in familiar surroundings.  In the distance, you %x the
-ancient forest grove, the place of worship to %d.
+         text = [[あなたは見なれた場所にたどりつき，遠方に%dの崇拝の地で
+ある古森の木立を%xた．
 
-Something is wrong, though.  Surrounding the grove are centaurs!
-And they've noticed you!]],
+しかし，何かが違う．なんと木立の回りにいるのはケンタウロスだ！
+彼らはあなたに気がついた！]],
       },
       goal_first = {
          synopsis = "[You descend into a subterranean complex.  Hooves clatter in the distance.]",
          output = "text",
-         text = [[You descend into a weird place, in which roughly cut cave-like walls
-join with smooth, finished ones, as if someone was in the midst of
-finishing off the construction of a subterranean complex.
+         text = [[あなたは気味の悪い場所に降り立った．
+荒く切断した洞窟のような壁が，完成されたなめらかな壁とつながっている．
+まるで誰かが地下迷宮の建築を仕上げている最中のようである．
 
-Off in the distance, you hear a sound like the clattering of many
-hooves on rock.]],
+遠く離れた所で，岩の上で多くの蹄が鳴らされているらしい音が聞こえる．]],
       },
       goal_next = {
-         text = "Once again, you enter the distorted castle of %n.",
+         text = "再びあなたは%nのねじ曲がった城に侵入した．",
       },
       gotit = {
          synopsis = "[You pick up %o and feel power.  It's time to return %oh to %l.]",
          output = "text",
-         text = [[As you pick up %o, it seems to glow, and a warmth
-fills you completely.  You realize that its power is what has protected
-your %sp against their enemies for so long.
+         text = [[あなたが%oを拾うと，それは光ったように見えて，そしてあなたを
+暖かさで満たした．あなたはこの力が敵と戦う%s達を長い間守って
+きたものであることを悟った．
 
-You must now return it to %l without delay -- their lives depend
-on your speed.]],
+あなたは一刻も早くこれを%lの元に届けなければならない―
+彼らの命はあなたのスピードにかかっている．]],
       },
       guardtalk_after = {
-         "\"%pC!  I have not seen you in many moons.  How do you fare?\"",
-         "\"Birdsong has returned to the grove, surely this means you have defeated %n.\"",
-         "\"%lC seems to have regained some of his strength.\"",
-         "\"So, tell us how you entered %i, in case some new evil arises there.\"",
-         "\"Is that truly %o that I see you carrying?\"",
+         "「%pよ！ ずいぶん長いこと会わなかったが，元気にやっているかね？」",
+         "「鳥の歌が木々の合間に戻ってきました．これは，あなたが%nを打ち破ったことを表しています．」",
+         "「%lはその力のいくばくかを回復できたようです．」",
+         "「新たな問題が持ち上がったとき，どうやって%iに入ったか教えてくれ．」",
+         "「あなたのもたらしたものは真の%oなのですか？」",
       },
       guardtalk_before = {
-         "\"%pC!  I have not seen you in many moons.  How do you fare?\"",
-         "\"%nC continues to threaten the grove.  But we hold fast.\"",
-         "\"%lC is growing weak.  The magic required to defend the grove drains us.\"",
-         "\"Remember %i is hard to enter.  Beware the distraction of leatherwings.\"",
-         "\"We must regain %o.  Without it we will be overrun.\"",
+         "「%pよ！ ずいぶん長いこと会わなかったが，元気にやっているかね？」",
+         "「%nは木立を脅かし続けているが，我々がしっかり支えている．」",
+         "「%lはだんだん弱ってきた． 木立を守るために必要な魔力が我々を消耗させるのだ．」",
+         "「%iに潜入するのは難しいぞ．皮の翼たちの狂気に気をつけなさい．」",
+         "「我々は%oを取り戻さなければならない．さもなくば   やられてしまうだろう．」",
       },
       hasamulet = {
          synopsis = "[You have the Amulet!  Take it to the Astral Plane and offer it to %d.]",
          output = "text",
-         text = [["You have it!  You have recovered the Amulet of Yendor!
-Now attend to me, %p, and I will tell you what must be done:
+         text = [[「おお！ イェンダーの魔除けを取り戻したのか！
+これから何をするべきか教えるから，注意して聞くのだ：
 
-"The Amulet has within it magic, the capability to transport you to
-the Astral Plane, where the primary circle of %d resides.
+この魔除けはある魔力を内に秘めている．それはお前を天上界に転送するものだ．
+天上界には%dの最初のサークルが存在する．
 
-"To activate this magic, you must travel upwards as far as you can.
-When you reach the temple, sacrifice the Amulet to %d.
+この魔力を働かせるには，お前は登れるだけ上に登らなければならない．
+寺院にたどり着いたら，魔除けを%dに捧げるのだ．
 
-"Thus will you fulfill your destiny."]],
+そうすればお前は宿命を果たすことができるだろう．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC curses you as %nh dies.]",
          output = "text",
-         text = [[%nC collapses to the ground, cursing you and %l, then says:
+         text = [[%nはあなたと%lを呪いながら地面に倒れ，そして言った：
 
-    "You have defeated me, %r!  But I curse you one final time, with
-    my dying breath!  You shall die before you leave my castle!"]],
+    「お前の勝ちだ，%rよ！ しかし，わしは今際の際に
+      お前を呪ってやる，わしの最期の息でな！ お前は自分の城に戻る前
+      に死ぬのだ！」]],
       },
       leader_first = {
          synopsis = "[You have returned, %p.  We need your help.  Are you ready?]",
          output = "text",
-         text = [["%pC!  You have returned!  Thank %d.
+         text = [[「%pよ！ よく戻って来てくれた！ %dよ感謝します．
 
-"We have great need of you.  But first, I must see if you have the
-required abilities to take on this responsibility."]],
+我々はお前が必要だが，この大事な役目を果たす能力をお前が持っているか
+最初に確かめさせてくれ．」]],
       },
       leader_last = {
          synopsis = "[You are not sufficiently %a.  We renounce your %shood.]",
          output = "text",
-         text = [["%pC!  You have doomed us all.  You fairly radiate %L influences
-and weaken the power we have raised in this grove as a result!
+         text = [[「%pよ！ お前は我々すべてを破滅させる気なのか！
+お前が%Lの影響力をまき散らしているせいで，
+木立を支えている我々の力が弱まっているではないか！
 
-"Begone!  We renounce your %shood with us!  You are an outcast now!"]],
+「立ち去れ！ 我々はお前と%s分の縁を切る．お前は追放だ！」]],
       },
       leader_next = {
-         text = "\"Once again, %p, you stand in our midst.  Are you ready now?\"",
+         text = "「おお%pよ．再びお前は我々の中心に立っている．準備はできているか？」",
       },
       leader_other = {
-         text = "\"Ah, you are here again, %p.  Allow me to determine your readiness...\"",
+         text = "「おお，また来たな%pよ．お前の準備ができているか調べさせてくれ…」",
       },
       locate_first = {
          synopsis = "[This is %i.  There are bats nearby.  Beware the wumpus!]",
          output = "text",
-         text = [[This must be %i.
+         text = [[ここは%iに違いない．
 
-You are in a cave built of many different rooms, all interconnected
-by tunnels.  Your quest is to find and shoot the evil wumpus that
-resides elsewhere in the cave without running into any bottomless
-pits or using up your limited supply of arrows.  Good luck.
+トンネルにより相互接続された多くの部屋からなる洞窟中にあなたはいる．
+あなたの目的は，底なしの落し穴に落ちたり矢を使い尽くす前に，
+洞窟中のどこかにいる悪いワンパスを見つけて射殺すことだ． 
+幸運を祈る．
 
-You are in room 9 of the cave.  There are tunnels to rooms
-5, 8, and 10.
-*rustle* *rustle* (must be bats nearby.)
-*sniff* (I can smell the evil wumpus nearby!)]],
+あなたは洞窟の9番目の部屋に居る．
+ここには，5，8，10の部屋へと続くトンネルがある．
+カサカサ，カサカサ(近くにこうもりが居るに違いない．)
+クンクン（近くで邪悪なワンパスの臭いがする！）]],
       },
       locate_next = {
          synopsis = "[You are in %i.  There are pits.  There are bats nearby.]",
          output = "text",
-         text = [[Once again, you descend into %i.
+         text = [[再びあなたは%iに降り立った．
 
-*whoosh* (I feel a draft from some pits.)
-*rustle* *rustle* (must be bats nearby.)]],
+シューッ（いくつかの孔から隙間風を感じる。）
+カサカサ，カサカサ(近くにこうもりが居るに違いない！)]],
       },
       nemesis_first = {
          synopsis = "[You have come to recover %o, but I shall keep %oh and you shall die.]",
          output = "text",
-         text = [["So, %c.  %lC has sent you to recover %o.
+         text = [[「ほう%cか．%lが%oを取り戻させるために
+  お前を送り込んだんだな．
 
-"Well, I shall keep that bauble.  It pleases me.  You, %c, shall die."]],
+だがわしはこいつを手放す気はないぞ．%cよ，お前は死ぬのだ．」]],
       },
       nemesis_next = {
-         text = "\"Back again, eh?  Well, a mere %r is no threat to me!  Die, %c!\"",
+         text = [[「ほう，また来たか．だが，たかが%rでは脅威にはならないぞ．
+  死ね，%c！」]],
       },
       nemesis_other = {
-         text = "\"You haven't learned your lesson, %c.  You can't kill me!  You shall die now.\"",
+         text = [[「経験不足だな%cよ．お前ではこのわしは倒せん！ 
+  お前は今ここで死ぬのだ．」]],
       },
       nemesis_wantsit = {
-         text = [["I shall have %o from you, %r.  Then I shall
-kill you."]],
+         text = "「%rよ，お前に%oを渡すつもりはない．お前は殺す．」",
       },
       nexttime = {
-         text = "Once again, you stand before %H.",
+         text = "再び，あなたは%Hの前に立った．",
       },
       offeredit = {
          synopsis = "[You have succeeded.  Take %o with you as you go to find the Amulet.]",
          output = "text",
-         text = [["%pC!  You have succeeded!  I feared it was not possible!
+         text = [[「%pよ！ よくやった！ 私は無理ではないかと恐れていたのだ！
 
-"You have returned with %o!
+「%oを持って戻ってきたな！
 
-"I fear, now, that the Centaurs will regroup and plot yet another raid.
-This will take some time, but if you can recover the Amulet of Yendor
-for %d before that happens, we will be eternally safe.
+「私は今，かのケンタウロスが再び集まって襲撃を計画することを恐れている．
+それはいつかなされるだろう，しかし，その前にお前が%dのために
+イェンダーの魔除けを取り戻すことができれば，我々は永遠に安泰だ．
 
-"Take %o with you.  It will aid in your quest for
-the Amulet."]],
+「%oを持って行くがいい．魔除けを探す冒険の助けとなるだろう．」]],
       },
       offeredit2 = {
          synopsis = "[You are the keeper of %o now.  Go and find the Amulet.]",
          output = "text",
-         text = [[%l flexes %o reverently.
+         text = [[%lはうやうやしく%oをしならせた。
 
-"With this wondrous bow, one need never run out of arrows.
-You are its keeper now, and the time has come to resume your
-search for the Amulet.  %Z await your return
-through the magic portal that brought you here."]],
+「この不思議な弓を使っていると、決して矢が尽きない．
+お前は%oの守護者だ．
+魔除け探索を再開せよ．魔法の入口の向こうで，
+%Zがお前を待っているぞ．」]],
       },
       othertime = {
-         text = [[You have the oddest feeling that this may be the last time you
-are to enter %H.]],
+         text = "あなたは，%Hに入るのはこれが最後かもしれないという奇妙な感じがした．",
       },
       posthanks = {
-         text = [["Welcome, %p.  How have you fared on your quest for the Amulet
-of Yendor?"]],
+         text = "「良く来た，%pよ．イェンダーの魔除けの探索は順調かな？」",
       },
    },
    Rog = {
       assignquest = {
          synopsis = "[Get %o from %n and bring it to %l.]",
          output = "text",
-         text = [["Will everyone not going to retrieve %o from that
-jerk, %n, take one step backwards.  Good choice,
-%p, because I was going to send you anyway.  My other %gp
-are too valuable to me.
+         text = [[「誰も%oを馬鹿野郎の%nから取りかえしてきや
+  がらねぇ．よく聞け！%p，なぜなら俺はお前を送りつけるからだ．
+  他の%gたちはお前なんかより大事だからな．
 
-"Here's the deal.  I want %o, %n
-has %o.  You are going to get %o
-and bring it back to me.  So simple an assignment even you can understand
-it."]],
+「取り引きと行こうじゃないか．俺は%oが欲しい．%nが
+  %oを持っている．お前は%oを取りに行き，
+  俺のところへ持ってこい．簡単なこった．お前でも十分理解できるだろ．」]],
       },
       badalign = {
          synopsis = "[Come back when you are really %a.]",
          output = "text",
-         text = [["Maybe I should chain you to my perch here for a while.  Perhaps watching
-real %a men at work will bring some sense back to you.  I don't
-think I could stand the sight of you for that long though.  Come back
-when you can be trusted to act properly."]],
+         text = [[「どうやら，お前を止まり木につなりでおくべきだったようだ．おおかた働く
+  %aの人間を見てつまらん感情でも抱いたんだろう．お前の前に
+  立っているなんて考えたくもない．何を信じるべきかわかったら戻ってこい．」]],
       },
       badlevel = {
          synopsis = "[%rA is not adequately trained to handle this job.]",
          output = "text",
-         text = [["In the time that you've been gone you've only been able to master the
-arts of %ra?  I've trained ten times again as many %Rp
-in that time.  Maybe I should send one of them, no?  Where would that
-leave you, %p?  Oh yeah, I remember, I was going to kill you!"]],
+         text = [[「現時点で%rを極めたか？俺は10年前に%Rを極めたものだ．
+  私は%Rを極めた１人として送られたのだが，それに比べて%p
+  お前はどうだ？ふん．忘れるな！俺はお前を殺そうとしてるのだぜ．」]],
       },
       discourage = {
-         "\"May I suggest a compromise.  Are you interested in gold or gems?\"",
-         "\"Please don't force me to kill you.\"",
-         "\"Grim times are upon us all.  Will you not see reason?\"",
-         "\"I knew %l, and you're no %lt, thankfully.\"",
-         "\"It is a shame that we are not meeting under more pleasant circumstances.\"",
-         "\"I was once like you are now, %p.  Believe in me -- our way is better.\"",
-         "\"Stay with me, and I will make you %os guardian.\"",
-         "\"When you return, with or without %o, %l will have you killed.\"",
-         "\"Do not be fooled; I am prepared to kill to defend %o.\"",
-         "\"I can reunite you with the Twain.  Oh, the stories you can swap.\"",
+         "「妥協しようじゃねぇか．金と宝石のどっちがいい？」",
+         "「お前は殺したくねぇんだがな．」",
+         "「いやな時間だけありやがる．理由はわかってんのか？」",
+         "「俺は%lを知っている．お前は%lじゃない．ありがてぇ．」",
+         "「俺たちがもっと喜ばしい状況で会えねぇとはひでぇ話だ．」",
+         "「俺はかつては今のお前のような立場だった，%pよ．俺を信じろ，   俺のやりかたの方がすぐれてるってもんだ．」",
+         "「俺のところに来ねぇか？お前を%oの番兵にしてやろう．」",
+         "「お前が戻ったら%oの如何にかかわらず   %lはお前を殺すぜ．」",
+         "「馬鹿はやめろ，俺は%oのため殺してもいいんだぜ．」",
+         "「お前をトウェインに会わせてやれるぜ．ミイラ取りがミイラか？」",
       },
       encourage = {
-         "\"You don't seem to understand, %o isn't here so neither should you be!\"",
-         "\"May %d curse you with lead fingers.  Get going!\"",
-         "\"We don't have all year.  GET GOING!\"",
-         "\"How would you like a scar necklace?  I'm just the jeweler to do it!\"",
-         "\"Lazy S.O.B.  Maybe I should call up someone else...\"",
-         "\"Maybe I should open your skull and see if my instructions are inside?\"",
-         "\"This is not a task you can complete in the afterlife, you know.\"",
-         "\"Inside every living person is a dead person trying to get out, and I have your key!\"",
-         "\"We're almost out of hell-hound chow, so why don't you just get moving!\"",
-         "\"You know, %o isn't going to come when you whistle.  You must get it yourself.\"",
+         "「なんでぇ，わからなかったのか？%oはここにはねぇ．何しろお前が   取り返してねぇんだからな！」",
+         "「%dの呪いがあらんことを．行け！」",
+         "「俺らには暇がねぇんだ．行け！」",
+         "「傷もののネックレスは好きか？俺はそういうことをする宝石屋だぜ！」",
+         "「怠けもんが！このクソ野郎．誰か他のやつを呼ぶぞ．．．」",
+         "「お前の頭を開いて俺の命令が本当にてめぇの中に入ってるか見てやろうか？」",
+         "「安心して老後を送りたいなら，この仕事はちゃんとやっとくんだな．」",
+         "「生きている人間と言うのはもがき続ける死んだ人間だ．そして俺はお前の   鍵を持っている！」",
+         "「俺らは皆カタギにはなれねぇ．何いまさらじたばたしてんだ！」",
+         "「%oは笛を吹いたって来やがらねぇ．自分で取って   くるしかねぇんだ．」",
       },
       firsttime = {
          synopsis = "[You are in Ransmannsby, where you trained.  Find %l.]",
          output = "text",
-         text = [[Unexpectedly, you find yourself back in Ransmannsby, where you trained to
-be a thief.  Quickly you make the guild sign, hoping that you AND word
-of your arrival reach %ls den.]],
+         text = [[ふと，あなたは盗賊になるために修業した，ランスマンスベイに
+戻っているのに気がついた．あなたは素早くギルドの印を作った．
+%lに届くことを祈りながら．]],
       },
       goal_first = {
          synopsis = "[You sense %o.]",
          output = "text",
-         text = [[You feel a great swelling up of courage, sensing the presence of
-%o.  Or is it fear?]],
+         text = [[あなたは勇気が湧いてくるような気がした．%oが近いに違いない．
+それとも恐れ？]],
       },
       goal_next = {
-         text = "The hairs on the back of your neck whisper -- it's fear.",
+         text = "あなたのうなじの髮がささやいた．-- 恐怖なんかじゃない．",
       },
       gotit = {
          synopsis = "[You pick up %o and know that %l should not have it.]",
          output = "text",
-         text = [[As you pick up %o, the hairs on the back of your
-neck fall out.  At once you realize why %n was
-willing to die to keep it out of %ls hands.  Somehow
-you know that you must do likewise.]],
+         text = [[あなたが%oを拾うと，うなじの髪の毛がはらりと落ちた．すぐに
+あなたは，何故%nがそれを%lの手元から
+離しておくために進んで死んだのかを悟った．
+どういうわけか，あなたも同じことをしなければ
+ならないような気になった．]],
       },
       guardtalk_after = {
-         "\"I was sure wrong about Lady Tyvefelle's house; I barely got away with my life and lost my lock pick in the process.\"",
-         "\"You're back?  Even the Twain don't come back anymore.\"",
-         "\"Can you spare an old cutpurse a zorkmid for some grog?\"",
-         "\"Fritz tried to join the other side, and now he's hell-hound chow.\"",
-         "\"Be careful what you steal, I hear the boss has perfected turning rocks into worthless pieces of glass.\"",
+         "「レディ・タイヴェフェルの家は確実にヤバイぜ． 俺は鍵開け道具を失うのと引き換えにかろうじて命からがら逃げ出せた．」",
+         "「戻ってきた？トウェインですら戻ってこないのに．」",
+         "「この年寄スリにラム酒のための金を恵んでくれ．」",
+         "「フリッツは裏切りやがった．いまやすっかりカタギだ．」",
+         "「何でも盗めばいいってもんじゃない，ボスが岩を価値のないガラスに   仕上げている音を聞いたぜ．」",
       },
       guardtalk_before = {
-         "\"I hear that Lady Tyvefelle's household is lightly guarded.\"",
-         "\"You're back?  Even the Twain don't come back anymore.\"",
-         "\"Can you spare an old cutpurse a zorkmid for some grog?\"",
-         "\"Fritz tried to join the other side, and now he's hell-hound chow.\"",
-         "\"Be careful what you steal, I hear the boss has perfected turning rocks into worthless pieces of glass.\"",
+         "「レディ・タイヴェフェルの家の警備は手薄だそうだ．」",
+         "「戻ってきた？トウェーンですら戻ってこないのに．」",
+         "「この年寄スリにラム酒のための金を恵んでくれ．」",
+         "「フリッツは裏切りやがった．いまやすっかりカタギだ．」",
+         "「何でも盗めばいいってもんじゃない，ボスが岩を価値のないガラスに   仕上げている音を聞いたぜ．」",
       },
       hasamulet = {
          synopsis = "[Take the Amulet to the Astral Plane and find %ds temple.]",
          output = "text",
-         text = [["I see that with your abilities, and my brains, we could rule this world.
+         text = [[「お前の能力は俺のふんだ通りのものだった，俺らはこの世界の掟だ．
 
-"All that we would need to be all-powerful is for you to take that little
-trinket you've got there up to the Astral Plane.  From there, %d will
-show you what to do with it.  Once that's done, we will be invincible!"]],
+「万能の力を得るためにお前がすることは，そのチンケな装飾具を天上界に
+  持ってくことだ．そこで%dが何をすりゃいいのか教えてくれる．これができ
+  たら，俺らは無敵だ！」]],
       },
       killed_nemesis = {
          synopsis = "[Before dying, %n tells you to use the %o wisely.]",
          output = "text",
-         text = [["I know what you are thinking, %p.  It is not too late for you
-to use %o wisely.  For the sake of your guild
-%sp, do what is right."
+         text = [[「%p，お前が何を考えてるのか知ってるぞ．%oを賢く
+  使うにはまだ遅くない．お前のギルドの%lのため正しく使うのだ．」
 
-You sit and wait for death to come for %n, and then you
-brace yourself for your next meeting with %l!]],
+あなたは座りこみ，%nの死を待った，そして次に%lに会うため
+神経を緊張させた！]],
       },
       leader_first = {
          synopsis = "[You owe back dues to your guild.  You can pay them off if you're up to the job.]",
          output = "text",
-         text = [["Well, look who it is boys -- %p has come home.  You seem to have
-fallen behind in your dues.  I should kill you as an example to these
-other worthless cutpurses, but I have a better plan.  If you are ready
-maybe you could work off your back dues by performing a little job for
-me.  Let us just see if you are ready..."]],
+         text = [[「誰か来たようだな．%pか．何だ？任務に失敗しやがったのか．ふん．
+  ここにいる価値のないスリのように殺してやろうと思ったが，もっといいこと
+  を思いついた．準備はいいか？なーに，俺のためにちょいと仕事をしてくれれば
+  いいのさ．準備ができてるかな．．．」]],
       },
       leader_last = {
          synopsis = "[You must go.]",
          output = "text",
-         text = [["Well %gp, it looks like our friend has forgotten who is the boss
-around here.  Our friend seems to think that %rp have been put in
-charge.  Wrong.  DEAD WRONG!"
+         text = [[「%g！俺の友は誰がここのボスだか忘れたと見える．俺の友は
+  %rが裏切ったと考えている．間違いだ．死すべき間違いだ！」
 
-Your sudden shift in surroundings prevents you from hearing the end
-of %ls curse.]],
+%lの呪いの言葉が遠のき，まわりの景色が突然変った．]],
       },
       leader_next = {
          synopsis = "[Are you stupid or are you ready?]",
          output = "text",
-         text = [["Well, I didn't expect to see you back.  It shows that you are either stupid,
-or you are finally ready to accept my offer.  Let us hope for your sake it
-isn't stupidity that brings you back."]],
+         text = [[「また会えるとは思わなかったぜ．お前は馬鹿か？俺の任務を請け負う
+  だけの技量があるか見てやろう．せいぜいお前があいかわらず馬鹿で
+  ないことを祈ろう．」]],
       },
       leader_other = {
-         text = [["Did you perhaps mistake me for some other %lt?  You must
-think me as stupid as your behavior.  I warn you not to try my patience."]],
+         text = [[「%l以外にそそのかされておらんだろうな？俺のことをお前
+  くらい馬鹿だと考えてるだろう．俺にも我慢の限界ってものがあるんだぜ．」]],
       },
       locate_first = {
-         text = "Those damn little hairs tell you that you are nearer to %o.",
+         text = "くそったれの髮の毛が%oに近づいたことを知らせた．",
       },
       locate_next = {
-         text = "Not wanting to face %l without having stolen %o, you continue.",
+         text = "%oを盗むまでは%lには会いたくなかったが，続けた．",
       },
       nemesis_first = {
-         text = "\"Ah!  You must be %ls ... er, `hero'.  A pleasure to meet you.\"",
+         text = "「お前が%lの．．．使いのヒーローか．お前に会えて嬉しいぜ．」",
       },
       nemesis_next = {
-         text = "\"We meet again.  Please reconsider your actions.\"",
+         text = "「また会ったな．もういいかげんにしてほしいものだ．」",
       },
       nemesis_other = {
          synopsis = "[You cannot trust %l.]",
          output = "text",
-         text = [["Surely, %p, you have learned that you cannot trust any bargains
-that %l has made.  I can show you how to continue on
-your quest without having to run into him again."]],
+         text = [[「おい%p，%lとの取り引きは信用できないってことは
+  知ってんだろうな．俺がお前がどうやったら冒険を続けるか示してやろう．
+  彼のところに逃げこむ前にな．」]],
       },
       nemesis_wantsit = {
          synopsis = "[%lC should not have %o.]",
          output = "text",
-         text = [["Please, think for a moment about what you are doing.  Do you truly
-believe that %d would want %l to have
-%o?"]],
+         text = [[「ちょっとまて，考えなおしてくれ．本当に%lが%o
+  を持つことを%dが望んでいると思ってるのか？」]],
       },
       nexttime = {
-         text = [[Once again, you find yourself back in Ransmannsby.  Fond memories are
-replaced by fear, knowing that %l is waiting for you.]],
+         text = [[もういちど，あなたはランスマンスベイに戻っているのに気がついた．甘い
+記憶が恐れに置きかえられている．%lがあなたを待っている
+のに気がついた．]],
       },
       offeredit = {
          synopsis = "[Take %o with you and go.]",
          output = "text",
-         text = [["Well, I'll be damned.  You got it.  I am proud of you, a fine %r
-you've turned out to be.
+         text = [[「ふん．ちょうどけなしてたとろだ．ブツを手に入れたようだな．お前を
+  誇りに思っとるよ．お前は素晴しい%rだ．
 
-"While you were gone I got to thinking, you and %o
-together could bring me more treasure than either of you apart, so why don't
-you take it with you.  All I ask is a cut of whatever loot you come by.
-That is a better deal than I offered %n.
+「お前が行ってしまったあと，考えてたんだが，お前と%o
+  は一緒にしとくと俺をもっと宝のあるところへ導いてくれそうだ．どうだい？
+  つまり，俺が聞きてぇのはお前が略奪したものの分け前ってことだ．
+  %nなんかよりずっとすげぇ分け前にちがいねぇ．
 
-"But, you see what happened to %n when he refused.
-Don't make me find another to send after you this time."]],
+「しかし，お前は%nが拒否したとき何が起きたか見ただろう．また別の
+  人間を今度はお前のところに送るなんてことがねぇようにしとけ．」]],
       },
       offeredit2 = {
          synopsis = "[Take %o and acquire the Amulet.]",
          output = "text",
-         text = [[%lC seems tempted to swap %o for
-the mundane one you detect in his pocket, but noticing your alertness,
-evidently chickens out.
+         text = [[%lはさっと%oを彼のポケットにあるつまらない
+物と交換しようとしたが，あなたが注意していることに気づくと，
+明らかにしりごみした．
 
-"Go filch the Amulet before someone else beats you to it.
-%Z are back the way you came, through the magic portal."]],
+「他のやつらにやられるまえに，魔除けをかっぱらってくるんだ．魔法の入口の向こうで，
+  %Zがお前を待ってるぜ．」]],
       },
       othertime = {
-         text = [[You rub your hands through your hair, hoping that the little ones on
-the back of your neck stay down, and prepare yourself for your meeting
-with %l.]],
+         text = [[あなたは髮をとかした，誰にも首ねっこを圧えつけられることは
+ないことを祈りながら．そして，%lに会う準備をした．]],
       },
       posthanks = {
          synopsis = "[How about trading %o for something?]",
          output = "text",
-         text = [["Quite the little thief, aren't we, %p.  Can I interest you in a
-swap for %o?  Look around, anything in the keep
-is yours for the asking."]],
+         text = [[「チンケな盗賊だが%p，俺は%oのかわりにお前に興味がある．
+  良く見まわせ，ここにあるもん全部を望むならお前にくれてやってもいいぜ．」]],
       },
    },
    Sam = {
       assignquest = {
          synopsis = "[You must enter %i, then regain %o from %n.]",
          output = "text",
-         text = [["Domo %p-san, indeed you are ready.  I can now tell you what
-it is that I require of you.
+         text = [[「%pよ，実にすばらしい．私はお前に私が何を求めているか
+  告げよう．
 
-"The daimyo, %n, has betrayed us.  He has stolen from us
-%o and taken it to his donjon deep within
-%i.
+「大名の%nが我々を裏切った．彼は我々から%oを盗み，
+  %iの地下深くに持ち去ったのだ．
 
-"If I cannot show the emperor %o when he comes
-for the festival he will know that I have failed in my duty, and
-request that I commit seppuku.
+「帝が祭にやってきたとき，%oを献上できねば，帝は私の失敗に
+  気がつき，切腹を要求するであろう．
 
-"You must gain entrance to %i and retrieve the
-emperor's property.  Be quick!  The emperor will be here for the
-cha-no-you in 5 sticks.
+「おまえは，%iに入り，帝の財産を回収せねばならない．急げ！
+  帝は5日後の茶の湯に来るのだ．
 
-"Wakarimasu ka?"]],
+「わかったか？」]],
       },
       badalign = {
          synopsis = "[When you can think %a and act %a then return.]",
          output = "text",
-         text = [["%p-san, you would do better to join the kyokaku.
+         text = [[「%pよ．侠客に加わったほうがよいのではないか？
 
-"You have skills, but until you can call upon the bushido to know when and
-how to use them you are not samurai.  When you can think %a and
-act %a then return."]],
+「おまえは技量を持っている，しかし武士道のなんたるかを知るまでは，
+  おまえは侍ではない．%aについてよく考え，%aを実行し
+  そして戻るがよい．」]],
       },
       badlevel = {
          synopsis = "[\"I require %Ra to defeat %n.  Return when you are ready.\"]",
          output = "text",
-         text = [["%p-san, you have learned well and honored your family.
-I require the skills of %Ra in order to defeat %n.
-Go and seek out teachers.  Learn what they have learned.  When you
-are ready, return to me."]],
+         text = [[「%pよ，おまえはよく学び，家族を名誉に思っている．おまえが%nを
+  倒すには%Rくらいの技量が必要だ．
+  行け！そして師を捜せ！学ぶべきことを学べ！用意ができたなら
+  私のところへ戻ってくるのだ．」]],
       },
       discourage = {
-         "\"Ahh, I finally meet the daimyo of the kyokaku!\"",
-         "\"There is no honor for me in your death.\"",
-         "\"You know that I cannot resash my swords until they have killed.\"",
-         "\"Your presence only compounds the dishonor of %l in not coming %liself.\"",
-         "\"I will make tea with your hair and serve it to %l.\"",
-         "\"Your fear shows in your eyes, coward!\"",
-         "\"I have not heard of you, %p-san; has your life been that unworthy?\"",
-         "\"If you will not obey me, you will die.\"",
-         "\"Kneel now and make the two cuts of honor.  I will tell your %sp of your honorable death.\"",
-         "\"Your master was a poor teacher.  You will pay for his mistakes in your teaching.\"",
+         "「おお，私はとうとう侠客の大名に会った！」",
+         "「お前の死など私にとっては名誉でもなんでもない．」",
+         "「我が剣は血を求めてやまない．」",
+         "「お前の存在は単に%lの不名誉を高めるだけだ．」",
+         "「お前の髪で茶を沸かし，%lに捧げよう．」",
+         "「お前の恐怖心が目に見えるぞ，憶病者め！」",
+         "「\"%p？知らないな．お前の存在など一片の価値もない」",
+         "「従わねば，死あるのみ．」",
+         "「ひざまずけ，名誉を捨てよ．さすればお前の%sに   名誉の死を伝えてやろう」",
+         "「お前の師は間抜けだな．彼の教え間違いの報いを受けるがよい」",
       },
       encourage = {
-         "\"To defeat %n you must overcome the seven emotions: hate, adoration, joy, anxiety, anger, grief, and fear.\"",
-         "\"Remember your honor is my honor, you perform in my name.\"",
-         "\"I will go to the temple and burn incense for your safe return.\"",
-         "\"Sayonara.\"",
-         "\"There can be honor in defeat, but no gain.\"",
-         "\"Your kami must be strong in order to succeed.\"",
-         "\"You are indeed a worthy %R, but now you must be a worthy samurai.\"",
-         "\"If you fail, %n will be like a tai-fun on the land.\"",
-         "\"If you are truly %a, %d will listen.\"",
-         "\"Sharpen your swords and your wits for the task before you.\"",
+         "「%nを倒すには，おまえは7つの感情を打ち破らねばならぬ：   憎しみ，愛慕，楽しみ，不安，怒り，悲しみ，そして恐れだ．」",
+         "「おまえの名誉は私の名誉であることを忘れるな，我が名のもとで戦え！」",
+         "「私は寺へ行き，おまえの安全のため香を焚くつもりだ．」",
+         "「さらばだ．」",
+         "「打ち負かした際には力や金はないが，名誉がある．」",
+         "「成功のためにはおまえの神は強者でなければならない．」",
+         "「おまえは実に%Rにふさわしい，しかし今やおまえは侍としても   ふさわしくなければならぬ．」",
+         "「もしおまえが失敗するなら，%nはこの地の台風のようになる   であろう．」",
+         "「もしおまえが本当に%aを守っているなら，%dは聞きいれてく   れるだろう．」",
+         "「任務のため，おまえの剣を研ぎ，知恵を鍛えよ．」",
       },
       firsttime = {
          synopsis = "[The banner of %n flies above town.  What has happened to %l?]",
          output = "text",
-         text = [[Even before your senses adjust, you recognize the kami of
-%H.
+         text = [[意識が完全に戻る前に，あなたは%Hの都にいることがわかった．
 
-You %x the standard of your teki, %n, flying above
-the town.  How could such a thing have happened?  Why are ninja
-wandering freely; where are the samurai of your daimyo, %l?
+あなたの宿敵である%nが何故町の上空を飛んでいるのを%xた．
+なぜこんなことが起きているのだ？
+忍者が何故あちこちで放浪しているのだ？あなたの大
+名である%lの侍はどこにいるのだ？
 
-You quickly say a prayer to Izanagi and Izanami and walk towards
-town.]],
+あなたは急いで伊邪那岐および伊邪那美に祈りをささげ，町へ向って
+歩いていった．]],
       },
       goal_alt = {
-         text = "As you arrive once again at the home of %n.",
+         text = "再び%nの地に帰ってきた．",
       },
       goal_first = {
          synopsis = "[You feel the taunts %n, but after offering a prayer to %d, you proceed.]",
          output = "text",
-         text = [[In your mind, you hear the taunts of %n.
+         text = [[気のせいか，%nのあざけ笑いを聞いた．
 
-You become like the rice plant and bend to the ground, offering a
-prayer to %d.  But when the wind has passed, you stand
-proudly again.  Putting your kami in the hands of fate, you advance.]],
+あなたは稲穂のように首を垂れ，地面に屈伏し，
+%dへの祈りを捧げた．一陣の風が通りすぎると，
+神の宿命を手に，あなたはまた勇ましげに前進した．]],
       },
       goal_next = {
-         text = [[As you arrive once again at the home of %n, your thoughts
-turn only to %o.]],
+         text = [[%nの地へもう一度戻るときは，%oだけを考えて
+いるような気がした．]],
       },
       gotit = {
          synopsis = "[You feel the power of %o and are humbled.]",
          output = "text",
-         text = [[As you pick up %o, you feel the strength of its karma.
-You realize at once why so many good samurai had to die to defend it.
-You are humbled knowing that you hold one of the artifacts of the
-sun goddess.]],
+         text = [[%oを拾うと，その業の強さを感じた．
+あなたは直ちに，なぜ多くの侍がそれを守るために死んだのかを
+悟った．あなたは太陽神の聖器の１つを手にしたことを知って謙虚
+な気持になった．]],
       },
       guardtalk_after = {
-         "\"Come, join us in celebrating with some sake.\"",
-         "\"Ikaga desu ka?\"",
-         "\"You have brought our clan and %l much honor.\"",
-         "\"Please %r, sit for a while and tell us how you overcame the Ninja.\"",
-         "\"%lC still lives!  You have saved us from becoming ronin.\"",
+         "「来い．祝杯を上げようじゃないか．」",
+         "「いかがですか？」",
+         "「おまえは我らが氏族と%lに多くの名誉をもたらしてくれた．」",
+         "「さぁさぁ%r，まぁ，ここに座って，忍者をどうやってあしらったか我々に教えてくれよ．」",
+         "「%lは安泰なり！おまえは我々を浪人になることから救ってくれた．」",
       },
       guardtalk_before = {
-         "\"To succeed, you must walk like a butterfly on the wind.\"",
-         "\"Ikaga desu ka?\"",
-         "\"I fear for The Land of The Gods.\"",
-         "\"%nC has hired the Ninja -- be careful.\"",
-         "\"If %o is not returned, we will all be ronin.\"",
+         "「成功のためには，蝶のように歩かねばならない」",
+         "「もうかりまっか？」",
+         "「私は神の地を恐れている」",
+         "「%nは忍者を雇ったそうだ．気をつけろ．」",
+         "「もし%oが手に戻らなければ，我々は全員浪人になる．」",
       },
       hasamulet = {
          synopsis = "[Take the Amulet to the Astral Plane to finish your task.]",
          output = "text",
-         text = [["Ah, %p-sama.  You have wasted your efforts returning home.
-Now that you are in possession of the Amulet, you are honor-bound to
-finish the quest you have undertaken.  There will be plenty of time
-for saki and stories when you have finished.
+         text = [[「おお%p様，故郷に帰られるとはもったいのうございます．
+  今や，あなたは魔除けの所有者です．あなたが請け負っている冒険を
+  終了することは名誉なことです．無事終了した際には，酒宴と冒険談
+  のためにあまるほどの時間があるでしょう．
 
-"Go now, and may our prayers be a wind at your back."]],
+「お進みください，あなたに我々の祈りのあらんことを．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC dies without honor.]",
          output = "text",
-         text = [[Your healing skills tell you that %ns wounds are mortal.
+         text = [[%nの傷は致命傷であることが感覚的にわかった．
 
-You know that the bushido tells you to finish him and let his kami
-die with honor, but the thought of so many samurai dead due to this
-man's dishonor prevents you from giving the final blow.
+あなたは武士道では主のため，または主の神のために死ぬことは名誉であると
+教えていることを知っている．しかし，この不名誉な男のために死んだ数多く
+の侍への思いがとどめの一撃を与えることを妨げた．
 
-You order that his unwashed head be given to the crows and his body
-thrown into the sea.]],
+あなたは彼の生首をカラスに与え，彼の体を海へ投げることにした．]],
       },
       leader_first = {
          synopsis = "[%lC needs someone to lead %lj samurai against %n.  Are you ready?]",
          output = "text",
-         text = [["Ah, %p-san, it is good to see you again.  I need someone who can
-lead my samurai against %n.  If you are ready, you will be
-that person."]],
+         text = [[「おお%pよ，おまえに会えて非常に嬉しい．私は%nに
+  対して我が侍魂を導く者を必要としている．
+  もし，おまえに準備ができているなら，
+  おまえがその選ばれた人間だ．」]],
       },
       leader_last = {
          synopsis = "[Leave and do not come back.]",
          output = "text",
-         text = [["You are no longer my samurai, %p.
+         text = [[「おまえはもはや私の侍ではない，%pよ．
 
-"Hara-kiri is denied.  You are ordered to shave your head and then to
-become a monk.  Your fief and family are forfeit.  Wakarimasu ka?"]],
+「ハラキリはやめよう．頭を剃り，僧にでもなるがよい．おまえの
+  領地や家族は没収する．わかったか？」]],
       },
       leader_next = {
-         text = [["Once again, %p-san, you kneel before me.  Are you yet capable of
-being my vassal?"]],
+         text = [[「また来たな%pよ．私の前にひざまずけ．おまえにわたしの臣下
+  になるだけの技量があるかな？」]],
       },
       leader_other = {
-         synopsis = "[Are you truly a samurai?]",
-         output = "text",
-         text = [["You begin to test my matsu, %p-san.
-If you cannot determine what I want in a samurai, how can I rely on you
-to figure out what I need from a samurai?"]],
+         text = [[「おまえは私の松の試練を受けはじめた，%pよ．もし，おまえが
+  私が侍に望むべきものを決めかねているなら，どうやっておまえを信頼したら
+  よいのだ？」]],
       },
       locate_first = {
-         text = [[You instinctively reach for your swords.  You do not recognize the
-lay of this land, but you know that your teki are everywhere.]],
+         text = [[あなたは直感的に剣に手が伸びた．あなたは自分がどこにいるのかわからなかっ
+たが，敵があちこちにいるのだけはわかった．]],
       },
       locate_next = {
-         text = [[Thankful that your %sp at %H cannot see
-your fear, you prepare again to advance.]],
+         text = [[%Hにいるあなたの%sがあなたの恐怖にひきつった
+顔を見られないことが幸いだ．あなたは前進する準備をした．]],
       },
       nemesis_first = {
-         text = [["Ah, so it is to be you, %p-san.  I offer you seppuku.
-I will be your second if you wish."]],
+         text = [[「おまえか，%pよ．切腹するという手段が残っているぞよ．
+  お前が望むなら，介錯人になろうぞ．」]],
       },
       nemesis_next = {
-         text = [["I have offered you the honorable exit.  Now I will have your
-head to send unwashed to %l."]],
+         text = [[「名誉ある死を勧めよう．さすれば，%lにお前の生首を
+  届けてやる．」]],
       },
       nemesis_other = {
-         text = "\"After I have dispatched you, I will curse your kami.\"",
+         text = "「お前をとっとと処刑して，おまえの神を呪ってやろうぞ．」",
       },
       nemesis_wantsit = {
-         text = [["You have fought my samurai; surely you must know that you
-will not be able to take %o back to
-%H."]],
+         text = [[「お前は私の侍と戦った．%oを持って
+  %Hに帰ることなど不可能であると痛いほど知るがよい．」]],
       },
       nexttime = {
-         text = "Once again, you are back at %H.",
+         text = "もう一度，あなたは%Hに戻った．",
       },
       offeredit = {
          synopsis = "[The emperor wants you to take %o and recover the Amulet.]",
          output = "text",
-         text = [[As you bow before %l, he welcomes you:
+         text = [[%lに礼をすると，彼はあなたを迎えた：
 
-    "You have brought your family great honor, %p-sama.
+    「あなたは一族に偉大な名誉をもたらしました，%p様．
 
-    "While you have been gone the emperor's advisors have discovered in
-    the ancient texts that the karma of the samurai who seeks to recover
-    the Amulet and the karma of %o are joined
-    as the seasons join to make a year.
+    「あなたが行く前に帝の従者が古代の文献の中に魔除けを取り戻す
+      ために探索する侍のカルマを発見し，%oのカルマは
+      四季の季節として結びつけられていることを発見しました．
 
-    "Because you have shown such fidelity, the emperor requests
-    that you take leave of other obligations and continue on the
-    road that fate has set your feet upon.  I would consider it
-    an honor if you would allow me to watch your household until
-    you return with the Amulet."
+    「あなたの忠誠心を見て，帝はあなたが他の義務を放棄し，あなたの宿命の
+      道をたどることを求めました．もしあなたが魔除けを持ってくる
+      までわたしがあなたの一族の世話をしてもよいなら，それは
+      非常に名誉なことです．」
 
-With that, %l bows, and places his sword atop
-%o.]],
+このように%lは礼をし，彼の剣を%oの上に置いた．]],
       },
       offeredit2 = {
          synopsis = "[Take %o, return to %Z, and recover the Amulet.]",
          output = "text",
-         text = [[%l holds %o tightly for a moment, then returns
-his gaze to you.
+         text = [[%lはしばらくの間%oをしっかりとつかみ，それから視線をあなたに戻した．
 
-"The time is ripe to recover the Amulet.  Return to %Z
-through the magic portal that transported you here so that you may
-achieve the destiny which awaits you."]],
+「魔除け探索の時が熟しました．
+  魔除け探索を再開するのです．魔法の入口の向こうで，
+  %Zがあなたを待っています．」]],
       },
       othertime = {
          synopsis = "[%HC is threatened by %n.]",
          output = "text",
-         text = [[You are back at %H.
+         text = [[あなたは%Hに戻った．
 
-Instantly you sense a subtle change in your karma.  You seem to know that
-if you do not succeed in your quest, %n will have destroyed
-the kami of %H before you return again.]],
+即座に，あなたはカルマの微妙な違いを感じとった．あなたは，もしクエストに
+失敗したら，あなたが戻る前に%nが%Hの都を破壊すると言う重大な
+事態に気がついた．]],
       },
       posthanks = {
-         text = "%lC bows.  \"%p-sama, tell us of your search for the Amulet.\"",
+         text = "%lは礼をした．「%p様，魔除け探索の話をお聞かせください．」",
       },
    },
    Tou = {
       assignquest = {
          synopsis = "[Enter %i and recover %o from %n.]",
          output = "text",
-         text = [["You have indeed proven yourself a worthy %c, %p.
+         text = [[「確かに君はしょーしんしょーめーの%cだ，%p君．」
 
-"But now your kinfolk and I must ask you to put aside your travels and
-help us in our time of need.  After you left us we elected a new mayor,
-%n.  He proved to be a most heinous and vile creature.
+「しかし，私及び我が一族は君に旅を一時休止して
+  この困ってる状況において助けてほしい．君が旅に出た直後，
+  %nが新しい町長として当選したんだが，
+  奴は残忍にして情け容赦ない，とんでもないやつだったんだ．．」
 
-"Soon after taking office he absconded with %o
-and fled town, leaving behind his henchmen to rule over us.  In order
-for us to regain control of our town, you must enter %i
-and recover %o.
+「町長になってからというもの，奴は%oを
+  盗みだし，  町を自分の手下どもに好きなように任せ，
+  町を出ていった．我々がこの町を元に戻すためには君に
+  %iにいってもらい，%oを
+  取ってきてもらわなければならない．」
 
-"Do not be distracted on your quest.  If you do not return quickly I fear
-that all will be lost.  Let us both pray now that %d will guide you
-and keep you safe."]],
+「道草を食うようなことはしないでくれ．もし君が早く帰ってこれなけ
+  れば我々は全てを失ってしまうかもしれないんだ．%dが
+  君を導き，安全に守ってくれることを祈ろう．」]],
       },
       badalign = {
          synopsis = "[You are not sufficiently %a.  Return when you are.]",
          output = "text",
-         text = [["It would be an affront to %d to have one not true to the
-%a path undertake her bidding.
+         text = [[「%aでない道を歩むものをこの試練に送ることは%dに対し
+  不貞を働くことになる．」
 
-"You must not return to us until you have purified yourself of these
-bad influences on your actions.  Remember, only by following the %a
-path can you hope to overcome the obstacles you will face."]],
+「君は自らの業を浄めるまでわれわれの元に帰ってくるな．
+  そして覚えておけ．%aな道だけを進ことによって君はさらなる
+  試練に立ち向かうことができるんだ．」]],
       },
       badlevel = {
          synopsis = "[Return when you are %Ra.]",
          output = "text",
-         text = [["There is still too much that you have to learn before you can undertake
-the next step.  Return to us as a proven %R, and perhaps then
-you will be ready.
+         text = [[「君は次の行動を起こす前にもっと学ばなければいけない．
+  %R として我々の前に帰ってこれたら，もしかしたら用意
+  できてるかもしれない．」
 
-"Go back now, and may the teachings of %d serve you well."]],
+「ささ，戻りたまえ．んで，%dの教えが君の為にならんことを．」]],
       },
       discourage = {
-         "\"I defeated %l and I will defeat you, %p.\"",
-         "\"Where is %d now!  You must realize no one can help you here.\"",
-         "\"Beg for mercy now and I may be lenient on you.\"",
-         "\"If you were not so %a, you might have stood a chance.\"",
-         "\"Vengeance is mine at last, %p.\"",
-         "\"I only wish that %l had a more worthy %r to send against me.\"",
-         "\"With %o in my possession you cannot hope to defeat me.\"",
-         "\"%nC has never been defeated, NEVER!\"",
-         "\"Are you truly the best %H has to send against me?  I pity %l.\"",
-         "\"How do you spell %p?  I want to ensure the marker on your grave is correct as a warning to your %sp.\"",
+         "「私は%lに勝った．そして今度はお前に勝つ番だ，%p．」",
+         "「%dとやらはここにはいない．ここでお前を助けるものなぞ   誰もいない．」",
+         "「詫びろ．そうすれば助けてやらないこともない．」",
+         "「それほど%aでなければ，もしかしたら互角に戦えたかもしれない．」",
+         "「最後に勝つのは私だ，%p．」",
+         "「弱い！%lももう少し骨のある%rを送り出せばよかったものを．」",
+         "「%oが私の手元にある以上，お前に勝つ見込みはない．」",
+         "「%nは一度たりとも負けたことはないのだ．一度もな．」",
+         "「お前は本当に%Hで一番強いのか？そうならば   %lを憐れむよ．」",
+         "「%pのつづりはどう書くんだ？墓石にどう書くのかちゃんと   確かめないと，お前の%sに対する見せしめにならないからな．」",
       },
       encourage = {
-         "\"Do not be fooled by the false promises of %n.\"",
-         "\"To enter %i you must pass many traps.\"",
-         "\"If you do not return with %o, your quest will be in vain.\"",
-         "\"Do not be afraid to call upon %d if you truly need help.\"",
-         "\"If you do not destroy %n, he will follow you back here!\"",
-         "\"Take %o from %n and you may be able to defeat him.\"",
-         "\"You must hurry, %p!\"",
-         "\"You are like %Sa to me, %p.  Do not let me down.\"",
-         "\"If you are %a at all times you may succeed, %p.\"",
-         "\"Let all who meet you on your journey know that you are on a quest for %l and grant safe passage.\"",
+         "「%nの口車にのるな．奴は必ず裏切る．」",
+         "「%iに入るためには様々な罠をくぐり抜けなければならないっす．」 ",
+         "「%oなくして帰ってきたら，あなたのしてきた   ことはなーんの意味も持たない．」",
+         "「どうしても助けが必要なら，ためらわずに%dに祈りなさい．」",
+         "「%nを倒さなければ，%nはあなたをここまで追ってきますよ．」",
+         "「%nから%oをとることが出来たら   %nを倒すことが出来るかもしれないっす．」",
+         "「%p，急ぎなさい！」",
+         "「%p君，私にとって君は%Sのようなものだ．   期待を裏切るようなことはしないでくれ．」",
+         "「%p君，君が常に%aであるならば，   もしかしたら成功するかもしれない．」",
+         "「旅の途中で会う全ての者が君に安全であるように，   君が%lの為に旅に出ている，   ということを知らせておいたほうがいい．」",
       },
       firsttime = {
          synopsis = "[You find yourself back at %H, but the quiet is ominous.]",
          output = "text",
-         text = [[You breathe a sigh of relief as you find yourself back in the familiar
-surroundings of %H.
+         text = [[あなたは見慣れた%Hの敷地について安堵の一息をついた．
 
-You quickly notice that things do not appear the way they did when you
-left.  The town is dark and quiet.  There are no sounds coming from
-behind the town walls, and no campfires burning in the fields.  As a
-matter of fact, you do not %x any movement in the fields at all, and
-the crops seem as though they have been untended for many weeks.]],
+しかし，ここを離れた時とはなんだか違うのに気付いた．
+町は暗く，静まり返っている．町の壁の向こう側からはなにも音が聞こえず，
+広場でのキャンプファイアーも見当たらない．
+というより，広場では何の動きも感じられず，作物は何週間
+にも渡って手入れされていないようだ．]],
       },
       goal_alt = {
-         text = "You have returned to %ns lair.",
+         text = "%nsのねぐらに帰ってきた．",
       },
       goal_first = {
-         text = "You sense the presence of %o.",
+         text = "あなたは%oがここのどこかにあることに気づいた．",
       },
       goal_next = {
-         text = [[You gain confidence, knowing that you may soon be united with
-%o.]],
+         text = [[あなたはもう少ししたら%oと共になれる，
+ということで自信を取り戻した．]],
       },
       gotit = {
          synopsis = "[You pick up %o and feel relief.  Return it to %l.]",
          output = "text",
-         text = [[As you pick up %o, you feel a great
-weight has been lifted from your shoulders.  Your only thoughts are
-to quickly return to %H and find %l.]],
+         text = [[%oを拾うにつれて，背中から
+重荷を下ろしたときのような
+安堵感を感じた．今思うことはただ一つ．
+%Hへ早くかえって%lを探すことだ．]],
       },
       guardtalk_after = {
-         "\"Gehennom on 5 zorkmids a day -- more like 500 a day if you ask me.\"",
-         "\"Do you know where I could find some nice postcards of The Gnomish Mines?\"",
-         "\"Have you tried the weird toilets?\"",
-         "\"If you stick around, I'll show you the pictures from my latest trip.\"",
-         "\"Did you bring me back any souvenirs?\"",
+         "「ゲヘナで一日５ゴールドだって？５００の間違いじゃぁないのかい？」",
+         "「ノームの炭坑のきれいな絵葉書を売ってるところ知りません？」",
+         "「あのー．変なトイレを使ったことあります？」",
+         "「ちょっとそこで待ってくれれば，私の今回の旅行についての写真を見せてあげるよ．」",
+         "「私のお土産を取り返してくれたのかい？」",
       },
       guardtalk_before = {
-         "\"Gehennom on 5 zorkmids a day -- more like 500 a day if you ask me.\"",
-         "\"Do you know where I could find some nice postcards of The Gnomish Mines?\"",
-         "\"Have you tried the weird toilets?\"",
-         "\"Don't stay at the Inn, I hear the food is terrible and it has rats.\"",
-         "\"They told me that this was the off season!\"",
+         "「ゲヘナで一日５ゴールドだって？５００の間違いじゃぁないのかい？」",
+         "「ノームの炭坑のきれいな絵葉書を売ってるところ知りません？」",
+         "「あのー．変なトイレを使ったことあります？」",
+         "「宿には泊まらない方がいいよ．食事がひどくて， 　おまけに鼠がでるんだってさ．」",
+         "「えー．聞いてないよー．今がオフシーズンじゃなかったの？」",
       },
       hasamulet = {
          synopsis = "[You have the Amulet.  Take it to the Astral Plane to finish your task.]",
          output = "text",
-         text = [["Stand back and let me look at you, %p.
-Now that you have recovered the Amulet of Yendor, I'm afraid living
-out your days in %H would seem pretty tame.
+         text = [[「もう少し下がって君の姿を見せてくれ，%p．
+  イェンダーの魔除けを手にした以上，これからずっと
+  %Hで生きていくというのはちとつまらないであろう．」
 
-"You have come too far to stop now, for there are still more tasks that
-our oral history foretells for you.  Forever more, though, your name shall
-be spoken by the %gP with awe.  You are truly an inspiration to your
-%sp!"]],
+「君はもう後戻りする訳にはいかない．なぜなら，
+  君はこれから後に様々な冒険をすることを運命づけられている．
+  そして，%pと言う名は%gの間で伝説として語り継がれるだろう．
+  %p，君は自分の%sの偉大なる手本となったのだ．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC curses at you as %nh dies.]",
          output = "text",
-         text = [[You turn in the direction of %n.  As his earthly body begins
-to vanish before your eyes, you hear him curse:
+         text = [[あなたは%nの方向へ目を向ける．彼の体があなたの目の前から
+消えるにつれ，彼の呪いの言葉を聞いた．
 
-    "You shall never be rid of me, %p!
-    I will find you where ever you go and regain what is rightly mine."]],
+    「%p，お前にはずっとつきまとってやる！
+      お前がどこにいようがお前を必ず探し出して
+      私の為にあるべきものを取り返してみせる．」]],
       },
       leader_first = {
          synopsis = "[Someone must defeat %n.  Are your ready?]",
          output = "text",
-         text = [["Is it really you, %p!  I had given up hope for your return.
-As you can %x, we are desperately in need of your talents.  Someone must
-defeat %n if our town is to become what it once was.
+         text = [[「やや，%p君かい．戻ってくるとは思わなかったよ．
+  君にも分かると思うが，我々はヒジョーに困ってるんだ．
+  誰かが%nを倒さねば，町はもとのように戻らないんだ．」
 
-"Let me see if you are ready to be that someone."]],
+「君が我々を助けるに値するほどか確かめてみよう．」]],
       },
       leader_last = {
          synopsis = "[Leave %H and never return.]",
          output = "text",
-         text = [["It is too late, %p.  You are not even worthy to die amongst us.
-Leave %H and never return."]],
+         text = [[「遅すぎたね，%p君．君は我々の仲間として死ぬにも値しない．
+  %Hを離れて，二度と帰ってくるな．」]],
       },
       leader_next = {
-         text = "\"Things are getting worse, %p.  I hope that this time you are ready.\"",
+         text = [[「状況は刻一刻悪化してるんだ，%p君．
+　今回は用意できているだろうね．」]],
       },
       leader_other = {
-         text = "\"I hope that for the sake of %H you have prepared yourself this time.\"",
+         text = "「%Hのためにも，今回は準備してきただろうね．」",
       },
       locate_first = {
          synopsis = "[You %x the handiwork of %ns henchlings.]",
          output = "text",
-         text = [[Only your faith in %d keeps you from trembling.  You %x
-the handiwork of %ns henchlings everywhere.]],
+         text = [[%dに対する信仰だけがあなたを恐怖から遠ざけているようだ．
+あなたは%nのごろつきどもの作ったものをそこらじゅうで見かけた．]],
       },
       locate_next = {
-         text = "You know that this time you must find and destroy %n.",
+         text = [[今回こそあなたは%nを探して倒さなければならない，
+と感じた．]],
       },
       nemesis_first = {
          synopsis = "[%rA will not defeat me.]",
          output = "text",
-         text = [["So, %p, %l thinks that you can wrest
-%o from me!
+         text = [[「ほほう，%p，%lはお前ごときが私から
+%oを取り返せると思っているのか！」
 
-"It only proves how desperate he has become that he sends %ra to
-try to defeat me.  When this day is over, I will have you enslaved
-in the mines where you will rue the day that you ever entered
-%i."]],
+「%r程度の雑魚を私のもとに送りつけるとは笑止な．
+  よほど部下に恵まれていないらしい．今日という日が終わったら，
+  お前を地下の奥深くで働かせ，%iに来たことをうんと
+  後悔させてやろう．」]],
       },
       nemesis_next = {
-         text = [["I let you live the last time because it gave me pleasure.
-This time I will destroy you, %p."]],
+         text = [[「この前私がお前を生かしておいたのは，この上なく楽しませてもらったから
+  だ．しかし%p，今回は本当に殺す！」]],
       },
       nemesis_other = {
          synopsis = "[Run away or you will suffer severely.]",
          output = "text",
-         text = [["These meetings come to bore me.  You disturb my workings with
-%o.
+         text = [[「なんだかこうしてお前と何回も会うのもつまらん．
+  私と%oを邪魔してるだけだ．」
 
-"If you do not run away now, I will inflict so much suffering on you that
-%l will feel guilty for ever having sent his %S to me!"]],
+「もし私の前から失せなければ，お前にこの上ない苦しみを味わせてくれる．
+  そうすれば，%lは自分の%Sを私の元に送ったことをさぞや
+  後悔するだろう．」]],
       },
       nemesis_wantsit = {
          synopsis = "[\"Return %o to me and we will rule %H.\"]",
          output = "text",
-         text = [["You fool.  You do not know how to call upon the powers of
-%o.
+         text = [[「愚か者が！お前に%oを扱う知識はないだろうが．」
 
-"Return it to me and I will teach you how to use it, and together we
-will rule %H.  But do so now, as my patience grows thin."]],
+「今私にそれを返せばそれの使い方を教えてやる．
+  それでもって，二人で%Hを支配しよう．ただ，今すぐ返せ．
+  私は気が短いんでね．」]],
       },
       nexttime = {
-         text = "Once again, you are back at %H.",
+         text = "あなたは再び%Hへと戻ってきた．",
       },
       offeredit = {
          synopsis = "[Take %o and with %ds guidance, recover the Amulet.]",
          output = "text",
-         text = [[As %l detects the presence of %o,
-he almost smiles for the first time in many a full moon.
+         text = [[%lは%oの存在を確認するにつれ，
+何月ぶりかというほどの笑顔を見せた．
 
-As he looks up from %o he says:
+そして，%oから目を離すにつれて話した．
 
-    "You have recovered %o.  You are its
-    owner now, but not its master.  Let it work with you as you continue
-    your journey.  With its help, and %d to guide you on the
-    %a path, you may yet recover the Amulet of Yendor."]],
+「君は%oを取り戻してくれた．
+  それは君が持ち主となったわけだが，君はまだ真の主となったわけではない．
+  君が旅を続けるにつれ，それは真の姿を見せるだろう．それと%dの
+  %aな導きがあればもしやしたらイェンダーの魔除けを手にすることが
+  できるかもしれない．」]],
       },
       offeredit2 = {
          synopsis = "[Keep %o and return to %Z through the portal.]",
          output = "text",
-         text = [["%oC is yours now.  %Z
-await your return through the magic portal that brought you here."]],
+         text = [[「今や，君は%oの守護者だよ．魔法の入口の向こうで，
+  %Zが君を待っているよ．」]],
       },
       othertime = {
-         text = [[You are back at %H.
-Things appear to have become so bad that you fear that soon
-%H will not be here to return to.]],
+         text = [[あなたは%Hへと戻ってきた．
+
+状況がひどくなりすぎて，
+帰ってくる頃には%Hがなくなってしまうのではないかと危惧した．]],
       },
       posthanks = {
-         text = [["I could not be more proud than if you were my own %S, %p!
-Tell me of your adventures in quest of the Amulet of Yendor."]],
+         text = [[「君が私の本当の%Sであればよかったものの．しかし，それにしても
+これは私にとって君はこの上ない誇りだ．
+ささ，君のイェンダーの魔除けを探すまでの冒険談を聞かせてくれたまえ．」]],
       },
    },
    Val = {
       assignquest = {
          synopsis = "[Find %i; defeat %n; return with %o.]",
          output = "text",
-         text = [["It is not clear, %p, for my sight is limited without our relic.
-But it is now likely that you can defeat %n, and recover
-%o.
+         text = [[「%pよ，わたしの眼力は聖器無しでは極めて制限されてしま
+  うので正確なことは言えません．しかし，あなたは%nを打ち負かし，
+  %oを取り返すだけの力を得たようです．
 
-"A short time ago, %n and his minions attacked this place.  They
-opened the huge volcanic vents you %x about the hill, and attacked.  I knew
-that this was to come to pass, and had asked %d for a group of %gP
-to help defend this place.  The few you %x here are the mightiest of
-Valhalla's own, and are all that are left of one hundred %d sent.
+「少し前に，%nと彼の使い魔がこの地に攻撃をしかけました．丘の上
+  にあるのを見たと思いますが，彼らは巨大な火口を開き，攻撃をしかけてき
+  たのです．わたしはこれが困ったことになるのを知り，%gの一隊にこの地を
+  守るよう%dに懇願しました．ここにいる者達はヴァルハラ宮殿直属
+  の選ばれた精鋭で，%dの送った100人の戦士の生き残りなのです．
 
-"Despite the great and glorious battle we fought, %n managed at
-last to steal %o.  This has upset the balance of the universe,
-and unless %oh is returned into my care, %n may start Ragnarok.
+「偉大かつ栄誉ある戦いにもかかわらず，とうとう%nは
+  %oを盗んでしまいました．%oがわたしの手元に戻らな
+  ければ，%nはラグナロックを始めてしまい，世界の均衡は崩れて
+  しまうでしょう．
 
-"You must find the entrance to %i.  Travel downward
-from there and you will find %ns lair.  Defeat him and
-return %o to me."]],
+「あなたは，%iの入口を探さなければなりません．ここから地下に
+  旅を進め，%nの隠れ家をみつけるのです．彼を打ち負かし，
+  %oを私の元へ取り返してください．」]],
       },
       badalign = {
          synopsis = "[You have strayed from the %a path.  Return after you purify yourself.]",
          output = "text",
-         text = [["NO!  This is terrible.  I see you becoming an ally of %n, and
-leading his armies in the final great battles.  This must not come to
-pass!  You have strayed from the %a path.  You must purge yourself,
-and return here only when you have regained a state of purity."]],
+         text = [[「いけません！恐しいことです．%nに心を奪われ，
+  偉大なる最終戦で彼の部下を導く姿が見えます．大変困った
+  ことですわね．あなたは%aの道から外れているようです．
+  自分自身を浄め，純粋な気持を取り戻したときにまた戻ってくるのです．」]],
       },
       badlevel = {
          synopsis = "[Come back when you are %Ra.]",
          output = "text",
-         text = [["I see you and %n fighting, %p.  But you are not prepared and
-shall die at %ns hand if you proceed.  No.  This will not do.
-Go back out into the world, and grow more experienced at the ways of war.
-Only when you have returned %Ra will you be able to defeat %n."]],
+         text = [[「%pよ，私はあなたと%nの戦いを見ています．しかし
+  あなたは準備ができてないようです．今のままではあなたは%n
+  の手により殺されてしまうでしょう．いけません．こんなことになっては
+  いけない．戻りなさい，そして戦いにより経験を積むのです．%R
+  になってから戻ってくるのです．そうすれば，%nを打ち負かすこ
+  とができるでしょう．」 ]],
       },
       discourage = {
-         "\"I am your death, %c.\"",
-         "\"You cannot prevail, %r.  I have foreseen your every move.\"",
-         "\"With you out of the way, Valhalla will be mine for the taking.\"",
-         "\"I killed scores of %ds best when I took %o. Do you really think that one %c can stand against me?\"",
-         "\"Who bears the souls of %cP to Valhalla, %r?\"",
-         "\"No, %d cannot help you here.\"",
-         "\"Some instrument of %d you are, %p.  You are a weakling!\"",
-         "\"Never have I seen %ca so clumsy in battle.\"",
-         "\"You die now, little %s.\"",
-         "\"Your body I destroy now, your soul when my hordes overrun Valhalla!\"",
+         "「我に貴様の死を，%c．」",
+         "「私には勝てんよ，%r．貴様の動きなど手に取るようにわかるわい．」",
+         "「貴様が道から外れているので，ヴァルハラ宮殿は我がものだ．」",
+         "「%oを手にしてたときは，%dの精鋭を何十人となく殺したもんだ．   たった１人の%cが私にはむかってくる？滑稽な話だ．」",
+         "「誰が%cの魂をヴァルハラ宮殿に生みつけるんだ，%rよ？」",
+         "「無駄無駄，ここでは%dは助けてくれないぞ．」",
+         "「貴様は%dの道具さ%p．軟弱者め！」",
+         "「%cがこんなにも戦いが下手とは知らなかったわい．」",
+         "「貴様はすぐにでも死ぬさ，可愛いそうな%sよ．」",
+         "「貴様の体を破壊し，貴様の魂は我が軍がヴァルハラ宮殿を襲うときに   破壊するとしよう！」",
       },
       encourage = {
-         "\"Go with the blessings of %d.\"",
-         "\"Call upon %d when you are in need.\"",
-         "\"Use %o if you can.  It will protect you.\"",
-         "\"Magical cold is very effective against %n.\"",
-         "\"To face %n, you will need to be immune to fire.\"",
-         "\"May %d strengthen your sword-arm.\"",
-         "\"Trust in %d.  He will not desert you.\"",
-         "\"It becomes more likely that Ragnarok will come with every passing moment. You must hurry, %p.\"",
-         "\"If %n can master %o, he will be powerful enough to face %d far earlier than is fated.  This must not be!\"",
-         "\"Remember your training, %p.  You can succeed.\"",
+         "「%dの祝福のあらんことを．」",
+         "「必要ならば%dを呼びなさい．」",
+         "「可能なら%oを使いなさい．あなたを守るてしょう．」",
+         "「%nには寒さの魔法が効果的です．」",
+         "「%nと直面するには，炎への耐性が必要です．」",
+         "「%dがあなたの利き腕に力を与えてくれるでしょう．」",
+         "「%dを信じなさい．彼はあなたを見捨てたりしませんわ．」",
+         "「ラグナロックが今すぐにでも起きそうです．急ぎなさい%p！」",
+         "「もし%nが%oを支配しているなら，彼は%dに   匹敵するくらい強力なはずです．これだけは避けねばなりません！」",
+         "「あなたの力を信じなさい%p．きっと成功しますわ．」",
       },
       firsttime = {
          synopsis = "[You arrive below %H.  Something is wrong; there is lava present.]",
          output = "text",
-         text = [[You materialize at the base of a snowy hill.  Atop the hill sits
-a place you know well, %H.  You immediately realize
-that something here is very wrong!
+         text = [[あなたは雪の降る丘に突如現われた．この地の丘の頂上にある%Hは
+よく知っている場所だが，あなたは即座に何かが大きく違うことに気がついた．
 
-In places, the snow and ice have been melted into steaming pools of
-water.  Fumaroles and pools of bubbling lava surround the hill.
-The stench of sulphur is carried through the air, and you %x creatures
-that should not be able to live in this environment moving towards you.]],
+何故か，雪や氷が水溶け水蒸気をもくもくとあげている．噴気孔やぶくぶく
+と泡だっている溶岩が丘を囲んでいる．硫黄の匂いが空気を漂っており，
+このような環境では生きていけない生物があなたの前方で動いているの
+を%xた．]],
       },
       goal_first = {
          synopsis = "[This is the lair of %n.]",
          output = "text",
-         text = [[Through clouds of sulphurous gasses, you %x a rock palisade
-surrounded with a moat of bubbling lava.  You remember the description
-from something that %l said.  This is the lair of %n.]],
+         text = [[硫黄のガスの雲間に，あなたは泡だつ溶岩の堀を囲む石の柵を見つけた．
+あなたは%lが言っていたことを思いだした．これは%nの
+住み家だ．]],
       },
       goal_next = {
-         text = "Once again, you stand in sight of %ns lair.",
+         text = "もう一度，あなたは%nの住み家の見えるところにやってきた．",
       },
       gotit = {
          synopsis = "[You must return %o to %l.]",
          output = "text",
-         text = [[As you pick up %o, your mind is suddenly filled with images,
-and you perceive all of the possibilities of each potential choice you
-could make.  As you begin to control and channel your thoughts, you
-realize that you must return %o to %l immediately.]],
+         text = [[%oを拾うと，あなたの心は突然イメージで満たされ，選択可能な全ての
+可能性を理解した．あなたの思いを制御し伝達しはじめると，あなたは
+%oを%lに直ちに返さなければならないことに気がついた．]],
       },
       guardtalk_after = {
-         "\"Hail, and well met, brave %c.\"",
-         "\"May %d guide your steps, %p.\"",
-         "\"%lC told us you had succeeded!\"",
-         "\"You recovered %o just in time, %p.\"",
-         "\"Hail %d, for delivering %o back to us.\"",
+         "「ようこそ！偉大なる%c．」",
+         "「%pよ，%dがお前を導いてくれるであろう．」",
+         "「%lは君の成功を話してくれたよ！」",
+         "「ちょうどいいときに%oを取り戻してきてくれた．%p．」",
+         "「おぉ，%dよ，%oを我々のもとに返してくださった．」",
       },
       guardtalk_before = {
-         "\"Hail, and well met, brave %c.\"",
-         "\"May %d guide your steps, %p.\"",
-         "\"%lC weakens.  Without %o, her foresight is dim.\"",
-         "\"You must hurry, %p, else Ragnarok may well come.\"",
-         "\"I would deal with this foul %n myself, but %d forbids it.\"",
+         "「ようこそ！偉大なる%c．」",
+         "「%pよ，%dがお前を導いてくれるであろう．」",
+         "「%lは衰弱している．%oなしでは彼女の   洞察力はかすんでしまうのだ．」",
+         "「お前は急がねばならぬ%p．さもなければラグナロックがやってくる．」",
+         "「むかつく%nにこの身をぶつけたい，しかし%dがそれを   してはならぬと言うのだ．」",
       },
       hasamulet = {
          synopsis = "[Take the Amulet to %ds temple on the Astral Plane and offer it.]",
          output = "text",
-         text = [["Excellent, %p.  I see you have recovered the Amulet!
+         text = [[「まぁ，なんてことでしょう%p．あなたが魔除けを取り戻すのを
+  この目で見られるなんて！
 
-"You must take the Amulet to the Great Temple of %d, on the Astral
-Plane.  There you must offer the Amulet to %d.
+「あなたは魔除けを天上界にある%dの偉大な寺院に持っていかねば
+  なりません．そこで%dに魔除けを捧げるのです．
 
-"Go now, my %S.  I cannot tell you your fate, as the power of the
-Amulet interferes with mine.  I hope for your success."]],
+「さぁ，わたしの%S．私はあなたに運命を告げることはできません．
+  魔除けの力が邪魔をするのです．あなたの成功を祈っていますわ．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC dies.]",
          output = "text",
-         text = [[A look of surprise and horror appears on %ns face.
+         text = [[驚きと恐怖が%nの顔に現われた．
 
-    "No!!!  %o has lied to me!  I have been misled!"
+    「ばかな！%oは我が手中にあったはずだ．何故だ！！」
 
-Suddenly, %n grasps his head and screams in agony, then dies.]],
+突然%nは顔を掴み，苦痛の声をあげ，死んだ．]],
       },
       leader_first = {
          synopsis = "[We need your aid.  Are you ready?]",
          output = "text",
-         text = [["Ah, %p, my %S.  You have returned to %H
-at last.  We are in dire need of your aid, but I must determine if you
-are yet ready for such an undertaking.
+         text = [[「まぁ，わたしの%S%pよ！%Hに戻ってきてくれましたのね．
+  我々はあなたの力が至急必要なのです，しかしその前にあなたがそれを
+  受け負うだけの力があるか決めなければなりません．
 
-"Let me read your fate..."]],
+「あなたの運命を読んでみましょう．．．」]],
       },
       leader_last = {
          synopsis = "[\"Begone from my presence and never return.\"]",
          output = "text",
-         text = [["No, %p.  Your fate is sealed.  I must cast about for another
-champion.  Begone from my presence, and never return.  Know this, that
-you shall never succeed in this life, and Valhalla is denied to you."]],
+         text = [[「いけません%p！あなたの運命は封印されてしまいました．
+  わたしは別の勇者を頼ることにします．わたしの前から去りなさい．戻って
+  くることはまかりなりません．次のことをよく覚えておくのです．あなたは
+  決して成功することはないでしょう．ヴァルハラ宮殿もあなたを拒んでいます．」]],
       },
       leader_next = {
-         text = [["Let me read the future for you now, %p, perhaps you have managed to
-change it enough..."]],
+         text = [[「あなたの未来を読んでみましょう%p，たぶんあなたは簡単に
+  修業をなさってくるでしょうけど．．．」]],
       },
       leader_other = {
-         text = [["Again, I shall read your fate, my %S.  Let us both hope that you have
-made changes to become ready for this task..."]],
+         text = [[「また，あなたの運命を読んでみましょう，わたしの%Sよ．この
+  任務をこなすだけの修業をなさってきたことを望みましょう．」]],
       },
       locate_first = {
          synopsis = "[This is the entrance to %i.]",
          output = "text",
-         text = [[The ice and snow gives way to a valley floor.  You %x ahead of you
-a huge round hill surrounded by pools of lava.  This then is the entrance
-to %i.  It looks like you're not going to get in without
-a fight though.]],
+         text = [[氷と雪が谷底に道を作っていた．あなたは目の前に，溶岩に囲まれた大きな
+丸い丘を見た．これは%iへの入口である．戦うことなしに内部に
+入ることは無理なようだ．]],
       },
       locate_next = {
-         text = "Once again, you stand before the entrance to %i.",
+         text = "もう一度，あなたは%iの入口の前にやってきた．",
       },
       nemesis_first = {
          synopsis = "[\"%oC has shown me that I must kill you.\"]",
          output = "text",
-         text = [["So!  %lC has finally sent %ca to challenge me!
+         text = [[「ほう．%lは私を倒すため%cを送ってきたか！
 
-"I thought that mastering %o would enable me to challenge
-%d, but it has shown me that first I must kill you!  So come, little
-%s.  Once I defeat you, I can at last begin the final battle with %d."]],
+「私は%oを支配することにより%dを倒せると思ってるのだが，
+  手始めに貴様を殺すことによってその力をためしてみよう！来るがよい．
+  哀れな%sよ．貴様を殺してから，%dとの最終戦争を始めよう
+  ではないか．」]],
       },
       nemesis_next = {
-         text = "\"Again you challenge me, %r.  Good.  I will kill you now.\"",
+         text = "「またきたか%r．よろしい．今度こそ貴様に止めを刺してやろう．」",
       },
       nemesis_other = {
-         text = "\"Have you not learned yet?  You cannot defeat %n!\"",
+         text = "「まだわからんのか？貴様に%nは倒せないのさ！」",
       },
       nemesis_wantsit = {
-         text = "\"I will kill you, %c, and wrest %o from your mangled hands.\"",
+         text = "「%cよ死ね！貴様の腕を切りきざみ%oをもぎとってやる．」",
       },
       nexttime = {
-         text = "Once again, you are near the abode of %l.",
+         text = "もう一度，あなたは%lの住まいの近くにやってきた．",
       },
       offeredit = {
          synopsis = "[Take %o.  Search for the Amulet.]",
          output = "text",
-         text = [[As you approach, %l rises and touches %o.
+         text = [[あなたが近づくと，%lは立ちあがり，%oに触れた．
 
-"You may take %o with you, %p.  I have removed from
-it the power to foretell the future, for that power no mortal should
-have.  Its other abilities, however, you have at your disposal.
+「%pよ．%oを持っていきなさい．わたしは%oから，
+  定命の者の手に触れてはならぬ未来を告げる力を取り除きました．
+  しかしながら%oの他の力は，あなたの思い通りにしてかまいません．
 
-"You must now begin in %ds name to search for the Amulet of Yendor.
-May your steps be guided by %d, my %S."]],
+「あなたは%dの名のもとイェンダーの魔除けを探さねばなりません．
+  あなたの進む道が%dの導きにより開かれますように．
+  わたしの%sよ．」]],
       },
       offeredit2 = {
          synopsis = "[You are %os keeper now.  Return through the portal and find the Amulet.]",
          output = "text",
-         text = [["Careful, %p!  %oC might break, and that would be
-a tragic loss.  You are its keeper now, and the time has come to
-resume your search for the Amulet.  %Z await your
-return through the magic portal that brought you here."]],
+         text = [[「気をつけなさい%p！%oが壊れてしまうわ．
+  そうなったら大きな痛手です．あなたは%oの守護者なのです．
+  魔除け探索を再開しなさい．魔法の入口の向こうで，
+  %Zがあなたを待っていますよ．」]],
       },
       othertime = {
-         text = [[Again you materialize near %ls abode.  You have a nagging feeling
-that this may be the last time you come here.]],
+         text = [[再度，あなたは%lの住まいの近くに現われた．ここにやってくるのはこれが
+最後であるようないらだつ気持になった．]],
       },
       posthanks = {
-         text = [["Greetings, %p.  I have not been able to pay as much attention to
-your search for the Amulet as I have wished.  How do you fare?"]],
+         text = [[「%p，ようこそ．私はあなたの魔除け探索についての助言を
+  述べることはできません．今の旅はどんな感じかしら？」]],
       },
    },
    Wiz = {
       assignquest = {
          synopsis = "[Travel to %i; overcome %n; return with %o.]",
          output = "text",
-         text = [["Yes, %p, you truly are ready for this dire task.  Listen,
-carefully, for what I tell you now will be of vital importance.
+         text = [[「%pよ，このおそろしい仕事への準備はまさに整ったようだな．
+  よく聞け．これからわたしの言うことは，おまえにとってきわめて重要なこ
+  となのだ．
 
-"Since you left us to hone your skills in the world, we unexpectedly came
-under attack by the forces of %n.  As you know, we thought
-%n had perished at the end of the last age, but, alas, this was
-not the case.
+「おまえが技を磨くため，我々を残し，世に出て行ってからというもの，我々
+  は%nの手により予期しない攻撃を食らっている．%nは
+  先の時代の終りに滅んだものと思っていた．しかし，ああ，それは間違いだ
+  ったのだ．
 
-"%nC sent an army of abominations against us.  Among them was a
-minion, mindless and ensorcelled, and thus, in the confusion, it was
-able to penetrate our defenses.  Alas, this creature has stolen
-%o and I fear has delivered %oh to %n.
+「%nは忌まわしきものの大群を，我々のもとへよこした．そのなか
+  には理性のない魔術使いの手下がおり，混乱に乗じて我々の防衛線を突破す
+  ることができたのだ．ああ，そいつは%oを盗んでしまった．
+  そして%oを%nのもとへ届けてしまったのではないかとわた
+  しは恐れている．
 
-"Over the years, I had woven most of my power into this amulet, and thus,
-without it, I have but a shadow of my former power, and I fear that I
-shall soon perish.
+「長年の間，わたしは自分の力のほとんどを，この魔よけに注ぎ込んだ．その
+  せいでわたしは魔よけなしでは，力をほとんど発揮できない．そして，その
+  まま死んでしまうのではないかとわたしは恐れている．
 
-"You must travel to %i, and within its dungeons,
-find and overcome %n, and return %o to me.
+「おまえは%iへ行き，その迷路の中で%nを見つけ打ち倒し，
+  %oをわたしのもとへ奪い返してくるのだ．
 
-"Go now, with %d, and complete this quest before it is too late."]],
+「%dとともに行け．そして手遅れになる前にこの使命を果たすのだ．」]],
       },
       badalign = {
          synopsis = "[Go; come back when you are worthy of %d.]",
          output = "text",
-         text = [["You amaze me, %p!  How many times did I tell you that the way of a mage
-is an exacting one.  One must use the world with care, lest one leave it
-in ruins and simplify the task of %n.
+         text = [[「%pよ，おまえには驚いた．魔法使いの道は厳しいものだと，
+  何度言ったらわかるのだ．世界を扱うには注意をもってせよ．さもなくば，
+  世界は廃虚と化し，%nの仕事を楽にするだけだ．
 
-"You must go back and show your worthiness.  Do not return until you are
-truly ready for this quest.  May %d guide you in this task."]],
+「戻って，自分がいかに価値ある者か，示すのだ．冒険の準備が本当に整うま
+  で，ここに戻ることは許さん．%dの導きのあらんことを．」]],
       },
       badlevel = {
          synopsis = "[Go; return when you are %Ra.]",
          output = "text",
-         text = [["Alas, %p, you have not yet shown your proficiency as a worthy
-spellcaster.  As %ra, you would surely be overcome in the challenge
-ahead.  Go, now, expand your horizons, and return when you have attained
-renown as %Ra."]],
+         text = [[「ああ，%pよ．おまえはまだ，まじない師にふさわしい熟練を
+  見せておらん．%raとしては，確かに試練に耐えてきたのであろう．さあ，
+  行け．もっと能力を高めよ．%Raとしての名声を勝ちとった時，
+  再び戻ってくるのだ．」]],
       },
       discourage = {
-         "\"Your puny powers are no match for me, fool!\"",
-         "\"When you are defeated, your torment will last for a thousand years.\"",
-         "\"After your downfall, %p, I shall devour %l for dessert!\"",
-         "\"Are you ready yet to beg for mercy?  I could be lenient...\"",
-         "\"Your soul shall join the enslaved multitude I command!\"",
-         "\"Your lack of will is evident, and you shall die as a result.\"",
-         "\"Your faith in %d is for naught!  Come, submit to me now!\"",
-         "\"A mere %r is nothing compared to my skill!\"",
-         "\"So, you are the best hope of %l?  How droll.\"",
-         "\"Feel my power, %c!  My victory is imminent!\"",
+         "「馬鹿ものめ，そんなひよわなことでわたしにかなうと思ったか！」",
+         "「君の死の苦しみは1000年ものあいだ続くことになろう．」",
+         "「%pよ，君を斃したあとは，デザートに%lを滅ぼして   やろうじゃないか！」",
+         "「もう慈悲を乞う準備はできたかい？わたしが寛大であったらよかったかもな．．．」",
+         "「君の魂を，わたしの命に従うやつらに加えてやろうじゃないか！」",
+         "「君に気力がないことは目に見えているんだ．それが命とりになるんだよ．」",
+         "「君の%dへの信心は無駄だ！さあ，もはや，わたしに従うのだ！」",
+         "「%rなど，わたしの技に比べればものの数ではない！」",
+         "「ほう，君は%lの最大の希望であるってわけかね？こりゃあ，傑作だ．」",
+         "「%cよ，わたしの力を感じるのだ！わたしの勝利は目に見えてるじゃないか！」",
       },
       encourage = {
-         "\"Beware, for %n is immune to most magical attacks.\"",
-         "\"To enter %i you must pass many traps.\"",
-         "\"%nC may be vulnerable to physical attacks.\"",
-         "\"%d will come to your aid when you call.\"",
-         "\"You must utterly destroy %n.  He will pursue you otherwise.\"",
-         "\"%oC is a mighty artifact.  With it you can destroy %n.\"",
-         "\"Go forth with the blessings of %d.\"",
-         "\"I will have my %gP watch for your return.\"",
-         "\"Feel free to take any items in that chest that might aid you.\"",
-         "\"You will know when %o is near.  Proceed with care!\"",
+         "「気をつけろ．%nを魔法で攻撃しても，大抵効かないぞ．」",
+         "「%iに入るためには，罠をたくさんかわさねばならない．」",
+         "「%nは，物理的攻撃には弱いということもありうる．」",
+         "「%dは，呼べば，あなたを助けに来てくれることだろう．」",
+         "「%nは完全に殺してしまわねばならない．そうしないと，いつまでも   追いかけてくる．」",
+         "「%oCは強力な聖器だ．これを使えば，%nを殺すことができる．」",
+         "「%dの祝福とともに進め．」",
+         "「わたしの%gPに，あなたの帰還を待たせるとしよう．」",
+         "「この箱の中のもので，役立つものがあれば何でも持っていくがよい．」",
+         "「%oが近付いてくると，それを感じるだろう．注意深く進め！」",
       },
       firsttime = {
          synopsis = "[You have arrived at %ls tower but something is very wrong.]",
          output = "text",
-         text = [[You are suddenly in familiar surroundings.  You notice what appears to
-be a large, squat stone structure nearby.  Wait!  That looks like the
-tower of your former teacher, %l.
+         text = [[突然，あなたは見なれた景色の中に自分を見い出した．大きくてずんぐりした
+石づくりの建造物が，そばにあるのにあなたは気がついた．待てよ，それはあ
+なたの老師，%lの塔のようだ．
 
-However, things are not the same as when you were last here.  Mists and
-areas of unexplained darkness surround the tower.  There is movement in
-the shadows.
+だが，前回ここへ来た時と状況は変わってしまっている．霧と，名状しがたい
+暗黒とが塔を覆っている．闇の中に，動く影がある．
 
-Your teacher would never allow such unaesthetic forms to surround the
-tower...  unless something were dreadfully wrong!]],
+あなたの師の美意識は，こんなものが塔を覆うことを決して許しはしないはず
+だ．．．．何かとてつもなく恐ろしいことが起こったとでもいうのでないかぎ
+り！]],
       },
       goal_alt = {
-         text = "You have returned to %ns lair.",
+         text = "%nsのねぐらに帰ってきた．",
       },
       goal_first = {
-         text = "You feel your mentor's presence; perhaps %o is nearby.",
+         text = "あなたは師の存在を感じた．%oが近いのだろう．",
       },
       goal_next = {
-         text = "The aura of %o tingles at the edge of your perception.",
+         text = "%oのオーラのせいで，あなたの知覚のへりがひりひりした．",
       },
       gotit = {
          synopsis = "[You feel %os power and know you should return %oh to %l.]",
          output = "text",
-         text = [[As you touch %o, its comforting power infuses you
-with new energy.  You feel as if you can detect others' thoughts flowing
-through it.  Although you yearn to wear %o and
-attack the Wizard of Yendor, you know you must return it to its rightful
-owner, %l.]],
+         text = [[%oに触れると，その心地よい力があなたに新たなる力をそそいだ．
+あなたはそれから流れ出てくる他の者の思考を理解できるような気がした．
+あなたは%oをまとってイェンダーの魔法使いを攻撃することを切に願ったが，
+あなたはその正当なる所有者である
+%lのもとへ自分が戻らねばならないことに気がついた．]],
       },
       guardtalk_after = {
-         "\"I have some eye of newt to trade, do you have a spare blind-worm's sting?\"",
-         "\"The magic portal now seems like it will remain stable for quite some time.\"",
-         "\"Have you noticed how much stronger %l is since %o was recovered?\"",
-         "\"Thank %d!  We weren't positive you would defeat %n.\"",
-         "\"I, too, will venture into the world, because %n was but one of many evils to be vanquished.\"",
+         "「私の持ってるイモリの目と交換できるような余った盲目虫の針は持ってないかい？」",
+         "「今，魔法の入り口はまるで今までずっと安定していたかのように見えます．」",
+         "「%oが戻されてから%lがどれほど強くなったか教えてくれるかい？」",
+         "「%dに感謝を！おまえが%nを倒せるとは確信していなかった．」",
+         "「わたしも思い切って冒険に出よう．%nは，滅ぼすべき   魔物どものひとつにすぎなかったのだから．」",
       },
       guardtalk_before = {
-         "\"Would you happen to have some eye of newt in that overstuffed pack, %s?\"",
-         "\"Ah, the spell to create the magic portal worked.  Outstanding!\"",
-         "\"Hurry!  %lC may not survive that casting of the portal spell!\"",
-         "\"The spells of %n were just too powerful for us to withstand.\"",
-         "\"I, too, will venture into the world, because %n is but one of many evils to be vanquished.\"",
+         "「%sよ，そのぱんぱんの荷物の中には，ひょっとしてイモリの目が   入っていたりはしないか？」",
+         "「おお，魔法の入口を作る魔法が働いた．見よ！」",
+         "「急げ！魔法の入口を作る魔法を唱えたからには%lはもう長いこと   はないぞ！！」",
+         "「%nの呪文は我々が抵抗するにはまったく強力でした．」",
+         "「わたしも思い切って冒険に出よう．%nは，滅ぼすべき   魔物どものひとつにすぎんのだから．」",
       },
       hasamulet = {
          synopsis = "[Take the Amulet to %ds altar on the Astral Plane.]",
          output = "text",
-         text = [["Congratulations, %p.  I always knew that if anyone could succeed
-in defeating the Wizard of Yendor and his minions, it would be you.
+         text = [[「%pよ，おめでとう．イェンダーの魔法使いとその一味をたおすことが
+  できるものがいるとすれば，おまえであろうことはわたしには
+  いつもわかっていたよ．
 
-"Go now, and take the Amulet to the Astral Plane.  Once there, present
-the Amulet on the altar of %d.  Along the way you shall pass through
-the four Elemental Planes.  These planes are like nothing you have ever
-experienced before, so be prepared!
+「その魔除けを持ち，天上界に行くのだ．昔，その魔除けは%dの祭壇にあったのだ．
+  その途中，おまえは４つの精霊界を通過することになろう．今までの経験に
+  ない場所だ，覚悟を決めておくのだぞ！
 
-"For this you were born, %s!  I am very proud of you."]],
+「%sよ，おまえはこのために生まれてきたのだ．おまえをわたしはとても
+  ほこらしく思うぞ．」]],
       },
       killed_nemesis = {
          synopsis = "[%nC curses you as %nh dies.]",
          output = "text",
-         text = [[%nC, whose body begins to shrivel up, croaks out:
+         text = [[体がみるみるうちにしぼみはじめた%nが，叫んだ．
 
-    "I shall haunt your progress until the end of time.  A thousand
-    curses on you and %l."
+    「おまえの行く先々，時の終りまでたたってやる．
+      おまえと%lに千の呪いのあらんことを．」
 
-Then, the body bursts into a cloud of choking dust, and blows away.]],
+すると，その体は爆発して息のつまりそうな煙に変わり，流れて消えた．]],
       },
       leader_first = {
          synopsis = "[You have come a long way, but are you ready for the task I require?]",
          output = "text",
-         text = [["Come closer, %p, for my voice falters in my old age.
-Yes, I see that you have come a long way since you went out into the
-world, leaving the safe confines of this tower.  However, I must first
-determine if you have all of the skills required to take on the task
-I require of you."]],
+         text = [[「%pよ，もっと近くに来てくれ．わたしの声は年のせいで掠れてし
+  まったのでな．おまえが安全なこの塔の領域を去り，世に旅立ってからもう，
+  ずいぶんになる．やっと来てくれたのだな．だが，まずはじめに，おまえに
+  使命を果たすため充分な腕前があるのかどうか，試さねばならん．」]],
       },
       leader_last = {
          synopsis = "[\"Get out of here!\"]",
          output = "text",
-         text = [["You fool, %p!  Why did I waste all of those years teaching you
-the esoteric arts?  Get out of here!  I shall find another."]],
+         text = [[「%pよ，このうつけものめが！何故わたしはこの数年まるまる，
+  おまえに奥義を伝授するのに費やしてしまったというのだろう？出ていけ！
+  お前なんぞに期待はせん．」]],
       },
       leader_next = {
-         text = "\"Well, %p, you have returned.  Perhaps you are now ready...\"",
+         text = "「%pよ，戻ってきてくれたのだな．準備は万端のことと思うが．．．」",
       },
       leader_other = {
-         text = [["This is getting tedious, %p, but perseverance is a sign of a true mage.
-I certainly hope that you are truly ready this time!"]],
+         text = [[「%pよ，待つのは退屈だ．しかし，忍耐こそは真の勇気の証なのだ．
+  今度こそはまさに準備を整えておろうな！」]],
       },
       locate_first = {
-         text = "Wisps of fog swirl nearby.  You feel that %ns lair is close.",
+         text = [[近くで煙が一筋，渦を巻いている．あなたは%nの隠れ家が
+近付いたのを感じた．]],
       },
       locate_next = {
-         text = "You believe that you may once again invade %i.",
+         text = [[あなたは，自分が再び，%iに侵入することになるかもしれないことを
+確信した．]],
       },
       nemesis_first = {
          synopsis = "[\"Your destruction should make for good sport.\"]",
          output = "text",
-         text = [["Ah, I recognize you, %p.  So, %l has sent you to steal
-%o from me, hmmm?  Well, %lh is a fool to send such
-a mental weakling against me.
+         text = [[「おお，%p，君か．つまり，%lはわたしから%oを
+  盗み出すために君を送り込んだってわけだね？こんなうすら馬鹿をわたしに
+  差し向けるとは，%lもヤキがまわったもんだねぇ．」
 
-"Your destruction, however, should make for good sport.  In the end, you
-shall beg me to kill you!"]],
+「まっ，君をやっつけるのも，いい運動になるだろう．しまいには，自分から
+  殺してくれってわたしに懇願させてあげようじゃないか！」]],
       },
       nemesis_next = {
          synopsis = "[\"Your soul shall soon be mine to command.\"]",
          output = "text",
-         text = [["How nice of you to return, %p!  I enjoyed our last meeting.  Are you
-still hungry for more pain?
+         text = [[「%pよ，よくぞ戻ってきた．このまえはとても楽しかったよ．
+  痛い思いにまだまだ飢えてるってわけかい？」
 
-"Come!  Your soul, like %o, shall soon be mine to command."]],
+「かかってこい！すぐに君の魂を，%oと同じく，わたしの思うまま
+  にしてあげようじゃないか．」]],
       },
       nemesis_other = {
-         text = [["I'm sure that your perseverance shall be the subject of innumerable
-ballads, but you shall not be around to hear them, I fear!"]],
+         text = [[「おまえの忍耐力は，無数の物語の語るところとなることだろう．だが，わた
+  しが恐れるのは，おまえがそれを聞くことはついぞないのではないかという
+  ことだ！」]],
       },
       nemesis_wantsit = {
-         text = [["Thief!  %oC belongs to me, now.  I shall feed
-your living flesh to my minions."]],
+         text = [[「泥棒！%oは今やわたしのものだ．おまえの肉を，わたしの手下ども
+  にくれてやるぞ．」]],
       },
       nexttime = {
-         text = "Once again, you are back at %H.",
+         text = "ふたたび，あなたは%Hに戻ってきた．",
       },
       offeredit = {
          synopsis = "[Take %o with you in your quest for the Amulet.]",
          output = "text",
-         text = [[%lC notices %o in your possession,
-beams at you and says:
+         text = [[%lはあなたが%oを持っていることに気がつき，
+あなたを見て言った．
 
-    "I knew you could defeat %n and retrieve
-    %o.  We shall never forget this
-    brave service.
+    「どうやら，%nをたおして%oをとりかえすことができたようだな．
+      わたしはこの勇気ある行ないを決して忘れはしまいぞ．
 
-    "Take %oh with you in your quest for the Amulet of Yendor.
-    I can sense that it has attuned %oiself to you already.
+    「イェンダーの魔除けを求めに，%oを携えて行くがよい．
+      すでにおまえに同調しているのがわたしにはわかるのだ．
 
-    "May %d guide you in your quest, and keep you from harm."]],
+    「%dがおまえの旅を導き，危険より守らんことを．」]],
       },
       offeredit2 = {
          synopsis = "[Keep %o, return through the portal to %Z; find the other Amulet.]",
          output = "text",
-         text = [["You are the keeper of %o now.  It is time to
-recover the /other/ Amulet.  %Z await your return through
-the magic portal which brought you here."]],
+         text = [[「今や，おまえは%oの守護者だ．
+  ＊他の＊魔除け探索を再開せよ．魔法の入口の向こうで，
+  %Zがおまえを待っているぞ．」]],
       },
       othertime = {
-         text = [[You are back at %H.
-You have an odd feeling this may be the last time you ever come here.]],
+         text = [[あなたは%Hに戻ってきた．
+ここに来るのはこれで最後になるかもしれない，そんな奇妙な気がした．]],
       },
       posthanks = {
-         text = [["Come near, my %S, and share your adventures with me.
-So, have you succeeded in your quest for the Amulet of Yendor?"]],
+         text = [[「わが%Sよ，もっと近くに来て，冒険を共にしてくれ．イェンダーの
+  魔除けはもう，手に入れたかね？」]],
       },
    },
 }
