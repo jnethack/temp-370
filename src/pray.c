@@ -2627,7 +2627,10 @@ halu_gname(aligntyp alignment)
 const char *
 align_gtitle(aligntyp alignment)
 {
+/*JP
     const char *gnam, *result = "god";
+*/
+    const char *gnam, *result = "主神";
 
     switch (alignment) {
     case A_LAWFUL:
@@ -2644,7 +2647,10 @@ align_gtitle(aligntyp alignment)
         break;
     }
     if (gnam && *gnam == '_')
+/*JP
         result = "goddess";
+*/
+        result = "女神";
     return result;
 }
 
