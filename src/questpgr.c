@@ -357,7 +357,12 @@ convert_arg(char c)
 staticfn void
 convert_line(const char *in_line, char *out_line)
 {
+#if 0 /*JP:T*/
     char *c, *cc;
+#else /*JP:FIXED:cはin_lineを受けるのでconst*/
+    const char *c;
+    char *cc;
+#endif
 
     cc = out_line;
     for (c = in_line; *c; c++) {
@@ -377,14 +382,14 @@ convert_line(const char *in_line, char *out_line)
 #if 0 /*JP*/
                     Strcat(cc, An(gc.cvt_buf));
                     cc += strlen(cc);
-#endif
                     continue; /* for */
+#endif
                 case 'a':
 #if 0 /*JP*/
                     Strcat(cc, an(gc.cvt_buf));
                     cc += strlen(cc);
-#endif
                     continue; /* for */
+#endif
 
                 /* capitalize */
                 case 'C':

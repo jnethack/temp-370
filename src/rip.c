@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2017. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 /* Defining TEXT_TOMBSTONE causes genl_outrip() to exist, but it doesn't
@@ -116,13 +121,35 @@ genl_outrip(winid tmpwin, int how, time_t when)
     for (line = DEATH_LINE, dpx = buf; line < YEAR_LINE; line++) {
         char tmpchar;
         int i, i0 = (int) strlen(dpx);
+#if 1 /*JP*/
+        unsigned char *uc;
+        int jstone_line;
+
+        if (i0 <= STONE_LINE_LEN)
+            jstone_line = STONE_LINE_LEN;
+        else if (i0 / 2 <= STONE_LINE_LEN )
+            jstone_line = ((i0 + 3) / 4) * 2;
+        else if (i0 / 3 <= STONE_LINE_LEN )
+            jstone_line = ((i0 + 5) / 6) * 2;
+        else
+            jstone_line = ((i0 + 7) / 8) * 2;
+#endif
 
         if (i0 > STONE_LINE_LEN) {
             for (i = STONE_LINE_LEN; (i > 0) && (i0 > STONE_LINE_LEN); --i)
                 if (dpx[i] == ' ')
                     i0 = i;
             if (!i)
+#if 0 /*JP*/
                 i0 = STONE_LINE_LEN;
+#else
+                {
+                    i0 = 0;
+                    while(i0 < jstone_line){
+                        i0 += charlen((unsigned char) dpx[i0]);
+                    }
+                }
+#endif
         }
         tmpchar = dpx[i0];
         dpx[i0] = 0;
