@@ -369,7 +369,10 @@ You(const char *line, ...)
     char *tmp;
 
     va_start(the_args, line);
+/*JP
     vpline(YouMessage(tmp, "You ", line), the_args);
+*/
+    vpline(YouMessage(tmp, "あなたは", line), the_args);
     va_end(the_args);
 }
 
@@ -380,7 +383,10 @@ Your(const char *line, ...)
     char *tmp;
 
     va_start(the_args, line);
+/*JP
     vpline(YouMessage(tmp, "Your ", line), the_args);
+*/
+    vpline(YouMessage(tmp, "あなたの", line), the_args);
     va_end(the_args);
 }
 
@@ -392,9 +398,15 @@ You_feel(const char *line, ...)
 
     va_start(the_args, line);
     if (Unaware)
+/*JP
         YouPrefix(tmp, "You dream that you feel ", line);
+*/
+        YouPrefix(tmp, "あなたは夢の中で", line);
     else
+/*JP
         YouPrefix(tmp, "You feel ", line);
+*/
+        YouPrefix(tmp, "あなたは", line);
     vpline(strcat(tmp, line), the_args);
     va_end(the_args);
 }
@@ -406,7 +418,10 @@ You_cant(const char *line, ...)
     char *tmp;
 
     va_start(the_args, line);
+/*JP
     vpline(YouMessage(tmp, "You can't ", line), the_args);
+*/
+    vpline(YouMessage(tmp, "あなたは", line), the_args);
     va_end(the_args);
 }
 
@@ -417,7 +432,10 @@ pline_The(const char *line, ...)
     char *tmp;
 
     va_start(the_args, line);
+/*JP
     vpline(YouMessage(tmp, "The ", line), the_args);
+*/
+    vpline(YouMessage(tmp, "", line), the_args);
     va_end(the_args);
 }
 
@@ -428,7 +446,10 @@ There(const char *line, ...)
     char *tmp;
 
     va_start(the_args, line);
+/*JP
     vpline(YouMessage(tmp, "There ", line), the_args);
+*/
+    vpline(YouMessage(tmp, "", line), the_args);
     va_end(the_args);
 }
 
@@ -437,10 +458,15 @@ You_hear(const char *line, ...)
 {
     va_list the_args;
     char *tmp;
+#if 1 /*JP*/
+    const char *adj;
+    char *p;
+#endif
 
     if ((Deaf && !Unaware) || !flags.acoustics)
         return;
     va_start(the_args, line);
+#if 0 /*JP*/
     if (Underwater)
         YouPrefix(tmp, "You barely hear ", line);
     else if (Unaware)
@@ -448,6 +474,29 @@ You_hear(const char *line, ...)
     else
         YouPrefix(tmp, "You hear ", line);  /* Deaf-aware */
     vpline(strcat(tmp, line), the_args);
+#else
+    if (Underwater)
+        adj = "かすかに";
+    else if (Unaware)
+        adj = "夢の中で";
+    else
+        adj = "";
+    tmp = You_buf(strlen(adj) + strlen(line) + sizeof("あなたは   "));
+
+    p = (char *)strstr(line, "聞こ") ;
+    if (p == NULL)
+        Strcpy(tmp, "あなたは");
+    else
+        Strcpy(tmp, "");
+    if (p != NULL || (p = (char *)strstr(line, "聞い")) != NULL){
+        strncat(tmp, line, (p - line));
+        strcat(tmp, adj);
+        strcat(tmp, p);
+    } else {
+        Strcat(tmp, line);
+    }
+    vpline(tmp, VA_ARGS);
+#endif
     va_end(the_args);
 }
 
@@ -459,11 +508,19 @@ You_see(const char *line, ...)
 
     va_start(the_args, line);
     if (Unaware)
+/*JP
         YouPrefix(tmp, "You dream that you see ", line);
+*/
+        YouPrefix(tmp, "あなたは夢の中で", line);
+#if 0 /*JP*/
     else if (Blind) /* caller should have caught this... */
         YouPrefix(tmp, "You sense ", line);
+#endif
     else
+/*JP
         YouPrefix(tmp, "You see ", line);
+*/
+        YouPrefix(tmp, "あなたは", line);
     vpline(strcat(tmp, line), the_args);
     va_end(the_args);
 }
@@ -480,10 +537,17 @@ verbalize(const char *line, ...)
 
     va_start(the_args, line);
     gp.pline_flags |= PLINE_VERBALIZE;
+#if 0 /*JP*/
     tmp = You_buf((int) strlen(line) + sizeof "\"\"");
     Strcpy(tmp, "\"");
     Strcat(tmp, line);
     Strcat(tmp, "\"");
+#else
+    tmp = You_buf((int) strlen(line) + sizeof "「」");
+    Strcpy(tmp, "「");
+    Strcat(tmp, line);
+    Strcat(tmp, "」");
+#endif
     vpline(tmp, the_args);
     gp.pline_flags &= ~PLINE_VERBALIZE;
     va_end(the_args);
@@ -609,9 +673,15 @@ impossible(const char *s, ...)
         return;
     }
 
+/*JP
     Strcpy(pbuf2, "Program in disorder!");
+*/
+    Strcpy(pbuf2, "プログラムに障害発生！");
     if (program_state.something_worth_saving)
+/*JP
         Strcat(pbuf2, "  (Saving and reloading may fix this problem.)");
+*/
+        Strcat(pbuf2, "  (保存して再読み込みすれば問題解決するかもしれない．)");
     pline("%s", pbuf2);
     pline("Please report these messages to %s.", DEVTEAM_EMAIL);
     if (sysopt.support) {
