@@ -185,7 +185,7 @@ hooked_tty_getlin(
 #if 1 /*JP*/
             {
                 int n;
-                n = offset_in_kanji((unsigned char *)tmp, bufp - tmp);
+                n = offset_in_kanji(tmp, bufp - tmp);
                 if (n > 0) {
                     /* 後で1バイト引かれるのでその分はここでは引かない */
                     bufp = bufp - (n - 1);
@@ -212,18 +212,10 @@ hooked_tty_getlin(
 #endif /* NEWAUTOCOMP */
             *bufp = c;
             bufp[1] = 0;
-#if 0 /*JP*/
             putsyms(bufp);
-#else
-            raw_putsyms(bufp);
-#endif
             bufp++;
             if (hook && (*hook)(obufp)) {
-#if 0 /*JP*/
                 putsyms(bufp);
-#else
-                raw_putsyms(bufp);
-#endif
 #ifndef NEWAUTOCOMP
                 bufp = eos(bufp);
 #else  /* NEWAUTOCOMP */
