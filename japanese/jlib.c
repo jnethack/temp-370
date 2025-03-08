@@ -44,7 +44,7 @@ static const char* ccode_alt[]={
 
 /* default input kcode */
 #ifndef INPUT_KCODE
-# if defined(MSDOS) || defined(WIN32)
+# if (defined(MSDOS) || defined(WIN32)) && !defined(ICUTF8)
 #  define INPUT_KCODE SJIS
 # else
 #  define INPUT_KCODE UTF8
