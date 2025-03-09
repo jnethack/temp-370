@@ -212,18 +212,10 @@ hooked_tty_getlin(
 #endif /* NEWAUTOCOMP */
             *bufp = c;
             bufp[1] = 0;
-#if 0 /*JP*/
             putsyms(bufp);
-#else
-            raw_putsyms(bufp);
-#endif
             bufp++;
             if (hook && (*hook)(obufp)) {
-#if 0 /*JP*/
                 putsyms(bufp);
-#else
-                raw_putsyms(bufp);
-#endif
 #ifndef NEWAUTOCOMP
                 bufp = eos(bufp);
 #else  /* NEWAUTOCOMP */
