@@ -299,7 +299,6 @@ charlen(unsigned int c)
  *  2バイト文字をバッファリングしながら出力する
  *  漢字コード変換も行う
  */
-#ifdef ICUTF8
 int
 jbuffer(
      unsigned int c,
@@ -307,6 +306,7 @@ jbuffer(
      void (*f1)(unsigned int),
      void (*f2)(unsigned char *))
 {
+#ifdef ICUTF8
     static unsigned char ibuf[8];
     static int bufcnt = 0;
     static int buflen;
@@ -337,15 +337,7 @@ jbuffer(
     ibuf[bufcnt] = '\0';
     f2(ibuf);
     bufcnt = 0;
-}
 #else
-int
-jbuffer(
-     unsigned int c,
-     unsigned int *buf,
-     void (*f1)(unsigned int),
-     void (*f2)(unsigned char *))
-{
     static unsigned int ibuf[2];
     unsigned int c1, c2;
 #ifndef POSIX_ICONV
@@ -410,8 +402,8 @@ jbuffer(
         return 1;
     }
     return -1;
-}
 #endif
+}
 
 /*
  *  2バイト文字をバッファリングしながら出力する
