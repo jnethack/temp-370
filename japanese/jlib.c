@@ -5,10 +5,16 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#ifdef JAPANESETEST
+#ifdef _MSC_VER
+#include <windows.h>
+#endif
+#else
 #ifdef WIN32
 #include "win32api.h"
 #endif
 #include "hack.h"
+#endif
 #ifdef POSIX_ICONV
 #include <iconv.h>
 #endif
@@ -69,6 +75,13 @@ static int      input_kcode = INPUT_KCODE;
 #ifdef POSIX_ICONV
 static iconv_t  output_dsc = 0;
 static iconv_t  input_dsc = 0;
+#endif
+
+#ifdef JAPANESETEST
+int rn2(int max)
+{
+  return 0;
+}
 #endif
 
 /*
@@ -742,6 +755,7 @@ jrndm_replace(char *c)
       memcpy(c, cc, 2);
 }
 
+#ifndef JAPANESETEST
 /*
  * "put off"を対象によって適切に和訳する
  */
@@ -868,6 +882,7 @@ numeral(register struct obj *obj)
         }
     }
 }
+#endif
 
 /*-------------------------------------------------------------------------
         全角文字のかすれパターン
@@ -1372,6 +1387,7 @@ jrubout(char *engr,int nxt,int use_rubout,int select_rnd)
     return 1;
 }
 
+#ifndef JAPANESETEST
 static struct trans_verb trans_verb_list[] = {
     {"adjust",  "どれ", "を", "調整する"},
     {"call",    "どれ", "を", "呼ぶ"},
@@ -1435,3 +1451,4 @@ struct trans_verb
 
     return &dummyverb;;
 }
+#endif
