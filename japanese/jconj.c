@@ -6,7 +6,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "hack.h"
+
+#define STRNCMP2(x, y) strncmp(x, y, strlen(y))
+
 
 #define EUC     0
 #define SJIS    1
@@ -333,7 +335,7 @@ jconj(const char *jverb,const char *sfx)
     }
 
 #ifdef JAPANESETEST
-    fprintf( stderr, "I don't know such word \"%s\"\n");
+    fprintf( stderr, "I don't know such word \"%s\"\n", jverb);
 #endif
     return jverb;
 }
@@ -420,18 +422,6 @@ jconj_adj(const char *jadj)
 
 
 #ifdef JAPANESETEST
-unsigned char
-*e2sj(unsigned char *s)
-{
-    return *s;
-}
-
-unsigned char
-*sj2e(unsigned char *s)
-{
-    return *s;
-}
-
 void
 main(void)
 {
