@@ -61,8 +61,8 @@ static unsigned char hira_tab[][2]={
 #define KAHEN   4 /* カ変 */
 
 #define NORMAL  0 /* あける→～た */
-#define SOKUON  1 /* 刻む→～んだ */
-#define HATSUON 2 /* 打つ→～った */
+#define HATSUON 1 /* 刻む→～んだ */
+#define SOKUON  2 /* 打つ→～った */
 #define ION     3 /* 浮く→～いた */
 
 struct _jconj_tab {
@@ -70,7 +70,7 @@ struct _jconj_tab {
     int column;
 /* 0: fifth conj. 1:upper conj. 2:lower conj. 3:SAHEN 4:KAHEN */
     int katsuyo_type;
-/* 0: normal 1: sokuon 2: hatson 3: ion */
+/* 0: normal 1: hatsuon 2: sokuon 3: ion */
     int onbin_type;
 } jconj_tab[] = {
 /* あ */
@@ -79,7 +79,7 @@ struct _jconj_tab {
     {"いれる", J_RA, LOWER, NORMAL},
     {"入れる", J_RA, LOWER, NORMAL},
     {"浮く", J_KA, FIFTH, ION},
-    {"打つ", J_TA, FIFTH, HATSUON},
+    {"打つ", J_TA, FIFTH, SOKUON},
     {"置く", J_KA, FIFTH, ION},
     {"納める", J_MA, LOWER, NORMAL},
     {"落ちる", J_TA, UPPER, NORMAL},
@@ -89,72 +89,72 @@ struct _jconj_tab {
     {"輝く", J_KA, FIFTH, ION},
     {"書く", J_KA, FIFTH, ION},
     {"かける", J_KA, UPPER, NORMAL},
-    {"かぶる", J_RA, FIFTH, HATSUON},
+    {"かぶる", J_RA, FIFTH, SOKUON},
     {"構える", J_A, LOWER, NORMAL},
     {"噛みつく", J_KA, FIFTH, ION},
-    {"刻む", J_MA, FIFTH, SOKUON},
+    {"刻む", J_MA, FIFTH, HATSUON},
     {"着る", J_KA, UPPER, NORMAL},
     {"来る", J_KA, KAHEN, NORMAL}, 
     {"砕く", J_KA, FIFTH, ION}, 
     {"加える", J_A, LOWER, NORMAL},
-    {"こする", J_RA, FIFTH, HATSUON},
+    {"こする", J_RA, FIFTH, SOKUON},
     {"こます", J_SA, FIFTH, NORMAL},
-    {"込む", J_MA, FIFTH, SOKUON},
+    {"込む", J_MA, FIFTH, HATSUON},
     {"殺す", J_SA, FIFTH, NORMAL},
     {"壊す", J_SA, FIFTH, NORMAL},
 /* さ */
     {"捧げる", J_KA, LOWER, NORMAL},
     {"錆びる", J_BA, UPPER, NORMAL},
-    {"死ぬ", J_NA, FIFTH, SOKUON},
-    {"滑る", J_RA, FIFTH, HATSUON},
+    {"死ぬ", J_NA, FIFTH, HATSUON},
+    {"滑る", J_RA, FIFTH, SOKUON},
     {"する", J_SA, SAHEN, NORMAL}, 
 /* た */
     {"たじろぐ", J_GA, FIFTH, ION},
     {"出す", J_SA, FIFTH, NORMAL},
     {"食べる", J_HA, LOWER, NORMAL}, 
-    {"使う", J_WA, FIFTH, HATSUON},
+    {"使う", J_WA, FIFTH, SOKUON},
     {"つける", J_KA, LOWER, NORMAL},
     {"つまずく", J_KA, FIFTH, ION},
     {"出る", J_NA, LOWER, NORMAL},
     {"解く", J_KA, FIFTH, ION},
     {"溶ける", J_KA, LOWER, NORMAL},
     {"とばす", J_SA, FIFTH, NORMAL},
-    {"飛ぶ", J_BA, FIFTH, SOKUON},
-    {"取る", J_RA, FIFTH, HATSUON},
+    {"飛ぶ", J_BA, FIFTH, HATSUON},
+    {"取る", J_RA, FIFTH, SOKUON},
 /* な */
     {"投げる", J_GA, LOWER, NORMAL},
     {"名づける", J_KA, LOWER, NORMAL},
-    {"握る", J_RA, FIFTH, HATSUON},
+    {"握る", J_RA, FIFTH, SOKUON},
     {"脱ぐ", J_GA, FIFTH, ION},
     {"濡らす", J_SA, FIFTH, NORMAL},
-    {"塗る", J_RA, FIFTH, HATSUON},
-    {"飲む", J_MA, FIFTH, SOKUON},
+    {"塗る", J_RA, FIFTH, SOKUON},
+    {"飲む", J_MA, FIFTH, HATSUON},
 /* は */
-    {"はいずる", J_RA, FIFTH, HATSUON},
+    {"はいずる", J_RA, FIFTH, SOKUON},
     {"履く", J_KA, FIFTH, ION},
-    {"はさむ", J_MA, FIFTH, SOKUON},
+    {"はさむ", J_MA, FIFTH, HATSUON},
     {"はずす", J_SA, FIFTH, NORMAL},
     {"外す", J_SA, FIFTH, NORMAL},
     {"はめる", J_MA, UPPER, NORMAL},
-    {"光る", J_RA, FIFTH, HATSUON},
+    {"光る", J_RA, FIFTH, SOKUON},
     {"浸す", J_SA, FIFTH, NORMAL},
     {"ひっかける", J_KA, LOWER, NORMAL},
-    {"拾う", J_WA, FIFTH, HATSUON},
-    {"踏む", J_MA, FIFTH, SOKUON},
+    {"拾う", J_WA, FIFTH, SOKUON},
+    {"踏む", J_MA, FIFTH, HATSUON},
     {"振りかざす", J_SA, FIFTH, NORMAL},
     {"震える", J_A, LOWER, NORMAL},
-    {"掘る", J_RA, FIFTH, HATSUON},
+    {"掘る", J_RA, FIFTH, SOKUON},
 /* ま */
     {"巻く", J_KA, FIFTH, ION},
     {"またたく", J_KA, FIFTH, ION},
-    {"守る", J_RA, FIFTH, HATSUON},
+    {"守る", J_RA, FIFTH, SOKUON},
     {"回す", J_SA, FIFTH, NORMAL},
     {"身につける", J_KA, LOWER, NORMAL},
-    {"持つ", J_TA, FIFTH, HATSUON},
+    {"持つ", J_TA, FIFTH, SOKUON},
 /* や */
     {"焼く", J_KA, FIFTH, ION},
-    {"呼ぶ", J_BA, FIFTH, SOKUON},
-    {"読む", J_MA, FIFTH, SOKUON},
+    {"呼ぶ", J_BA, FIFTH, HATSUON},
+    {"読む", J_MA, FIFTH, HATSUON},
     {"よろめく", J_KA, FIFTH, ION},
 /* ら */
 /* わ */
@@ -211,14 +211,14 @@ jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
                     memcpy(p, e2sj(hira_tab[tab->column + 1]), 2);
                 }
                 break;
-              case SOKUON:
+              case HATSUON:
                 if(!IC){
                     p[1] = 0xf3;
                 } else {
                     memcpy(p, "ん", 2);
                 }
                 break;
-              case HATSUON:
+              case SOKUON:
                 if(!IC){
                     p[1] = 0xc3;
                 } else {
@@ -234,7 +234,7 @@ jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
                 break;
             }
             strcpy((char *)p + 2, sfx);
-            if(tab->onbin_type == SOKUON ||
+            if(tab->onbin_type == HATSUON ||
                (tab->onbin_type == ION && tab->column >= J_GA)){
                 if(!IC){
                   ++p[3];
