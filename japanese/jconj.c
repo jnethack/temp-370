@@ -9,16 +9,6 @@
 
 #define STRNCMP2(x, y) strncmp(x, y, strlen(y))
 
-
-#define EUC     0
-#define SJIS    1
-#define JIS     2
-
-/* internal kcode */
-/* IC=0 EUC */
-/* IC=1 SJIS */
-#define IC ((unsigned char)("漢"[0])==0x8a)
-
 #define J_A     0
 #define J_KA    (1*5)
 #define J_SA    (2*5)
@@ -36,22 +26,22 @@
 #define J_BA    (13*5)
 #define J_PA    (14*5)
 
-static unsigned char hira_tab[][2]={
-    {0xa4, 0xa2}, {0xa4, 0xa4}, {0xa4, 0xa6}, {0xa4, 0xa8}, {0xa4, 0xaa}, 
-    {0xa4, 0xab}, {0xa4, 0xad}, {0xa4, 0xaf}, {0xa4, 0xb1}, {0xa4, 0xb3}, 
-    {0xa4, 0xb5}, {0xa4, 0xb7}, {0xa4, 0xb9}, {0xa4, 0xbb}, {0xa4, 0xbd}, 
-    {0xa4, 0xbf}, {0xa4, 0xc1}, {0xa4, 0xc4}, {0xa4, 0xc6}, {0xa4, 0xc8}, 
-    {0xa4, 0xca}, {0xa4, 0xcb}, {0xa4, 0xcc}, {0xa4, 0xcd}, {0xa4, 0xce}, 
-    {0xa4, 0xcf}, {0xa4, 0xd2}, {0xa4, 0xd5}, {0xa4, 0xd8}, {0xa4, 0xdb}, 
-    {0xa4, 0xde}, {0xa4, 0xdf}, {0xa4, 0xe0}, {0xa4, 0xe1}, {0xa4, 0xe2}, 
-    {0xa4, 0xe4}, {0xa4, 0xa4}, {0xa4, 0xe6}, {0xa4, 0xa8}, {0xa4, 0xe8}, 
-    {0xa4, 0xe9}, {0xa4, 0xea}, {0xa4, 0xeb}, {0xa4, 0xec}, {0xa4, 0xed}, 
-    {0xa4, 0xef}, {0xa4, 0xa4}, {0xa4, 0xa6}, {0xa4, 0xa8}, {0xa4, 0xaa}, 
-    {0xa4, 0xac}, {0xa4, 0xae}, {0xa4, 0xb0}, {0xa4, 0xb2}, {0xa4, 0xb4}, 
-    {0xa4, 0xb6}, {0xa4, 0xb8}, {0xa4, 0xba}, {0xa4, 0xbc}, {0xa4, 0xbe}, 
-    {0xa4, 0xc0}, {0xa4, 0xc2}, {0xa4, 0xc5}, {0xa4, 0xc7}, {0xa4, 0xc9}, 
-    {0xa4, 0xd0}, {0xa4, 0xd3}, {0xa4, 0xd6}, {0xa4, 0xd9}, {0xa4, 0xdc}, 
-    {0xa4, 0xd1}, {0xa4, 0xd4}, {0xa4, 0xd7}, {0xa4, 0xda}, {0xa4, 0xdd},
+static const char *hira_tab[] = {
+    "あ", "い", "う", "え", "お", 
+    "か", "き", "く", "け", "こ",
+    "さ", "し", "す", "せ", "そ",
+    "た", "ち", "つ", "て", "と",
+    "な", "に", "ぬ", "ね", "の",
+    "は", "ひ", "ふ", "へ", "ほ",
+    "ま", "み", "む", "め", "も",
+    "や", "い", "ゆ", "え", "よ",
+    "ら", "り", "る", "れ", "ろ",
+    "わ", "い", "う", "え", "お",
+    "が", "ぎ", "ぐ", "げ", "ご",
+    "ざ", "じ", "ず", "ぜ", "ぞ",
+    "だ", "ぢ", "づ", "で", "ど",
+    "ば", "び", "ぶ", "べ", "ぼ",
+    "ぱ", "ぴ", "ぷ", "ぺ", "ぽ",
 };
 
 #define FIFTH   0 /* 五段 */
@@ -192,12 +182,7 @@ jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
       case FIFTH:
         p = tmp + (len - 2);
         if(!STRNCMP2(sfx, "な")){
-            if(!IC){
-                p[0] = 0xa4;
-                p[1] = hira_tab[tab->column][1];
-            } else {
-              memcpy(p, e2sj(hira_tab[tab->column]), 2);
-            }
+            memcpy(p, hira_tab[tab->column], 2);
 
             strcpy((char *)p + 2, sfx);
             break;
@@ -205,32 +190,16 @@ jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
         else if(!STRNCMP2(sfx, "た") || !STRNCMP2(sfx, "て")){
             switch( tab->onbin_type ){
               case NORMAL:
-                if(!IC){
-                    p[1] = hira_tab[tab->column + 1][1];
-                } else {
-                    memcpy(p, e2sj(hira_tab[tab->column + 1]), 2);
-                }
+                memcpy(p, hira_tab[tab->column + 1], 2);
                 break;
               case HATSUON:
-                if(!IC){
-                    p[1] = 0xf3;
-                } else {
-                    memcpy(p, "ん", 2);
-                }
+                memcpy(p, "ん", 2);
                 break;
               case SOKUON:
-                if(!IC){
-                    p[1] = 0xc3;
-                } else {
-                    memcpy(p, "っ", 2);
-                }
+                memcpy(p, "っ", 2);
                 break;
               case ION:
-                if(!IC){
-                    p[1] = 0xa4;
-                } else {
-                    memcpy(p, "い", 2);
-                }
+                memcpy(p, "い", 2);
                 break;
             }
             strcpy((char *)p + 2, sfx);
@@ -246,36 +215,20 @@ jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
             break;
         }
         else if(!STRNCMP2(sfx, "ば")){
-            if(!IC){
-                p[1] = hira_tab[tab->column + 3][1];
-            } else {
-                memcpy(p, e2sj(hira_tab[tab->column + 3]), 2);
-            }
+            memcpy(p, hira_tab[tab->column + 3], 2);
             strcpy((char *)p + 2, sfx);
         }
         else if(!STRNCMP2(sfx, "れ")){
-            if(!IC){
-                p[1]=hira_tab[tab->column + 3][1];
-            } else {
-                memcpy(p, e2sj(hira_tab[tab->column + 3]), 2);
-            }
+            memcpy(p, hira_tab[tab->column + 3], 2);
             strcpy((char *)p + 2, sfx + 2);
         }
         else if(!STRNCMP2(sfx, "ま")) {
-            if(!IC){
-                p[1] = hira_tab[tab->column + 1][1];
-            } else {
-                memcpy(p, e2sj(hira_tab[tab->column + 1]), 2);
-            }
+            memcpy(p, hira_tab[tab->column + 1], 2);
             strcpy((char *)p + 2, sfx);
             break;
         }
         else if(!STRNCMP2(sfx, "よ")) {
-            if(!IC){
-                p[1] = hira_tab[tab->column + 4][1];
-            } else {
-                memcpy(p, e2sj(hira_tab[tab->column + 4]), 2);
-            }
+            memcpy(p, hira_tab[tab->column + 4], 2);
             strcpy((char *)p + 2, sfx + 2);
             break;
         }
