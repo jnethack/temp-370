@@ -15,10 +15,10 @@
 #   This is used for building two distinct executables of NetHack:
 #
 #   A tty port utilizing the Win32 Console I/O subsystem, Console
-#       NetHack.exe
+#       JNetHack.exe
 #
 #   A Win32 native port built on the Windows API, Graphical NetHack or
-#       NetHackW.exe
+#       JNetHackW.exe
 #
 #   If you have any questions about building NetHack for the Windows platform
 #   please read sys/windows/Install.windows file included in the distribution.
@@ -1704,7 +1704,7 @@ GAMEOBJ=$(GAMEOBJ:^ =^
 #--------
 #
 
-$(GAMEDIR)NetHack.exe : gamedir.tag $(OTTY)consoletty.o \
+$(GAMEDIR)JNetHack.exe : gamedir.tag $(OTTY)consoletty.o \
 			$(ALLOBJTTY) $(CURSESWINCONOBJS) \
 			$(TTYSOUNDOBJS) $(OTTY)date.o $(OTTY)console.res \
 			$(LUALIB) $(TTYOBJTTY) $(PDCTXTLIB) $(PDCTXTOBJS) $(OTTYHACKLIB)
@@ -1727,7 +1727,7 @@ $(GAMEDIR)NetHack.exe : gamedir.tag $(OTTY)consoletty.o \
 # NetHackW
 #---------
 #
-$(GAMEDIR)NetHackW.exe : gamedir.tag $(OGUI)tile.o \
+$(GAMEDIR)JNetHackW.exe : gamedir.tag $(OGUI)tile.o \
 			$(ALLOBJGUI) $(GAMEOBJGUI) $(GUIOBJ) $(GUISOUNDOBJS) \
 			$(CURSESWINGUIOBJS) $(OGUI)date.o \
 			$(OGUI)NetHackW.res \
@@ -1762,8 +1762,8 @@ binary.tag: 	$(DAT)data $(DAT)rumors $(DAT)oracles $(DLB) \
 	if exist $(DOC)guidebook.txt copy $(DOC)guidebook.txt $(GAMEDIR)Guidebook.txt
 	if exist $(DOC)nethack.txt copy $(DOC)nethack.txt $(GAMEDIR)NetHack.txt
 #	if exist $(UTIL)sfctool.pdb copy $(UTIL)sfctool.pdb $(GAMEDIR)sfctool.pdb
-	@if exist $(GAMEDIR)NetHack.PDB echo NOTE: You may want to remove $(U_GAMEDIR)/NetHack.PDB to conserve space
-	@if exist $(GAMEDIR)NetHackW.PDB echo NOTE: You may want to remove $(U_GAMEDIR)/NetHackW.PDB to conserve space
+	@if exist $(GAMEDIR)JNetHack.PDB echo NOTE: You may want to remove $(U_GAMEDIR)/JNetHack.PDB to conserve space
+	@if exist $(GAMEDIR)JNetHackW.PDB echo NOTE: You may want to remove $(U_GAMEDIR)/JNetHackW.PDB to conserve space
 	-if exist $(MSWSYS)nethackrc.template copy $(MSWSYS)nethackrc.template   $(R_GAMEDIR)
 	-if not exist $(GAMEDIR)record. goto>$(GAMEDIR)record.
 ! IF ("$(USE_DLB)" == "Y")
@@ -2812,16 +2812,16 @@ $(SndWavDir)sa2_xplevelup.wav: $(SndWavDir)sa2_xplevelup.uu $(U)uudecode.exe
 # packaging
 #===============================================================================
 
-PKGFILES = nethackrc.template Guidebook.txt license NetHack.exe NetHack.txt \
-	 NetHackW.exe opthelp nhdat$(NHV) record symbols \
+PKGFILES = nethackrc.template Guidebook.txt license JNetHack.exe NetHack.txt \
+	 JNetHackW.exe opthelp nhdat$(NHV) record symbols \
 	 sysconf.template $(SFCTOOLBASENAM)
 FILESTOZIP = $(BinDir)nethackrc.template $(BinDir)Guidebook.txt $(BinDir)license \
-	$(BinDir)NetHack.exe $(BinDir)NetHack.txt $(BinDir)NetHackW.exe \
+	$(BinDir)JNetHack.exe $(BinDir)NetHack.txt $(BinDir)JNetHackW.exe \
 	$(BinDir)opthelp $(BinDir)nhdat$(NHV) $(BinDir)record \
 	$(BinDir)symbols $(BinDir)sysconf.template $(SFCTOOLPKG)
 
-DBGSYMS = NetHack.PDB NetHackW.PDB $(SFCTOOLPDBNAM)
-PDBTOZIP = $(BinDir)NetHack.PDB $(BinDir)NetHackW.PDB $(SFCTOOLPDBBIN)
+DBGSYMS = JNetHack.PDB JNetHackW.PDB $(SFCTOOLPDBNAM)
+PDBTOZIP = $(BinDir)JNetHack.PDB $(BinDir)JNetHackW.PDB $(SFCTOOLPDBBIN)
 MAINZIP = $(PkgDir)nethack-$(NHV)-win-$(TARGET_CPU).zip
 DBGSYMZIP = $(PkgDir)nethack-$(NHV)-win-$(TARGET_CPU)-debugsymbols.zip
 
@@ -2841,8 +2841,8 @@ binary:  envchk.tag libdir.tag ottydir$(TARGET_CPU).tag \
 		$(LUASRC)lua.h $(PDCDEP) \
 		$(INCL)nhlua.h $(OUTL)utility.tag \
 		$(DAT)data $(DAT)rumors $(DAT)oracles $(DAT)engrave \
-		$(DAT)epitaph $(DAT)bogusmon $(GAMEDIR)NetHack.exe \
-		$(GAMEDIR)NetHackW.exe $(SFCTOOLPKG) $(GAMEDIRDLLS) binary.tag
+		$(DAT)epitaph $(DAT)bogusmon $(GAMEDIR)JNetHack.exe \
+		$(GAMEDIR)JNetHackW.exe $(SFCTOOLPKG) $(GAMEDIRDLLS) binary.tag
 	@echo NetHack is up to date.
 
 #===============================================================================
@@ -2850,14 +2850,14 @@ binary:  envchk.tag libdir.tag ottydir$(TARGET_CPU).tag \
 #===============================================================================
 
 spotless: clean
-	if exist $(GAMEDIR)NetHack.exe  del $(GAMEDIR)NetHack.exe
-	if exist $(GAMEDIR)NetHackW.exe del $(GAMEDIR)NetHackW.exe
-	if exist $(GAMEDIR)NetHack.pdb  del $(GAMEDIR)NetHack.pdb
-	if exist $(GAMEDIR)NetHackW.pdb del $(GAMEDIR)NetHackW.pdb
-	if exist $(GAMEDIR)nhdat$(NHV)  del $(GAMEDIR)nhdat$(NHV)
-	if exist $(INCL)date.h          del $(INCL)date.h
-	if exist $(INCL)onames.h        del $(INCL)onames.h
-	if exist $(INCL)pm.h            del $(INCL)pm.h
+	if exist $(GAMEDIR)JNetHack.exe del $(GAMEDIR)JNetHack.exe
+	if exist $(GAMEDIR)JNetHackW.exe del $(GAMEDIR)JNetHackW.exe
+	if exist $(GAMEDIR)JNetHack.pdb del $(GAMEDIR)JNetHack.pdb
+	if exist $(GAMEDIR)JNetHackW.pdb del $(GAMEDIR)JNetHackW.pdb
+	if exist $(GAMEDIR)nhdat$(NHV) del $(GAMEDIR)nhdat$(NHV)
+	if exist $(INCL)date.h         del $(INCL)date.h
+	if exist $(INCL)onames.h       del $(INCL)onames.h
+	if exist $(INCL)pm.h           del $(INCL)pm.h
 	if exist $(U)*.lnk              del $(U)*.lnk
 	if exist $(U)*.map              del $(U)*.map
 	if exist $(DAT)data             del $(DAT)data
