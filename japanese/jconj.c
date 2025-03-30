@@ -26,6 +26,13 @@
 #define J_BA    (13*5)
 #define J_PA    (14*5)
 
+static int cl = /* 全角ひらがなのバイト数 */
+#ifdef ICUTF8
+    3;
+#else
+    2;
+#endif
+
 static const char *hira_tab[] = {
     "あ", "い", "う", "え", "お", 
     "か", "き", "く", "け", "こ",
@@ -180,83 +187,83 @@ jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
 
     switch( tab->katsuyo_type ){
       case FIFTH:
-        p = tmp + (len - 2);
+        p = tmp + (len - cl);
         if(!STRNCMP2(sfx, "な")){
-            memcpy(p, hira_tab[tab->column], 2);
+            memcpy(p, hira_tab[tab->column], cl);
 
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
             break;
         }
         else if(!STRNCMP2(sfx, "た") || !STRNCMP2(sfx, "て")){
             switch( tab->onbin_type ){
               case NORMAL:
-                memcpy(p, hira_tab[tab->column + 1], 2);
+                memcpy(p, hira_tab[tab->column + 1], cl);
                 break;
               case HATSUON:
-                memcpy(p, "ん", 2);
+                memcpy(p, "ん", cl);
                 break;
               case SOKUON:
-                memcpy(p, "っ", 2);
+                memcpy(p, "っ", cl);
                 break;
               case ION:
-                memcpy(p, "い", 2);
+                memcpy(p, "い", cl);
                 break;
             }
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
             if(tab->onbin_type == HATSUON ||
                (tab->onbin_type == ION && tab->column >= J_GA)){
-                if(!IC){
-                  ++p[3];
-                } else {
-                  ++p[3];
-                }
-/*        memcpy(p+2, e2sj(sj2e(p+2)+1), 2);*//* sj2e() returns ptr to char* */
+                  /*
+                   * 2文字目を濁音にする。
+                   * 清音の次が濁音であることに依存している。
+                   * EUC-JP, SJIS, UTF-8 とも満たしている。
+                   */
+                  ++p[cl * 2 - 1];
             }
             break;
         }
         else if(!STRNCMP2(sfx, "ば")){
-            memcpy(p, hira_tab[tab->column + 3], 2);
-            strcpy((char *)p + 2, sfx);
+            memcpy(p, hira_tab[tab->column + 3], cl);
+            strcpy((char *)p + cl, sfx);
         }
         else if(!STRNCMP2(sfx, "れ")){
-            memcpy(p, hira_tab[tab->column + 3], 2);
-            strcpy((char *)p + 2, sfx + 2);
+            memcpy(p, hira_tab[tab->column + 3], cl);
+            strcpy((char *)p + cl, sfx + cl);
         }
         else if(!STRNCMP2(sfx, "ま")) {
-            memcpy(p, hira_tab[tab->column + 1], 2);
-            strcpy((char *)p + 2, sfx);
+            memcpy(p, hira_tab[tab->column + 1], cl);
+            strcpy((char *)p + cl, sfx);
             break;
         }
         else if(!STRNCMP2(sfx, "よ")) {
-            memcpy(p, hira_tab[tab->column + 4], 2);
-            strcpy((char *)p + 2, sfx + 2);
+            memcpy(p, hira_tab[tab->column + 4], cl);
+            strcpy((char *)p + cl, sfx + cl);
             break;
         }
         break;
       case LOWER:
       case UPPER:
       case KAHEN:
-        p = tmp + (len - 2);
+        p = tmp + (len - cl);
         if(!STRNCMP2(sfx, "ば")){
             strcpy((char *)p, "れ");
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
         }
         else if(!STRNCMP2(sfx, "れ") && tab->katsuyo_type == LOWER){
             strcpy((char *)p, "ら");
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
         }
         else
           strcpy((char *)p, sfx);
         break;
       case SAHEN:
-        p = tmp + (len - 4);
+        p = tmp + (len - cl * 2);
         if(!STRNCMP2(sfx, "な") ||
            !STRNCMP2(sfx, "ま") ||
            !STRNCMP2(sfx, "た") ||
            !STRNCMP2(sfx, "て") ||
            !STRNCMP2(sfx, "よ")){
             strcpy((char *)p, "し");
-            strcpy((char *)p + 2, sfx);
+            strcpy((char *)p + cl, sfx);
         }
         else if(!STRNCMP2(sfx, "ば") || !STRNCMP2(sfx, "れば")){
             strcpy((char *)p, "すれば");
@@ -301,9 +308,9 @@ jcan(const char *jverb)
     static char tmp[1024];
 
     int len = strlen(jverb);
-    if(!strcmp(jverb + len - 4, "する")){
-        strncpy(tmp, jverb, len - 4);
-        strcpy(tmp + len - 4, "できる");
+    if(!strcmp(jverb + len - cl * 2, "する")){
+        strncpy(tmp, jverb, len - cl * 2);
+        strcpy(tmp + len - cl * 2, "できる");
         return tmp;
     } else {
         ret = jconj(jverb, "れる");
@@ -318,9 +325,9 @@ jcannot(const char *jverb)
     static char tmp[1024];
 
     int len = strlen(jverb);
-    if(!strcmp(jverb + len - 4, "する")){
-        strncpy(tmp, jverb, len-4);
-        strcpy(tmp +len-4, "できない");
+    if(!strcmp(jverb + len - cl * 2, "する")){
+        strncpy(tmp, jverb, len - cl * 2);
+        strcpy(tmp + len - cl * 2, "できない");
         return tmp;
     } else {
         return jconj(jverb, "れない");
