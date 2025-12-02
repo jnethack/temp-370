@@ -2812,7 +2812,7 @@ $(SndWavDir)sa2_xplevelup.wav: $(SndWavDir)sa2_xplevelup.uu $(U)uudecode.exe
 # packaging
 #===============================================================================
 
-PKGFILES = nethackrc.template Guidebook.txt license NetHack.exe NetHack.txt \
+PKGFILES = nethackrc.template Guidebook.txt license JNetHack.exe NetHack.txt \
 	 JNetHackW.exe opthelp nhdat370 record symbols \
 	 sysconf.template $(SFCTOOLBASENAM)
 FILESTOZIP = $(BinDir)nethackrc.template $(BinDir)Guidebook.txt $(BinDir)license \
