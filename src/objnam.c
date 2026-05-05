@@ -239,7 +239,10 @@ obj_typename(int otyp)
     if (Role_if(PM_SAMURAI)) {
         actualn = Japanese_item_name(otyp, actualn);
         if (otyp == WOODEN_HARP || otyp == MAGIC_HARP)
+/*JP
             dn = "koto";
+*/
+            dn = "琴";
     }
     /* generic items don't have an actual-name; we shouldn't ever be called
        for those; pacify static analyzer without resorting to impossible() */
@@ -330,9 +333,15 @@ obj_typename(int otyp)
     case ARMOR_CLASS:
         if (objects[otyp].oc_armcat == ARM_GLOVES
             || objects[otyp].oc_armcat == ARM_BOOTS)
+/*JP
             Strcpy(buf, "pair of ");
+*/
+            Strcat(buf, "一対の");
         else if (otyp >= GRAY_DRAGON_SCALES && otyp <= YELLOW_DRAGON_SCALES)
+/*JP
             Strcpy(buf, "set of ");
+*/
+            Strcat(buf, "一式の");
         FALLTHROUGH;
         /*FALLTHRU*/
     default:
@@ -723,7 +732,10 @@ xname_flags(
     if (Role_if(PM_SAMURAI)) {
         actualn = Japanese_item_name(typ, actualn);
         if (typ == WOODEN_HARP || typ == MAGIC_HARP)
+/*JP
             dn = "koto";
+*/
+            dn = "琴";
     }
     /* generic items don't have an actual-name; we shouldn't ever be called
        for those; pacify static analyzer without resorting to impossible() */
@@ -947,7 +959,10 @@ xname_flags(
                appropriate and omitted by xname(); shrink_glob() wants
                it but uses Yname2() -> yname() -> xname() rather than
                doname() so we've added an external flag to request it */
+/*JP
             Concat(buf, 0, "partly eaten ");
+*/
+            Concat(buf, 0, "食べかけの");
         }
         if (obj->globby) { /* 5.0 added "medium" to replace no-prefix */
 #if 0 /*JP:T*/
@@ -1592,7 +1607,11 @@ doname_base(
             vague_quan = (doname_flags & DONAME_VAGUE_QUAN) != 0,
             for_menu = (doname_flags & DONAME_FOR_MENU) != 0;
     boolean known, dknown, cknown, bknown, lknown,
+#if 0 /*JP*/
             fake_arti, force_the;
+#else
+            fake_arti;
+#endif
     char prefix[PREFIX];
     char tmpbuf[PREFIX + 1]; /* for when we have to add something at
                               * the start of prefix instead of the
@@ -1668,7 +1687,9 @@ doname_base(
        want "the" prefix and when it doesn't, avoid "a"/"an" prefix too */
     fake_arti = (obj->otyp == SLIME_MOLD
                  && (aname = artifact_name(bp, (short *) 0, FALSE)) != 0);
+#if 0 /*JP*/
     force_the = (fake_arti && !strncmpi(aname, "the ", 4));
+#endif
 
     prefix[0] = '\0';
     if (obj->quan != 1L) {
@@ -3847,6 +3868,7 @@ makesingular(const char *oldstr)
 }
 
 
+#if 0 /*JP*/
 staticfn boolean
 ch_ksound(const char *basestr)
 {
@@ -3873,7 +3895,6 @@ ch_ksound(const char *basestr)
     return FALSE;
 }
 
-#if 0 /*JP*/
 staticfn boolean
 badman(
     const char *basestr,
