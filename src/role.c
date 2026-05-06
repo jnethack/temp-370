@@ -2895,7 +2895,11 @@ genl_player_setup(int screenheight)
                     /* pick a random role */
                     k = pick_role(RACE, GEND, ALGN, PICK_RANDOM);
                     if (k < 0) {
+#if 0 /*JP:T*/
                         pline("Incompatible role!");
+#else
+                        pline("選べない職業！");
+#endif
                         k = randrole(FALSE);
                     }
                 } else {
@@ -2979,7 +2983,11 @@ genl_player_setup(int screenheight)
                 if (pick4u == 'y' || pick4u == 'a' || RACE == ROLE_RANDOM) {
                     k = pick_race(ROLE, GEND, ALGN, PICK_RANDOM);
                     if (k < 0) {
+#if 0 /*JP:T*/
                         pline("Incompatible race!");
+#else
+                        pline("選べない種族！");
+#endif
                         k = randrace(ROLE);
                     }
                 } else { /* pick4u == 'n' */
@@ -3070,7 +3078,11 @@ genl_player_setup(int screenheight)
                 if (pick4u == 'y' || pick4u == 'a' || GEND == ROLE_RANDOM) {
                     k = pick_gend(ROLE, RACE, ALGN, PICK_RANDOM);
                     if (k < 0) {
+#if 0 /*JP:T*/
                         pline("Incompatible gender!");
+#else
+                        pline("選べない性別！");
+#endif
                         k = randgend(ROLE, RACE);
                     }
                 } else { /* pick4u == 'n' */
@@ -3161,7 +3173,11 @@ genl_player_setup(int screenheight)
                 if (pick4u == 'y' || pick4u == 'a' || ALGN == ROLE_RANDOM) {
                     k = pick_align(ROLE, RACE, GEND, PICK_RANDOM);
                     if (k < 0) {
+#if 0 /*JP:T*/
                         pline("Incompatible alignment!");
+#else
+                        pline("選べない属性！");
+#endif
                         k = randalign(ROLE, RACE);
                     }
                 } else { /* pick4u == 'n' */
@@ -3291,8 +3307,13 @@ genl_player_setup(int screenheight)
 #endif
         }
         any.a_int = -1;
+#if 0 /*JP:T*/
         add_menu(win, &nul_glyphinfo, &any, 'q', 0,
                  ATR_NONE, clr, "Quit", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(win, &nul_glyphinfo, &any, 'q', 0,
+                 ATR_NONE, clr, "抜ける", MENU_ITEMFLAGS_NONE);
+#endif
 #if 0 /*JP*/
         Sprintf(pbuf, "Is this ok? [yn%sq]", iflags.renameallowed ? "a" : "");
 #else
@@ -3363,23 +3384,44 @@ reset_role_filtering(void)
     start_menu(win, MENU_BEHAVE_STANDARD);
 
     /* no extra blank line preceding this entry; end_menu supplies one */
+#if 0 /*JP:T*/
     add_menu_str(win, "Unacceptable roles");
+#else
+    add_menu_str(win, "選ばない職業");
+#endif
     setup_rolemenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
     add_menu_str(win, "");
+#if 0 /*JP:T*/
     add_menu_str(win, "Unacceptable races");
+#else
+    add_menu_str(win, "選ばない種族");
+#endif
     setup_racemenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
     add_menu_str(win, "");
+#if 0 /*JP:T*/
     add_menu_str(win, "Unacceptable genders");
+#else
+    add_menu_str(win, "選ばない性別");
+#endif
     setup_gendmenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
     add_menu_str(win, "");
+#if 0 /*JP:T*/
     add_menu_str(win, "Unacceptable alignments");
+#else
+    add_menu_str(win, "選ばない属性");
+#endif
     setup_algnmenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
-    Sprintf(filterprompt, "Pick all that apply%s",
+#if 0 /*JP:T*/
+    Sprintf(filterprompt, "適用するものを全て選ぶ%s",
             gotrolefilter() ? " and/or unpick any that no longer apply" : "");
+#else
+    Sprintf(filterprompt, "Pick all that apply%s",
+            gotrolefilter() ? "か、適用しないものを外す" : "");
+#endif
     end_menu(win, filterprompt);
     n = select_menu(win, PICK_ANY, &selected);
 
