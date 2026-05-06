@@ -3458,11 +3458,11 @@ plsel_startmenu(int ttyrows, int aspect)
                 (GEND < 0) ? "<gender>" : genders[GEND].adj,
                 (ALGN < 0) ? "<alignment>" : aligns[ALGN].adj);
 #else
-        Sprintf(qbuf, "%.20s%.20s%.20sの%.20s",
-                rolename,
-                (RACE < 0) ? "<種族>" : races[RACE].noun,
+        Sprintf(qbuf, "%.20sの%.20sの%.20sの%.20s",
+                (ALGN < 0) ? "<属性>" : aligns[ALGN].noun,
                 (GEND < 0) ? "<性別>" : genders[GEND].adj,
-                (ALGN < 0) ? "<属性>" : aligns[ALGN].adj);
+                (RACE < 0) ? "<種族>" : races[RACE].noun,
+                rolename);
 #endif
     } else {
         /* "<name> the <alignment> <gender> <race.adjective> <role>" */
@@ -3474,11 +3474,11 @@ plsel_startmenu(int ttyrows, int aspect)
                 races[RACE].adj,
                 rolename);
 #else
-        Sprintf(qbuf, "%.20s, %.20s%.20sの%.20s%.20s",
+        Sprintf(qbuf, "%.20s, %.20sの%.20sの%.20sの%.20s",
                 svp.plname,
-                aligns[ALGN].adj,
+                aligns[ALGN].noun,
                 genders[GEND].adj,
-                races[RACE].adj,
+                races[RACE].noun,
                 rolename);
 #endif
     }
