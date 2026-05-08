@@ -33,6 +33,15 @@ dumplogmsg(const char *line)
 
     if (!strncmp(line, "Unknown command", 15))
         return;
+#if 1 /*JP*/
+    {
+        const char *str = "コマンド？";
+        int len = strlen(str);
+        const char *end = strchr(line, '\0');
+        if (!strcmp(end - len, str))
+            return;
+    }
+#endif
     if (oldest && strlen(oldest) >= strlen(line)) {
         /* this buffer will gradually shrink until the 'else' is needed;
            there's no pressing need to track allocation size instead */
