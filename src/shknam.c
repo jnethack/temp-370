@@ -5,6 +5,11 @@
 
 /* shknam.c -- initialize a shop */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn boolean stock_room_goodpos(struct mkroom *, int, int, int, int);
@@ -458,8 +463,13 @@ mkshobj_at(const struct shclass *shp, int sx, int sy, boolean mkspecl)
     int atype;
 
     /* 3.6 tribute */
+#if 0 /*JP:T*/
     if (mkspecl && (!strcmp(shp->name, "rare books")
                     || !strcmp(shp->name, "second-hand bookstore"))) {
+#else
+    if (mkspecl && (!strcmp(shp->name, "幻の本屋")
+                    || !strcmp(shp->name, "古書店"))) {
+#endif
         struct obj *novel = mksobj_at(SPE_NOVEL, sx, sy, FALSE, FALSE);
 
         if (novel)
@@ -758,7 +768,10 @@ stock_room(int shp_indx, struct mkroom *sroom)
             n--;
         else if (inside_shop(sx, sy - 1))
             n++;
+/*JP
         Sprintf(buf, "Closed for inventory");
+*/
+        Sprintf(buf, "棚卸しのため閉店");
         make_engr_at(m, n, buf, NULL, 0L, DUST);
         if (levl[m][n].typ != CORR && levl[m][n].typ != ROOM)
             levl[m][n].typ = (Is_special(&u.uz)

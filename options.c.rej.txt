@@ -1,0 +1,202 @@
+alternate key handler
+ALTキーハンドラ
+deprecated (use S_boulder in sym file instead)
+巨岩を表示するシンボル文字
+the name of your (first) cat (e.g., catname:Tabby
+冒険を供にする(最初の)猫の名前 (例 catname:たま
+the name of your (first) dog (e.g., dogname:Fang
+冒険を供にする(最初の)犬の名前 (例 dogname:ポチ
+the symbols to use in drawing the dungeon map
+ダンジョンを描画するシンボル文字
+the symbols to use in drawing special effects
+特殊効果を描画するシンボル文字
+the font to use in the map window
+マップウィンドウに使用するフォント
+the font to use in the message window
+メッセージウィンドウに使用するフォント
+the size of the menu font
+メニューフォントのサイズ
+the size of the message font
+メッセージフォントのサイズ
+the size of the status font
+状況フォントのサイズ
+the size of the text font
+テキストフォントのサイズ
+the font to use in status window
+状況ウィンドウに使用するフォント
+the font to use in text windows
+テキストウィンドウに使用するフォント
+the name of a fruit you enjoy eating
+好物の果物の名前
+the name of your (first) horse (e.g., horsename:Silver
+冒険を供にする(最初の)馬の名前 (例 ghoulname:シルバー
+deselect all items on this page of a menu
+現在表示されているページのアイテムを非選択
+jump to the first page in a menu
+メニューの最初のページへ
+text attribute for menu headings
+強調，反転または下線で種類を表示する
+invert all items in a menu
+全てのアイテムを反転
+invert all items on this page of a menu", 4
+現在表示されているページのアイテムを反転"
+jump to the last page in a menu
+メニューの最後のページへ
+goto the next menu page
+次のメニューのページへ
+goto the previous menu page
+前のメニューのページへ
+search for a menu item
+メニューの検索
+select all items in a menu
+全てのアイテムを選択
+select all items on this page of a menu
+現在表示されている全てのアイテムを選択
+the symbols to use for monsters
+モンスターに使用されるシンボル文字
+number of top line messages to save
+先頭行に表示されたメッセージ履歴の保存数
+the type of message window required", 
+メッセージウィンドウのタイプを設定",
+the type of message window required
+メッセージウィンドウのタイプを設定
+your character's name (e.g., name:Merlin
+あなたの名前 (例 name:マーリン
+game receives click info from mouse
+ゲームがマウスからのクリック情報を受け取る
+use the number pad for movement
+ナンバーパッドを使用する
+the symbols to use for objects
+アイテムに使用されるシンボル文字
+the inventory order of the items in your pack
+背負い袋内の物の順番
+palette (00c/880/-fff is blue/yellow/reverse white
+パレット (00c/880/-fffはそれぞれ青/黄/反転白を示す
+palette (adjust an RGB color in palette (color
+パレット (パレットのRGB色を調整する (色
+same as palette, only order is reversed
+パレットが同じとき、指示したものだけ反転させる
+attributes for highlighting pets
+ペットをハイライトするための属性
+your preferred initial pet type
+あなたの選択した初期ペットの種類
+maximum burden picked up before prompt
+拾うときに最大荷重になる手前で確認する
+types of objects to pick up automatically
+自動で拾いあげる物のシンボル
+choose character via dialog or prompts
+キャラクター選択にダイアログや確認画面を使う
+your starting race (e.g.,
+ゲーム開始時の種族 (例
+your starting role (e.g.,
+ゲーム開始時の職業 (例
+display frequency when `running' or `travelling'
+トラベルコマンド等での連続移動時の描画頻度
+the parts of the score list you wish to see
+ゲーム終了時に見るスコアの種類
+amount to scroll map when scroll_margin is reached
+scroll_marginに届いたときのマップスクロール量
+scroll map when this far from the edge
+マップ端からのマップスクロール開始距離
+sort object selection lists by description
+物体選択リストを説明でソートする
+type of sound card to use
+使用しているサウンドカードの種類
+highlight control
+ハイライトの制御
+2 or 3 lines for horizontal (bottom or top) status display
+垂直(下か上)のステータス表示に2,3行使う
+2 or 3 lines for status display
+ステータス表示に2,3行使う
+override keystroke value
+キーマッピングを変更する
+suppress alerts about version-specific features
+バージョン間の違いに関する警告メッセージの無効化
+the symbols to use in drawing traps
+罠を描画するシンボル文字
+show more old messages at a time
+一度に表示するメッセージの数
+method of video updating
+使用するビデオモードを設定する
+color mappings for internal screen routines
+内蔵スクリーンルーチン用のカラーマップを用いる
+gray shades to map to black/gray/white
+表示にグレイスケールを用いる
+windowing system to use
+使用するウインドウシステム
+window processor to use
+使用するウィンドウプロセッサ
+load DECGraphics display symbols
+DECGraphics表示シンボルを読み込む
+load IBMGraphics display symbols
+IBMGraphics表示シンボルを読み込む
+load curses display symbols
+curses表示シンボルを読み込む
+load MACGraphics display symbols
+MACGraphics表示シンボルを読み込む
+Go to first page
+先頭ページに移動
+Go to last page
+最終ページに移動
+Go to next page
+次のページに移動
+Select all items
+全ての項目を選択
+Unselect all items
+全ての項目を選択解除
+Invert selection
+選択を反転
+Select items in current page
+現在のページの項目を選択
+Unselect items in current page
+現在のページの項目を選択解除
+Invert current page selection
+現在のページの選択を反転
+Search and toggle matching items
+検索してマッチングした項目をトグル
+y to pray (supersedes old \"prayconfirm\" option
+祈るときにyが必要(古い\"prayconfirm\"オプションを上書きする
+Selection:       On page   Full menu
+選択:             ページ  完全メニュー
+Select all
+全て選択
+Deselect all
+全て選択解除
+Invert all
+全て反転
+Text match
+テキストマッチ
+Search and toggle matching entries
+検索してマッチしたエントリをトグル
+Navigation
+操作
+Go to
+移動 
+Next page, if any, otherwise 
+あれば次のページ、なければ
+Finish menu with any selection(s) made
+選択してメニュー終了
+Cancel menu without selecting anything
+何も選択せずにメニューをキャンセル
+currently set
+個設定中
+Booleans (selecting will toggle value):
+真偽オプション (選択すると値が切り替わります)：
+Set %s to what?
+%sに何を設定する？
+How to highlight menu headings:
+メニューヘッダの強調方法を選択してください：
+Unable to access \"%s\" file.
+\"%s\"ファイルにアクセスできません．
+There were no symbol sets found in \"%s\".
+\"%s\"にシンボル設定がありません．
+unknown
+不明
+Boolean options (which can be negated by prefixing them with '!' or \"no\"
+真偽値オプション (否定の値を指定する場合，'!'もしくは\"no\"を先頭に付加します
+Some of the options can be set only before the game is started; those
+オプションにはゲーム開始前のみにしか設定できないものがあります．
+items will not be selectable in the 'O' command's menu.
+それらは'O'コマンドのメニューでは選択することができません．
+Set options as OPTIONS=<options> in %s
+オプションは %s の中でOPTIONS=<options>と設定します

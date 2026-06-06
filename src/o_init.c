@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2011. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 #ifndef SFCTOOL
@@ -854,7 +859,10 @@ dodiscovered(void) /* free after Robert Viduya */
         }
     }
     if (ct == 0) {
+/*JP
         You("haven't discovered anything yet...");
+*/
+        You("まだ何も発見していない．．．");
     } else {
         if (sorted_ct) {
             /* if we're alphabetizing by class, we've already shown the
@@ -876,11 +884,15 @@ dodiscovered(void) /* free after Robert Viduya */
 staticfn char *
 oclass_to_name(char oclass, char *buf)
 {
+#if 0 /*JP*//*使わない*/
     char *s;
+#endif
 
     Strcpy(buf, let_to_name(oclass, FALSE, FALSE));
+#if 0 /*JP*//*小文字化しない*/
     for (s = buf; *s; ++s)
         *s = lowc(*s);
+#endif
     return buf;
 }
 
@@ -891,10 +903,19 @@ int
 doclassdisco(void)
 {
     static NEARDATA const char
+/*JP
         prompt[] = "View discoveries for which sort of objects?",
+*/
+        prompt[] = "どの種類の発見物を見ますか？",
+/*JP
         havent_discovered_any[] = "haven't discovered any %s yet.",
+*/
+        havent_discovered_any[] = "まだ何も%sを発見していない．",
         unique_items[] = "unique items or relics",
+/*JP
         artifact_items[] = "artifacts";
+*/
+        artifact_items[] = "聖器";
     winid tmpwin = WIN_ERR;
     menu_item *pick_list = 0;
     anything any;
@@ -990,7 +1011,10 @@ doclassdisco(void)
 
     /* there might not be anything for us to do... */
     if (!discosyms[0]) {
+/*JP
         You(havent_discovered_any, "items");
+*/
+        You(havent_discovered_any, "アイテム");
         if (tmpwin != WIN_ERR)
             destroy_nhwindow(tmpwin);
         return ECMD_OK;
@@ -1178,11 +1202,20 @@ rename_disco(void)
         }
     }
     if (ct == 0) {
+/*JP
         You("haven't discovered anything yet...");
+*/
+        You("まだ何も発見していない．．．");
     } else if (mn == 0) {
+/*JP
         pline("None of your discoveries can be assigned names...");
+*/
+        pline("名前の付けられる発見物はない．．．");
     } else {
+/*JP
         end_menu(tmpwin, "Pick an object type to name");
+*/
+        end_menu(tmpwin, "名前を付けるオブジェクトの種類を選んでください");
         dis = STRANGE_OBJECT;
         sl = select_menu(tmpwin, PICK_ONE, &selected);
         if (sl > 0) {

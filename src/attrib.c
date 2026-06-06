@@ -2,89 +2,183 @@
 /*      Copyright 1988, 1989, 1990, 1992, M. Stephenson           */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
+
 /*  attribute modification routines. */
 
 #include "hack.h"
 
 /* part of the output on gain or loss of attribute */
 static const char
+#if 0 /*JP:T*/
     *const plusattr[] = { "strong", "smart", "wise",
                           "agile",  "tough", "charismatic" },
+#else
+    *const plusattr[] = { "強い", "賢明だ", "賢い",
+                          "機敏だ", "頑丈だ", "魅力的だ" },
+#endif
+#if 0 /*JP:T*/
     *const minusattr[] = { "weak",    "stupid",
                            "foolish", "clumsy",
                            "fragile", "repulsive" };
+#else
+    *const minusattr[] = { "弱い", "愚かだ",
+                           "間抜けだ", "不器用だ",
+                           "ひ弱だ", "醜い" };
+#endif
 /* also used by enlightenment in insight.c for non-abbreviated status info */
 extern const char *const attrname[6];
 
 const char
+#if 0 /*JP:T*/
     *const attrname[] = { "strength", "intelligence", "wisdom",
                           "dexterity", "constitution", "charisma" };
+#else
+    *const attrname[] = { "強さ", "知力", "賢さ",
+                          "素早さ", "耐久力", "魅力" };
+#endif
 
 static const struct innate {
     schar ulevel;
     long *ability;
     const char *gainstr, *losestr;
 } arc_abil[] = { { 1, &(HSearching), "", "" },
+/*JP
                  { 5, &(HStealth), "stealthy", "" },
+*/
+                 { 5, &(HStealth), "人目を盗む力を得た", "人目を盗む力を失った" },
                  { 10, &(HFast), "quick", "slow" },
                  { 0, 0, 0, 0 } },
 
   bar_abil[] = { { 1, &(HPoison_resistance), "", "" },
+/*JP
                  { 7, &(HFast), "quick", "slow" },
+*/
+                 { 7, &(HFast), "素早さを得た", "遅くなった" },
+/*JP
                  { 15, &(HStealth), "stealthy", "" },
+*/
+                 { 15, &(HStealth), "人目を盗む力を得た", "人目を盗む力を失った" },
                  { 0, 0, 0, 0 } },
 
+/*JP
   cav_abil[] = { { 7, &(HFast), "quick", "slow" },
+*/
+  cav_abil[] = { { 7, &(HFast), "素早さを得た", "遅くなった" },
+/*JP
                  { 15, &(HWarning), "sensitive", "" },
+*/
+                 { 15, &(HWarning), "敏感になった", "鈍感になった" },
                  { 0, 0, 0, 0 } },
 
   hea_abil[] = { { 1, &(HPoison_resistance), "", "" },
+/*JP
                  { 15, &(HWarning), "sensitive", "" },
+*/
+                 { 15, &(HWarning), "敏感になった", "鈍感になった" },
                  { 0, 0, 0, 0 } },
 
+/*JP
   kni_abil[] = { { 7, &(HFast), "quick", "slow" }, { 0, 0, 0, 0 } },
+*/
+  kni_abil[] = { { 7, &(HFast), "素早さを得た", "遅くなった" }, { 0, 0, 0, 0 } },
 
   mon_abil[] = { { 1, &(HFast), "", "" },
                  { 1, &(HSleep_resistance), "", "" },
                  { 1, &(HSee_invisible), "", "" },
+/*JP
                  { 3, &(HPoison_resistance), "healthy", "" },
+*/
+                 { 3, &(HPoison_resistance), "健康になった", "不健康になった" },
                  { 5, &(HStealth), "stealthy", "" },
+/*JP
                  { 7, &(HWarning), "sensitive", "" },
+*/
+                 { 7, &(HWarning), "敏感になった", "鈍感になった" },
+/*JP
                  { 9, &(HSearching), "perceptive", "unaware" },
+*/
+                 { 9, &(HSearching), "知覚力を得た", "知覚力を失った" },
+/*JP
                  { 11, &(HFire_resistance), "cool", "warmer" },
+*/
+                 { 11, &(HFire_resistance), "冷たくなった", "暖かくなった" },
+/*JP
                  { 13, &(HCold_resistance), "warm", "cooler" },
+*/
+                 { 13, &(HCold_resistance), "暖かくなった", "冷たくなった"},
+/*JP
                  { 15, &(HShock_resistance), "insulated", "conductive" },
+*/
+                 { 15, &(HShock_resistance), "絶縁された", "導電された" },
+/*JP
                  { 17, &(HTeleport_control), "controlled", "uncontrolled" },
+*/
+                 { 17, &(HTeleport_control), "制御力を得た", "制御力を失った" },
                  { 0, 0, 0, 0 } },
 
+/*JP
   pri_abil[] = { { 15, &(HWarning), "sensitive", "" },
+*/
+  pri_abil[] = { { 15, &(HWarning), "敏感になった", "鈍感になった" },
+/*JP
                  { 20, &(HFire_resistance), "cool", "warmer" },
+*/
+                 { 20, &(HFire_resistance), "冷たくなった", "暖かくなった" },
                  { 0, 0, 0, 0 } },
 
   ran_abil[] = { { 1, &(HSearching), "", "" },
+/*JP
                  { 7, &(HStealth), "stealthy", "" },
+*/
+                 { 7, &(HStealth), "人目を盗む力を得た", "人目を盗む力を失った" },
                  { 15, &(HSee_invisible), "", "" },
                  { 0, 0, 0, 0 } },
 
   rog_abil[] = { { 1, &(HStealth), "", "" },
+/*JP
                  { 10, &(HSearching), "perceptive", "" },
+*/
+                 { 10, &(HSearching), "知覚力を得た", "知覚力を失った" },
                  { 0, 0, 0, 0 } },
 
   sam_abil[] = { { 1, &(HFast), "", "" },
+/*JP
                  { 15, &(HStealth), "stealthy", "" },
+*/
+                 { 15, &(HStealth), "人目を盗む力を得た", "人目を盗む力を失った" },
                  { 0, 0, 0, 0 } },
 
+/*JP
   tou_abil[] = { { 10, &(HSearching), "perceptive", "" },
+*/
+  tou_abil[] = { { 10, &(HSearching), "知覚力を得た", "知覚力を失った" },
+/*JP
                  { 20, &(HPoison_resistance), "hardy", "" },
+*/
+                 { 20, &(HPoison_resistance), "免疫力を得た", "免疫力を失った" },
                  { 0, 0, 0, 0 } },
 
   val_abil[] = { { 1, &(HCold_resistance), "", "" },
                  { 3, &(HStealth), "stealthy", "" },
+/*JP
                  { 7, &(HFast), "quick", "slow" },
+*/
+                 { 7, &(HFast), "素早さを得た", "遅くなった" },
                  { 0, 0, 0, 0 } },
 
+/*JP
   wiz_abil[] = { { 15, &(HWarning), "sensitive", "" },
+*/
+  wiz_abil[] = { { 15, &(HWarning), "敏感になった", "鈍感になった" },
+/*JP
                  { 17, &(HTeleport_control), "controlled", "uncontrolled" },
+*/
+                 { 17, &(HTeleport_control), "制御力を得た", "制御力を失った" },
                  { 0, 0, 0, 0 } },
 
   /* Intrinsics conferred by race */
@@ -92,7 +186,10 @@ static const struct innate {
                  { 0, 0, 0, 0 } },
 
   elf_abil[] = { { 1, &HInfravision, "", "" },
+/*JP
                  { 4, &HSleep_resistance, "awake", "tired" },
+*/
+                 { 4, &(HSleep_resistance), "目が覚めた", "眠くなった" },
                  { 0, 0, 0, 0 } },
 
   gno_abil[] = { { 1, &HInfravision, "", "" },
@@ -128,7 +225,10 @@ adjattrib(
 
     if ((ndx == A_INT || ndx == A_WIS) && uarmh && uarmh->otyp == DUNCE_CAP) {
         if (msgflg == 0)
+/*JP
             Your("cap constricts briefly, then relaxes again.");
+*/
+            Your("帽子がしばらくの間キュっと締めつけ，そしてゆるんだ．");
         return FALSE;
     }
 
@@ -175,13 +275,23 @@ adjattrib(
     if (ACURR(ndx) == old_acurr) {
         if (msgflg == 0 && flags.verbose) {
             if (ABASE(ndx) == old_abase && AMAX(ndx) == old_amax) {
+#if 0 /*JP:T*/
                 pline("You're %s as %s as you can get.",
                       abonflg ? "currently" : "already", attrstr);
+#else
+                You("%s十分に%s．",
+                      abonflg ? "今のところ" : "既に", attrstr);
+#endif
             } else {
                 /* current stayed the same but base value changed, or
                    base is at minimum and reduction caused max to drop */
+#if 0 /*JP:T*/
                 Your("innate %s has %s.", attrname[ndx],
                      (incr > 0) ? "improved" : "declined");
+#else
+                Your("本質的な%sが%sした．", attrname[ndx],
+                     (incr > 0) ? "向上" : "低下");
+#endif
             }
         }
         return FALSE;
@@ -192,7 +302,10 @@ adjattrib(
 
     disp.botl = TRUE;
     if (msgflg <= 0)
+/*JP
         You_feel("%s%s!", (incr > 1 || incr < -1) ? "very " : "", attrstr);
+*/
+        You("%s%sなったような気がした！", (incr > 1 || incr < -1) ? "とても" : "", jconj_adj(attrstr));
     if (program_state.in_moveloop && (ndx == A_STR || ndx == A_CON))
         encumber_msg();
     return TRUE;
@@ -274,19 +387,51 @@ void
 poison_strdmg(int strloss, int dmg, const char *knam, schar k_format)
 {
     losestr(strloss, knam, k_format);
+#if 0 /*JP*/
     losehp(dmg, knam, k_format);
+#else
+    {
+        char jbuf[BUFSZ];
+        Sprintf(jbuf, "%sで", knam);
+        losehp(dmg, jbuf, k_format);
+    }
+#endif
 }
 
 static const struct poison_effect_message {
     void (*delivery_func)(const char *, ...);
     const char *effect_msg;
 } poiseff[] = {
+#if 0 /*JP:T*/
     { You_feel, "weaker" },             /* A_STR */
+#else
+    { You_feel, "弱くなった" },         /* A_STR */
+#endif
+#if 0 /*JP:T*/
     { Your, "brain is on fire" },       /* A_INT */
+#else
+    { You, "頭に血がのぼった" },        /* A_INT */
+#endif
+#if 0 /*JP:T*/
     { Your, "judgement is impaired" },  /* A_WIS */
+#else
+    { You, "判断力を失った" },          /* A_WIS */
+#endif
+#if 0 /*JP:T*/
     { Your, "muscles won't obey you" }, /* A_DEX */
+#else
+    { You, "思うように動けない" },      /* A_DEX */
+#endif
+#if 0 /*JP:T*/
     { You_feel, "very sick" },          /* A_CON */
+#else
+    { You_feel, "とても気分が悪くなった" }, /* A_CON */
+#endif
+#if 0 /*JP:T*/
     { You, "break out in hives" }       /* A_CHA */
+#else
+    { You, "じんましんがあらわれた" }   /* A_CHA */
+#endif
 };
 
 /* feedback for attribute loss due to poisoning */
@@ -305,11 +450,20 @@ poisontell(int typ,         /* which attribute */
      * (dunce cap) is such that we don't need message fixups for them.
      */
     if (typ == A_STR && ACURR(A_STR) == STR19(25))
+/*JP
         msg_txt = "innately weaker";
+*/
+        msg_txt = "本質的に弱くなった";
     else if (typ == A_CON && ACURR(A_CON) == 25)
+/*JP
         msg_txt = "sick inside";
+*/
+        msg_txt = "内部に病をかかえた";
 
+/*JP
     (*func)("%s%c", msg_txt, exclaim ? '!' : '.');
+*/
+    (*func)("%s%s", msg_txt, exclaim ? "！" : "．");
 }
 
 /* called when an attack or trap has poisoned hero (used to be in mon.c) */
@@ -322,26 +476,44 @@ poisoned(
     boolean thrown_weapon) /* thrown weapons are less deadly */
 {
     int i, loss, kprefix = KILLED_BY_AN;
+#if 0 /*JP*/
     boolean blast = !strcmp(reason, "blast");
+#else
+    boolean blast = (!strcmp(reason, "風") || !strcmp(reason, "息"));
+#endif
 
     /* inform player about being poisoned unless that's already been done;
        "blast" has given a "blast of poison gas" message; "poison arrow",
        "poison dart", etc have implicitly given poison messages too... */
+#if 0 /*JP:T*/
     if (!blast && !strstri(reason, "poison")) {
+#else
+    if (!blast && !strstri(reason, "毒")) {
+#endif
+#if 0 /*JP*/
         boolean plural = (reason[strlen(reason) - 1] == 's') ? 1 : 0;
+#endif
 
         /* avoid "The" Orcus's sting was poisoned... */
+#if 0 /*JP:T*/
         pline("%s%s %s poisoned!",
               isupper((uchar) *reason) ? "" : "The ", reason,
               plural ? "were" : "was");
+#else
+        pline("%sは毒におかされている！", reason);
+#endif
     }
     if (Poison_resistance) {
         if (blast)
             shieldeff(u.ux, u.uy);
+/*JP
         pline_The("poison doesn't seem to affect you.");
+*/
+        pline("毒は効かなかったようだ．");
         return;
     }
 
+#if 0 /*JP*//*日本語では不要*/
     /* suppress killer prefix if it already has one */
     i = name_to_mon(pkiller, (int *) 0);
     if (ismnum(i) && (mons[i].geno & G_UNIQ)) {
@@ -353,6 +525,7 @@ poisoned(
         /*[ does this need a plural check too? ]*/
         kprefix = KILLED_BY;
     }
+#endif
 
     /*
      * FIXME:
@@ -366,7 +539,10 @@ poisoned(
         if (u.uhp <= loss) {
             u.uhp = -1;
             disp.botl = TRUE;
+/*JP
             pline_The("poison was deadly...");
+*/
+            pline("毒は致死量だった．．．");
         } else {
             /* survived, but with severe reaction */
             int olduhp = u.uhp,
@@ -401,8 +577,12 @@ poisoned(
     if (u.uhp < 1) {
         svk.killer.format = kprefix;
         Strcpy(svk.killer.name, pkiller);
+#if 0 /*JP*/
         /* "Poisoned by a poisoned ___" is redundant */
         done(strstri(pkiller, "poison") ? DIED : POISONING);
+#else /*JP:日本語では区別していない*/
+        done(POISONING);
+#endif
     }
     encumber_msg();
 }
@@ -586,12 +766,21 @@ exerper(void)
 /* exercise/abuse text (must be in attribute order, not botl order);
    phrased as "You must have been [][0]." or "You haven't been [][1]." */
 static NEARDATA const char *const exertext[A_MAX][2] = {
+#if 0 /*JP:T*/
     { "exercising diligently", "exercising properly" },           /* Str */
     { 0, 0 },                                                     /* Int */
     { "very observant", "paying attention" },                     /* Wis */
     { "working on your reflexes", "working on reflexes lately" }, /* Dex */
     { "leading a healthy life-style", "watching your health" },   /* Con */
     { 0, 0 },                                                     /* Cha */
+#else
+    { "念入りに運動していた", "適切に運動していなかった" },       /* Str */
+    { 0, 0 },                                                     /* Int */
+    { "慎重に行動していた", "注意不足だった" },                   /* Wis */
+    { "反射神経を使っていた", "最近反射神経を使っていなかった" }, /* Dex */
+    { "健康的な生活をしていた", "健康管理を怠っていた" },         /* Con */
+    { 0, 0 },                                                     /* Cha */
+#endif
 };
 
 void
@@ -661,9 +850,14 @@ exerchk(void)
                 /* if you actually changed an attrib - zero accumulation */
                 AEXE(i) = ax = 0;
                 /* then print an explanation */
+#if 0 /*JP:T*/
                 You("%s %s.",
                     (mod_val > 0) ? "must have been" : "haven't been",
                     exertext[i][(mod_val > 0) ? 0 : 1]);
+#else
+                You("%sに違いない．",
+                    exertext[i][(mod_val > 0) ? 0 : 1]);
+#endif
             }
  nextattrib:
             /* this used to be ``AEXE(i) /= 2'' but that would produce
@@ -911,11 +1105,18 @@ from_what(
     /*
      * Restrict the source of the attributes just to debug mode for now
      */
+/*JP:「あなたはあなたの…によって」となると不自然なのでsimpleonames()を使う*/
+/*JP: 本来はminimal_xname()を使うべきだがstaticなので代用*/
     if (wizard) {
+/*JP
         static NEARDATA const char because_of[] = " because of %s";
+*/
+        static NEARDATA const char because_of[] = "%sによって";
 
         if (propidx >= 0) {
+#if 0 /*JP*/
             char *p;
+#endif
             struct obj *obj = (struct obj *) 0;
             int innateness = is_innate(propidx);
 
@@ -935,18 +1136,34 @@ from_what(
              */
             if ((propidx == BLINDED && u.uroleplay.blind)
                 || (propidx == DEAF && u.uroleplay.deaf))
+/*JP
                 Sprintf(buf, " from birth");
+*/
+                Sprintf(buf, "生まれてからずっと");
             else if (innateness == FROM_ROLE || innateness == FROM_RACE)
+/*JP
                 Strcpy(buf, " innately");
+*/
+                Strcpy(buf, "生まれながらに");
             else if (innateness == FROM_INTR) /* [].intrinsic & FROMOUTSIDE */
+/*JP
                 Strcpy(buf, " intrinsically");
+*/
+                Strcpy(buf, "本質的に");
             else if (innateness == FROM_EXP)
+/*JP
                 Strcpy(buf, " because of your experience");
+*/
+                Strcpy(buf, "経験によって");
             else if (innateness == FROM_LYCN)
+/*JP
                 Strcpy(buf, " due to your lycanthropy");
+*/
+                Strcpy(buf, "獣化病によって");
             else if (innateness == FROM_FORM)
                 Strcpy(buf, " from your creature form");
             else if (propidx == FAST && Very_fast)
+#if 0 /*JP:T*/
                 Sprintf(buf, because_of,
                         ((HFast & TIMEOUT) != 0L) ? "a potion or spell"
                           : ((EFast & W_ARMF) != 0L && uarmf->dknown
@@ -954,25 +1171,42 @@ from_what(
                               ? ysimple_name(uarmf) /* speed boots */
                                 : EFast ? "worn equipment"
                                   : something);
+#else
+                Sprintf(buf, because_of,
+                        ((HFast & TIMEOUT) != 0L) ? "薬や呪文"
+                          : ((EFast & W_ARMF) != 0L && uarmf->dknown
+                             && objects[uarmf->otyp].oc_name_known)
+                              ? ysimple_name(uarmf) /* speed boots */
+                                : EFast ? "装備"
+                                  : something);
+#endif
             else if (wizard
                      && (obj = what_gives(&u.uprops[propidx].extrinsic)) != 0)
                 Sprintf(buf, because_of, obj->oartifact
                                              ? bare_artifactname(obj)
+/*JP
                                              : ysimple_name(obj));
+*/
+                                             : simpleonames(obj));
             else if (propidx == BLINDED && Blindfolded_only)
+/*JP
                 Sprintf(buf, because_of, ysimple_name(ublindf));
+*/
+                Sprintf(buf, because_of, simpleonames(ublindf));
             else if (propidx == BLINDED && u.ucreamed
                      && BlindedTimeout == (long) u.ucreamed
                      && !EBlinded && !(HBlinded & ~TIMEOUT))
                 Sprintf(buf, "due to goop covering your %s",
                         body_part(FACE));
 
+#if 0 /*JP*//*不要*/
             /* remove some verbosity and/or redundancy */
             if ((p = strstri(buf, " pair of ")) != 0)
                 copynchars(p + 1, p + 9, BUFSZ); /* overlapping buffers ok */
             else if (propidx == STRANGLED
                      && (p = strstri(buf, " of strangulation")) != 0)
                 *p = '\0';
+#endif
 
         } else { /* negative property index */
             /* if more blocking capabilities get implemented we'll need to
@@ -985,13 +1219,23 @@ from_what(
                 break;
             case INVIS:
                 if (u.uprops[INVIS].blocked & W_ARMC)
+#if 0 /*JP*/
                     Sprintf(buf, because_of,
                             ysimple_name(uarmc)); /* mummy wrapping */
+#else
+                    Sprintf(buf, because_of,
+                            simpleonames(uarmc)); /* mummy wrapping */
+#endif
                 break;
             case CLAIRVOYANT:
                 if (wizard && (u.uprops[CLAIRVOYANT].blocked & W_ARMH))
+#if 0 /*JP*/
                     Sprintf(buf, because_of,
                             ysimple_name(uarmh)); /* cornuthaum */
+#else
+                    Sprintf(buf, because_of,
+                            simpleonames(uarmh)); /* cornuthaum */
+#endif
                 break;
             }
         }
@@ -1049,13 +1293,20 @@ adjabil(int oldlevel, int newlevel)
                 *(abil->ability) |= mask;
             if (!(*(abil->ability) & INTRINSIC & ~mask)) {
                 if (*(abil->gainstr))
+/*JP
                     You_feel("%s!", abil->gainstr);
+*/
+                    You("%sような気がした！", abil->gainstr);
             }
         } else if (oldlevel >= abil->ulevel && newlevel < abil->ulevel) {
             *(abil->ability) &= ~mask;
             if (!(*(abil->ability) & INTRINSIC)) {
                 if (*(abil->losestr))
+/*JP
                     You_feel("%s!", abil->losestr);
+*/
+                    You("%sような気がした！", abil->losestr);
+/*JP:この条件は満さないはず．*/
                 else if (*(abil->gainstr))
                     You_feel("less %s!", abil->gainstr);
             }
@@ -1335,14 +1586,22 @@ uchangealign(
         /* worn helm of opposite alignment might block change */
         if (!uarmh || uarmh->otyp != HELM_OF_OPPOSITE_ALIGNMENT)
             u.ualign.type = u.ualignbase[A_CURRENT];
+#if 0 /*JP:T*/
         You("have a %ssense of a new direction.",
             (u.ualign.type != oldalign) ? "sudden " : "");
+#else
+        You("%s別の方向性にめざめた．",
+            (u.ualign.type != oldalign) ? "突然" : "");
+#endif
     } else {
         /* putting on or taking off a helm of opposite alignment */
         u.ualign.type = (aligntyp) newalign;
         if (reason == A_CG_HELM_ON) {
             adjalign(-7); /* for abuse -- record will be cleared shortly */
+/*JP
             Your("mind oscillates %s.", Hallucination ? "wildly" : "briefly");
+*/
+            You("%s寝返った．", Hallucination ? "荒っぽく" : "あっさりと");
             make_confused(rn1(2, 3), FALSE);
             if (Is_astralevel(&u.uz) || ((unsigned) rn2(50) < u.ualign.abuse))
                 summon_furies(Is_astralevel(&u.uz) ? 0 : 1);
@@ -1350,9 +1609,15 @@ uchangealign(
             livelog_printf(LL_ALIGNMENT, "used a helm to turn %s",
                            aligns[1 - newalign].adj);
         } else if (reason == A_CG_HELM_OFF) {
+#if 0 /*JP:T*/
             Your("mind is %s.", Hallucination
                                     ? "much of a muchness"
                                     : "back in sync with your body");
+#else
+            Your("心は%s．", Hallucination
+                                    ? "似たり寄ったりになった"
+                                    : "再び体と一致するようになった");
+#endif
         }
     }
     if (u.ualign.type != oldalign) {

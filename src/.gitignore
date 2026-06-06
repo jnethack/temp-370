@@ -33,3 +33,4 @@ GNUmakefile
 GNUmakefile.depend
 .*.c
 .depend
+!*.rej

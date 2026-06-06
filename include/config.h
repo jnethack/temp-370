@@ -43,8 +43,14 @@
  */
 #ifdef SHORT_FILENAMES
 #include "patchlev.h"
+#if 1 /*JP*/
+#include "../japanese/jpatchle.h"
+#endif
 #else
 #include "patchlevel.h"
+#if 1 /*JP*/
+#include "../japanese/jpatchlevel.h"
+#endif
 #endif
 
 
