@@ -38,6 +38,7 @@ staticfn void bel_copy1(char **, char *);
 #ifndef SFCTOOL
 #define done_stopprint program_state.stopprint
 
+#if 0 /*JP*//*日本語では使わない*/
 /*
  * The order of these needs to match the macros in hack.h.
  */
@@ -48,9 +49,11 @@ static NEARDATA const char *deaths[] = {
     "turned into slime", "genocided", "panic", "trickery", "quit",
     "escaped", "ascended"
 };
+#endif /*JP*/
 
 static NEARDATA const char *ends[] = {
     /* "when you %s" */
+#if 0 /*JP*/
     "died", "choked", "were poisoned",
     "starved", "drowned", "burned",
     "dissolved in the lava",
@@ -58,6 +61,15 @@ static NEARDATA const char *ends[] = {
     "turned into slime", "were genocided",
     "panicked", "were tricked", "quit",
     "escaped", "ascended"
+#else /*JP: 最後に「殺された」追加 */
+    "死んだ", "窒息した", "毒におかされた",
+    "餓死した", "溺死した", "焼死した",
+    "溶岩に溶けた",
+    "押し潰された", "石になった",
+    "どろどろに溶けた", "虐殺された",
+    "パニックにおちいった", "奇妙な出来事に会った", "抜けた",
+    "脱出した", "昇天した", "殺された"
+#endif
 };
 
 static boolean Schroedingers_cat = FALSE;
@@ -192,10 +204,14 @@ done_in_by(struct monst *mtmp, int how)
             mimicker = (M_AP_TYPE(mtmp) == M_AP_MONSTER),
             imitator = (mptr != champtr || mimicker);
 
+/*JP
     You((how == STONING) ? "turn to stone..." : "die...");
+*/
+    You((how == STONING) ? "石になった．．．" : "死にました．．．");
     mark_synch(); /* flush buffered screen output */
     buf[0] = '\0';
     svk.killer.format = KILLED_BY_AN;
+#if 0 /*JP*//* 日本語には関係ないのでまとめてコメントアウト */
     /* "killed by the high priest of Crom" is okay,
        "killed by the high priest" alone isn't */
     if ((mptr->geno & G_UNIQ) != 0 && !(imitator && !mimicker)
@@ -215,10 +231,17 @@ done_in_by(struct monst *mtmp, int how)
         svk.killer.format = KILLED_BY;
     }
     (void) monhealthdescr(mtmp, TRUE, eos(buf));
+#endif
     if (mtmp->minvis)
+/*JP
         Strcat(buf, "invisible ");
+*/
+        Strcat(buf, "透明な");
     if (distorted)
+/*JP
         Strcat(buf, "hallucinogen-distorted ");
+*/
+        Strcat(buf, "幻覚で歪んだ");
 
     if (imitator) {
         char shape[BUFSZ];
@@ -231,12 +254,21 @@ done_in_by(struct monst *mtmp, int how)
                set up fake mptr for type_is_pname/the_unique_pm */
             mptr = &mons[mtmp->mappearance];
             fakenm = pmname(mptr, Mgender(mtmp));
+#if 0 /*JP:T*/
         } else if (alt && strstri(realnm, "vampire")
                    && !strcmp(fakenm, "vampire bat")) {
             /* special case: use "vampire in bat form" in preference
                to redundant looking "vampire in vampire bat form" */
             fakenm = "bat";
+#else
+        } else if (alt && strstri(realnm, "吸血鬼")
+                   && !strcmp(fakenm, "吸血こうもり")) {
+            /* 「吸血こうもりの姿の吸血鬼」は冗長なので
+               「こうもりの姿の吸血鬼」の形にする */
+            fakenm = "こうもり";
+#endif
         }
+#if 0 /*JP*/
         /* for the alternate format, always suppress any article;
            pname and the_unique should also have s_suffix() applied,
            but vampires don't take on any shapes which warrant that */
@@ -246,27 +278,49 @@ done_in_by(struct monst *mtmp, int how)
             Sprintf(shape, "the %s", fakenm);
         else /* "a"/"an" */
             Strcpy(shape, an(fakenm));
+#else /*JP:日本語ではシンプル*/
+        Strcpy(shape, fakenm);
+#endif
         /* omit "called" to avoid excessive verbosity */
+#if 0 /*JP:T*/
         Sprintf(eos(buf),
                 alt ? "%s in %s form"
                     : mimicker ? "%s disguised as %s"
                                : "%s imitating %s",
                 realnm, shape);
+#else
+        Sprintf(eos(buf),
+                alt ? "%sの姿の%s"
+                    : mimicker ? "%sのふりをしている%s"
+                               : "%sのまねをしている%s",
+                shape, realnm);
+#endif
         mptr = mtmp->data; /* reset for mimicker case */
 #if 0  /* hardfought */
     } else if (has_ebones(mtmp)) {
         Strcpy(buf, m_monnam(mtmp));
 #endif
     } else if (mptr == &mons[PM_GHOST]) {
+#if 0 /*JP*/
         Strcat(buf, "ghost");
         if (has_mgivenname(mtmp))
             Sprintf(eos(buf), " of %s", MGIVENNAME(mtmp));
+#else
+        if (has_mgivenname(mtmp))
+            Sprintf(eos(buf), "%sの幽霊", MGIVENNAME(mtmp));
+        else
+            Strcat(buf, "幽霊");
+#endif
     } else if (mtmp->isshk) {
+#if 0 /*JP*/
         const char *shknm = shkname(mtmp),
                    *honorific = shkname_is_pname(mtmp) ? ""
                                    : mtmp->female ? "Ms. " : "Mr. ";
 
         Sprintf(eos(buf), "%s%s, the shopkeeper", honorific, shknm);
+#else
+        Sprintf(eos(buf), "%sという名の店主", shkname(mtmp));
+#endif
         svk.killer.format = KILLED_BY;
     } else if (mtmp->ispriest || mtmp->isminion) {
         /* m_monnam() suppresses "the" prefix plus "invisible", and
@@ -279,6 +333,16 @@ done_in_by(struct monst *mtmp, int how)
                     has_ebones(mtmp) ? "of" : "called",
                     MGIVENNAME(mtmp));
         }
+#if 0 /*JP*/
+        Strcat(buf, pmname(mptr, Mgender(mtmp)));
+        if (has_mgivenname(mtmp)) {
+            Sprintf(eos(buf), " %s %s",
+                    has_ebones(mtmp) ? "of" : "called",
+                    MGIVENNAME(mtmp));
+        }
+#else
+        Strcat(buf, pmname(mptr, Mgender(mtmp)));
+#endif
     }
 
     Strcpy(svk.killer.name, buf);
@@ -339,6 +403,22 @@ done_in_by(struct monst *mtmp, int how)
         && (svm.mvitals[u.ugrave_arise].mvflags & G_GENOD))
         u.ugrave_arise = NON_PM;
 
+#if 1 /*JP*/
+    if (how == STONING){
+        /*JP
+              topten.c の killed_by_prefix を参照のこと。
+              STONING の場合は "石化した" が補われる。
+         */
+        Strcat(buf, "の攻撃で");
+    }
+    if (how == DIED){
+        /*JP
+              DIED の場合は通常 "死んだ" が補われるが、
+              怪物による場合は "に殺された" を補う。
+         */
+        svk.killer.format = KILLED_SUFFIX;
+    }
+#endif
     done(how);
     return;
 }
@@ -346,6 +426,7 @@ done_in_by(struct monst *mtmp, int how)
 RESTORE_WARNING_FORMAT_NONLITERAL
 
 /* some special cases for overriding while-helpless reason */
+#if 0 /*JP*//*日本語では使わない*/
 static const struct {
     int why, unmulti;
     const char *exclude, *include;
@@ -382,6 +463,7 @@ fixup_death(int how)
             }
     }
 }
+#endif
 
 #if defined(WIN32) && !defined(SYSCF)
 #define NOTIFY_NETHACK_BUGS
@@ -411,10 +493,19 @@ panic VA_DECL(const char *, str)
     }
 
     raw_print(program_state.gameover
+/*JP
                   ? "Postgame wrapup disrupted."
+*/
+                  ? "ゲーム終了時の処理が崩壊した．"
                   : !program_state.something_worth_saving
+/*JP
                         ? "Program initialization has failed."
+*/
+                        ? "プログラムの初期化に失敗した．"
+/*JP
                         : "Suddenly, the dungeon collapses.");
+*/
+                        : "突然迷宮が崩れた．");
 #ifndef MICRO
 #ifdef NOTIFY_NETHACK_BUGS
     if (!wizard)
@@ -424,9 +515,15 @@ panic VA_DECL(const char *, str)
         raw_print("\nError save file being written.\n");
 #else /* !NOTIFY_NETHACK_BUGS */
     if (!wizard) {
+#if 0 /*JP:T*/
         const char *maybe_rebuild = !program_state.something_worth_saving
                                      ? "."
                                      : "\nand it may be possible to rebuild.";
+#else
+        const char *maybe_rebuild = !program_state.something_worth_saving
+                                     ? "．"
+                                     : "\n復旧できる可能性があります．";
+#endif
 
 // XXX this may need an update if defined(CRASHREPORT) TBD
         if (sysopt.support)
@@ -436,8 +533,13 @@ panic VA_DECL(const char *, str)
             raw_printf("To report this error, contact %s%s",
                        sysopt.fmtd_wizard_list, maybe_rebuild);
         else
+#if 0 /*JP:T*/
             raw_printf("Report error to \"%s\"%s", WIZARD_NAME,
                        maybe_rebuild);
+#else
+            raw_printf("\"%s\"にエラーを報告してください．%s", WIZARD_NAME,
+                       maybe_rebuild);
+#endif
     }
 #endif /* ?NOTIFY_NETHACK_BUGS */
     /* XXX can we move this above the prints?  Then we'd be able to
@@ -522,7 +624,10 @@ dump_plines(void)
     char buf[BUFSZ], **strp;
 
     Strcpy(buf, " "); /* one space for indentation */
+/*JP
     putstr(0, 0, "Latest messages:");
+*/
+    putstr(0, 0, "最後のメッセージ:");
     for (i = 0, j = (int) gs.saved_pline_index; i < DUMPLOG_MSG_COUNT;
          ++i, j = (j + 1) % DUMPLOG_MSG_COUNT) {
         strp = &gs.saved_plines[j];
@@ -557,17 +662,32 @@ dump_everything(
        build date+time or even with an older nethack version,
        but we only have access to the one it finished under */
     putstr(0, 0, getversionstring(pbuf, sizeof pbuf));
+#if 1 /*JP*/
+    putstr(0, 0, version_string_j(pbuf));
+#endif
     putstr(0, 0, "");
 
     /* game start and end date+time to disambiguate version date+time */
     Strcpy(datetimebuf, yyyymmddhhmmss(ubirthday));
+#if 0 /*JP:T*/
     Sprintf(pbuf, "Game began %4.4s-%2.2s-%2.2s %2.2s:%2.2s:%2.2s",
             &datetimebuf[0], &datetimebuf[4], &datetimebuf[6],
             &datetimebuf[8], &datetimebuf[10], &datetimebuf[12]);
+#else
+    Sprintf(pbuf, "ゲーム開始 %4.4s-%2.2s-%2.2s %2.2s:%2.2s:%2.2s",
+            &datetimebuf[0], &datetimebuf[4], &datetimebuf[6],
+            &datetimebuf[8], &datetimebuf[10], &datetimebuf[12]);
+#endif
     Strcpy(datetimebuf, yyyymmddhhmmss(when));
+#if 0 /*JP*/
     Sprintf(eos(pbuf), ", ended %4.4s-%2.2s-%2.2s %2.2s:%2.2s:%2.2s.",
             &datetimebuf[0], &datetimebuf[4], &datetimebuf[6],
             &datetimebuf[8], &datetimebuf[10], &datetimebuf[12]);
+#else
+    Sprintf(eos(pbuf), ", 終了 %4.4s-%2.2s-%2.2s %2.2s:%2.2s:%2.2s.",
+            &datetimebuf[0], &datetimebuf[4], &datetimebuf[6],
+            &datetimebuf[8], &datetimebuf[10], &datetimebuf[12]);
+#endif
     putstr(0, 0, pbuf);
     putstr(0, 0, "");
 
@@ -588,7 +708,10 @@ dump_everything(
 
     dump_plines();
     putstr(0, 0, "");
+/*JP
     putstr(0, 0, "Inventory:");
+*/
+    putstr(0, 0, "持ち物:");
     (void) display_inventory((char *) 0, TRUE);
     container_contents(gi.invent, TRUE, TRUE, FALSE);
     enlightenment((BASICENLIGHTENMENT | MAGICENLIGHTENMENT),
@@ -624,10 +747,18 @@ disclose(int how, boolean taken)
 
     if (gi.invent && !done_stopprint) {
         if (taken)
+#if 0 /*JP:T*/
             Sprintf(qbuf, "Do you want to see what you had when you %s?",
                     (how == QUIT) ? "quit" : "died");
+#else
+            Sprintf(qbuf,"%sとき何を持っていたか見ますか？",
+                    (how == QUIT) ? "やめた" : "死んだ");
+#endif
         else
+/*JP
             Strcpy(qbuf, "Do you want your possessions identified?");
+*/
+            Strcpy(qbuf,"持ち物を識別しますか？"); 
 
         ask = should_query_disclose_option('i', &defquery);
         c = ask ? yn_function(qbuf, ynqchars, defquery, TRUE) : defquery;
@@ -644,9 +775,15 @@ disclose(int how, boolean taken)
 
     if (!done_stopprint) {
         ask = should_query_disclose_option('a', &defquery);
+#if 0 /*JP:T*/
         c = ask ? yn_function("Do you want to see your attributes?", ynqchars,
                               defquery, TRUE)
                 : defquery;
+#else
+        c = ask ? yn_function("属性を見ますか？", ynqchars,
+                              defquery, TRUE)
+                : defquery;
+#endif
         if (c == 'y')
             enlightenment((BASICENLIGHTENMENT | MAGICENLIGHTENMENT),
                           (how >= PANICKED) ? ENL_GAMEOVERALIVE
@@ -669,6 +806,7 @@ disclose(int how, boolean taken)
         if (should_query_disclose_option('c', &defquery)) {
             int acnt = count_achievements();
 
+#if 0 /*JP:T*/
             Sprintf(qbuf, "Do you want to see your conduct%s?",
                     /* this was distinguishing between one achievement and
                        multiple achievements, but "conduct and achievement"
@@ -677,6 +815,16 @@ disclose(int how, boolean taken)
                        to plural vs singular for conducts but the less
                        specific "conduct and achievements" is sufficient */
                     (acnt > 0) ? " and achievements" : "");
+#else
+            Sprintf(qbuf, "どういう行動%sをとったか見ますか？",
+                    /* this was distinguishing between one achievement and
+                       multiple achievements, but "conduct and achievement"
+                       looked strange if multiple conducts got shown (which
+                       is usual for an early game death); we could switch
+                       to plural vs singular for conducts but the less
+                       specific "conduct and achievements" is sufficient */
+                    (acnt > 0) ? "と実績" : "");
+#endif
             c = yn_function(qbuf, ynqchars, defquery, TRUE);
         } else {
             c = defquery;
@@ -689,9 +837,15 @@ disclose(int how, boolean taken)
 
     if (!done_stopprint) {
         ask = should_query_disclose_option('o', &defquery);
+#if 0 /*JP:T*/
         c = ask ? yn_function("Do you want to see the dungeon overview?",
                               ynqchars, defquery, TRUE)
                 : defquery;
+#else
+        c = ask ? yn_function("迷宮の概要を見ますか？",
+                              ynqchars, defquery, TRUE)
+                : defquery;
+#endif
         if (c == 'y')
             show_overview((how >= PANICKED) ? 1 : 2, how);
         if (c == 'q')
@@ -926,11 +1080,18 @@ artifact_score(
                 /* not observe_object; dead characters don't observe */
                 otmp->known = otmp->dknown = otmp->bknown = otmp->rknown = 1;
                 /* assumes artifacts don't have quan > 1 */
+#if 0 /*JP:T*/
                 Sprintf(pbuf, "%s%s (worth %ld %s and %ld points)",
                         the_unique_obj(otmp) ? "The " : "",
                         otmp->oartifact ? artiname(otmp->oartifact)
                                         : OBJ_NAME(objects[otmp->otyp]),
                         value, currency(value), points);
+#else
+                Sprintf(pbuf, "%s(%ld%s，%ldポイントの価値)，",
+                        otmp->oartifact ? artiname(otmp->oartifact)
+                                        : OBJ_NAME(objects[otmp->otyp]),
+                        value, currency(value), points);
+#endif
                 putstr(endwin, 0, pbuf);
             }
         }
@@ -1027,7 +1188,10 @@ done(int how)
             svk.killer.name[0] = '\0';
         }
         if (wizard) {
+/*JP
             You("are a very tricky wizard, it seems.");
+*/
+            You("とても扱いにくいwizardのようだ．");
             svk.killer.format = KILLED_BY_AN; /* reset to 0 */
             return;
         }
@@ -1064,7 +1228,10 @@ done(int how)
     if (!svk.killer.name[0] && (how == STARVING || how == BURNING))
         svk.killer.format = KILLED_BY;
     if (!svk.killer.name[0] || how >= PANICKED)
+/*JP
         Strcpy(svk.killer.name, deaths[how]);
+*/
+        Strcpy(svk.killer.name, ends[how]);
 
     if (how < PANICKED) {
         u.umortality++;
@@ -1079,21 +1246,39 @@ done(int how)
         }
     }
     if (Lifesaved && (how <= GENOCIDED)) {
+/*JP
         pline("But wait...");
+*/
+        pline("ちょっとまった．．．");
         /* assumes that only one type of item confers LifeSaved property */
         makeknown(AMULET_OF_LIFE_SAVING);
+/*JP
         Your("medallion %s!", !Blind ? "begins to glow" : "feels warm");
+*/
+        Your("魔除けは%s！", !Blind ? "輝きはじめた" : "暖かくなりはじめた");
         if (how == CHOKING)
+/*JP
             You("vomit ...");
+*/
+            You("吐いた．．．");
+/*JP
         You_feel("much better!");
+*/
+        You("気分がよくなった！");
+/*JP
         pline_The("medallion crumbles to dust!");
+*/
+        pline("魔除けはこなごなにくだけた！");
         if (uamul)
             useup(uamul);
 
         (void) adjattrib(A_CON, -1, TRUE);
         savelife(how);
         if (how == GENOCIDED) {
+/*JP
             pline("Unfortunately you are still genocided...");
+*/
+            pline("残念ながら，あなたは虐殺されたままだ．．．");
         } else {
             char killbuf[BUFSZ];
             formatkiller(killbuf, BUFSZ, how, FALSE);
@@ -1109,8 +1294,15 @@ done(int how)
            accept it more than once if there's no user supplying it */
         && !(program_state.done_hup && gd.done_seq++ == gh.hero_seq)
 #endif
+#if 0 /*JP:T*/
         && !paranoid_query(ParanoidDie, "Die?")) {
+#else
+        && !paranoid_query(ParanoidDie, "死んでみる？")) {
+#endif
+/*JP
         pline("OK, so you don't %s.", (how == CHOKING) ? "choke" : "die");
+*/
+        You("死ななかった．");
         iflags.last_msg = PLNMSG_OK_DONT_DIE;
         savelife(how);
         survive = TRUE;
@@ -1184,7 +1376,10 @@ really_done(int how)
      * smiling... :-)  -3.
      */
     if (svm.moves <= 1 && how < PANICKED && !done_stopprint)
+/*JP
         pline("Do not pass Go.  Do not collect 200 %s.", currency(200L));
+*/
+        pline("注意一秒，怪我一生，死亡一歩．");
 
     if (have_windows)
         wait_synch(); /* flush screen output */
@@ -1229,7 +1424,9 @@ really_done(int how)
     if (how == ESCAPED || how == PANICKED)
         svk.killer.format = NO_KILLER_PREFIX;
 
+#if 0 /*JP*//*日本語では使わない*/
     fixup_death(how); /* actually, fixup gm.multi_reason */
+#endif
 
     if (how != PANICKED) {
         boolean silently = done_stopprint ? TRUE : FALSE;
@@ -1284,7 +1481,11 @@ really_done(int how)
            excluded by active livelog */
         formatkiller(pbuf, (unsigned) sizeof pbuf, how, TRUE);
         if (!*pbuf)
+#if 0 /*JP:T*/
             Strcpy(pbuf, deaths[how]);
+#else
+            Strcpy(pbuf, ends[how]);
+#endif
         livelog_printf(LL_DUMP, "%s", pbuf);
 
         dump_everything(how, endtime);
@@ -1352,16 +1553,27 @@ really_done(int how)
         /* give this feedback even if bones aren't going to be created,
            so that its presence or absence doesn't tip off the player to
            new bones or their lack; it might be a lie if makemon fails */
+#if 0 /*JP:T*/
         Your("%s as %s...",
              (u.ugrave_arise != PM_GREEN_SLIME)
                  ? "body rises from the dead"
                  : "revenant persists",
              an(pmname(&mons[u.ugrave_arise], Ugender)));
+#else
+        Your("%s%sになった．．．",
+             (u.ugrave_arise != PM_GREEN_SLIME)
+                 ? "体は死体から蘇って"
+                 : "亡霊は",
+             pmname(&mons[u.ugrave_arise], Ugender));
+#endif
         display_nhwindow(WIN_MESSAGE, FALSE);
     }
 
     if (bones_ok) {
+/*JP
         if (!wizard || paranoid_query(ParanoidBones, "Save bones?"))
+*/
+        if (!wizard || paranoid_query(ParanoidBones, "骨をうめる？"))
             savebones(how, endtime, corpse);
         /* corpse may be invalid pointer now so
             ensure that it isn't used again */
@@ -1415,12 +1627,22 @@ really_done(int how)
         /* don't bother counting to see whether it should be plural */
     }
 
+#if 0 /*JP:T*/
     Sprintf(pbuf, "%s %s the %s...", Goodbye(), svp.plname,
             (how != ASCENDED)
                 ? (const char *) ((flags.female && gu.urole.name.f)
                     ? gu.urole.name.f
                     : gu.urole.name.m)
                 : (const char *) (flags.female ? "Demigoddess" : "Demigod"));
+#else
+    Sprintf(pbuf, "%s%sの%s．．．", Goodbye(),
+            (how != ASCENDED)
+                ? (const char *) ((flags.female && gu.urole.name.f)
+                    ? gu.urole.name.f
+                    : gu.urole.name.m)
+                : (const char *) (flags.female ? "女神" : "神"),
+            svp.plname);
+#endif
     dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     dump_forward_putstr(endwin, 0, "", done_stopprint);
 
@@ -1450,10 +1672,16 @@ really_done(int how)
 
         gv.viz_array[0][0] |= IN_SIGHT; /* need visibility for naming */
         mtmp = gm.mydogs;
+/*JP
         Strcpy(pbuf, "You");
+*/
+        Strcpy(pbuf, "あなた");
         if (mtmp || Schroedingers_cat) {
             while (mtmp) {
+/*JP
                 Sprintf(eos(pbuf), " and %s", mon_nam(mtmp));
+*/
+                Sprintf(eos(pbuf), "と%s", mon_nam(mtmp));
                 if (mtmp->mtame)
                     u.urexp = nowrap_add(u.urexp, mtmp->mhp);
                 mtmp = mtmp->nmon;
@@ -1465,17 +1693,34 @@ really_done(int how)
 
                 mhp = d(m_lev, 8);
                 u.urexp = nowrap_add(u.urexp, mhp);
+/*JP
                 Strcat(eos(pbuf), " and Schroedinger's cat");
+*/
+                Strcat(eos(pbuf), "とシュレディンガーの猫");
             }
+#if 1 /*JP*/
+            if (!done_stopprint)
+                Strcat(pbuf, "は");
+#endif
             dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
             pbuf[0] = '\0';
         } else {
+/*JP
             Strcat(pbuf, " ");
+*/
+            Strcat(pbuf, "は");
         }
+#if 0 /*JP:T*/
         Sprintf(eos(pbuf), "%s with %ld point%s,",
                 (how == ASCENDED) ? "went to your reward"
                                   : "escaped from the dungeon",
                 u.urexp, plur(u.urexp));
+#else
+        Sprintf(eos(pbuf), "%ldポイントマークし%s．",
+                u.urexp,
+                (how == ASCENDED) ? "昇天した"
+                                  : "迷宮から脱出した");
+#endif
         dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
 
         if (!done_stopprint)
@@ -1506,13 +1751,24 @@ really_done(int how)
                     if (has_oname(otmp))
                         free_oname(otmp);
                     otmp->quan = count;
+#if 0 /*JP:T*/
                     Sprintf(pbuf, "%8ld %s (worth %ld %s),", count,
                             xname(otmp), count * (long) objects[typ].oc_cost,
                             currency(2L));
+#else
+                    Sprintf(pbuf, "%ld個の%s(%ld%sの価値)，", count,
+                            xname(otmp), count * (long) objects[typ].oc_cost,
+                            currency(2L));
+#endif
                     obfree(otmp, (struct obj *) 0);
                 } else {
+#if 0 /*JP:T*/
                     Sprintf(pbuf, "%8ld worthless piece%s of colored glass,",
                             count, plur(count));
+#else
+                    Sprintf(pbuf, "%ld個の価値のない色つきガラス，",
+                            count);
+#endif
                 }
                 dump_forward_putstr(endwin, 0, pbuf, 0);
             }
@@ -1523,30 +1779,60 @@ really_done(int how)
         if (u.uz.dnum == 0 && u.uz.dlevel <= 0) {
             /* level teleported out of the dungeon; `how' is DIED,
                due to falling or to "arriving at heaven prematurely" */
+#if 0 /*JP:T*/
             Sprintf(pbuf, "You %s beyond the confines of the dungeon",
                     (u.uz.dlevel < 0) ? "passed away" : ends[how]);
+#else
+            Sprintf(pbuf, "迷宮の領域を越え%s．",
+                    (u.uz.dlevel < 0) ? "消えさった" : ends[how]);
+#endif
         } else {
             /* more conventional demise */
             const char *where = svd.dungeons[u.uz.dnum].dname;
 
             if (Is_astralevel(&u.uz))
+/*JP
                 where = "The Astral Plane";
+*/
+                where = "精霊界にて";
+/*JP
             Sprintf(pbuf, "You %s in %s", ends[how], where);
+*/
+            Sprintf(pbuf, "あなたは%s", where);
             if (!In_endgame(&u.uz) && !single_level_branch(&u.uz))
+#if 0 /*JP:T*/
                 Sprintf(eos(pbuf), " on dungeon level %d",
                         In_quest(&u.uz) ? dunlev(&u.uz) : depth(&u.uz));
+#else
+                Sprintf(eos(pbuf), "の地下%d階で",
+                        In_quest(&u.uz) ? dunlev(&u.uz) : depth(&u.uz));
+#endif
         }
 
+/*JP
         Sprintf(eos(pbuf), " with %ld point%s,", u.urexp, plur(u.urexp));
+*/
+        Sprintf(eos(pbuf), " %ldポイントをマークし，", u.urexp);
         dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     }
 
+#if 0 /*JP:T*/
     Sprintf(pbuf, "and %ld piece%s of gold, after %ld move%s.", umoney,
             plur(umoney), svm.moves, plur(svm.moves));
+#else
+    Sprintf(pbuf, "%ld枚の金貨を持って，%ld歩動いた．", umoney,
+            svm.moves);
+#endif
     dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
+#if 0 /*JP:T*/
     Sprintf(pbuf,
             "You were level %d with a maximum of %d hit point%s when you %s.",
             u.ulevel, u.uhpmax, plur(u.uhpmax), ends[how]);
+#else
+    Sprintf(pbuf,
+            "%sとき，あなたはレベル%uで，最大体力は%dであった．",
+            ends[how],u.ulevel, u.uhpmax);
+#endif
     dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     dump_forward_putstr(endwin, 0, "", done_stopprint);
     if (!done_stopprint)
@@ -1624,7 +1910,10 @@ container_contents(
                    reports the box as containing "1 item" */
                 cat = SchroedingersBox(box);
 
+/*JP
                 Sprintf(buf, "Contents of %s:", the(xname(box)));
+*/
+                Sprintf(buf, "%sの中身：", the(xname(box)));
                 putstr(tmpwin, 0, buf);
                 if (!dumping)
                     putstr(tmpwin, 0, "");
@@ -1649,7 +1938,10 @@ container_contents(
                     }
                     unsortloot(&sortedcobj);
                 } else if (cat) {
+/*JP
                     Strcpy(&buf[2], "Schroedinger's cat!");
+*/
+                    Strcpy(&buf[2], "シュレディンガーの猫！");
                     putstr(tmpwin, 0, buf);
                 }
                 if (dumping)
@@ -1660,7 +1952,10 @@ container_contents(
                     container_contents(box->cobj, identified, TRUE,
                                        reportempty);
             } else if (reportempty) {
+/*JP
                 pline("%s is empty.", upstart(thesimpleoname(box)));
+*/
+                pline("%sは空っぽだ．", xname(box));
                 display_nhwindow(WIN_MESSAGE, FALSE);
             }
         }
@@ -1699,6 +1994,9 @@ nh_terminate(int status)
         return;
 #endif
     program_state.exiting = 1;
+#if 1 /*JP*/
+    jputchar('\0'); /* reset terminal */
+#endif
     nethack_exit(status);
 }
 
@@ -1819,6 +2117,7 @@ bel_copy1(char **inp, char *out)
     *inp = in;
 }
 
+/*JP: files.cで1ヶ所使われているがここは英語のままにしておく*/
 char *
 build_english_list(char *in)
 {
