@@ -1,0 +1,18 @@
+--- ../../nethack/src/mhitu.c	2023-02-16 06:52:56.000000000 +0900
++++ ./mhitu.c	2026-06-07 02:06:49.243787800 +0900
+@@ -107,9 +114,15 @@
+ struct obj *otemp;
+ {
+     if (flags.verbose && !Blind && mon_visible(mtmp)) {
++#if 0 /*JP*/
+         pline("%s %s %s%s %s.", Monnam(mtmp),
+               (objects[otemp->otyp].oc_dir & PIERCE) ? "thrusts" : "swings",
+               (otemp->quan > 1L) ? "one of " : "", mhis(mtmp), xname(otemp));
++#else
++        pline("%sは%s%s．", Monnam(mtmp),
++              xname(otemp),
++              (objects[otemp->otyp].oc_dir & PIERCE) ? "を突いた" : "を振りまわした");
++#endif
+     }
+ }
+ 
