@@ -3,6 +3,11 @@
 /*-Copyright (c) Pasi Kallinen, 2018. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn char *nextmbuf(void);
@@ -123,7 +128,15 @@ name_from_player(
     /* strip leading and trailing spaces, condense internal sequences */
     (void) mungspaces(outbuf);
     if (strlen(outbuf) >= PL_PSIZ)
+#if 0 /*JP*/
         outbuf[PL_PSIZ - 1] = '\0';
+#else
+    {
+        int i = PL_PSIZ - 1;
+        i -= offset_in_kanji(outbuf, i);
+        outbuf[i] = '\0';
+    }
+#endif
     return outbuf;
 }
 
@@ -140,7 +153,12 @@ christen_monst(struct monst *mtmp, const char *name)
     if (lth > PL_PSIZ) {
         lth = PL_PSIZ;
         name = strncpy(buf, name, PL_PSIZ - 1);
+#if 0 /*JP*/
         buf[PL_PSIZ - 1] = '\0';
+#else
+        lth -= offset_in_kanji(buf, lth - 1);
+        buf[lth - 1] = '\0';
+#endif
     }
     new_mgivenname(mtmp, lth); /* removes old name if one is present */
     if (lth)
@@ -181,15 +199,22 @@ alreadynamed(struct monst *mtmp, char *monnambuf, char *usrbuf)
             /* avoid gendered pronoun for riders */
             pline("%s is already called that.", upstart(monnambuf));
         } else {
+#if 0 /*JP:T*/
             pline("%s is already called %s.",
                   upstart(strcpy(pronounbuf, mhe(mtmp))), monnambuf);
+#else
+        pline("%sは既に%sと呼ばれている．",
+              upstart(strcpy(pronounbuf, mhe(mtmp))), monnambuf);
+#endif
         }
         return TRUE;
+#if 0 /*JP*//*日本語では使わない*/
     } else if (mtmp->data == &mons[PM_JUIBLEX]
                && strstri(monnambuf, "Juiblex")
                && !strcmpi(usrbuf, "Jubilex")) {
         pline("%s doesn't like being called %s.", upstart(monnambuf), usrbuf);
         return TRUE;
+#endif
     }
     return FALSE;
 }
@@ -205,12 +230,18 @@ do_mgivenname(void)
     boolean do_swallow = FALSE;
 
     if (Hallucination) {
+/*JP
         You("would never recognize it anyway.");
+*/
+        You("それを認識できない．");
         return;
     }
     cc.x = u.ux;
     cc.y = u.uy;
+/*JP
     if (getpos(&cc, FALSE, "the monster you want to name") < 0
+*/
+    if (getpos(&cc, FALSE, "あなたが名づけたい怪物") < 0
         || !isok(cc.x, cc.y))
         return;
     cx = cc.x, cy = cc.y;
@@ -219,7 +250,10 @@ do_mgivenname(void)
         if (u.usteed && canspotmon(u.usteed)) {
             mtmp = u.usteed;
         } else {
+/*JP
             pline("This %s creature is called %s and cannot be renamed.",
+*/
+            pline("この%s生き物は%sと呼ばれていて，名前は変更できない．",
                   beautiful(), svp.plname);
             return;
         }
@@ -243,11 +277,17 @@ do_mgivenname(void)
                 || M_AP_TYPE(mtmp) == M_AP_OBJECT
                 || (mtmp->minvis && !See_invisible))))) {
 
+/*JP
         pline("I see no monster there.");
+*/
+        pline("そこに怪物はいない．");
         return;
     }
     /* special case similar to the one in lookat() */
+/*JP
     Sprintf(qbuf, "What do you want to call %s?",
+*/
+    Sprintf(qbuf, "%sを何と呼びますか？",
             distant_monnam(mtmp, ARTICLE_THE, monnambuf));
     /* use getlin() to get a name string from the player */
     if (!name_from_player(buf, qbuf,
@@ -264,18 +304,27 @@ do_mgivenname(void)
      */
     if ((mtmp->data->geno & G_UNIQ) && !mtmp->ispriest) {
         if (!alreadynamed(mtmp, monnambuf, buf))
+/*JP
             pline("%s doesn't like being called names!", upstart(monnambuf));
+*/
+            pline("%sはあだ名で呼ばれるのが嫌いなようだ！", Monnam(mtmp));
     } else if (mtmp->isshk
                && !(Deaf || helpless(mtmp)
                     || mtmp->data->msound <= MS_ANIMAL)) {
         if (!alreadynamed(mtmp, monnambuf, buf)) {
             SetVoice(mtmp, 0, 80, 0);
+/*JP
             verbalize("I'm %s, not %s.", shkname(mtmp), buf);
+*/
+            verbalize("私は%sだ，%sではない．", shkname(mtmp), buf);
         }
     } else if (mtmp->ispriest || mtmp->isminion || mtmp->isshk
                || mtmp->data == &mons[PM_GHOST] || has_ebones(mtmp)) {
         if (!alreadynamed(mtmp, monnambuf, buf))
+/*JP
             pline("%s will not accept the name %s.", upstart(monnambuf), buf);
+*/
+            pline("%sは%sという名前を受けいれなかった．", monnambuf, buf);
     } else {
         (void) christen_monst(mtmp, buf);
     }
@@ -295,13 +344,21 @@ do_oname(struct obj *obj)
 
     /* Do this now because there's no point in even asking for a name */
     if (obj->otyp == SPE_NOVEL) {
+/*JP
         pline("%s already has a published name.", Ysimple_name2(obj));
+*/
+        pline("%sにはすでに出版時の名前がある．", Ysimple_name2(obj));
         return;
     }
 
+#if 0 /*JP:T*/
     Sprintf(qbuf, "What do you want to name %s ",
             is_plural(obj) ? "these" : "this");
     (void) safe_qbuf(qbuf, qbuf, "?", obj, xname, simpleonames, "item");
+#else
+    (void) safe_qbuf(qbuf, "", "を何と名づけますか？", obj, xname,
+                     simpleonames, "それ");
+#endif
     /* use getlin() to get a name string from the player */
     if (!name_from_player(buf, qbuf, safe_oname(obj)))
         return;
@@ -348,9 +405,15 @@ do_oname(struct obj *obj)
         do {
             wipeout_text(bufp, rnd_on_display_rng(2), (unsigned) 0);
         } while (!strcmp(buf, bufcpy));
+/*JP
         pline("While engraving, your %s slips.", body_part(HAND));
+*/
+        pline("刻んでいる間に%sが滑ってしまった．", body_part(HAND));
         display_nhwindow(WIN_MESSAGE, FALSE);
+/*JP
         You("engrave: \"%s\".", buf);
+*/
+        You("刻んだ: 「%s」．",buf);
         /* violate illiteracy conduct since hero attempted to write
            a valid artifact name */
         u.uconduct.literate++;
@@ -382,8 +445,15 @@ oname(
     lth = *name ? (int) (strlen(name) + 1) : 0;
     if (lth > PL_PSIZ) {
         lth = PL_PSIZ;
+#if 0 /*JP*/
         name = strncpy(buf, name, PL_PSIZ - 1);
         buf[PL_PSIZ - 1] = '\0';
+#else
+        if (is_kanji2(name, lth - 1))
+            --lth;
+        name = strncpy(buf, name, lth - 1);
+        buf[lth - 1] = '\0';
+#endif
     }
     /* If named artifact exists in the game, do not create another.
        Also trying to create an artifact shouldn't de-artifact
@@ -547,7 +617,10 @@ docallcmd(void)
     add_menu(win, &nul_glyphinfo, &any, abc ? 0 : any.a_char, 'l',
              ATR_NONE, clr, "record an annotation for the current level",
              MENU_ITEMFLAGS_NONE);
+/*JP
     end_menu(win, "What do you want to name?");
+*/
+    end_menu(win, "どれに名前をつけますか？");
     if (select_menu(win, PICK_ONE, &pick_list) > 0) {
         ch = pick_list[0].item.a_char;
         free((genericptr_t) pick_list);
@@ -577,7 +650,10 @@ docallcmd(void)
             (void) xname(obj);
 
             if (!obj->dknown) {
+/*JP
                 You("would never recognize another one.");
+*/
+                You("他に認識できない．");
 #if 0
             } else if (call_ok(obj) == GETOBJ_EXCLUDE) {
                 You("know those as well as you ever will.");
@@ -645,11 +721,19 @@ docall(struct obj *obj)
 
     if (obj->oclass == POTION_CLASS && obj->fromsink)
         /* fromsink: kludge, meaning it's sink water */
+/*JP
         Sprintf(qbuf, "Call a stream of %s fluid:",
+*/
+        Sprintf(qbuf, "%s液体:",
                 OBJ_DESCR(objects[obj->otyp]));
     else
+#if 0 /*JP:T*/
         (void) safe_qbuf(qbuf, "Call ", ":", obj,
                          docall_xname, simpleonames, "thing");
+#else
+        (void) safe_qbuf(qbuf, "", "に何と名前を付ける？", obj,
+                         docall_xname, simpleonames, "これ");
+#endif
     /* pointer to old name */
     uname_p = &(objects[obj->otyp].oc_uname);
     /* use getlin() to get a name string from the player */
@@ -682,15 +766,23 @@ namefloorobj(void)
     int glyph;
     char buf[BUFSZ];
     struct obj *obj = 0;
+#if 0 /*JP*/
     boolean fakeobj = FALSE, use_plural;
+#else
+    boolean fakeobj = FALSE;
+#endif
 
     cc.x = u.ux, cc.y = u.uy;
     /* "dot for under/over you" only makes sense when the cursor hasn't
        been moved off the hero's '@' yet, but there's no way to adjust
        the help text once getpos() has started */
+#if 0 /*JP:T*/
     Sprintf(buf, "object on map (or '.' for one %s you)",
             (u.uundetected && hides_under(gy.youmonst.data))
               ? "over" : "under");
+#else
+    Sprintf(buf, "地図上の物(あるいは'.'であなたのいる場所)");
+#endif
     if (getpos(&cc, FALSE, buf) < 0 || cc.x <= 0)
         return;
     if (u_at(cc.x, cc.y)) {
@@ -703,8 +795,13 @@ namefloorobj(void)
     }
     if (!obj) {
         /* "under you" is safe here since there's no object to hide under */
+#if 0 /*JP:T*/
         There("doesn't seem to be any object %s.",
               u_at(cc.x, cc.y) ? "under you" : "there");
+#else
+        pline("%sには何もないようだ．",
+              u_at(cc.x, cc.y) ? "あなたの下" : "そこ");
+#endif
         return;
     }
     /* note well: 'obj' might be an instance of STRANGE_OBJECT if target
@@ -715,7 +812,9 @@ namefloorobj(void)
     Strcpy(buf, (obj->otyp != STRANGE_OBJECT)
                  ? simpleonames(obj)
                  : obj_descr[STRANGE_OBJECT].oc_name);
+#if 0 /*JP*/
     use_plural = (obj->quan > 1L);
+#endif
     if (Hallucination) {
         const char *unames[6];
         char tmpbuf[BUFSZ];
@@ -737,16 +836,35 @@ namefloorobj(void)
         /* traditional */
         unames[4] = roguename();
         /* silly */
+/*JP
         unames[5] = "Wibbly Wobbly";
+*/
+        unames[5] = "うろうろ";
+#if 0 /*JP:T*/
         pline("%s %s to call you \"%s.\"",
               The(buf), use_plural ? "decide" : "decides",
               unames[rn2_on_display_rng(SIZE(unames))]);
+#else
+        pline("%sはあなたを「%s」と呼ぶことに決めた．",
+              buf,
+              unames[rn2_on_display_rng(SIZE(unames))]);
+#endif
     } else if (call_ok(obj) == GETOBJ_EXCLUDE) {
+#if 0 /*JP:T*/
         pline("%s %s can't be assigned a type name.",
               use_plural ? "Those" : "That", buf);
+#else
+        pline("%sに種類の名前を割り当てることはできない．",
+              buf);
+#endif
     } else if (!obj->dknown) {
+#if 0 /*JP:T*/
         You("don't know %s %s well enough to name %s.",
             use_plural ? "those" : "that", buf, use_plural ? "them" : "it");
+#else
+        You("名前を付けられるほど%sのことをよく知らない．",
+            buf);
+#endif
     } else {
         docall(obj);
     }
@@ -898,8 +1016,10 @@ x_monnam(
         name = priestname(mtmp, article, do_exact, buf2);
         EHalluc_resistance = save_prop;
         mtmp->minvis = save_invis;
+#if 0 /*JP*/
         if (article == ARTICLE_NONE && !strncmp(name, "the ", 4))
             name += 4;
+#endif
         return strcpy(buf, name);
     }
 
@@ -917,6 +1037,7 @@ x_monnam(
      * none of this applies.
      */
     if (mtmp->isshk && !do_hallu && !do_mappear) {
+#if 0 /*JP*/
         if (adjective && article == ARTICLE_THE) {
             /* pathological case: "the angry Asidonhopo the blue dragon"
                sounds silly */
@@ -933,17 +1054,38 @@ x_monnam(
             }
         }
         return buf;
+#else
+        if (mdat == &mons[PM_SHOPKEEPER] && !do_invis){
+            Strcpy(buf, shkname(mtmp));
+        } else {
+            Sprintf(buf, "%sという名の%s%s",
+                    shkname(mtmp), do_invis ? "姿の見えない" : "",
+                    pm_name);
+        }
+        return buf;
+#endif
     }
 
     /* Put the adjectives in the buffer */
     if (adjective)
+/*JP
         Strcat(strcat(buf, adjective), " ");
+*/
+        Strcat(buf, adjective);
     if (do_invis)
+/*JP
         Strcat(buf, "invisible ");
+*/
+        Strcat(buf, "姿の見えない");
     if (do_saddle && (mtmp->misc_worn_check & W_SADDLE) && !Blind
         && !Hallucination)
+/*JP
         Strcat(buf, "saddled ");
+*/
+        Strcat(buf, "鞍のついている");
+#if 0 /*JP*/
     has_adjectives = (buf[0] != '\0');
+#endif
 
     /* Put the actual monster name or type into the buffer now.
        Remember whether the buffer starts with a personal name. */
@@ -961,11 +1103,22 @@ x_monnam(
       if (has_ebones(mtmp)) {
 #endif
         if (mdat == &mons[PM_GHOST]) {
+/*JP
             Sprintf(eos(buf), "%s ghost", s_suffix(name));
+*/
+            Sprintf(buf, "%sの幽霊", name);
+#if 0 /*JP*/
             name_at_start = TRUE;
+#endif
         } else if (called) {
+/*JP
             Sprintf(eos(buf), "%s called %s", pm_name, name);
+*/
+            Sprintf(eos(buf), "%sという名の%s", name, pm_name);
+#if 0 /*JP*/
             name_at_start = (boolean) type_is_pname(mdat);
+#endif
+#if 0 /*JP*//*定冠詞の処理は不要*/
         } else if (is_mplayer(mdat) && (bp = strstri(name, " the ")) != 0) {
             /* <name> the <adjective> <invisible> <saddled> <rank> */
             char pbuf[BUFSZ];
@@ -978,9 +1131,12 @@ x_monnam(
             Strcpy(buf, pbuf);
             article = ARTICLE_NONE;
             name_at_start = TRUE;
+#endif
         } else {
             Strcat(buf, name);
+#if 0 /*JP*/
             name_at_start = TRUE;
+#endif
         }
 #if 0 /* hardfought */
       }
@@ -990,13 +1146,22 @@ x_monnam(
 
         Strcpy(pbuf, rank_of((int) mtmp->m_lev, monsndx(mdat),
                              (boolean) mtmp->female));
+#if 0 /*JP*/
         Strcat(buf, lcase(pbuf));
+#else
+        Strcat(buf, pbuf);
+#endif
+#if 0 /*JP*/
         name_at_start = FALSE;
+#endif
     } else {
         Strcat(buf, pm_name);
+#if 0 /*JP*/
         name_at_start = (boolean) type_is_pname(mdat);
+#endif
     }
 
+#if 0 /*JP*//*日本語に冠詞はない*/
     if (name_at_start && (article == ARTICLE_YOUR || !has_adjectives)) {
         if (mdat == &mons[PM_WIZARD_OF_YENDOR])
             article = ARTICLE_THE;
@@ -1028,6 +1193,7 @@ x_monnam(
         Strcat(buf2, buf); /* buf2[] isn't viable to return,  */
         Strcpy(buf, buf2); /* so transfer the result to buf[] */
     }
+#endif
     return buf;
 }
 
@@ -1177,8 +1343,12 @@ distant_monnam(
        its own obfuscation) */
     if (mon->data == &mons[PM_HIGH_CLERIC] && !Hallucination
         && Is_astralevel(&u.uz) && !m_next2u(mon)) {
+#if 0 /*JP:T*/
         Strcpy(outbuf, article == ARTICLE_THE ? "the " : "");
         Strcat(outbuf, mon->female ? "high priestess" : "high priest");
+#else
+        Strcpy(outbuf, "法王");
+#endif
     } else {
         Strcpy(outbuf, x_monnam(mon, article, (char *) 0, 0, TRUE));
     }
@@ -1196,6 +1366,7 @@ mon_nam_too(struct monst *mon, struct monst *other_mon)
         outbuf = mon_nam(mon);
     } else {
         outbuf = nextmbuf();
+#if 0 /*JP*/
         switch (pronoun_gender(mon, PRONOUN_HALLU)) {
         case 0:
             Strcpy(outbuf, "himself");
@@ -1211,10 +1382,14 @@ mon_nam_too(struct monst *mon, struct monst *other_mon)
             Strcpy(outbuf, "themselves");
             break;
         }
+#else
+        Strcpy(outbuf, "自分自身");
+#endif
     }
     return outbuf;
 }
 
+#if 0 /*JP*//*unused*/
 /* construct "<monnamtext> <verb> <othertext> {him|her|it}self" which might
    be distorted by Hallu; if that's plural, adjust monnamtext and verb */
 char *
@@ -1245,8 +1420,10 @@ monverbself(
     if (othertext && *othertext)
         Strcat(strcat(monnamtext, " "), othertext);
     Strcat(strcat(monnamtext, " "), selfbuf);
+    Sprintf(eos(monnamtext), "は%s自分自身に%s", othertext, verb);
     return monnamtext;
 }
+#endif
 
 /* for debugging messages, where data might be suspect and we aren't
    taking what the hero does or doesn't know into consideration */
@@ -1434,11 +1611,13 @@ roguename(void)
                 return i + 5;
             }
     }
+    /*JP:Rogueの開発者の名前*/
     return rn2(3) ? (rn2(2) ? "Michael Toy" : "Kenneth Arnold")
                   : "Glenn Wichman";
 }
 
 static NEARDATA const char *const hcolors[] = {
+#if 0 /*JP:T*/
     "ultraviolet", "infrared", "bluish-orange", "reddish-green", "dark white",
     "light black", "sky blue-pink", "pinkish-cyan", "indigo-chartreuse",
     "salty", "sweet", "sour", "bitter", "umami", /* basic tastes */
@@ -1455,6 +1634,16 @@ static NEARDATA const char *const hcolors[] = {
     "apocyan", "infra-pink", "opalescent", "violant", "tuneless",
     "viridian", "aureolin", "cinnabar", "purpurin", "gamboge", "madder",
     "bistre", "ecru", "fulvous", "tekhelet", "selective yellow",
+    #else /*JP:TODO:追加分は未訳*/
+    "紫外色の", "赤外色の", "青色がかったオレンジ色の", "赤みがかった緑色の", "暗い白色の",
+    "明るい黒の", "水色がかったピンク色の", "塩辛い", "甘い", "すっぱい", "苦い",
+    "しま模様の", "らせん状の", "波状の", "格子模様状の", "チェック状の", "放射状の", "ペーズリー模様の",
+    "しみ状の", "青色の斑点状の", "点状の", "四角形状の", "丸状の",
+    "三角状の", "カベルネ色の", "サングリア色の", "鮮やかな赤紫色の", "藤色の", "レモンライム色の",
+    "苺バナナ色の", "ペパーミント色の", "ロマンチックな色の", "白熱色の",
+    "オクタリン色の", /* Discworld: the Colour of Magic */
+
+#endif
 };
 
 const char *
@@ -1472,11 +1661,15 @@ rndcolor(void)
     int k = rn2(CLR_MAX);
 
     return Hallucination ? hcolor((char *) 0)
+/*JP
                          : (k == NO_COLOR) ? "colorless"
+*/
+                         : (k == NO_COLOR) ? "無色の"
                                            : c_obj_colors[k];
 }
 
 static NEARDATA const char *const hliquids[] = {
+#if 0 /*JP:T*/
     "yoghurt", "oobleck", "clotted blood", "diluted water", "purified water",
     "instant coffee", "tea", "herbal infusion", "liquid rainbow",
     "creamy foam", "mulled wine", "bouillon", "nectar", "grog", "flubber",
@@ -1484,6 +1677,15 @@ static NEARDATA const char *const hliquids[] = {
     "caramel sauce", "ink", "aqueous humour", "milk substitute",
     "fruit juice", "glowing lava", "gastric acid", "mineral water",
     "cough syrup", "quicksilver", "sweet vitriol", "grey goo", "pink slime",
+#else
+    "ヨーグルト", "ウーブレック", "血糊", "蒸留水", "精製水",
+    "インスタントコーヒー", "紅茶", "ハーブ液", "液体の虹",
+    "クリーミーフォーム", "ホットワイン", "ブイヨン", "果汁", "グロッグ", "フラバー",
+    "ケチャップ", "低速光", "油", "ビネグレットソース", "液体水晶", "蜂蜜",
+    "カラメルソース", "インク", "房水", "代用乳",
+    "フルーツジュース", "流れる溶岩", "胃酸", "ミネラルウォーター",
+    "咳止めシロップ", "水銀", "ジエチルエーテル", "グレイグー", "ピンクスライム",
+#endif
     "cosmic latte", "bone oil", "custard", "lard", "vinegar", "creosote",
     /* "new coke (tm)", --better not */
 };

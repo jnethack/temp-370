@@ -957,8 +957,13 @@ do_symset(boolean rogueflag)
                 big_desc = thissize;
         }
         if (!setcount) {
+#if 0 /*JP:T*/
             There("are no appropriate %s symbol sets available.",
                   rogueflag ? "rogue level" : "primary");
+#else
+            There("適切な%sシンボル設定がありません．",
+                  rogueflag ? "rogueレベル" : "通常");
+#endif
             return TRUE;
         }
 
@@ -1000,8 +1005,13 @@ do_symset(boolean rogueflag)
                                                 : MENU_ITEMFLAGS_NONE);
             }
         }
+#if 0 /*JP:T*/
         Sprintf(buf, "Select %ssymbol set:",
                 rogueflag ? "rogue level " : "");
+#else
+        Sprintf(buf, "%sシンボル設定を選択してください：",
+                rogueflag ? "rogueレベル" : "");
+#endif
         end_menu(tmpwin, buf);
         n = select_menu(tmpwin, PICK_ONE, &symset_pick);
         if (n > 0) {
@@ -1039,7 +1049,10 @@ do_symset(boolean rogueflag)
             nothing_to_do = TRUE;
     } else if (!res) {
         /* The symbols file could not be accessed */
+/*JP
         pline("Unable to access \"%s\" file.", SYMBOLS);
+*/
+        pline("\"%s\"ファイルにアクセスできません．", SYMBOLS);
         return TRUE;
     } else if (!gs.symset_list) {
         /* The symbols file was empty */

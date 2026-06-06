@@ -535,7 +535,7 @@ offset_in_kanji(const unsigned char *s,int pos)
         0xfc,
         0xfe,
     };
-    if (output_kcode == UTF8) {
+    if (IC == UTF8) {
         int c = 1;
         int i;
 
