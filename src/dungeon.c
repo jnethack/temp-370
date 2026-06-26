@@ -1161,22 +1161,10 @@ fixup_level_locations(void)
     /*
      *  I hate hardwiring these names. :-(
      */
-/*JP
     quest_dnum = dname_to_dnum("The Quest");
-*/
-    quest_dnum = dname_to_dnum("クエスト");
-/*JP
     sokoban_dnum = dname_to_dnum("Sokoban");
-*/
-    sokoban_dnum = dname_to_dnum("倉庫番");
-/*JP
     mines_dnum = dname_to_dnum("The Gnomish Mines");
-*/
-    mines_dnum = dname_to_dnum("ノームの鉱山");
-/*JP
     tower_dnum = dname_to_dnum("Vlad's Tower");
-*/
-    tower_dnum = dname_to_dnum("ヴラド侯の塔");
     tutorial_dnum = dname_to_dnum("The Tutorial");
 
     /* one special fixup for dummy surface level */
@@ -2503,7 +2491,7 @@ print_dungeon(boolean bymenu, schar *rlev, xint16 *rdgn)
 #else
         else if (Is_earthlevel(&u.uz) || Is_waterlevel(&u.uz)
                  || Is_firelevel(&u.uz) || Is_airlevel(&u.uz)
-                 || Is_qstart(&u.uz) || at_dgn_entrance("クエスト")
+                 || Is_qstart(&u.uz) || at_dgn_entrance("The Quest")
                  || Is_knox(&u.uz))
 #endif
             Strcpy(buf, "No portal found.");
@@ -3214,7 +3202,7 @@ recalc_mapseen(void)
 /*JP
     mptr->flags.quest_summons = (at_dgn_entrance("The Quest")
 */
-    mptr->flags.quest_summons = (at_dgn_entrance("クエスト")
+    mptr->flags.quest_summons = (at_dgn_entrance("The Quest")
                                  && u.uevent.qcalled
                                  && !(u.uevent.qcompleted
                                       || u.uevent.qexpelled

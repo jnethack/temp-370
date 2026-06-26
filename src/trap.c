@@ -5323,7 +5323,7 @@ domagictrap(void)
 #else
                 You("突然%sが恋しくなった．",
                     Hallucination ? "青森"
-                        : (In_quest(&u.uz) || at_dgn_entrance("クエスト"))
+                        : (In_quest(&u.uz) || at_dgn_entrance("The Quest"))
                             ? "すぐそこにある故郷"
                             : "はるかかなたの故郷");
 #endif
