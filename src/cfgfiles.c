@@ -125,7 +125,11 @@ static boolean ignore_errors_on_unmatched = FALSE,
 /* used for messaging. Also used in options.c */
 static const char *default_configfile =
 #ifdef UNIX
+#if 0 /*JP*/
     ".nethackrc";
+#else
+    ".jnethackrc";
+#endif
 #else
 #if defined(MACOS9) || defined(__BEOS__)
     "NetHack Defaults";
