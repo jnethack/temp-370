@@ -3,11 +3,7 @@ the name of your (first) cat (e.g., catname:Tabby
 the name of your (first) dog (e.g., dogname:Fang
 冒険を供にする(最初の)犬の名前 (例 dogname:ポチ
 the name of your (first) horse (e.g., horsename:Silver
-冒険を供にする(最初の)馬の名前 (例 ghoulname:シルバー
-text attribute for menu headings
-強調，反転または下線で種類を表示する
-invert all items on this page of a menu", 4
-現在表示されているページのアイテムを反転"
+冒険を供にする(最初の)馬の名前 (例 horsename:シルバー
 the type of message window required", 
 メッセージウィンドウのタイプを設定",
 the type of message window required
@@ -15,7 +11,7 @@ the type of message window required
 same as palette, only order is reversed
 パレットが同じとき、指示したものだけ反転させる
 2 or 3 lines for horizontal (bottom or top) status display
-垂直(下か上)のステータス表示に2,3行使う
+水平(下か上)のステータス表示に2,3行使う
 window processor to use
 使用するウィンドウプロセッサ
 load curses display symbols

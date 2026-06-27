@@ -51,7 +51,10 @@ static const struct innate {
                  { 5, &(HStealth), "stealthy", "" },
 */
                  { 5, &(HStealth), "人目を盗む力を得た", "人目を盗む力を失った" },
+/*JP
                  { 10, &(HFast), "quick", "slow" },
+*/
+                 { 10, &(HFast), "素早さを得た", "遅くなった" },
                  { 0, 0, 0, 0 } },
 
   bar_abil[] = { { 1, &(HPoison_resistance), "", "" },
@@ -94,7 +97,10 @@ static const struct innate {
                  { 3, &(HPoison_resistance), "healthy", "" },
 */
                  { 3, &(HPoison_resistance), "健康になった", "不健康になった" },
+/*JP
                  { 5, &(HStealth), "stealthy", "" },
+*/
+                 { 5, &(HStealth), "人目を盗む力を得た", "人目を盗む力を失った" },
 /*JP
                  { 7, &(HWarning), "sensitive", "" },
 */

@@ -1702,14 +1702,8 @@ docompress_file(const char *filename, boolean uncomp)
             redirect(filename, RDBMODE, stdin, uncomp);
             redirect(cfn, WRBMODE, stdout, uncomp);
         }
-#if 1 /*JP:T*/
-_pragma_ignore(-Wunused-result)
-#endif
         (void) setgid(getgid());
         (void) setuid(getuid());
-#if 1 /*JP:T*/
-_pragma_pop
-#endif
         (void) execv(args[0], (char *const *) args);
         perror((char *) 0);
         (void) fprintf(stderr, "Exec to %scompress %s failed.\n",

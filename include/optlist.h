@@ -116,7 +116,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
      */
     NHOPTC(windowtype, Advanced, WINTYPELEN, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "使用するウインドウシステム (should be specified first)")
+                "使用するウインドウシステム (最初に指定する)")
     NHOPTC(playmode, Advanced, 8, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
                 "通常モード，探検モード，デバッグモードのいずれか")
@@ -253,7 +253,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #ifdef CURSES_GRAPHICS
     NHOPTC(cursesgraphics, Advanced, 70, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "curses表示シンボルを読み込む into symset")
+                "curses表示シンボルをsymsetに読み込む")
 #endif
     NHOPTB(customcolors, Map, 0, opt_out, set_in_game,
            On, Yes, No, No, "customcolours", &iflags.customcolors,
@@ -335,7 +335,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
                 Yes, Yes, Yes, No, NoAlias, "テキストウィンドウに使用するフォント")
     NHOPTB(force_invmenu, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.force_invmenu, Term_False,
-           "commands asking for inventory item show a menu")
+           "持ち物一覧メニューを表示するコマンド")
     NHOPTC(fruit, General, PL_FSIZ, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias, "好物の果物の名前")
     NHOPTB(fullscreen, Advanced, 0, opt_in, set_in_config,
@@ -438,12 +438,12 @@ static int optfn_##a(int, int, boolean, char *, char *);
     NHOPTC(menu_first_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias, "メニューの最初のページへ")
     NHOPTC(menu_headings, Advanced, 4, opt_in, set_in_game,
-                Yes, Yes, No, Yes, NoAlias, "display style for menu headings")
+                Yes, Yes, No, Yes, NoAlias, "メニュー見出しの表示スタイル")
     NHOPTC(menu_invert_all, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias, "全てのアイテムを反転")
     NHOPTC(menu_invert_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "invert all items on this page of a menu")
+                "現在表示されているページのアイテムを反転")
     NHOPTC(menu_last_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias, "メニューの最後のページへ")
     NHOPTC(menu_next_page, Advanced, 4, opt_in, set_in_config,
@@ -716,7 +716,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "use standout for --more--")
     NHOPTB(status_updates, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &iflags.status_updates, Term_False,
-           "allow the status lines to update")
+           "ステータス行を更新できるようにする")
     NHOPTO("status condition fields", Status, o_status_cond, BUFSZ,
                 opt_in, set_in_game,
                 No, Yes, No, NoAlias, "change status condition highlighting")
@@ -814,7 +814,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
            On, Yes, No, No, NoAlias, &flags.verbose, Term_False,
            (char *)0)
     NHOPTC(versinfo, Advanced, 80, opt_out, set_in_game,
-           No, Yes, No, Yes, NoAlias, "extra information for 'showvers'")
+           No, Yes, No, Yes, NoAlias, "'showvers'のための追加情報")
 #ifdef MSDOS
     NHOPTC(video, Advanced, 20, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias, "使用するビデオモードを設定する")

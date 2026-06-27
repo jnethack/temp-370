@@ -1290,16 +1290,15 @@ beautiful(void)
                        : (cha >= 4) ? "ugly"
                          : "hideous"); /* 3 is the minimum possible */
 #else
-/*JP 語幹で使う *//*JP:TODO*/
-    res = ((cha >= 25) ? "sublime" /* 25 is the maximum possible */
-           : (cha >= 19) ? "splendorous" /* note: not "splendiferous" */
-             : (cha >= 16) ? ((poly_gender() == 1) ? "美し" : "りりし")
-               : (cha >= 14) ? ((poly_gender() == 1) ? "winsome" : "amiable")
-                 : (cha >= 11) ? "cute"
-                   : (cha >= 9) ? "plain"
-                     : (cha >= 6) ? "homely"
-                       : (cha >= 4) ? "醜"
-                         : "hideous"); /* 3 is the minimum possible */
+    res = ((cha >= 25) ? "神々しい" /* 25 is the maximum possible */
+           : (cha >= 19) ? "輝かしい" /* note: not "splendiferous" */
+             : (cha >= 16) ? ((poly_gender() == 1) ? "美しい" : "りりしい")
+               : (cha >= 14) ? ((poly_gender() == 1) ? "無邪気な" : "親しみやすい")
+                 : (cha >= 11) ? "かわいい"
+                   : (cha >= 9) ? "普通な"
+                     : (cha >= 6) ? "地味な"
+                       : (cha >= 4) ? "醜い"
+                         : "恐ろしい"); /* 3 is the minimum possible */
 #endif
     return res;
 }
@@ -1339,7 +1338,7 @@ use_mirror(struct obj *obj)
 /*JP
             You_cant("see your %s %s.", uvisage, body_part(FACE));
 */
-            You_cant("自分の%sい%sを見ることができない．", uvisage, body_part(FACE));
+            You_cant("自分の%s%sを見ることができない．", uvisage, body_part(FACE));
         } else {
             if (u.umonnum == PM_FLOATING_EYE) {
                 if (Free_action) {
@@ -1394,7 +1393,7 @@ use_mirror(struct obj *obj)
 /*JP
                 You("look as %s as ever.", uvisage);
 */
-                You("あいかわらず%sく見える．", uvisage);
+                You("あいかわらず%s見える．", jconj_adj(uvisage));
             }
         }
         return ECMD_TIME;

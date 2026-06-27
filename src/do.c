@@ -2587,11 +2587,20 @@ revive_corpse(struct obj *corpse)
                 const char *effect = "";
 
                 if (mtmp->data == &mons[PM_DEATH])
+/*JP
                     effect = " in a whirl of spectral skulls";
+*/
+                    effect = "幽霊のような頭蓋骨が渦巻く中で";
                 else if (mtmp->data == &mons[PM_PESTILENCE])
+/*JP
                     effect = " in a churning pillar of flies";
+*/
+                    effect = "渦巻く蠅の柱の中で";
                 else if (mtmp->data == &mons[PM_FAMINE])
+/*JP
                     effect = " in a ring of withered crops";
+*/
+                    effect = "枯れた作物の輪の中で";
 
                 if (canseemon(mtmp)) {
 #if 0 /*JP:T*/
@@ -2949,7 +2958,9 @@ heal_legs(
                misleading since legs are being fully healed */
             Your("%s %s better.", legs, vtense(legs, "feel"));
 #else
-            Your("%sは回復した．", body_part(LEG));
+            Your("%s%sは回復した．",
+                 (EWounded_legs & BOTH_SIDES) == BOTH_SIDES ? "両" : "",
+                 body_part(LEG));
 #endif
         }
 

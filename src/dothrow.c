@@ -2537,11 +2537,26 @@ staticfn int
 gem_accept(struct monst *mon, struct obj *obj)
 {
     static NEARDATA const char
+/*JP
         nogood[]     = " is not interested in your junk.",
+*/
+        nogood[]     = "あなたのガラクタに興味を示さない．",
+/*JP
         acceptgift[] = " accepts your gift.",
+*/
+        acceptgift[] = "あなたの贈り物を受けとった．",
+/*JP
         maybeluck[]  = " hesitatingly",
+*/
+        maybeluck[]  = "ためらいながら",
+/*JP
         noluck[]     = " graciously",
+*/
+        noluck[]     = "丁重に",
+/*JP
         addluck[]    = " gratefully";
+*/
+        addluck[]    = "喜んで";
     char buf[BUFSZ];
     boolean is_buddy = sgn(mon->data->maligntyp) == sgn(u.ualign.type);
     boolean is_gem = objects[obj->otyp].oc_material == GEMSTONE;
@@ -2953,7 +2968,7 @@ throw_gold(struct obj *obj)
 
         if (digests(u.ustuck->data))
             /* note: s_suffix() returns a modifiable buffer */
-            swallower = strcat(s_suffix(swallower), "の体");
+            swallower = strcat(swallower, "の体");
         pline_The("金貨は%sの中へ消えていった．", swallower);
 #endif
         add_to_minv(u.ustuck, obj);

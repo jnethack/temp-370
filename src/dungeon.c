@@ -3453,7 +3453,10 @@ seen_string(xint16 x, const char *obj)
         return "no";
     /* an() returns too much.  index/strchr is ok in this case */
     case 1:
+/*JP
         return strchr(vowels, *obj) ? "an" : "a";
+*/
+        return "";
     case 2:
 /*JP
         return "some";
@@ -3484,7 +3487,10 @@ br_string2(branch *br)
 */
         return closed_portal ? "封印された魔法の入口" : "魔法の入口";
     case BR_NO_END1:
+/*JP
         return "Connection";
+*/
+        return "接続部";
     case BR_NO_END2:
 /*JP
         return br->end1_up ? "One way stairs up" : "One way stairs down";

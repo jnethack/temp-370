@@ -386,8 +386,8 @@ read_engr_at(coordxy x, coordxy y)
                 pline("Some text has been %s into the %s here.",
                       is_ice(x, y) ? "melted" : "burned", eloc);
 #else
-                pline("何かの文字が%s%sいる．",
-                      is_ice(x, y) ? "に刻まれて" : "に焼き付けられて", eloc);
+                pline("何かの文字が%s%sいる．", eloc,
+                      is_ice(x, y) ? "に刻まれて" : "に焼き付けられて");
 #endif
             }
             break;

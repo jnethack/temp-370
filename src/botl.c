@@ -2967,7 +2967,10 @@ status_hilite_add_threshold(int fld, struct hilite_s *hilite)
 staticfn boolean
 parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
 {
+/*JP
     static const char *const aligntxt[] = { "chaotic", "neutral", "lawful" };
+*/
+    static const char *const aligntxt[] = { "混沌", "中立", "秩序" };
     /* hu_stat[] from eat.c has trailing spaces which foul up comparisons;
        for the "not hungry" case, there's no text hence no way to highlight */
     static const char *const hutxt[] = {
@@ -4431,7 +4434,10 @@ status_hilite_menu_add(int origfld)
             Strcpy(hilite.textmatch, enc_stat[rv]);
         } else if (fld == BL_ALIGN) {
             static const char *const aligntxt[] = {
+/*JP
                 "chaotic", "neutral", "lawful"
+*/
+                "混沌", "中立", "秩序"
             };
             int rv = query_arrayvalue(qry_buf,
                                       aligntxt, 0, 2 + 1);

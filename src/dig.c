@@ -2249,8 +2249,13 @@ adj_pit_checks(coord *cc, char *msg)
             supporting = "跳ね橋";
 
         if (supporting) {
+#if 0 /*JP:T*/
             Sprintf(msg, "The %s supporting structures remain intact.",
                     s_suffix(supporting));
+#else
+            Sprintf(msg, "%sはまだちゃんと残っている．",
+                    supporting);
+#endif
             return FALSE;
         }
     }

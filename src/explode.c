@@ -383,7 +383,10 @@ explode(
 
         switch (abs(type) % 10) {
         case 0:
+/*JP
             adstr = "magical blast";
+*/
+            adstr = "魔法の風";
             adtyp = AD_MAGM;
             break;
         case 1:
@@ -398,7 +401,10 @@ explode(
             adtyp = AD_FIRE;
             break;
         case 2:
+/*JP
             adstr = "ball of cold";
+*/
+            adstr = "氷の玉";
             adtyp = AD_COLD;
             break;
         case 4:
@@ -411,15 +417,24 @@ explode(
             adtyp = AD_DISN;
             break;
         case 5:
+/*JP
             adstr = "ball of lightning";
+*/
+            adstr = "雷玉";
             adtyp = AD_ELEC;
             break;
         case 6:
+/*JP
             adstr = "poison gas cloud";
+*/
+            adstr = "毒の雲";
             adtyp = AD_DRST;
             break;
         case 7:
+/*JP
             adstr = "splash of acid";
+*/
+            adstr = "酸のしぶき";
             adtyp = AD_ACID;
             break;
         default:
@@ -760,10 +775,17 @@ explode(
                     Strcat(svk.killer.name, "で");
 #endif
                 } else if (olet == TRAP_EXPLODE) {
+#if 0 /*JP:T*/
                     svk.killer.format = NO_KILLER_PREFIX;
                     Snprintf(svk.killer.name, sizeof svk.killer.name,
                              "caught %sself in a %s", uhim(),
                              str);
+#else
+                    svk.killer.format = KILLED_BY;
+                    Snprintf(svk.killer.name, sizeof svk.killer.name,
+                             "%sにつつまれて",
+                             str);
+#endif
                 } else if (type >= 0 && olet != SCROLL_CLASS) {
 #if 0 /*JP:T*/
                     svk.killer.format = NO_KILLER_PREFIX;

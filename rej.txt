@@ -89,9 +89,6 @@ artifact.c:
             Sprintf(buf, "handling %s", killer_xname(obj));
             Sprintf(buf, "%sを扱って", killer_xname(obj));
 attrib.c:
-                 { 10, &(HSearching), "perceptive", "" },
-                 { 10, &(HSearching), "知覚力を得た", "知覚力を失った" },
-attrib.c:
                 Strcpy(buf, " from current creature form");
                 Strcpy(buf, "現在の姿によって");
 ball.c:
@@ -448,21 +445,6 @@ dothrow.c:
 dothrow.c:
             pline("%s catches %s.", Monnam(mon), the(xname(obj)));
             pline("%sは%sを掴んだ．", Monnam(mon), xname(obj));
-dothrow.c:
-    static NEARDATA const char nogood[] = " is not interested in your junk.";
-    static NEARDATA const char nogood[] = "あなたのガラクタに興味を示さない．";
-dothrow.c:
-    static NEARDATA const char acceptgift[] = " accepts your gift.";
-    static NEARDATA const char acceptgift[] = "あなたの贈り物を受けとった．";
-dothrow.c:
-    static NEARDATA const char maybeluck[] = " hesitatingly";
-    static NEARDATA const char maybeluck[] = "ためらいながら";
-dothrow.c:
-    static NEARDATA const char noluck[] = " graciously";
-    static NEARDATA const char noluck[] = "丁重に";
-dothrow.c:
-    static NEARDATA const char addluck[] = " gratefully";
-    static NEARDATA const char addluck[] = "喜んで";
 dothrow.c:
     if (flooreffects(obj, bhitpos.x, bhitpos.y, "fall"))
     if (flooreffects(obj, bhitpos.x, bhitpos.y, "落ちる"))
@@ -839,9 +821,6 @@ dungeon.c:
         getlin("What do you want to call this dungeon level?", nbuf);
         getlin("この階を何と呼ぶ？", nbuf);
 dungeon.c:
-        return index(vowels, *obj) ? "an" : "a";
-        return "";
-dungeon.c:
         str = "general store";
         str = "雑貨店";
 dungeon.c:
@@ -1201,21 +1180,6 @@ engrave.c:
 exper.c:
         pline("%s level %d.", Goodbye(), u.ulevel--);
         pline("さようならレベル%d．", u.ulevel--);
-explode.c:
-            str = "magical blast";
-            str = "魔法の風";
-explode.c:
-            str = "ball of cold";
-            str = "氷の玉";
-explode.c:
-            str = "ball of lightning";
-            str = "雷玉";
-explode.c:
-            str = "poison gas cloud";
-            str = "毒の雲";
-explode.c:
-            str = "splash of acid";
-            str = "酸のしぶき";
 files.c:
     const char *gamename = (hname && *hname) ? hname : "NetHack";
     const char *gamename = (hname && *hname) ? hname : "JNetHack";

@@ -3182,7 +3182,11 @@ key2extcmddesc(uchar key)
         /* special case: for reqmenu prefix (normally 'm'), replace
            "prefix: request menu or modify command (#reqmenu)"
            with two-line "movement prefix:...\nnon-movement prefix:..." */
+#if 0 /*JP:T*/
         if (!strncmpi(key2cmdbuf, "prefix:", 7) && !strcmpi(txt, "reqmenu"))
+#else /*extcmdlistと要同期*/
+        if (!STRNCMP2(key2cmdbuf, "接頭辞:") && !strcmpi(txt, "reqmenu"))
+#endif
             (void) strsubst(key2cmdbuf, "prefix:",
                      /* relies on implicit concatenation of literal strings */
                             "movement prefix:"

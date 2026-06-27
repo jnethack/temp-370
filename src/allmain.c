@@ -945,8 +945,8 @@ welcome(boolean new_game) /* false => restoring an old game */
                    : "%s %s, the%s, welcome back to NetHack!",
           Hello((struct monst *) 0), svp.plname, buf);
 #else
-    pline(new_game ? "%s %s, welcome to NetHack!  この世界では%s."
-                   : "%s %s, the%s, welcome back to NetHack!",
+    pline(new_game ? "%s%s，JNetHackの世界へ！このゲームではあなたは%sだ．"
+                   : "%s%s，JNetHackの世界へ！あなたは%sだ．",
           Hello((struct monst *) 0), svp.plname, buf);
 #endif
 

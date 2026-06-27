@@ -2349,7 +2349,7 @@ otransit_msg(struct obj *otmp, boolean nodrop, boolean chainthere, long num)
     if (num || chainthere) {
         /* As of 3.6.2: use a separate buffer for the suffix to avoid risk of
            overrunning obuf[] (let pline() handle truncation if necessary) */
-#if 0 /*JP*//*JP:TODO*/
+#if 0 /*JP*/
         if (num) { /* means: other objects are impacted */
             Sprintf(xbuf, " %s %s object%s", otense(otmp, "hit"),
                     (num == 1L) ? "another" : "other", (num > 1L) ? "s" : "");
@@ -2362,7 +2362,11 @@ otransit_msg(struct obj *otmp, boolean nodrop, boolean chainthere, long num)
             Sprintf(eos(xbuf), " and %s %s.",
                     otense(otmp, "fall"), gg.gate_str);
 #else
-        Sprintf(xbuf, "他の物体に命中して");
+        if (num) { /* means: other objects are impacted */
+            Sprintf(xbuf, "他の物体に命中して");
+        } else { /* chain-only msg */
+            Sprintf(xbuf, "鎖をガラガラと鳴らして");
+        }
         if(nodrop)
             Sprintf(eos(xbuf), "止まった．");
         else
