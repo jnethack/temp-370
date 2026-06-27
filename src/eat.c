@@ -1683,7 +1683,10 @@ tin_details(struct obj *obj, int mnum, char *buf)
         if (vegetarian(&mons[mnum]))
             Sprintf(eos(buf), "%s", mons[mnum].pmnames[NEUTRAL]);
         else
+/*JP
             Sprintf(eos(buf), "%s meat", mons[mnum].pmnames[NEUTRAL]);
+*/
+            Sprintf(eos(buf), "%sの肉", mons[mnum].pmnames[NEUTRAL]);
 #if 1 /*JP*//*「の」で始まるなら後置、それ以外なら前置*/
         if (strstr(tintxts[r].txt, "の") == tintxts[r].txt) {
             Strcpy(eos(buf), tintxts[r].txt);
@@ -2585,7 +2588,7 @@ fprefx(struct obj *otmp)
 /*JP
             pline("%s", "!#?&* elf kibble!");
 */
-            pline("%s", "！＃？＆＊ エルクの食い物！");
+            pline("%s", "！＃？＆＊ エルフの食い物！");
             break;
         } else if (maybe_polyd(is_elf(gy.youmonst.data), Race_if(PM_ELF))) {
 /*JP

@@ -477,13 +477,16 @@ ghitm(struct monst *mtmp, struct obj *gold)
 */
                     verbalize("そんなもので済むか，卑怯者！");
                 else /* unbribable (watchman) */
+/*JP
                     verbalize("I don't take bribes from scum like you!");
+*/
+                    verbalize("おまえのようなクズからの賄賂なんて受け取らない！");
             } else if (was_angry) {
                 SetVoice(mtmp, 0, 80, 0);
 /*JP
                 verbalize("That should do.  Now beat it!");
 */
-                verbalize("なんだい？これは？");
+                verbalize("これでいいだろう．さっさと消えろ！");
             } else {
                 SetVoice(mtmp, 0, 80, 0);
                 verbalize("Thanks for the tip, %s.",

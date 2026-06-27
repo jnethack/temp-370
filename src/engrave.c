@@ -127,7 +127,11 @@ wipeout_text(
     int cnt,       /* number of chars to degrade */
     unsigned seed) /* for semi-controlled randomization */
 {
+#if 0 /*JP*/
     char *s;
+#else
+    unsigned char *s;
+#endif
     int i, j, nxt, use_rubout;
     unsigned lth = (unsigned) strlen(engr);
 

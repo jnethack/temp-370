@@ -1591,9 +1591,6 @@ artifact_hit(
     }
     if (attacks(AD_ELEC, otmp)) {
         if (realizes_damage)
-            pline_The("massive hammer hits%s %s%c",
-                      !gs.spec_dbon_applies ? "" : "!  Lightning strikes",
-                      hittee, !gs.spec_dbon_applies ? '.' : '!');
 #if 0 /*JP*/
             pline_The("massive hammer hits%s %s%c",
                       !gs.spec_dbon_applies ? "" : "!  Lightning strikes",
@@ -2677,8 +2674,7 @@ static const struct {
 };
 
 static const char *
-clr2colorname2(clr)
-int clr;
+clr2colorname2(int clr)
 {
     int i;
 

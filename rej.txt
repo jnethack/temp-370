@@ -914,9 +914,6 @@ eat.c:
                 Sprintf(eos(buf), "%s", mons[mnum].mname);
                 Sprintf(eos(buf), "%s", mons[mnum].mname);
 eat.c:
-                Sprintf(eos(buf), "%s meat", mons[mnum].mname);
-                Sprintf(eos(buf), "%sの肉", mons[mnum].mname);
-eat.c:
         b_trapped("tin", 0);
         b_trapped("缶", 0);
 eat.c:
