@@ -57,6 +57,14 @@
                                          const char *, ...)
 =*/
 
+#if 1 /*JP*//*最小限のチェック用*/
+staticfn boolean
+_is_kanji(char c)
+{
+    return ((unsigned char)c & 0x80);
+}
+#endif
+
 /* is 'c' a digit? */
 boolean
 digit(char c)
