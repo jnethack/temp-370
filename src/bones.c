@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 #ifndef SFCTOOL
@@ -418,11 +423,18 @@ savebones(int how, time_t when, struct obj *corpse)
     if (nhfp) {
         close_nhfile(nhfp);
         if (wizard) {
+#if 0 /*JP:T*/
             if (y_n("Bones file already exists.  Replace it?") == 'y') {
+#else
+            if (y_n("骨ファイルが既に存在してるよ．  置き換える？") == 'y') {
+#endif
                 if (delete_bonesfile(&u.uz))
                     goto make_bones;
                 else
+/*JP
                     pline("Cannot unlink old bones.");
+*/
+                    pline("古い骨を削除できなかった．");
             }
         }
         /* compression can change the file's name, so must
@@ -662,13 +674,20 @@ getbones(void)
     program_state.reading_bonesfile = 1;
     if (validate(nhfp, gb.bones, FALSE) != SF_UPTODATE) {
         if (!wizard)
+/*JP
             pline("Discarding unusable bones; no need to panic...");
+*/
+            pline("使えない骨を捨てた．慌てる必要はない．．．");
         ok = FALSE;
         program_state.reading_bonesfile = 0;
     } else {
         ok = TRUE;
         if (wizard) {
+#if 0 /*JP:T*/
             if (y_n("Get bones?") == 'n') {
+#else
+            if (y_n("骨を拾う？") == 'n') {
+#endif
                 close_nhfile(nhfp);
                 compress_bonesfile();
                 program_state.reading_bonesfile = 0;
@@ -693,8 +712,13 @@ getbones(void)
         if (strcmp(bonesid, oldbonesid) != 0) {
             char errbuf[BUFSZ];
 
+#if 0 /*JP:T*/
             Sprintf(errbuf, "This is bones level '%s', not '%s'!",
                     oldbonesid, bonesid);
+#else
+            Sprintf(errbuf, "この骨のレベルは'%s'であって、'%s'ではない！",
+                    oldbonesid, bonesid);
+#endif
             if (wizard) {
                 pline1(errbuf);
                 ok = FALSE; /* won't die of trickery */
@@ -737,7 +761,11 @@ getbones(void)
     u.uroleplay.numbones++;
 
     if (wizard) {
+#if 0 /*JP:T*/
         if (y_n("Unlink bones?") == 'n') {
+#else
+        if (y_n("骨を消す？") == 'n') {
+#endif
             compress_bonesfile();
             return ok;
         }
