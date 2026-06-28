@@ -1659,6 +1659,9 @@ engrave(void)
     /* If the stylus did wear out mid-engraving, truncate the input so that we
      * can't go any further. */
     if (truncate && *endc != '\0') {
+#if 1 /*JP*//*漢字の1バイト目に移動*/
+        endc -= offset_in_kanji(svc.context.engraving.nextc, endc - svc.context.engraving.nextc);
+#endif
         *endc = '\0';
         You("are only able to write \"%s\".", svc.context.engraving.text);
     } else {
