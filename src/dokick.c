@@ -780,7 +780,10 @@ really_kick_object(coordxy x, coordxy y)
             else /* don't leave no_charge set when outside shop */
                 gk.kickedobj->no_charge = 0;
         }
+/*JP
         if (!flooreffects(gk.kickedobj, u.ux, u.uy, "fall")) {
+*/
+        if (!flooreffects(gk.kickedobj, u.ux, u.uy, "落ちる")) {
             place_object(gk.kickedobj, u.ux, u.uy);
             impact_disturbs_zombies(gk.kickedobj, TRUE);
             stackobj(gk.kickedobj);
@@ -938,7 +941,10 @@ really_kick_object(coordxy x, coordxy y)
         costly = FALSE; /* already billed */
     }
 
+/*JP
     if (flooreffects(gk.kickedobj, gb.bhitpos.x, gb.bhitpos.y, "fall"))
+*/
+    if (flooreffects(gk.kickedobj, gb.bhitpos.x, gb.bhitpos.y, "落ちる"))
         return 1;
     if (costly) {
         long gtg = 0L;
@@ -1626,7 +1632,7 @@ dokick(void)
 #if 0 /*JP:T*/
         legs_in_no_shape("kicking", FALSE);
 #else
-        legs_in_no_shape("蹴り", FALSE);
+        legs_in_no_shape("蹴りができる", FALSE);
 #endif
         no_kick = TRUE;
     } else if (near_capacity() > SLT_ENCUMBER) {
@@ -2390,12 +2396,18 @@ down_gate(coordxy x, coordxy y)
         return MIGR_NOWHERE;
     }
     if (stway && !stway->up && !stway->isladder) {
+/*JP
         gg.gate_str = "down the stairs";
+*/
+        gg.gate_str = "階段から";
         return (stway->tolev.dnum == u.uz.dnum) ? MIGR_STAIRS_UP
                                                 : MIGR_SSTAIRS;
     }
     if (stway && !stway->up && stway->isladder) {
+/*JP
         gg.gate_str = "down the ladder";
+*/
+        gg.gate_str = "はしごから";
         return MIGR_LADDER_UP;
     }
     /* hole will always be flagged as seen; trap drop might or might not */

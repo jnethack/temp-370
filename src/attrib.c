@@ -393,15 +393,14 @@ void
 poison_strdmg(int strloss, int dmg, const char *knam, schar k_format)
 {
     losestr(strloss, knam, k_format);
-#if 0 /*JP*/
-    losehp(dmg, knam, k_format);
-#else
-    {
+#if 1 /*JP*/
+    if (knam) {
         char jbuf[BUFSZ];
         Sprintf(jbuf, "%sで", knam);
-        losehp(dmg, jbuf, k_format);
+        knam = jbuf;
     }
 #endif
+    losehp(dmg, knam, k_format);
 }
 
 static const struct poison_effect_message {

@@ -1031,18 +1031,36 @@ doengrave_ctx_verb(struct _doengrave_ctx *de)
 {
     switch (de->type) {
     default:
+#if 0 /*JP:T*/
         de->everb = de->adding ? "add to the weird writing on"
                                : "write strangely on";
+#else
+        de->everb = de->adding ? "奇妙な文字列に書き加える"
+                               : "奇妙な文字列を書く";
+#endif
         break;
     case DUST:
+#if 0 /*JP:T*/
         de->everb = de->adding ? "add to the writing in" : "write in";
         de->eloc = de->frosted ? "frost" : "dust";
+#else
+        de->everb = de->adding ? "書き加える" : "書く";
+        de->eloc = de->frosted ? "霜" : "ほこり";
+#endif
         break;
     case HEADSTONE:
+#if 0 /*JP:T*/
         de->everb = de->adding ? "add to the epitaph on" : "engrave on";
+#else
+        de->everb = de->adding ? "墓碑銘を刻み加える" : "墓碑銘を刻む";
+#endif
         break;
     case ENGRAVE:
+#if 0 /*JP:T*/
         de->everb = de->adding ? "add to the engraving in" : "engrave in";
+#else
+        de->everb = de->adding ? "刻み加える" : "刻む";
+#endif
         break;
     case BURN:
 #if 0 /*JP:T*/
@@ -1056,10 +1074,18 @@ doengrave_ctx_verb(struct _doengrave_ctx *de)
 #endif
         break;
     case MARK:
+#if 0 /*JP:T*/
         de->everb = de->adding ? "add to the graffiti on" : "scribble on";
+#else
+        de->everb = de->adding ? "落書に書き加える" : "はしり書きする";
+#endif
         break;
     case ENGR_BLOOD:
+#if 0 /*JP:T*/
         de->everb = de->adding ? "add to the scrawl on" : "scrawl on";
+#else
+        de->everb = de->adding ? "なぐり書きに書き加える" : "なぐり書きする";
+#endif
         break;
     }
 }

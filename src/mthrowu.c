@@ -1078,7 +1078,10 @@ return_from_mtoss(
         if (notcaught) {
             (void) snuff_candle(otmp);
             if (!ship_object(otmp, x, y, FALSE)) {
+/*JP
                 if (flooreffects(otmp, x, y, "drop")) {
+*/
+                if (flooreffects(otmp, x, y, "落ちる")) {
                     if (cansee(x, y))
                         newsym(x, y);
                     return;

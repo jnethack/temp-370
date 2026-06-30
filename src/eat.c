@@ -320,7 +320,10 @@ choke(struct obj *food)
 */
             You("%sを喉に詰まらせてしまった．", foodword(food));
             if (food->oclass == COIN_CLASS) {
+/*JP
                 Strcpy(svk.killer.name, "very rich meal");
+*/
+                Strcpy(svk.killer.name, "とても高価な料理");
             } else {
                 svk.killer.format = KILLED_BY;
                 Strcpy(svk.killer.name, killer_xname(food));
@@ -330,7 +333,10 @@ choke(struct obj *food)
             You("choke over it.");
 */
             pline("喉に詰まらせてしまった．");
+/*JP
             Strcpy(svk.killer.name, "quick snack");
+*/
+            Strcpy(svk.killer.name, "早食い");
         }
 /*JP
         You("die...");
@@ -1830,7 +1836,10 @@ consume_tin(const char *mesg)
             pline("It smells like %s.", what);
 */
             pline("%sのような匂いがした．", what);
+/*JP
             if (y_n("Eat it?") == 'n') {
+*/
+            if (y_n("食べますか？") == 'n') {
                 if (flags.verbose)
 /*JP
                     You("discard the open tin.");
@@ -1926,7 +1935,10 @@ consume_tin(const char *mesg)
             tin->known = 1;
         }
 
+/*JP
         if (!always_eat && y_n("Eat it?") == 'n') {
+*/
+        if (!always_eat && y_n("食べますか？") == 'n') {
             if (flags.verbose)
 /*JP
                 You("discard the open tin.");
@@ -3271,9 +3283,15 @@ edibility_prompts(struct obj *otmp)
 #endif
     } else if (cadaver && !vegetarian(&mons[mnum])
                && !u.uconduct.unvegetarian && Role_if(PM_MONK)) {
+/*JP
         Snprintf(buf, sizeof buf, "%s unhealthy.", foodsmell);
+*/
+        Snprintf(buf, sizeof buf, "%sは健康に悪そうなにおいがする．", foodsmell);
     } else if (cadaver && acidic(&mons[mnum]) && !Acid_resistance) {
+/*JP
         Snprintf(buf, sizeof buf, "%s rather acidic.", foodsmell);
+*/
+        Snprintf(buf, sizeof buf, "%sは少し酸っぱそうなにおいがする．", foodsmell);
     } else if (Upolyd && u.umonnum == PM_RUST_MONSTER && is_metallic(otmp)
                && otmp->oerodeproof) {
 #if 0 /*JP:T*/

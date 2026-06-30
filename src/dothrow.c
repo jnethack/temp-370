@@ -159,7 +159,7 @@ throw_obj(struct obj *obj, int shotlimit)
                expression "with your bare hands" sounds better */
             makeplural(body_part(HAND)));
 #else
-        You("素%sで%sの死体を投げた．",
+        You("素%sで%sを投げた．",
             body_part(HAND),
             corpse_xname(obj, (const char *) 0, CXN_PFX_THE));
 #endif
@@ -661,7 +661,11 @@ hitfloor(
     if (IS_ALTAR(levl[u.ux][u.uy].typ)) {
         doaltarobj(obj);
     } else if (verbosely) {
+#if 0 /*JP:T*/
         const char *verb = (obj->otyp == WAN_STRIKING) ? "strike" : "hit";
+#else /*日本語は同じでよさそう*/
+        const char *verb = "命中した";
+#endif
         const char *surf = surface(u.ux, u.uy);
         struct trap *t = t_at(u.ux, u.uy);
 
@@ -2006,7 +2010,10 @@ throwit(
                       ? "Splash!" : "Plop!");
             }
         }
+/*JP
         if (flooreffects(obj, gb.bhitpos.x, gb.bhitpos.y, "fall")) {
+*/
+        if (flooreffects(obj, gb.bhitpos.x, gb.bhitpos.y, "落ちる")) {
             throwit_return(TRUE);
             return;
         }
@@ -3022,7 +3029,10 @@ throw_gold(struct obj *obj)
         }
     }
 
+/*JP
     if (flooreffects(obj, gb.bhitpos.x, gb.bhitpos.y, "fall"))
+*/
+    if (flooreffects(obj, gb.bhitpos.x, gb.bhitpos.y, "落ちる"))
         return ECMD_TIME;
     if (u.dz > 0)
         pline_The("gold hits the %s.", surface(gb.bhitpos.x, gb.bhitpos.y));

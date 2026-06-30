@@ -3528,7 +3528,7 @@ dokeylist(void)
           "+<direction> will run in specified direction until you encounter");
 #else
     Strcat(buf,
-          "-<方向> は、壁にぶつかるか何かがあるまで指定された方向に走る．");  
+          "+<方向> は、壁にぶつかるか何かがあるまで指定された方向に走る．");  
 #endif
     putstr(datawin, 0, buf);
 /*JP

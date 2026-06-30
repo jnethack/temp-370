@@ -2669,7 +2669,7 @@ jump(int magic) /* 0=Physical, otherwise skill level */
         You("跳ぶだけの力がない！");
         return ECMD_OK;
     } else if (!magic && Wounded_legs) {
-        legs_in_no_shape("jumping", u.usteed != 0);
+        legs_in_no_shape("跳べる", u.usteed != 0);
         return ECMD_OK;
     } else if (u.usteed && u.utrap) {
 /*JP

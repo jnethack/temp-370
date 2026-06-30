@@ -3226,7 +3226,7 @@ select_off(struct obj *otmp)
 /*JP
             You("are stuck in the %s, and cannot pull your %s out.",
 */
-            You("%sが%sにはまっているので脱ぐことができない．",
+            You("%sに%sがはまっているので脱ぐことができない．",
                 surface(u.ux, u.uy), makeplural(body_part(FOOT)));
             return 0;
         }

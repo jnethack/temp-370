@@ -3933,7 +3933,7 @@ print_mapseen(
                 Snprintf(buf, sizeof(buf), "%s%syou, %s%c", PREFIX, TAB,
                          tmpbuf, --kncnt ? ',' : '.');
 #else
-                Snprintf(buf, sizeof(buf), "%s%s     %s%c", PREFIX, TAB,
+                Snprintf(buf, sizeof(buf), "%s%sあなた, %s%c", PREFIX, TAB,
                          tmpbuf, --kncnt ? ',' : '.');
 #endif
                 add_menu_str(win, buf);

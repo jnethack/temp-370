@@ -1489,7 +1489,10 @@ use_pick_axe2(struct obj *obj)
                        || sobj_at(STATUE, rx, ry)) {
                 /* if both boulders and statues are present, the topmost
                    boulder will be shown on the map so treat it as target */
+/*JP
                 const char *what = boulder ? "boulder" : "statue";
+*/
+                const char *what = boulder ? "岩" : "彫像";
 
                 if (!ispick) {
                     boolean vibrate = !rn2(3);

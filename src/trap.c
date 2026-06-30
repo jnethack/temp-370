@@ -4235,7 +4235,10 @@ launch_obj(
                 if (used_up || dist == -1)
                     break; /* from 'while' loop */
             }
+/*JP
             if (flooreffects(singleobj, x, y, "fall")) {
+*/
+            if (flooreffects(singleobj, x, y, "落ちる")) {
                 used_up = TRUE;
                 launch_drop_spot((struct obj *) 0, 0, 0);
                 break;

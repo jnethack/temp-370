@@ -38,9 +38,6 @@ apply.c:
             You("pull free from %s.", mon_nam(u.ustuck));
             You("%sから離れた．", mon_nam(u.ustuck));
 apply.c:
-            pline("%s is in no shape for jumping.", Monnam(u.usteed));
-            pline("%sは跳べる状態ではない．", Monnam(u.usteed));
-apply.c:
         multi_reason = "jumping around";
         multi_reason = "跳ね回っている時に";
 apply.c:
@@ -308,9 +305,6 @@ dig.c:
             supporting = "stairs";
             supporting = "階段";
 do.c:
-    if (!u.uswallow && flooreffects(obj, u.ux, u.uy, "drop"))
-    if (!u.uswallow && flooreffects(obj,u.ux,u.uy, "落ちる"))
-do.c:
         n = query_category("Drop what type of items?", invent,
         n = query_category("どの種類のアイテムを置きますか？", invent,
 do.c:
@@ -371,17 +365,11 @@ dokick.c:
             Sprintf(killer.name, "kicking %s barefoot",
             Sprintf(killer.name, "靴無しで%sを蹴って",
 dokick.c:
-        if (!flooreffects(kickedobj, u.ux, u.uy, "fall")) {
-        if (!flooreffects(kickedobj, u.ux, u.uy, "落ちる")) {
-dokick.c:
                 pline("Thwwpingg!");
                 pline("ガシャーン！");
 dokick.c:
                 You("%s!", flyingcoinmsg[rn2(SIZE(flyingcoinmsg))]);
                 You("%s！", flyingcoinmsg[rn2(SIZE(flyingcoinmsg))]);
-dokick.c:
-    if (flooreffects(kickedobj, bhitpos.x, bhitpos.y, "fall"))
-    if(flooreffects(kickedobj, bhitpos.x, bhitpos.y, "落ちる"))
 dokick.c:
         if (yn_function("Kick your steed?", ynchars, 'y') == 'y') {
         if (yn_function("馬を蹴る？", ynchars, 'y') == 'y') {
@@ -440,14 +428,8 @@ dothrow.c:
         You("%s in the opposite direction.", range > 1 ? "hurtle" : "float");
         You("逆方向に飛ばされた．");
 dothrow.c:
-        if (flooreffects(obj, bhitpos.x, bhitpos.y, "fall")) {
-        if (flooreffects(obj,bhitpos.x, bhitpos.y, "落ちる")) {
-dothrow.c:
             pline("%s catches %s.", Monnam(mon), the(xname(obj)));
             pline("%sは%sを掴んだ．", Monnam(mon), xname(obj));
-dothrow.c:
-    if (flooreffects(obj, bhitpos.x, bhitpos.y, "fall"))
-    if (flooreffects(obj, bhitpos.x, bhitpos.y, "落ちる"))
 dothrow.c:
         pline_The("gold hits the %s.", surface(bhitpos.x, bhitpos.y));
         pline("金貨は%sに命中した．", surface(bhitpos.x, bhitpos.y));
@@ -869,12 +851,6 @@ dungeon.c:
         Sprintf(buf, "%sThe castle%s.", PREFIX, tunesuffix(mptr, tmpbuf));
         Sprintf(buf, "%s城%s．", PREFIX, tunesuffix(mptr, tmpbuf));
 eat.c:
-                Strcpy(killer.name, "very rich meal");
-                Strcpy(killer.name, "とても高価な料理");
-eat.c:
-            Strcpy(killer.name, "quick snack");
-            Strcpy(killer.name, "早食い");
-eat.c:
         You("finish eating %s.", food_xname(piece, TRUE));
         You("%sを食べ終えた．",  food_xname(piece, TRUE));
 eat.c:
@@ -896,12 +872,6 @@ eat.c:
         b_trapped("tin", 0);
         b_trapped("缶", 0);
 eat.c:
-        if (yn("Eat it?") == 'n') {
-        if (yn("食べますか？") == 'n') {
-eat.c:
-        if (yn("Eat it?") == 'n') {
-        if (yn("食べますか？") == 'n') {
-eat.c:
     pline("Blecch!  Rotten %s!", foodword(obj));
     pline("ゲェ！腐った%sだ！", foodword(obj));
 eat.c:
@@ -913,12 +883,6 @@ eat.c:
 eat.c:
                     Sprintf(killer.name, "%s egg",
                     Sprintf(killer.name, "%sの卵で",
-eat.c:
-        Sprintf(buf, "%s unhealthy.  %s", foodsmell, eat_it_anyway);
-        Sprintf(buf, "%sは健康に悪そうなにおいがする．%s", foodsmell, eat_it_anyway);
-eat.c:
-        Sprintf(buf, "%s rather acidic.  %s", foodsmell, eat_it_anyway);
-        Sprintf(buf, "%sは少し酸っぱそうなにおいがする．%s", foodsmell, eat_it_anyway);
 eat.c:
         Sprintf(buf, "%s unfamiliar to you.  %s", foodsmell, eat_it_anyway);
         Sprintf(buf, "%sはあなたになじまないようなにおいがする．%s", foodsmell, eat_it_anyway);
@@ -1117,24 +1081,6 @@ engrave.c:
 engrave.c:
             pline_The("engraving now reads: \"%s\".", buf);
             pline("刻まれた文字を読んだ：「%s」．", buf);
-engrave.c:
-        everb = (oep && !eow ? "add to the weird writing on"
-        everb = (oep && !eow ? "奇妙な文字列に書き加える"
-engrave.c:
-                             : "write strangely on");
-                             : "奇妙な文字列を書く");
-engrave.c:
-        everb = (oep && !eow ? "add to the writing in" : "write in");
-        everb = (oep && !eow ? "書き加える" : "書く");
-engrave.c:
-        eloc = is_ice(u.ux, u.uy) ? "frost" : "dust";
-        eloc = is_ice(u.ux,u.uy) ? "霜" : "ほこり";
-engrave.c:
-        everb = (oep && !eow ? "add to the epitaph on" : "engrave on");
-        everb = (oep && !eow ? "墓碑銘を刻み加える" : "墓碑銘を刻む");
-engrave.c:
-        everb = (oep && !eow ? "add to the engraving in" : "engrave in");
-        everb = (oep && !eow ? "刻み加える" : "刻む");
 engrave.c:
         everb = (oep && !eow ? "add to the graffiti on" : "scribble on");
         everb = (oep && !eow ? "落書に書き加える" : "はしり書きする");
@@ -2974,9 +2920,6 @@ trap.c:
 trap.c:
                         pline("Suddenly the rolling boulder disappears!");
                         pline("転がってきた岩がとつぜん消えた！");
-trap.c:
-            if (flooreffects(singleobj, bhitpos.x, bhitpos.y, "fall")) {
-            if (flooreffects(singleobj, bhitpos.x, bhitpos.y, "落ちる")) {
 trap.c:
                 You_hear("a loud crash%s!",
                 You_hear("%s大きなゴンという音を聞いた！",

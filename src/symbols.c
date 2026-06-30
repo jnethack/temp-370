@@ -1056,7 +1056,10 @@ do_symset(boolean rogueflag)
         return TRUE;
     } else if (!gs.symset_list) {
         /* The symbols file was empty */
+/*JP
         There("were no symbol sets found in \"%s\".", SYMBOLS);
+*/
+        pline("\"%s\"にシンボル設定がありません．", SYMBOLS);
         return TRUE;
     }
 

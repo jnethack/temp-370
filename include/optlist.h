@@ -719,14 +719,14 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "ステータス行を更新できるようにする")
     NHOPTO("status condition fields", Status, o_status_cond, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "change status condition highlighting")
+                No, Yes, No, NoAlias, "条件付きステータスハイライトを変更")
 #ifdef STATUS_HILITES
     NHOPTC(statushilites, Advanced, 20, opt_in, set_in_game,
                 Yes, Yes, Yes, No, NoAlias,
                 "0=ステータスハイライトなし，Nターン毎にハイライト表示")
     NHOPTO("status highlight rules", Status, o_status_hilites, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "change status line highlighting")
+                No, Yes, No, NoAlias, "ステータス行ハイライトを変更")
 #else
     NHOPTC(statushilites, Advanced, 20, opt_in, set_in_config,
                 Yes, Yes, Yes, No, NoAlias, "ハイライトの制御")

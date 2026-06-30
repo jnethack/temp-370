@@ -205,7 +205,10 @@ do_statusline2(void)
 */
         Sprintf(expr, "経験:%d/%-1ld", u.ulevel, u.uexp);
     else
+/*JP
         Sprintf(expr, "Xp:%d", u.ulevel);
+*/
+        Sprintf(expr, "経験:%d", u.ulevel);
     xln = strlen(expr);
 
     /* time/move counter */
@@ -3066,7 +3069,7 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
                    && is_fld_arrayvalues(s[sidx], enc_stat_opt,
                                          SLT_ENCUMBER, OVERLOADED + 1,
                                          &kidx)) {
-            txt = enc_stat_opt[kidx];
+            txt = enc_stat[kidx];
 #endif
             txtval = TRUE;
         } else if (fld == BL_ALIGN

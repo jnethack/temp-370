@@ -1106,7 +1106,7 @@ x_monnam(
 /*JP
             Sprintf(eos(buf), "%s ghost", s_suffix(name));
 */
-            Sprintf(buf, "%sの幽霊", name);
+            Sprintf(eos(buf), "%sの幽霊", name);
 #if 0 /*JP*/
             name_at_start = TRUE;
 #endif

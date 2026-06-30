@@ -9397,9 +9397,15 @@ show_menu_controls(winid win, boolean dolist)
         arg = ""; /* no extra prefix for 'dolist' */
     } else { /* menu controls help: '?k' */
         putstr(win, 0, "");
+/*JP
         Sprintf(buf, mc_altfmt, "", "Whole", "Current");
+*/
+        Sprintf(buf, mc_altfmt, "", "全体", "現在");
         putstr(win, 0, buf);
+/*JP
         Sprintf(buf, mc_altfmt, "", " Menu", " Page");
+*/
+        Sprintf(buf, mc_altfmt, "", " メニュー", " ページ");
         putstr(win, 0, buf);
 /*JP
         Sprintf(buf, mc_fmt, "Select",

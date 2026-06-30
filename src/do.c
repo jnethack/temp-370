@@ -1072,7 +1072,10 @@ dropz(struct obj *obj, boolean with_impact)
                 (void) mpickobj(u.ustuck, obj);
         }
     } else {
+/*JP
         if (flooreffects(obj, u.ux, u.uy, "drop"))
+*/
+        if (flooreffects(obj, u.ux, u.uy, "落ちる"))
             return;
         place_object(obj, u.ux, u.uy);
         if (with_impact)
@@ -2905,7 +2908,7 @@ legs_in_no_shape(const char *for_what, /* jumping, kicking, riding */
              (wl == LEFT_SIDE) ? "left " : (wl == RIGHT_SIDE) ? "right " : "",
              bp, (wl == BOTH_SIDES) ? "are" : "is", for_what);
 #else
-        Your("%s%sは%sができる状態ではない．",
+        Your("%s%sは%s状態ではない．",
              (wl == LEFT_SIDE) ? "左" : (wl == RIGHT_SIDE) ? "右" : "",
              bp, for_what);
 #endif
