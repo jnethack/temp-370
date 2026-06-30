@@ -392,10 +392,12 @@ losestr(int num, const char *knam, schar k_format)
 void
 poison_strdmg(int strloss, int dmg, const char *knam, schar k_format)
 {
+#if 1 /*JP*/
+    char jbuf[BUFSZ];
+#endif
     losestr(strloss, knam, k_format);
 #if 1 /*JP*/
     if (knam) {
-        char jbuf[BUFSZ];
         Sprintf(jbuf, "%sで", knam);
         knam = jbuf;
     }
