@@ -1474,9 +1474,8 @@ doengrave(void)
                                         (excludes ' ' and DEL) */
 #else /*JP:日本語でランダム化 */
             {
-                int pos = sp - de->ebuf;
-                if (_iskanji(de->ebuf, pos)) {
-                    sp -= offset_in_kanji(de->ebuf, pos);
+                sp -= offset_in_kanji(de->ebuf, sp - de->ebuf);
+                if (is_kanji(*sp)) {
                     jrndm_replace(sp);
                 } else {
                     *sp = '!' + rn2(93); /* ASCII-code only */
