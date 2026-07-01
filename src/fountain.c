@@ -2,6 +2,11 @@
 /*      Copyright Scott R. Turner, srt@ucla, 10/27/86 */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 /* Code for drinking from fountains. */
 
 #include "hack.h"
@@ -20,12 +25,18 @@ DISABLE_WARNING_FORMAT_NONLITERAL
 void
 floating_above(const char *what)
 {
+/*JP
     const char *umsg = "are floating high above the %s.";
+*/
+    const char *umsg = "%sの遥か上方に浮いている．";
 
     if (u.utrap && (u.utraptype == TT_INFLOOR || u.utraptype == TT_LAVA)) {
         /* when stuck in floor (not possible at fountain or sink location,
            so must be attempting to move down), override the usual message */
+/*JP
         umsg = "are trapped in the %s.";
+*/
+        umsg = "%sにつかまっている．";
         what = surface(u.ux, u.uy); /* probably redundant */
     }
     You(umsg, what);
@@ -42,11 +53,19 @@ dowatersnakes(void)
 
     if (!(svm.mvitals[PM_WATER_MOCCASIN].mvflags & G_GONE)) {
         if (!Blind) {
+#if 0 /*JP:T*/
             pline("An endless stream of %s pours forth!",
                   Hallucination ? makeplural(rndmonnam(NULL)) : "snakes");
+#else
+            pline("%sがどどっと流れ出てきた！",
+                  Hallucination ? rndmonnam(NULL) : "蛇");
+#endif
         } else {
             Soundeffect(se_snakes_hissing, 75);
+/*JP
             You_hear("%s hissing!", something);
+*/
+            You_hear("シーッという音を聞いた！");
         }
         while (num-- > 0)
             if ((mtmp = makemon(&mons[PM_WATER_MOCCASIN], u.ux, u.uy,
@@ -55,7 +74,10 @@ dowatersnakes(void)
                 (void) mintrap(mtmp, NO_TRAP_FLAGS);
     } else {
         Soundeffect(se_furious_bubbling, 20);
+/*JP
         pline_The("fountain bubbles furiously for a moment, then calms.");
+*/
+        pline("泉は突然激しく泡だち，やがて静かになった．");
     }
 }
 
@@ -69,15 +91,26 @@ dowaterdemon(void)
         if ((mtmp = makemon(&mons[PM_WATER_DEMON], u.ux, u.uy,
                             MM_NOMSG)) != 0) {
             if (!Blind)
+/*JP
                 You("unleash %s!", a_monnam(mtmp));
+*/
+                You("%sを解き放した！", a_monnam(mtmp));
             else
+/*JP
                 You_feel("the presence of evil.");
+*/
+                You_feel("邪悪な存在を感じた！");
 
             /* Give those on low levels a (slightly) better chance of survival
              */
             if (rnd(100) > (80 + level_difficulty())) {
+#if 0 /*JP:T*/
                 pline("Grateful for %s release, %s grants you a wish!",
                       mhis(mtmp), mhe(mtmp));
+#else
+                pline("%sは解放をとても感謝し，のぞみをかなえてくれるようだ！",
+                      mhe(mtmp));
+#endif
                 /* give a wish and discard the monster (mtmp set to null) */
                 mongrantswish(&mtmp);
             } else if (t_at(mtmp->mx, mtmp->my))
@@ -85,7 +118,10 @@ dowaterdemon(void)
         }
     } else {
         Soundeffect(se_furious_bubbling, 20);
+/*JP
         pline_The("fountain bubbles furiously for a moment, then calms.");
+*/
+        pline("泉は突然激しく泡だち，やがて静かになった．");
     }
 }
 
@@ -99,19 +135,31 @@ dowaternymph(void)
         && (mtmp = makemon(&mons[PM_WATER_NYMPH], u.ux, u.uy,
                            MM_NOMSG)) != 0) {
         if (!Blind)
+/*JP
             You("attract %s!", a_monnam(mtmp));
+*/
+            pline("%sが現われた！", a_monnam(mtmp));
         else
+/*JP
             You_hear("a seductive voice.");
+*/
+            You_hear("魅惑的な声を聞いた．");
         mtmp->msleeping = 0;
         if (t_at(mtmp->mx, mtmp->my))
             (void) mintrap(mtmp, NO_TRAP_FLAGS);
     } else if (!Blind) {
         Soundeffect(se_bubble_rising, 50);
         Soundeffect(se_loud_pop, 50);
+/*JP
         pline("A large bubble rises to the surface and pops.");
+*/
+        pline("大きな泡が沸き出てはじけた．");
     } else {
         Soundeffect(se_loud_pop, 50);
+/*JP
         You_hear("a loud pop.");
+*/
+        You_hear("大きなものがはじける音を聞いた．");
     }
 }
 
@@ -124,9 +172,15 @@ dogushforth(int drinking)
     do_clear_area(u.ux, u.uy, 7, gush, (genericptr_t) &madepool);
     if (!madepool) {
         if (drinking)
+/*JP
             Your("thirst is quenched.");
+*/
+            Your("渇きは癒された．");
         else
+/*JP
             pline("Water sprays all over you.");
+*/
+            pline("水しぶきがあなたにかかった．");
     }
 }
 
@@ -145,7 +199,10 @@ gush(coordxy x, coordxy y, genericptr_t poolcnt)
         return;
 
     if (!((*(int *) poolcnt)++))
+/*JP
         pline("Water gushes forth from the overflowing fountain!");
+*/
+        pline("泉から水がどどっと溢れ出た！");
 
     /* Put a pool at x, y */
     set_levltyp(x, y, POOL);
@@ -165,9 +222,15 @@ staticfn void
 dofindgem(void)
 {
     if (!Blind)
+/*JP
         You("spot a gem in the sparkling waters!");
+*/
+        pline("きらめく水の中に宝石を見つけた！");
     else
+/*JP
         You_feel("a gem here!");
+*/
+        You_feel("宝石があるようだ！");
     (void) mksobj_at(rnd_class(DILITHIUM_CRYSTAL, LUCKSTONE - 1), u.ux, u.uy,
                      FALSE, FALSE);
     SET_FOUNTAIN_LOOTED(u.ux, u.uy);
@@ -181,9 +244,16 @@ watchman_warn_fountain(struct monst *mtmp)
     if (is_watch(mtmp->data) && couldsee(mtmp->mx, mtmp->my)
         && mtmp->mpeaceful) {
         if (!Deaf) {
+/*JP
             pline("%s yells:", Amonnam(mtmp));
+*/
+            pline("%sは叫んだ：", Amonnam(mtmp));
+/*JP
             verbalize("Hey, stop using that fountain!");
+*/
+            verbalize("おい，泉を汚すな！");
         } else {
+#if 0 /*JP:T*/
             pline("%s earnestly %s %s %s!",
                   Amonnam(mtmp),
                   nolimbs(mtmp->data) ? "shakes" : "waves",
@@ -191,6 +261,13 @@ watchman_warn_fountain(struct monst *mtmp)
                   nolimbs(mtmp->data)
                   ? mbodypart(mtmp, HEAD)
                   : makeplural(mbodypart(mtmp, ARM)));
+#else
+                        pline("%sは真剣に%sを振った！",
+                              Amonnam(mtmp),
+                              nolimbs(mtmp->data)
+                                      ? mbodypart(mtmp, HEAD)
+                                      : makeplural(mbodypart(mtmp, ARM)));
+#endif
         }
         return TRUE;
     }
@@ -210,11 +287,17 @@ dryup(coordxy x, coordxy y, boolean isyou)
             mtmp = get_iter_mons(watchman_warn_fountain);
             /* You can see or hear this effect */
             if (!mtmp)
+/*JP
                 pline_The("flow reduces to a trickle.");
+*/
+                pline("流れはちょろちょろになった．");
             return;
         }
         if (isyou && wizard) {
+/*JP
             if (y_n("Dry up fountain?") == 'n')
+*/
+            if (y_n("泉を干上がらせますか？") == 'n')
                 return;
         }
         /* FIXME: sight-blocking clouds should use block_point() when
@@ -224,7 +307,10 @@ dryup(coordxy x, coordxy y, boolean isyou)
             int glyph = glyph_at(x, y);
 
             if (!glyph_is_cmap(glyph) || glyph_to_cmap(glyph) != S_cloud)
+/*JP
                 pline_The("fountain dries up!");
+*/
+                pline("泉は干上がった！");
         }
         /* replace the fountain with ordinary floor */
         set_levltyp(x, y, ROOM); /* updates level.flags.nfountains */
@@ -247,14 +333,20 @@ drinkfountain(void)
     int fate = rnd(30);
 
     if (Levitation) {
+/*JP
         floating_above("fountain");
+*/
+        floating_above("泉");
         return;
     }
 
     if (mgkftn && u.uluck >= 0 && fate >= 10) {
         int i, ii, littleluck = (u.uluck < 4);
 
+/*JP
         pline("Wow!  This makes you feel great!");
+*/
+        pline("ワォ！とても気持ちよくなった！");
         /* blessed restore ability */
         for (ii = 0; ii < A_MAX; ii++)
             if (ABASE(ii) < AMAX(ii)) {
@@ -270,14 +362,20 @@ drinkfountain(void)
                 i = 0;
         }
         display_nhwindow(WIN_MESSAGE, FALSE);
+/*JP
         pline("A wisp of vapor escapes the fountain...");
+*/
+        pline("煙のかたまりが泉から逃げた．．．");
         exercise(A_WIS, TRUE);
         levl[u.ux][u.uy].blessedftn = 0;
         return;
     }
 
     if (fate < 10) {
+/*JP
         pline_The("cool draught refreshes you.");
+*/
+        pline("冷たい一杯でさっぱりした．");
         u.uhunger += rnd(10); /* don't choke on water */
         newuhs(FALSE);
         if (mgkftn)
@@ -285,27 +383,50 @@ drinkfountain(void)
     } else {
         switch (fate) {
         case 19: /* Self-knowledge */
+/*JP
             You_feel("self-knowledgeable...");
+*/
+            You("自分自身が判るような気がした．．．");
             display_nhwindow(WIN_MESSAGE, FALSE);
             enlightenment(MAGICENLIGHTENMENT, ENL_GAMEINPROGRESS);
             exercise(A_WIS, TRUE);
+/*JP
             pline_The("feeling subsides.");
+*/
+            pline("その感じはなくなった．");
             break;
         case 20: /* Foul water */
+/*JP
             pline_The("water is foul!  You gag and vomit.");
+*/
+            pline("水はひどく不快な味がした！あなたは吐き戻した．");
             morehungry(rn1(20, 11));
             vomit();
             break;
         case 21: /* Poisonous */
+/*JP
             pline_The("water is contaminated!");
+*/
+            pline("水は汚染されている！");
             if (Poison_resistance) {
+/*JP
                 pline("Perhaps it is runoff from the nearby %s farm.",
+*/
+                pline("たぶん，これは近くの%sの農場から流れている．",
                       fruitname(FALSE));
+/*JP
                 losehp(rnd(4), "unrefrigerated sip of juice", KILLED_BY_AN);
+*/
+                losehp(rnd(4),"腐った果汁のしたたりで", KILLED_BY_AN);
                 break;
             }
+#if 0 /*JP:T*/
             poison_strdmg(rn1(4, 3), rnd(10), "contaminated water",
                           KILLED_BY);
+#else
+            poison_strdmg(rn1(4, 3), rnd(10), "汚染された水で",
+                          KILLED_BY);
+#endif
             exercise(A_CON, FALSE);
             break;
         case 22: /* Fountain of snakes! */
@@ -318,7 +439,10 @@ drinkfountain(void)
             struct obj *obj, *nextobj;
             int buc_changed = 0;
 
+/*JP
             pline("This water's no good!");
+*/
+            pline("この水はとてもまずい！");
             morehungry(rn1(20, 11));
             exercise(A_CON, FALSE);
             /* this is more severe than rndcurse() */
@@ -336,14 +460,29 @@ drinkfountain(void)
         case 25: /* See invisible */
             if (Blind) {
                 if (Invisible) {
+/*JP
                     You("feel transparent.");
+*/
+                    You("透明になった気がする．");
                 } else {
+/*JP
                     You("feel very self-conscious.");
+*/
+                    You("自意識過剰に感じた．");
+/*JP
                     pline("Then it passes.");
+*/
+                    pline("その感じは消えた．");
                 }
             } else {
+/*JP
                 You_see("an image of someone stalking you.");
+*/
+                You("何かが自分の後をつけている映像を見た．");
+/*JP
                 pline("But it disappears.");
+*/
+                pline("しかし，それは消えてしまった．");
             }
             HSee_invisible |= FROMOUTSIDE;
             newsym(u.ux, u.uy);
@@ -368,8 +507,13 @@ drinkfountain(void)
         {
             struct monst *mtmp;
 
+#if 0 /*JP:T*/
             pline("This %s gives you bad breath!",
                   hliquid("water"));
+#else
+            pline("%sを飲んだら息が臭くなった！",
+                  hliquid("水"));
+#endif
             for (mtmp = fmon; mtmp; mtmp = mtmp->nmon) {
                 if (DEADMONSTER(mtmp))
                     continue;
@@ -381,8 +525,13 @@ drinkfountain(void)
             dogushforth(TRUE);
             break;
         default:
+#if 0 /*JP:T*/
             pline("This tepid %s is tasteless.",
                   hliquid("water"));
+#else
+            pline("このなまぬるい%sは味がない．",
+                  hliquid("水"));
+#endif
             break;
         }
     }
@@ -397,7 +546,10 @@ dipfountain(struct obj *obj)
     boolean is_hands = (obj == &hands_obj);
 
     if (Levitation) {
+/*JP
         floating_above("fountain");
+*/
+        floating_above("泉");
         return;
     }
 
@@ -410,10 +562,18 @@ dipfountain(struct obj *obj)
 
         if (u.ualign.type != A_LAWFUL) {
             /* Ha!  Trying to cheat her. */
+#if 0 /*JP:T*/
             pline("A freezing mist rises from the %s"
                   " and envelopes the sword.",
                   hliquid("water"));
+#else
+            pline("冷たい霧が%sから立ち昇り，剣をつつんだ．",
+                  hliquid("水"));
+#endif
+/*JP
             pline_The("fountain disappears!");
+*/
+            pline("泉は消えてしまった！");
             curse(obj);
             if (obj->spe > -6 && !rn2(3))
                 obj->spe--;
@@ -426,8 +586,14 @@ dipfountain(struct obj *obj)
             /* The lady of the lake acts! - Eric Backus */
             /* Be *REAL* nice */
             pline(
+/*JP
               "From the murky depths, a hand reaches up to bless the sword.");
+*/
+              "にごった深みから，剣を祝福せんと手が伸びてきた．");
+/*JP
             pline("As the hand retreats, the fountain disappears!");
+*/
+            pline("手が退くと，泉は消えてしまった！");
             obj = oname(obj, artiname(ART_EXCALIBUR),
                         ONAME_VIA_DIP | ONAME_KNOW_ARTI);
             discover_artifact(ART_EXCALIBUR);
@@ -467,10 +633,16 @@ dipfountain(struct obj *obj)
     case 20: /* Uncurse the item */
         if (!is_hands && obj->cursed) {
             if (!Blind)
+/*JP
                 pline_The("%s glows for a moment.", hliquid("water"));
+*/
+                pline_The("%sは輝きだした．", hliquid("水"));
             uncurse(obj);
         } else {
+/*JP
             pline("A feeling of loss comes over you.");
+*/
+            pline("奇妙な脱力感があなたをおそった．");
         }
         break;
     case 21: /* Water Demon */
@@ -493,13 +665,22 @@ dipfountain(struct obj *obj)
         dogushforth(FALSE);
         break;
     case 26: /* Strange feeling */
+/*JP
         pline("A strange tingling runs up your %s.", body_part(ARM));
+*/
+        pline("奇妙なしびれがあなたの%sに走った．", body_part(ARM));
         break;
     case 27: /* Strange feeling */
+/*JP
         You_feel("a sudden chill.");
+*/
+        You("突然寒けを感じた．");
         break;
     case 28: /* Strange feeling */
+/*JP
         pline("An urge to take a bath overwhelms you.");
+*/
+        pline("風呂に入りたいという欲望にかられた．");
         {
             long money = money_cnt(gi.invent);
             struct obj *otmp, *nextobj;
@@ -521,7 +702,10 @@ dipfountain(struct obj *obj)
                             delobj(otmp);
                     }
                 }
+/*JP
                 You("lost some of your gold in the fountain!");
+*/
+                You("金をいくらか泉に落としてしまった！");
                 CLEAR_FOUNTAIN_LOOTED(u.ux, u.uy);
                 exercise(A_WIS, FALSE);
             }
@@ -539,8 +723,13 @@ dipfountain(struct obj *obj)
                                    + 1) * 2) + 5),
                       u.ux, u.uy);
         if (!Blind)
+#if 0 /*JP:T*/
             pline("Far below you, you see coins glistening in the %s.",
                   hliquid("water"));
+#else
+            pline("遥か下で、%sの中で金貨が輝いているのをみつけた．",
+                  hliquid("水"));
+#endif
         exercise(A_WIS, TRUE);
         newsym(u.ux, u.uy);
         break;
@@ -581,7 +770,10 @@ void
 breaksink(coordxy x, coordxy y)
 {
     if (cansee(x, y) || u_at(x, y))
+/*JP
         pline_The("pipes break!  Water spurts out!");
+*/
+        pline("配管が壊れ水が噴出した！");
     /* updates level.flags.nsinks and level.flags.nfountains */
     set_levltyp(x, y, FOUNTAIN);
     levl[x][y].looted = 0;
@@ -598,36 +790,63 @@ drinksink(void)
     struct monst *mtmp;
 
     if (Levitation) {
+/*JP
         floating_above("sink");
+*/
+        floating_above("流し台");
         return;
     }
     switch (rn2(20)) {
     case 0:
+/*JP
         You("take a sip of very cold %s.", hliquid("water"));
+*/
+        You("とても冷たい%sを一口飲んだ．", hliquid("水"));
         break;
     case 1:
+/*JP
         You("take a sip of very warm %s.", hliquid("water"));
+*/
+        You("とてもあたたかい%sを一口飲んだ．", hliquid("水"));
         break;
     case 2:
+/*JP
         You("take a sip of scalding hot %s.", hliquid("water"));
+*/
+        You("とても熱い%sを一口飲んだ．", hliquid("湯"));
         if (Fire_resistance) {
+/*JP
             pline("It seems quite tasty.");
+*/
+            pline("とてもおいしい水だ．");
             monstseesu(M_SEEN_FIRE);
         } else {
+/*JP
             losehp(rnd(6), "sipping boiling water", KILLED_BY);
+*/
+            losehp(rnd(6), "沸騰した水を飲んで", KILLED_BY);
             monstunseesu(M_SEEN_FIRE);
         }
         /* boiling water burns considered fire damage */
         break;
     case 3:
         if (svm.mvitals[PM_SEWER_RAT].mvflags & G_GONE)
+/*JP
             pline_The("sink seems quite dirty.");
+*/
+            pline("流し台はとても汚ならしい．");
         else {
             mtmp = makemon(&mons[PM_SEWER_RAT], u.ux, u.uy, MM_NOMSG);
             if (mtmp)
+#if 0 /*JP:T*/
                 pline("Eek!  There's %s in the sink!",
                       (Blind || !canspotmon(mtmp)) ? "something squirmy"
                                                    : a_monnam(mtmp));
+#else
+                pline("げ！流し台に%sがいる！",
+                      (Blind || !canspotmon(mtmp)) ? "身もだえするようなもの"
+                                                   : a_monnam(mtmp));
+#endif
         }
         break;
     case 4:
@@ -639,8 +858,14 @@ drinksink(void)
             obfree(otmp, (struct obj *) 0);
         }
         otmp->cursed = otmp->blessed = 0;
+#if 0 /*JP:T*/
         pline("Some %s liquid flows from the faucet.",
               Blind ? "odd" : hcolor(OBJ_DESCR(objects[otmp->otyp])));
+#else
+        pline("蛇口から%s液体が流れた．",
+              Blind ? "奇妙な" :
+              hcolor(OBJ_DESCR(objects[otmp->otyp])));
+#endif
         if(!(Blind || Hallucination))
             observe_object(otmp);
         otmp->quan++;       /* Avoid panic upon useup() */
@@ -650,48 +875,78 @@ drinksink(void)
         break;
     case 5:
         if (!(levl[u.ux][u.uy].looted & S_LRING)) {
+/*JP
             You("find a ring in the sink!");
+*/
+            You("流し台に指輪をみつけた！");
             (void) mkobj_at(RING_CLASS, u.ux, u.uy, TRUE);
             levl[u.ux][u.uy].looted |= S_LRING;
             exercise(A_WIS, TRUE);
             newsym(u.ux, u.uy);
         } else
+/*JP
             pline("Some dirty %s backs up in the drain.", hliquid("water"));
+*/
+            pline("汚い%sが排水口から逆流してきた．", hliquid("水"));
         break;
     case 6:
         breaksink(u.ux, u.uy);
         break;
     case 7:
+/*JP
         pline_The("%s moves as though of its own will!", hliquid("water"));
+*/
+        pline_The("%sが意思を持っているかのように動いた！", hliquid("水"));
         if ((svm.mvitals[PM_WATER_ELEMENTAL].mvflags & G_GONE)
             || !makemon(&mons[PM_WATER_ELEMENTAL], u.ux, u.uy, MM_NOMSG))
+/*JP
             pline("But it quiets down.");
+*/
+            pline("しかし，静かになった．");
         break;
     case 8:
+/*JP
         pline("Yuk, this %s tastes awful.", hliquid("water"));
+*/
+        pline("オェ，この%sはとてもひどい味がする．", hliquid("水"));
         more_experienced(1, 0);
         newexplevel();
         break;
     case 9:
+/*JP
         pline("Gaggg... this tastes like sewage!  You vomit.");
+*/
+        pline("ゲェー．下水のような味がする！あなたは吐き戻した．");
         morehungry(rn1(30 - ACURR(A_CON), 11));
         vomit();
         break;
     case 10:
+/*JP
         pline("This %s contains toxic wastes!", hliquid("water"));
+*/
+        pline("この%sは有毒な廃棄物を含んでいる！", hliquid("水"));
         if (!Unchanging) {
+/*JP
             You("undergo a freakish metamorphosis!");
+*/
+            You("奇形な変化をしはじめた！");
             polyself(POLY_NOFLAGS);
         }
         break;
     /* more odd messages --JJB */
     case 11:
         Soundeffect(se_clanking_pipe, 50);
+/*JP
         You_hear("clanking from the pipes...");
+*/
+        You_hear("配管のカチンという音を聞いた．．．");
         break;
     case 12:
         Soundeffect(se_sewer_song, 100);
+/*JP
         You_hear("snatches of song from among the sewers...");
+*/
+        You_hear("下水の中からとぎれとぎれの歌を聞いた．．．");
         break;
     case 13:
         pline("Ew, what a stench!");
@@ -699,15 +954,24 @@ drinksink(void)
         break;
     case 19:
         if (Hallucination) {
+/*JP
             pline("From the murky drain, a hand reaches up... --oops--");
+*/
+            pline("暗い排水口から，手が伸びてきた．．--おっと--");
             break;
         }
         FALLTHROUGH;
         /*FALLTHRU*/
     default:
+#if 0 /*JP:T*/
         You("take a sip of %s %s.",
             rn2(3) ? (rn2(2) ? "cold" : "warm") : "hot",
             hliquid("water"));
+#else
+        You("%s%sを一口飲んだ．",
+            rn2(3) ? (rn2(2) ? "冷たい" : "あたたかい") : "熱い",
+            hliquid("水"));
+#endif
     }
 }
 
@@ -807,12 +1071,28 @@ sink_backs_up(coordxy x, coordxy y)
     char buf[BUFSZ];
 
     if (!Blind)
+#if 0 /*JP:T*/
         Strcpy(buf, "Muddy waste pops up from the drain");
+#else
+        Strcpy(buf, "排水口からどろどろの廃棄物が出てくる");
+#endif
     else if (!Deaf)
+#if 0 /*JP:T*/
         Strcpy(buf, "You hear a sloshing sound"); /* Deaf-aware */
+#else
+        Strcpy(buf, "あなたは，バチャバチャする音を聞いた"); /* Deaf-aware */
+#endif
     else
+#if 0 /*JP:T*/
         Sprintf(buf, "Something splashes you in the %s", body_part(FACE));
+#else
+        Sprintf(buf, "何かがあなたの%sにかかった", body_part(FACE));
+#endif
+#if 0 /*JP:T*/
     pline("%s%s.", !Deaf ? "Flupp!  " : "", buf);
+#else
+    pline("%s%s．", !Deaf ? "うわ！" : "", buf);
+#endif
 
     if (!(levl[x][y].looted & S_LRING)) { /* once per sink */
         if (!Blind)
