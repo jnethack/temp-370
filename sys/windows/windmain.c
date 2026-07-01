@@ -1367,7 +1367,11 @@ void
 stdio_raw_print(const char *str)
 {
     if (str)
+#if 0 /*JP:T*/
         fprintf(stdout, "%s\n", str);
+#else
+        jputs(str);
+#endif
     return;
 }
 
@@ -1377,7 +1381,11 @@ void
 stdio_nonl_raw_print(const char *str)
 {
     if (str)
+#if 0 /*JP:T*/
         fprintf(stdout, "%s", str);
+#else /*エラー用なので改行の乱れは一旦無視する*/
+        jputs(str);
+#endif
     return;
 }
 
@@ -1385,7 +1393,11 @@ stdio_nonl_raw_print(const char *str)
 void
 stdio_raw_print_bold(const char *str)
 {
+#if 0 /*JP:T*/
     stdio_raw_print(str);
+#else
+    jputs(str);
+#endif
     return;
 }
 
