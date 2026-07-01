@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn int unstolenarm(void);
@@ -60,8 +65,10 @@ stealgold(struct monst *mtmp)
     struct obj *fgold = g_at(u.ux, u.uy);
     struct obj *ygold;
     long tmp;
+#if 0 /*JP*/
     struct monst *who;
     const char *whose, *what;
+#endif
 
     /* skip lesser coins on the floor */
     while (fgold && fgold->otyp != GOLD_PIECE)
@@ -74,6 +81,7 @@ stealgold(struct monst *mtmp)
         obj_extract_self(fgold);
         add_to_minv(mtmp, fgold);
         newsym(u.ux, u.uy);
+#if 0 /*JP*/
         if (u.usteed) {
             who = u.usteed;
             whose = s_suffix(y_monnam(who));
@@ -91,6 +99,10 @@ stealgold(struct monst *mtmp)
             what += 5;
         pline("%s quickly snatches some gold from %s %s %s!", Monnam(mtmp),
               (Levitation || Flying) ? "beneath" : "between", whose, what);
+#else /*JP:足が無くても「足元」でよしとする*/
+        pline("%sは素早くあなたの%sから金をひったくった！", Monnam(mtmp),
+              (Levitation || Flying) ? "下" : "足元");
+#endif
         if (!ygold || !rn2(5)) {
             if (!tele_restrict(mtmp))
                 (void) rloc(mtmp, RLOC_MSG);
@@ -107,7 +119,10 @@ stealgold(struct monst *mtmp)
             setnotworn(ygold);
         freeinv(ygold);
         add_to_minv(mtmp, ygold);
+/*JP
         Your("purse feels lighter.");
+*/
+        Your("財布は軽くなった．");
         if (!tele_restrict(mtmp))
             (void) rloc(mtmp, RLOC_MSG);
         monflee(mtmp, 0, FALSE, FALSE);
@@ -189,7 +204,10 @@ stealarm(void)
                     if (otmp->unpaid)
                         subfrombill(otmp, shop_keeper(*u.ushops));
                     freeinv(otmp);
+/*JP
                     pline("%s steals %s!", Monnam(mtmp), doname(otmp));
+*/
+                    pline("%sは%sを盗んだ！", Monnam(mtmp), doname(otmp));
                     (void) mpickobj(mtmp, otmp); /* may free otmp */
                     /* Implies seduction, "you gladly hand over ..."
                        so we don't set mavenge bit here. */
@@ -389,12 +407,21 @@ steal(struct monst *mtmp, char *objnambuf)
             pline("%s takes off your unseen chain.", Monnambuf);
             (void) openholdingtrap(&gy.youmonst, &dummy);
         } else if (Blind) {
+/*JP
             pline("Somebody tries to rob you, but finds nothing to steal.");
+*/
+            pline("誰かがあなたから盗もうとしたが，盗むものがないことに気がついた．");
         } else if (inv_cnt(TRUE) > inv_cnt(FALSE)) {
+/*JP
             pline("%s tries to rob you, but isn't interested in gold.",
+*/
+            pline("%sはあなたから盗もうとしたが，お金には興味がない．",
                   Monnambuf);
         } else {
+/*JP
             pline("%s tries to rob you, but there is nothing to steal!",
+*/
+            pline("%sはあなたから盗もうとしたが，盗むものがないことに気がついた！",
                   Monnambuf);
         }
         return 1; /* let her flee */
@@ -473,6 +500,7 @@ steal(struct monst *mtmp, char *objnambuf)
                           && bimanual(uwep)));
 
         if (ostuck || can_carry(mtmp, otmp) == 0) {
+#if 0 /*JP*/
             static const char *const how[] = {
                 "steal", "snatch", "grab", "take"
             };
@@ -482,6 +510,12 @@ steal(struct monst *mtmp, char *objnambuf)
                   (otmp->owornmask & W_ARMOR) ? "your " : "",
                   (otmp->owornmask & W_ARMOR) ? armor_simple_name(otmp)
                                               : yname(otmp));
+#else
+ cant_take:
+            pline("%sは%sを盗もうとしたが諦めた．", Monnambuf,
+                  (otmp->owornmask & W_ARMOR) ? armor_simple_name(otmp)
+                                              : yname(otmp));
+#endif
             /* the fewer items you have, the less likely the thief
                is going to stick around to try again (0) instead of
                running away (1) */
@@ -529,6 +563,7 @@ steal(struct monst *mtmp, char *objnambuf)
                 otmp->cursed = 0;
                 slowly = (armordelay >= 1 || gm.multi < 0);
                 if (flags.female)
+#if 0 /*JP:T*/
                     urgent_pline("%s charms you.  You gladly %s your %s.",
                                  !seen ? "She" : Monnambuf,
                                  curssv ? "let her take"
@@ -536,7 +571,17 @@ steal(struct monst *mtmp, char *objnambuf)
                                    : was_doffing ? "continue removing"
                                      : "start removing",
                                  armor_simple_name(otmp));
+#else
+                    urgent_pline("%sはあなたを魅了した．あなたはよろこんで%sを%sた．",
+                                 !seen ? "彼女" : Monnambuf,
+                                 armor_simple_name(otmp),
+                                 curssv ? "はずしてもらっ"
+                                 : !slowly ? "はずして手渡し"
+                                   : was_doffing ? "はずし続け"
+                                     : "はずし始め");
+#endif
                 else
+#if 0 /*JP:T*/
                     urgent_pline("%s seduces you and %s off your %s.",
                                  !seen ? "She" : Adjmonnam(mtmp, "beautiful"),
                                  curssv ? "helps you to take"
@@ -544,10 +589,22 @@ steal(struct monst *mtmp, char *objnambuf)
                                    : was_doffing ? "you continue taking"
                                      : "you start taking",
                                  armor_simple_name(otmp));
+#else
+                    urgent_pline("%sはあなたを誘惑した．あなたは%sを%s．",
+                                 !seen ? "彼女" : Adjmonnam(mtmp, "美しい"),
+                                 armor_simple_name(otmp),
+                                 curssv ? "はずしてもらっ"
+                                 : !slowly ? "はずし"
+                                   : was_doffing ? "はずし続け"
+                                     : "はずし始め");
+#endif
                 named++;
                 /* the following is to set multi for later on */
                 nomul(-armordelay);
+/*JP
                 gm.multi_reason = "taking off clothes";
+*/
+                gm.multi_reason = "服を脱いでいる時に";
                 gn.nomovemsg = 0;
                 remove_worn_item(otmp, TRUE);
                 otmp->cursed = curssv;
@@ -600,7 +657,11 @@ steal(struct monst *mtmp, char *objnambuf)
     if (iflags.last_msg == PLNMSG_MON_TAKES_OFF_ITEM
         && mtmp->data->mlet == S_NYMPH)
         ++named;
+#if 0 /*JP:T*/
     urgent_pline("%s stole %s.", named ? "She" : Monnambuf, doname(otmp));
+#else
+    urgent_pline("%sは%sを盗んだ．", named ? "彼女" : Monnambuf, doname(otmp));
+#endif
     encumber_msg();
     could_petrify = (otmp->otyp == CORPSE
                      && touch_petrifies(&mons[otmp->corpsenm]));
@@ -647,7 +708,10 @@ mpickobj(struct monst *mtmp, struct obj *otmp)
     if (obj_sheds_light(otmp) && attacktype(mtmp->data, AT_ENGL)) {
         /* this is probably a burning object that you dropped or threw */
         if (engulfing_u(mtmp) && !Blind)
+/*JP
             pline("%s out.", Tobjnam(otmp, "go"));
+*/
+            pline("%sは飛びだした．", xname(otmp));
         snuff_otmp = TRUE;
     }
     /* for hero owned object on shop floor, mtmp is taking possession
@@ -759,7 +823,10 @@ stealamulet(struct monst *mtmp)
         freeinv(otmp);
         Strcpy(buf, doname(otmp));
         (void) mpickobj(mtmp, otmp); /* could merge and free otmp but won't */
+/*JP
         pline("%s steals %s!", Some_Monnam(mtmp), buf);
+*/
+        pline("%sは%sを盗んだ！", Some_Monnam(mtmp), buf);
         if (can_teleport(mtmp->data) && !tele_restrict(mtmp))
             (void) rloc(mtmp, RLOC_MSG);
         encumber_msg();
@@ -787,23 +854,37 @@ maybe_absorb_item(
         if (cansee(mon->mx, mon->my)) {
             /* Some_Monnam() avoids "It pulls ... and absorbs it!"
                if hero can see the location but not the monster */
+#if 0 /*JP:T*/
             pline("%s pulls %s away from you and absorbs %s!",
                   Some_Monnam(mon), /* Monnam() or "Something" */
                   yname(obj), (obj->quan > 1L) ? "them" : "it");
+#else
+            pline("%sは%sを引っぱり込んで吸収した！",
+                  Some_Monnam(mon), /* Monnam() or "Something" */
+                  yname(obj));
+#endif
         } else {
             const char *hand_s = body_part(HAND);
 
             if (bimanual(obj))
                 hand_s = makeplural(hand_s);
+#if 0 /*JP:T*/
             pline("%s %s pulled from your %s!", upstart(yname(obj)),
                   otense(obj, "are"), hand_s);
+#else
+            pline("%sはあなたの%sから引っぱり込まれた！", upstart(yname(obj)),
+                  hand_s);
+#endif
         }
         freeinv(obj);
         encumber_msg();
     } else {
         /* not carried; presumably thrown or kicked */
         if (canspotmon(mon))
+/*JP
             pline("%s absorbs %s!", Monnam(mon), yname(obj));
+*/
+            pline("%sは%sを吸収した！", Monnam(mon), yname(obj));
     }
     /* add to mon's inventory */
     (void) mpickobj(mon, obj);
@@ -833,8 +914,14 @@ mdrop_obj(
     }
     /* obj_no_longer_held(obj); -- done by place_object */
     if (verbosely && cansee(omx, omy))
+/*JP
         pline_mon(mon, "%s drops %s.", Monnam(mon), obj_name);
+*/
+        pline_mon(mon, "%sは%sを置いた．", Monnam(mon), obj_name);
+/*JP
     if (!flooreffects(obj, omx, omy, "fall")) {
+*/
+    if (!flooreffects(obj, omx, omy, "落ちる")) {
         place_object(obj, omx, omy);
         stackobj(obj);
     }
@@ -883,8 +970,13 @@ relobj(
     /* vault guard's gold goes away rather than be dropped... */
     if (mtmp->isgd && (otmp = findgold(mtmp->minvent)) != 0) {
         if (canspotmon(mtmp))
+#if 0 /*JP:T*/
             pline("%s gold %s.", s_suffix(Monnam(mtmp)),
                   canseemon(mtmp) ? "vanishes" : "seems to vanish");
+#else
+            pline("%sの金は消えた%s．", Monnam(mtmp),
+                  canseemon(mtmp) ? "" : "ようだ");
+#endif
         obj_extract_self(otmp);
         obfree(otmp, (struct obj *) 0);
     } /* isgd && has gold */

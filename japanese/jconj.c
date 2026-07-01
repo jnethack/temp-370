@@ -177,7 +177,10 @@ jconjsub(struct _jconj_tab *tab, const char *jverb, const char *sfx)
     unsigned char *p;
     static unsigned char tmp[1024];
 
+
     len = strlen(jverb);
+    if (len > 1000 || strlen(sfx) > 100) /* 安全用 */
+        return jverb;
     strcpy((char *)tmp, jverb );
 
     if(!STRNCMP2(sfx, "と")){
@@ -288,7 +291,7 @@ jconj(const char *jverb,const char *sfx)
     }
 
     for( tab = jconj_tab; tab->main != (void*)0; ++tab){
-        if(len - strlen(tab->main) > 0 &&
+        if(len > strlen(tab->main) &&
            !strcmp(jverb + (len - strlen(tab->main)), tab->main)){
             return jconjsub(tab, jverb, sfx);
         }
@@ -308,9 +311,12 @@ jcan(const char *jverb)
     static char tmp[1024];
 
     int len = strlen(jverb);
-    if(!strcmp(jverb + len - cl * 2, "する")){
-        strncpy(tmp, jverb, len - cl * 2);
-        strcpy(tmp + len - cl * 2, "できる");
+    if (len > 1000) /* 安全用 */
+        return jverb;
+    int prev = len - cl * 2; /* 2文字前 */
+    if(prev >= 0 && !strcmp(jverb + prev, "する")){
+        strncpy(tmp, jverb, prev);
+        strcpy(tmp + prev, "できる");
         return tmp;
     } else {
         ret = jconj(jverb, "れる");
@@ -325,9 +331,12 @@ jcannot(const char *jverb)
     static char tmp[1024];
 
     int len = strlen(jverb);
-    if(!strcmp(jverb + len - cl * 2, "する")){
-        strncpy(tmp, jverb, len - cl * 2);
-        strcpy(tmp + len - cl * 2, "できない");
+    if (len > 1000) /* 安全用 */
+        return jverb;
+    int prev = len - cl * 2; /* 2文字前 */
+    if(prev >= 0 && !strcmp(jverb + prev, "する")){
+        strncpy(tmp, jverb, prev);
+        strcpy(tmp + prev, "できない");
         return tmp;
     } else {
         return jconj(jverb, "れない");
@@ -366,15 +375,17 @@ jconj_adj(const char *jadj)
     int len;
     static unsigned char tmp[1024];
 
+    len = strlen(jadj);
+    if (len < cl || len > 1000) /* 安全用 */
+        return jadj;
     strcpy((char *)tmp, jadj);
-    len = strlen((char *)tmp);
 
-    if(!strcmp((char *)tmp + len - 2, "い")){
-        strcpy((char *)tmp + len - 2, "く");
-    } else if(!strcmp((char *)tmp + len - 2, "だ") ||
-              !strcmp((char *)tmp + len - 2, "な") ||
-              !strcmp((char *)tmp + len - 2, "の")){
-        strcpy((char *)tmp + len - 2, "に");
+    if(!strcmp((char *)tmp + len - cl, "い")){
+        strcpy((char *)tmp + len - cl, "く");
+    } else if(!strcmp((char *)tmp + len - cl, "だ") ||
+              !strcmp((char *)tmp + len - cl, "な") ||
+              !strcmp((char *)tmp + len - cl, "の")){
+        strcpy((char *)tmp + len - cl, "に");
     }
 
     return (char *)tmp;
@@ -382,7 +393,7 @@ jconj_adj(const char *jadj)
 
 
 #ifdef JAPANESETEST
-void
+int
 main(void)
 {
     struct _jconj_tab *tab;
@@ -402,5 +413,6 @@ main(void)
     printf("%s\n", jconj("徹夜でnethackの翻訳をする", "た"));
     printf("%s\n", jconj("徹夜でnethackの翻訳をする", "れば"));
     printf("%s\n", jconj("徹夜でnethackの翻訳をする", "とき"));
+    return 0;
 }
 #endif
