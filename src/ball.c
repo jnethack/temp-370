@@ -3,6 +3,11 @@
 /*-Copyright (c) David Cohrs, 2006. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 /* Ball & Chain
  * =============================================================*/
 
@@ -24,7 +29,10 @@ ballrelease(boolean showmsg)
 {
     if (carried(uball) && !welded(uball)) {
         if (showmsg)
+/*JP
             pline("Startled, you drop the iron ball.");
+*/
+            pline("驚いてあなたは鉄球を落した．");
         if (uwep == uball)
             setuwep((struct obj *) 0);
         if (uswapwep == uball)
@@ -53,16 +61,29 @@ ballfall(void)
     if (gets_hit) {
         int dmg = rn1(7, 25);
 
+/*JP
         pline_The("iron ball falls on your %s.", body_part(HEAD));
+*/
+        pline("鉄球はあなたの%sの上に落ちた．", body_part(HEAD));
         if (uarmh) {
             if (hard_helmet(uarmh)) {
+/*JP
                 pline("Fortunately, you are wearing a hard helmet.");
+*/
+                pline("幸運にも，あなたは固い兜を身につけていた．");
                 dmg = 3;
             } else if (flags.verbose)
+/*JP
                 pline("%s does not protect you.", Yname2(uarmh));
+*/
+                Your("%sでは守れない．", xname(uarmh));
         }
+#if 0 /*JP*/
         losehp(Maybe_Half_Phys(dmg), "crunched in the head by an iron ball",
                NO_KILLER_PREFIX);
+#else
+        losehp(Maybe_Half_Phys(dmg), "鉄球で頭を打って", KILLED_BY);
+#endif
     }
 }
 
@@ -774,8 +795,13 @@ drag_ball(coordxy x, coordxy y, int *bc_control,
  drag:
 
     if (near_capacity() > SLT_ENCUMBER && dist2(x, y, u.ux, u.uy) <= 2) {
+#if 0 /*JP:T*/
         You("cannot %sdrag the heavy iron ball.",
             gi.invent ? "carry all that and also " : "");
+#else
+        You("%s重い鉄球をひきずることができない．",
+            gi.invent ? "それだけの荷物を持ったまま" : "");
+#endif
         nomul(0);
         return FALSE;
     }
@@ -788,13 +814,19 @@ drag_ball(coordxy x, coordxy y, int *bc_control,
         || ((t = t_at(uchain->ox, uchain->oy))
             && (is_pit(t->ttyp) || is_hole(t->ttyp)))) {
         if (Levitation) {
+/*JP
             You_feel("a tug from the iron ball.");
+*/
+            You("鉄球に引っぱられた．");
             if (t)
                 t->tseen = 1;
         } else {
             struct monst *victim;
 
+/*JP
             You("are jerked back by the iron ball!");
+*/
+            You("鉄球にぐいと引っぱられた！");
             if ((victim = m_at(uchain->ox, uchain->oy)) != 0) {
                 int tmp;
                 int dieroll = rnd(20);
@@ -869,6 +901,9 @@ drag_ball(coordxy x, coordxy y, int *bc_control,
     return TRUE;
 }
 
+#if 1 /*JP*//*内部で非リテラルフォーマット文字列を使う*/
+DISABLE_WARNING_FORMAT_NONLITERAL
+#endif
 /*
  *  drop_ball()
  *
@@ -889,7 +924,11 @@ drop_ball(coordxy x, coordxy y)
     }
 
     if (x != u.ux || y != u.uy) {
+#if 0 /*JP*/
         static const char pullmsg[] = "The ball pulls you out of the ";
+#else /*フォーマット文字列にする*/
+        static const char *pullmsg = "鉄球は%sからあなたを引っぱり出した！";
+#endif
         struct trap *t;
         long side;
 
@@ -897,28 +936,59 @@ drop_ball(coordxy x, coordxy y)
             && u.utraptype != TT_INFLOOR && u.utraptype != TT_BURIEDBALL) {
             switch (u.utraptype) {
             case TT_PIT:
+#if 0 /*JP:T*/
                 pline("%s%s!", pullmsg, "pit");
+#else
+                pline(pullmsg, "落し穴");
+#endif
                 break;
             case TT_WEB:
+#if 0 /*JP:T*/
                 pline("%s%s!", pullmsg, "web");
+#else
+                pline(pullmsg, "くもの巣");
+#endif
                 Soundeffect(se_destroy_web, 30);
+/*JP
                 pline_The("web is destroyed!");
+*/
+                pline("くもの巣はこわれた！");
                 deltrap(t_at(u.ux, u.uy));
                 break;
             case TT_LAVA:
+#if 0 /*JP:T*/
                 pline("%s%s!", pullmsg, hliquid("lava"));
+#else
+                pline(pullmsg, hliquid("溶岩"));
+#endif
                 break;
             case TT_BEARTRAP:
                 side = rn2(3) ? LEFT_SIDE : RIGHT_SIDE;
+#if 0 /*JP:T*/
                 pline("%s%s!", pullmsg, "bear trap");
+#else
+                pline(pullmsg, "熊の罠");
+#endif
                 set_wounded_legs(side, rn1(1000, 500));
                 if (!u.usteed) {
+#if 0 /*JP:T*/
                     Your("%s %s is severely damaged.",
                          (side == LEFT_SIDE) ? "left" : "right",
                          body_part(LEG));
+#else
+                    Your("%s%sはひどい傷を負った．",
+                         (side == LEFT_SIDE) ? "左" : "右",
+                         body_part(LEG));
+#endif
+#if 0 /*JP:T*/
                     losehp(Maybe_Half_Phys(2),
                            "leg damage from being pulled out of a bear trap",
                            KILLED_BY);
+#else
+                    losehp(Maybe_Half_Phys(2),
+                           "熊の罠から抜けようと足を引っぱって",
+                           KILLED_BY);
+#endif
                 }
                 break;
             }
@@ -971,9 +1041,14 @@ litter(void)
         nextobj = otmp->nobj;
         if (otmp != uball && rnd(capacity) <= (int) otmp->owt) {
             if (canletgo(otmp, "")) {
+#if 0 /*JP:T*/
                 You("drop %s and %s %s down the stairs with you.",
                     yname(otmp), (otmp->quan == 1L) ? "it" : "they",
                     otense(otmp, "fall"));
+#else
+                You("%sを落とし，それはあなたと一緒に階段を落ちていった．",
+                    yname(otmp));
+#endif
                 setnotworn(otmp);
                 freeinv(otmp);
                 hitfloor(otmp, FALSE);
@@ -981,6 +1056,9 @@ litter(void)
         }
     }
 }
+#if 1 /*JP*/
+RESTORE_WARNING_FORMAT_NONLITERAL
+#endif
 
 void
 drag_down(void)
@@ -999,31 +1077,52 @@ drag_down(void)
     forward = carried(uball) && (uwep == uball || !uwep || !rn2(3));
 
     if (carried(uball) && !welded(uball))
+/*JP
         You("lose your grip on the iron ball.");
+*/
+        You("鉄球を手から落してしまった．");
 
     cls();  /* previous level is still displayed although you
                went down the stairs. Avoids bug C343-20 */
 
     if (forward) {
         if (rn2(6)) {
+/*JP
             pline_The("iron ball drags you downstairs!");
+*/
+            You("鉄球によって階段をころがり落ちた！");
             losehp(Maybe_Half_Phys(rnd(6)),
+/*JP
                    "dragged downstairs by an iron ball", NO_KILLER_PREFIX);
+*/
+                   "鉄球により階段をころがり落ちて", KILLED_BY);
             litter();
         }
     } else {
         if (rn2(2)) {
             Soundeffect(se_iron_ball_hits_you, 25);
+/*JP
             pline_The("iron ball smacks into you!");
+*/
+            pline("鉄球はあなたにゴツンとぶつかった！");
+/*JP
             losehp(Maybe_Half_Phys(rnd(20)), "iron ball collision",
+*/
+            losehp(Maybe_Half_Phys(rnd(20)), "鉄球の衝突で",
                    KILLED_BY_AN);
             exercise(A_STR, FALSE);
             dragchance -= 2;
         }
         if ((int) dragchance >= rnd(6)) {
+/*JP
             pline_The("iron ball drags you downstairs!");
+*/
+            You("鉄球によって階段をころがり落ちた！");
             losehp(Maybe_Half_Phys(rnd(3)),
+/*JP
                    "dragged downstairs by an iron ball", NO_KILLER_PREFIX);
+*/
+                   "鉄球により階段をころがり落ちて", KILLED_BY);
             exercise(A_STR, FALSE);
             litter();
         }

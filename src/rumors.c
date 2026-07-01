@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 #include "dlb.h"
 
@@ -531,7 +536,10 @@ outrumor(
     int mechanism)
 {
     static const char fortune_msg[] =
+/*JP
         "This cookie has a scrap of paper inside.";
+*/
+        "このクッキーには紙切が入っている．";
     const char *line;
     char buf[BUFSZ];
     boolean reading = (mechanism == BY_COOKIE || mechanism == BY_PAPER);
@@ -543,21 +551,34 @@ outrumor(
         } else if (Blind) {
             if (mechanism == BY_COOKIE)
                 pline(fortune_msg);
+/*JP
             pline("What a pity that you cannot read it!");
+*/
+            pline("それを読めないなんて気の毒な！");
             return;
         }
     }
 
     line = getrumor(truth, buf, reading ? FALSE : TRUE);
     if (!*line)
+/*JP
         line = "NetHack rumors file closed for renovation.";
+*/
+        line = "噂の真相は刷新のため休刊している．";
     switch (mechanism) {
     case BY_ORACLE:
         /* Oracle delivers the rumor */
+#if 0 /*JP:T*/
         pline("True to her word, the Oracle %ssays: ",
               (!rn2(4) ? "offhandedly "
                        : (!rn2(3) ? "casually "
                                   : (rn2(2) ? "nonchalantly " : ""))));
+#else
+        pline("約束どおりに，賢者は%s述べた:",
+              (!rn2(4) ? "無造作に"
+                       : (!rn2(3) ? "何気なく"
+                                  : (rn2(2) ? "無頓着に" : ""))));
+#endif
         SetVoice((struct monst *) 0, 0, 80, voice_oracle);
         verbalize1(line);
         /* [WIS exercised by getrumor()] */
@@ -567,7 +588,10 @@ outrumor(
         FALLTHROUGH;
     /* FALLTHRU */
     case BY_PAPER:
+/*JP
         pline("It reads:");
+*/
+        pline("それを読んだ:");
         break;
     }
     pline1(line);
@@ -671,10 +695,19 @@ outoracle(boolean special, boolean delphi)
         if (delphi)
             putstr(tmpwin, 0,
                    special
+/*JP
                      ? "The Oracle scornfully takes all your gold and says:"
+*/
+                     ? "賢者は軽蔑したようにあなたの全てのお金を受けとり，述べた："
+/*JP
                      : "The Oracle meditates for a moment and then intones:");
+*/
+                     : "賢者はしばらく瞑想し，歌うように話した：");
         else
+/*JP
             putstr(tmpwin, 0, "The message reads:");
+*/
+            putstr(tmpwin, 0, "メッセージ:");
         putstr(tmpwin, 0, "");
 
         while (dlb_fgets(line, COLNO, oracles) && strcmp(line, "---\n")) {
@@ -704,17 +737,29 @@ doconsult(struct monst *oracl)
     umoney = money_cnt(gi.invent);
 
     if (!oracl) {
+/*JP
         There("is no one here to consult.");
+*/
+        pline("ここには神託を述べる人はいない．");
         return ECMD_OK;
     } else if (!oracl->mpeaceful) {
+/*JP
         pline("%s is in no mood for consultations.", Monnam(oracl));
+*/
+        pline("賢者は神託を告げてくれる雰囲気ではない．");
         return ECMD_OK;
     } else if (!umoney) {
+/*JP
         You("have no gold.");
+*/
+        You("お金がない．");
         return ECMD_OK;
     }
 
+/*JP
     Sprintf(qbuf, "\"Wilt thou settle for a minor consultation?\" (%d %s)",
+*/
+    Sprintf(qbuf, "「汝，低位の神託を受けるか？」(%d%s)",
             minor_cost, currency((long) minor_cost));
     switch (ynq(qbuf)) {
     default:
@@ -722,7 +767,10 @@ doconsult(struct monst *oracl)
         return ECMD_OK;
     case 'y':
         if (umoney < (long) minor_cost) {
+/*JP
             You("don't even have enough gold for that!");
+*/
+            You("これに払えるだけのお金すら持っていない！");
             return ECMD_OK;
         }
         u_pay = minor_cost;
@@ -731,7 +779,10 @@ doconsult(struct monst *oracl)
         if (umoney <= (long) minor_cost /* don't even ask */
             || (svo.oracle_cnt == 1 || go.oracle_flg < 0))
             return ECMD_OK;
+/*JP
         Sprintf(qbuf, "\"Then dost thou desire a major one?\" (%d %s)",
+*/
+        Sprintf(qbuf, "「ならば汝，高位の神託を受けるか？」(%d%s)",
                 major_cost, currency((long) major_cost));
         if (y_n(qbuf) != 'y')
             return ECMD_OK;
@@ -777,7 +828,10 @@ couldnt_open_file(const char *filename)
     if (!iflags.debug_fuzzer)
         program_state.something_worth_saving = 0;
 
+/*JP
     impossible("Can't open '%s' file.", filename);
+*/
+    impossible("'%s'ファイルが開けない．", filename);
     program_state.something_worth_saving = save_something;
 }
 
