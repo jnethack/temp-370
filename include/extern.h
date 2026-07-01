@@ -709,8 +709,10 @@ extern char *Amonnam(struct monst *) NONNULLARG1;
 extern char *a_monnam(struct monst *) NONNULLARG1;
 extern char *distant_monnam(struct monst *, int, char *) NONNULLARG1;
 extern char *mon_nam_too(struct monst *, struct monst *) NONNULLPTRS;
+#if 0 /*JP*//*unused*/
 extern char *monverbself(struct monst *, char *,
                          const char *, const char *) NONNULLARG123;
+#endif
 extern char *minimal_monnam(struct monst *, boolean);
 extern char *bogusmon(char *, char *) NONNULLARG1;
 extern char *rndmonnam(char *);

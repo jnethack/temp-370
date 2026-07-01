@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2011. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn int pet_type(void);
@@ -118,7 +123,10 @@ pick_familiar_pm(struct obj *otmp, boolean quietly)
             if (!quietly)
                 /* have just been given "You <do something with>
                    the figurine and it transforms." message */
+/*JP
                 pline("... into a pile of dust.");
+*/
+                pline("．．．そしてちりの山になった．");
             return (struct permonst *) 0;
         }
     } else if (!rn2(3)) {
@@ -129,7 +137,10 @@ pick_familiar_pm(struct obj *otmp, boolean quietly)
 
         pm = rndmonst_adj(0, max);
         if (!pm && !quietly)
+/*JP
             There("seems to be nothing available for a familiar.");
+*/
+            pline("下僕は現れなかった．");
     }
     return pm;
 }
@@ -191,7 +202,10 @@ make_familiar(struct obj *otmp, coordxy x, coordxy y, boolean quietly)
             reallytame = FALSE; /* not tame after all */
             if (chance == 2) {  /* hostile (cursed figurine) */
                 if (!quietly)
+/*JP
                     You("get a bad feeling about this.");
+*/
+                    You("嫌な予感がした．");
                 mtmp->mpeaceful = 0;
                 set_malign(mtmp);
             }
@@ -238,13 +252,29 @@ makedog(void)
     if (!*petname && pettype == PM_LITTLE_DOG) {
         /* All of these names were for dogs. */
         if (Role_if(PM_CAVE_DWELLER))
+#if 0 /*JP:T*/
             petname = "Slasher"; /* The Warrior */
+#else
+            petname = "スラッシャー";
+#endif
         if (Role_if(PM_SAMURAI))
+#if 0 /*JP:T*/
             petname = "Hachi"; /* Shibuya Station */
+#else
+            petname = "ハチ公";
+#endif
         if (Role_if(PM_BARBARIAN))
+#if 0 /*JP:T*/
             petname = "Idefix"; /* Obelix */
+#else
+            petname = "イデフィクス";
+#endif
         if (Role_if(PM_RANGER))
+#if 0 /*JP:T*/
             petname = "Sirius"; /* Orion's dog */
+#else
+            petname = "シリウス";
+#endif
     }
 
     /* specifying NO_MINVENT prevents makemon() from having a 1% chance
@@ -831,21 +861,36 @@ keepdogs(
                 mdrop_special_objs(mtmp); /* drop Amulet */
             } else if (mtmp->meating || mtmp->mtrapped) {
                 if (canseemon(mtmp))
+#if 0 /*JP:T*/
                     pline_mon(mtmp, "%s is still %s.", Monnam(mtmp),
                              mtmp->meating ? "eating" : "trapped");
+#else
+                    pline_mon(mtmp, "%sはまだ%s．", Monnam(mtmp),
+                             mtmp->meating ? "食べている" : "罠にかかったままだ");
+#endif
                 stay_behind = TRUE;
             } else if (mon_has_amulet(mtmp)) {
                 if (canseemon(mtmp))
+/*JP
                     pline("%s seems very disoriented for a moment.",
+*/
+                    pline("%sは一瞬方向感覚を失ったようだ．",
                           Monnam(mtmp));
                 stay_behind = TRUE;
             }
             if (stay_behind) {
                 if (mtmp->mleashed) {
+#if 0 /*JP:T*/
                     pline("%s leash suddenly comes loose.",
                           humanoid(mtmp->data)
                               ? (mtmp->female ? "Her" : "His")
                               : "Its");
+#else
+                    pline("%sに結ばれた紐は突然ゆるんだ．",
+                          humanoid(mtmp->data)
+                              ? (mtmp->female ? "彼女" : "彼")
+                              : "その生物");
+#endif
                     m_unleash(mtmp, FALSE);
                 }
                 if (mtmp == u.usteed) {
@@ -877,7 +922,10 @@ keepdogs(
         } else if (mtmp->mleashed) {
             /* this can happen if your quest leader ejects you from the
                "home" level while a leashed pet isn't next to you */
+/*JP
             pline("%s leash goes slack.", s_suffix(Monnam(mtmp)));
+*/
+            pline("%sに結ばれた紐はたるんだ．", Monnam(mtmp));
             m_unleash(mtmp, FALSE);
         }
     }
@@ -1202,11 +1250,20 @@ tamedog(
                 boolean big_corpse =
                     (obj->otyp == CORPSE && ismnum(obj->corpsenm)
                      && mons[obj->corpsenm].msize > mtmp->data->msize);
+#if 0 /*JP:T*/
                 pline_mon(mtmp, "%s catches %s%s",
                           Monnam(mtmp), the(xname(obj)),
                          !big_corpse ? "." : ", or vice versa!");
+#else
+                pline_mon(mtmp, "%sは%sをつかまえた%s",
+                          Monnam(mtmp), xname(obj),
+                         !big_corpse ? "．" : "，と言うよりその逆か！");
+#endif
             } else if (cansee(mtmp->mx, mtmp->my))
+/*JP
                 pline("%s.", Tobjnam(obj, "stop"));
+*/
+                pline("%sは止まった．", xname(obj));
             /* dog_eat expects a floor object */
             place_object(obj, mtmp->mx, mtmp->my);
             (void) dog_eat(mtmp, obj, mtmp->mx, mtmp->my, FALSE);
@@ -1316,9 +1373,16 @@ wary_dog(struct monst *mtmp, boolean was_dead)
             if (haseyes(gy.youmonst.data)) {
                 if (haseyes(mtmp->data))
                     pline_mon(mtmp,
+#if 0 /*JP:T*/
                              "%s %s to look you in the %s.", Monnam(mtmp),
                              mtmp->mpeaceful ? "seems unable" : "refuses",
                              body_part(EYE));
+#else
+                             "%sはあなたの%s%s．", Monnam(mtmp),
+                             body_part(EYE),
+                             mtmp->mpeaceful ? "を見ることができないようだ" 
+                                             : "から目をそらした");
+#endif
                 else
                     pline_mon(mtmp, "%s avoids your gaze.", Monnam(mtmp));
             }
@@ -1332,8 +1396,13 @@ wary_dog(struct monst *mtmp, boolean was_dead)
 
     if (!mtmp->mtame) {
         if (!quietly && canspotmon(mtmp))
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s %s.", Monnam(mtmp),
                   mtmp->mpeaceful ? "is no longer tame" : "has become feral");
+#else
+            pline_mon(mtmp, "%sは%s．", Monnam(mtmp),
+                  mtmp->mpeaceful ? "ペットでなくなった" : "野生化した");
+#endif
         newsym(mtmp->mx, mtmp->my);
         /* a life-saved monster might be leashed;
            don't leave it that way if it's no longer tame */
