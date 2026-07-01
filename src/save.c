@@ -3,6 +3,11 @@
 /*-Copyright (c) Michael Allison, 2009. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 #ifndef NO_SIGNAL
@@ -43,13 +48,19 @@ int
 dosave(void)
 {
     clear_nhwindow(WIN_MESSAGE);
+/*JP
+    if (y_n("Really save?") == 'n') {
+*/
     if (y_n("Really save?") == 'n') {
         clear_nhwindow(WIN_MESSAGE);
         if (gm.multi > 0)
             nomul(0);
     } else {
         clear_nhwindow(WIN_MESSAGE);
+/*JP
         pline("Saving...");
+*/
+        pline("保存中．．．");
 #if defined(HANGUPHANDLING)
         program_state.done_hup = 0;
 #endif
@@ -61,7 +72,10 @@ dosave(void)
 
             /* make sure they see the Saving message */
             display_nhwindow(WIN_MESSAGE, TRUE);
+/*JP
             exit_nhwindows("Be seeing you...");
+*/
+            exit_nhwindows("また会いましょう．．．");
             nh_terminate(EXIT_SUCCESS);
         } else
             docrt();
@@ -114,7 +128,10 @@ dosave0(void)
         if (nhfp) {
             close_nhfile(nhfp);
             clear_nhwindow(WIN_MESSAGE);
+/*JP
             There("seems to be an old save file.");
+*/
+            pline("前にセーブしたファイルがあります．");
             if (y_n("Overwrite the old file?") == 'n') {
                 nh_sfconvert(fq_save);
                 nh_compress(fq_save);
