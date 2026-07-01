@@ -2,6 +2,11 @@
 /* Copyright (c) 1996 by Jean-Christophe Collet  */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 /*
@@ -986,15 +991,27 @@ enter_force_field(genericptr_t p1, genericptr_t p2)
 
     if (p2 == (genericptr_t) 0) { /* That means the player */
         if (!Blind)
+#if 0 /*JP*/
             You("bump into %s.  Ouch!",
                 Hallucination ? "an invisible tree"
                               : "some kind of invisible wall");
+#else
+            You("%sにぶちあたった．いてっ！",
+                Hallucination ? "目に見えない木"
+                              : "なんらかの目に見えない壁");
+#endif
         else
+/*JP
             pline("Ouch!");
+*/
+            pline("いてっ！");
     } else {
         mtmp = (struct monst *) p2;
         if (canseemon(mtmp))
+/*JP
             pline("%s bumps into %s!", Monnam(mtmp), something);
+*/
+            pline("%sは%sにぶちあたった！", Monnam(mtmp), something);
     }
     return FALSE;
 }
@@ -1111,13 +1128,23 @@ inside_gas_cloud(genericptr_t p1, genericptr_t p2)
         if (m_poisongas_ok(&gy.youmonst) == M_POISONGAS_OK)
             return FALSE;
         if (!Blind) {
+/*JP
             Your("%s sting.", makeplural(body_part(EYE)));
+*/
+            Your("%sがチクチクした．", body_part(EYE));
             make_blinded(1L, FALSE);
         }
         if (!Poison_resistance) {
+#if 0 /*JP:T*/
             pline("%s is burning your %s!", Something,
                   makeplural(body_part(LUNG)));
+#else
+            pline("何か妙なものを吸いこんだ！");
+#endif
+/*JP
             You("cough and spit blood!");
+*/
+            You("咳きこみ，血を吐いた！");
             wake_nearto(u.ux, u.uy, 2);
             dam = Maybe_Half_Phys(rnd(dam) + 5);
             if (Half_gas_damage) /* worn towel */
@@ -1126,7 +1153,10 @@ inside_gas_cloud(genericptr_t p1, genericptr_t p2)
             monstunseesu(M_SEEN_POISON);
             return FALSE;
         } else {
+/*JP
             You("cough!");
+*/
+            You("咳きこんだ！");
             wake_nearto(u.ux, u.uy, 2);
             monstseesu(M_SEEN_POISON);
             return FALSE;
@@ -1138,7 +1168,10 @@ inside_gas_cloud(genericptr_t p1, genericptr_t p2)
             if (!is_silent(mtmp->data)) {
                 if (cansee(mtmp->mx, mtmp->my)
                     || (distu(mtmp->mx, mtmp->my) < 8))
+/*JP
                     pline("%s coughs!", Monnam(mtmp));
+*/
+                    pline("%sは咳きこんだ！", Monnam(mtmp));
                 wake_nearto(mtmp->mx, mtmp->my, 2);
             }
             if (heros_fault(reg))
@@ -1154,7 +1187,10 @@ inside_gas_cloud(genericptr_t p1, genericptr_t p2)
                 if (heros_fault(reg))
                     killed(mtmp);
                 else
+/*JP
                     monkilled(mtmp, "gas cloud", AD_DRST);
+*/
+                    monkilled(mtmp, "ガス雲", AD_DRST);
                 if (DEADMONSTER(mtmp)) { /* not lifesaved */
                     return TRUE;
                 }
@@ -1394,10 +1430,16 @@ region_safety(void)
         }
     } else if (r) {
         remove_region(r);
+/*JP
         pline_The("gas cloud enveloping you dissipates.");
+*/
+        pline("あなたを包んでいたガス雲は消えた．");
     } else {
         /* cloud dissipated on its own, so nothing needs to be done */
+/*JP
         pline_The("gas cloud has dissipated.");
+*/
+        pline("ガス雲は消えた．");
     }
     /* maybe cure blindness too */
     if (BlindedTimeout == 1L)

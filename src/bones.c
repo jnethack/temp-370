@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 #ifndef SFCTOOL
@@ -422,7 +427,10 @@ savebones(int how, time_t when, struct obj *corpse)
                 if (delete_bonesfile(&u.uz))
                     goto make_bones;
                 else
+/*JP
                     pline("Cannot unlink old bones.");
+*/
+                    pline("古い骨を削除できなかった．");
             }
         }
         /* compression can change the file's name, so must
@@ -662,7 +670,10 @@ getbones(void)
     program_state.reading_bonesfile = 1;
     if (validate(nhfp, gb.bones, FALSE) != SF_UPTODATE) {
         if (!wizard)
+/*JP
             pline("Discarding unusable bones; no need to panic...");
+*/
+            pline("使えない骨を捨てた．慌てる必要はない．．．");
         ok = FALSE;
         program_state.reading_bonesfile = 0;
     } else {
