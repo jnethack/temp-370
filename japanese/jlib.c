@@ -94,11 +94,11 @@ int rn2(int max)
 int
 is_kanji(unsigned c)
 {
-    if(IC == EUC)
-      return (c & 0x80);
-    else
+    if(IC == SJIS)
       return ((unsigned int)c>=0x81 && (unsigned int)c<=0x9f)
         || ((unsigned int)c>=0xe0 && (unsigned int)c<=0xfc);
+    else
+      return (c & 0x80);
 }
 
 void
@@ -210,16 +210,18 @@ str2ic(const char *s)
         size_t src_len, dst_len;
         up = (unsigned char *)s;
         src_len = strlen(s);
-        dst_len = sizeof(buf);
+        dst_len = sizeof(buf) - 1;
         if (iconv(input_dsc, (char**)&up, &src_len,
                 (char**)&p, &dst_len) == (size_t)-1){
-            strcpy((char *)buf, s);
+            strncpy((char *) buf, s, sizeof(buf) - 1);
+            buf[sizeof(buf) - 1] = '\0';
             return (char *)buf;
         }
-        *(p++) = '\0';
+        *p = '\0';
         return (char *)buf;
     } else {
-        strcpy((char *)buf, s);
+        strncpy((char *) buf, s, sizeof(buf) - 1);
+        buf[sizeof(buf) - 1] = '\0';
         return (char *)buf;
     }
 #else /*WIN32*/
@@ -535,7 +537,7 @@ offset_in_kanji(const unsigned char *s,int pos)
         0xfc,
         0xfe,
     };
-    if (output_kcode == UTF8) {
+    if (IC == UTF8) {
         int c = 1;
         int i;
 
@@ -715,7 +717,7 @@ jrndm_replace(char *c)
           cc[1] = rn2(10) + 0x30;
         else if(cc[1] <= 0x5A) /* Ａ～Ｚ */
           cc[1] = rn2(26) + 0x41;
-        else if(cc[2] <= 0x7A) /* ａ～ｚ */
+        else if(cc[1] <= 0x7A) /* ａ～ｚ */
           cc[1] = rn2(26) + 0x61;
         break;
       case 0x24:
@@ -1339,7 +1341,9 @@ static const char *ro2 =
  * 漢字交じり文の文字を消す
  */
 static int
-kanji2index(unsigned char c1,unsigned char c2)
+kanji2index(
+    unsigned char c1,
+    unsigned char c2)
 {
     if (IC == SJIS) {
         /* SJIS */
@@ -1356,11 +1360,25 @@ kanji2index(unsigned char c1,unsigned char c2)
 }
 
 int
-jrubout(char *engr,int nxt,int use_rubout,int select_rnd)
+jrubout(
+    char *engr,
+    int nxt,
+    int use_rubout,
+    int select_rnd)
 {
     int j;
     unsigned char *s;
     const unsigned char *p;
+
+    if (IC == UTF8) {
+        int offset = offset_in_kanji(engr, nxt);
+        /* 非漢字の場合 */
+        if (offset == 0 && !is_kanji(engr[nxt])) {
+            return 0;
+        }
+        /*JP:TODO:漢字はそのまま通す*/
+        return 1;
+    }
 
     if(is_kanji2(engr, nxt)){
         return 1;
