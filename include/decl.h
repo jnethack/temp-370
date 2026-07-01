@@ -1295,8 +1295,8 @@ struct const_globals {
 extern const struct const_globals cg;
 
 extern struct obj hands_obj;
-extern char do_random_str;
 #if 1 /*JP*/
+extern char do_random_str;
 struct trans_verb {
     const char *en;
     const char *what;

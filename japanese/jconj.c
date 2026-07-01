@@ -288,7 +288,7 @@ jconj(const char *jverb,const char *sfx)
     }
 
     for( tab = jconj_tab; tab->main != (void*)0; ++tab){
-        if(len - strlen(tab->main) > 0 &&
+        if(len > strlen(tab->main) &&
            !strcmp(jverb + (len - strlen(tab->main)), tab->main)){
             return jconjsub(tab, jverb, sfx);
         }
@@ -369,12 +369,12 @@ jconj_adj(const char *jadj)
     strcpy((char *)tmp, jadj);
     len = strlen((char *)tmp);
 
-    if(!strcmp((char *)tmp + len - 2, "い")){
-        strcpy((char *)tmp + len - 2, "く");
-    } else if(!strcmp((char *)tmp + len - 2, "だ") ||
-              !strcmp((char *)tmp + len - 2, "な") ||
-              !strcmp((char *)tmp + len - 2, "の")){
-        strcpy((char *)tmp + len - 2, "に");
+    if(!strcmp((char *)tmp + len - cl, "い")){
+        strcpy((char *)tmp + len - cl, "く");
+    } else if(!strcmp((char *)tmp + len - cl, "だ") ||
+              !strcmp((char *)tmp + len - cl, "な") ||
+              !strcmp((char *)tmp + len - cl, "の")){
+        strcpy((char *)tmp + len - cl, "に");
     }
 
     return (char *)tmp;

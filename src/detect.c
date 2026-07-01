@@ -8,6 +8,11 @@
  * command.
  */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 #include "artifact.h"
 
@@ -387,19 +392,37 @@ gold_detect(struct obj *sobj)
         char buf[BUFSZ];
 
         if (gy.youmonst.data == &mons[PM_GOLD_GOLEM])
+/*JP
             Sprintf(buf, "You feel like a million %s!", currency(2L));
+*/
+            Strcpy(buf, "あなたは金持ちになったように感じた！");
         else if (money_cnt(gi.invent) || hidden_gold(TRUE))
             Strcpy(buf,
+/*JP
                "You feel worried about your future financial situation.");
+*/
+               "あなたは将来の経済状況が心配になった．");
         else if (steedgold)
+#if 0 /*JP:T*/
             Sprintf(buf, "You feel interested in %s financial situation.",
                     s_suffix(x_monnam(u.usteed,
                                       u.usteed->mtame ? ARTICLE_YOUR
                                                       : ARTICLE_THE,
                                       (char *) 0,
                                       SUPPRESS_SADDLE, FALSE)));
+#else
+                Sprintf(buf, "あなたは%sの経済状況に興味が出てきた．",
+                        x_monnam(u.usteed,
+                                          u.usteed->mtame ? ARTICLE_YOUR
+                                                          : ARTICLE_THE,
+                                          (char *) 0,
+                                          SUPPRESS_SADDLE, FALSE));
+#endif
         else
+/*JP
             Strcpy(buf, "You feel materially poor.");
+*/
+            Strcpy(buf, "あなたはひもじさを感じた．");
 
         strange_feeling(sobj, buf);
         return 1;
@@ -407,7 +430,10 @@ gold_detect(struct obj *sobj)
     /* only under me - no separate display required */
     if (stale)
         docrt();
+/*JP
     You("notice some gold between your %s.", makeplural(body_part(FOOT)));
+*/
+    You("%sの間に金貨が落ちていることに気がついた．", body_part(FOOT));
     return 0;
 
  outgoldmap:
@@ -465,10 +491,16 @@ gold_detect(struct obj *sobj)
         newsym(u.ux, u.uy);
         ter_typ |= TER_MON; /* so autodescribe will recognize hero */
     }
+/*JP
     You_feel("very greedy, and sense gold!");
+*/
+    You("どん欲になったような気がした，そして金貨の位置を感知した！");
     exercise(A_WIS, TRUE);
 
+/*JP
     browse_map(ter_typ, "gold");
+*/
+    browse_map(ter_typ, "金");
 
     map_redisplay();
     return 0;
@@ -483,7 +515,10 @@ food_detect(struct obj *sobj)
     int ct = 0, ctu = 0;
     boolean confused = (Confusion || (sobj && sobj->cursed)), stale;
     char oclass = confused ? POTION_CLASS : FOOD_CLASS;
+/*JP
     const char *what = confused ? something : "food";
+*/
+    const char *what = confused ? "ハラヘリ" : "食べ物";
 
     stale = clear_stale_map(oclass, 0);
     if (u.usteed) /* some situations leave steed with stale coordinates */
@@ -513,19 +548,32 @@ food_detect(struct obj *sobj)
         gk.known = stale && !confused;
         if (stale) {
             docrt();
+/*JP
             You("sense a lack of %s nearby.", what);
+*/
+            You("%sが減っているのに気がついた．",what);
             if (sobj && sobj->blessed) {
                 if (!u.uedibility)
+/*JP
                     Your("%s starts to tingle.", body_part(NOSE));
+*/
+                    Your("%sがぴくっと動いた．", body_part(NOSE));
                 u.uedibility = 1;
             }
         } else if (sobj) {
             char buf[BUFSZ];
 
+#if 0 /*JP:T*/
             Sprintf(buf, "Your %s twitches%s.", body_part(NOSE),
                     (sobj->blessed && !u.uedibility)
                         ? " then starts to tingle"
                         : "");
+#else
+            Sprintf(buf, "あなたの%sがひくひくと動い%s．", body_part(NOSE),
+                    (sobj->blessed && !u.uedibility)
+                        ? "て，うずうずしだした"
+                        : "た");
+#endif
             if (sobj->blessed && !u.uedibility) {
                 boolean savebeginner = flags.beginner;
 
@@ -539,7 +587,10 @@ food_detect(struct obj *sobj)
         return !stale;
     } else if (!ct) {
         gk.known = TRUE;
+/*JP
         You("%s %s nearby.", sobj ? "smell" : "sense", what);
+*/
+        You("近くで%s%s．", what, sobj ? "のにおいをかいだ" : "を感知した");
         if (sobj && sobj->blessed) {
             if (!u.uedibility)
                 Your("%s starts to tingle.", body_part(NOSE));
@@ -577,16 +628,30 @@ food_detect(struct obj *sobj)
         }
         if (sobj) {
             if (sobj->blessed) {
+#if 0 /*JP:T*/
                 Your("%s %s to tingle and you smell %s.", body_part(NOSE),
                      u.uedibility ? "continues" : "starts", what);
+#else
+                Your("%sはうずうずし%s，%sの匂いを嗅ぎとった．", body_part(NOSE),
+                     u.uedibility ? "続け" : "始め", what);
+#endif
                 u.uedibility = 1;
             } else
+/*JP
                 Your("%s tingles and you smell %s.", body_part(NOSE), what);
+*/
+                Your("%sはうずうずし，%sの匂いを嗅ぎとった．", body_part(NOSE), what);
         } else
+/*JP
             You("sense %s.", what);
+*/
+            You("%sを感知した．", what);
         exercise(A_WIS, TRUE);
 
+/*JP
         browse_map(ter_typ, "food");
+*/
+        browse_map(ter_typ, "食料");
 
         map_redisplay();
     }
@@ -632,9 +697,15 @@ object_detect(struct obj *detector, /* object doing the detecting */
     if (Hallucination || (Confusion && class == SCROLL_CLASS))
         Strcpy(stuff, something);
     else
+/*JP
         Strcpy(stuff, class ? def_oc_syms[class].name : "objects");
+*/
+        Strcpy(stuff, class ? def_oc_syms[class].name : "物体");
     if (boulder && class != ROCK_CLASS)
+/*JP
         Strcat(stuff, " and/or large stones");
+*/
+        Strcat(stuff, "と巨岩");
 
     if (do_dknown)
         for (obj = gi.invent; obj; obj = obj->nobj)
@@ -686,10 +757,16 @@ object_detect(struct obj *detector, /* object doing the detecting */
     if (!clear_stale_map(!class ? ALL_CLASSES : class, 0) && !ct) {
         if (!ctu) {
             if (detector)
+/*JP
                 strange_feeling(detector, "You feel a lack of something.");
+*/
+                strange_feeling(detector, "あなたは何かが欠乏しているような気がした．");
             return 1;
         }
+/*JP
         You("sense %s nearby.", stuff);
+*/
+        You("近くの%sを感知した．", stuff);
         return 0;
     }
 
@@ -777,12 +854,18 @@ object_detect(struct obj *detector, /* object doing the detecting */
         newsym(u.ux, u.uy);
         ter_typ |= TER_MON;
     }
+/*JP
     You("detect the %s of %s.", ct ? "presence" : "absence", stuff);
+*/
+    You("%s%s．", stuff, ct ? "を発見した" : "は何もないことがわかった" );
 
     if (!ct)
         display_nhwindow(WIN_MAP, TRUE);
     else
+/*JP
         browse_map(ter_typ, "object");
+*/
+        browse_map(ter_typ, "物体");
 
     map_redisplay();
     return 0;
@@ -816,8 +899,14 @@ monster_detect(struct obj *otmp, /* detecting object (if any) */
     if (!mcnt) {
         if (otmp)
             strange_feeling(otmp, Hallucination
+/*JP
                                       ? "You get the heebie jeebies."
+*/
+                                      ? "あなたは金鳥の夏でキンチョーした．"
+/*JP
                                       : "You feel threatened.");
+*/
+                                      : "あなたは恐怖でぞくっとした．");
         return 1;
     } else {
         boolean unconstrained, woken = FALSE;
@@ -841,9 +930,15 @@ monster_detect(struct obj *otmp, /* detecting object (if any) */
         }
         if (!swallowed)
             display_self();
+/*JP
         You("sense the presence of monsters.");
+*/
+        You("怪物の存在を嗅ぎつけた．");
         if (woken)
+/*JP
             pline("Monsters sense the presence of you.");
+*/
+            pline("怪物はあなたの存在を嗅ぎつけた．");
 
         if ((otmp && otmp->blessed) && !unconstrained) {
             /* persistent detection--just show updated map */
@@ -852,7 +947,10 @@ monster_detect(struct obj *otmp, /* detecting object (if any) */
             /* one-shot detection--allow player to move cursor around and
                get autodescribe feedback */
             EDetect_monsters |= I_SPECIAL;
+/*JP
             browse_map(TER_DETECT | TER_MON, "monster of interest");
+*/
+            browse_map(TER_DETECT | TER_MON, "関心のある怪物");
             EDetect_monsters &= ~I_SPECIAL;
         }
 
@@ -995,9 +1093,15 @@ display_trap_map(int cursed_src)
         newsym(u.ux, u.uy);
         ter_typ |= TER_MON; /* for autodescribe at <u.ux,u.uy> */
     }
+/*JP
     You_feel("%s.", cursed_src ? "very greedy" : "entrapped");
+*/
+    You("%s気持になった．", cursed_src ? "とてもどん欲な" : "だまされているような");
 
+/*JP
     browse_map(ter_typ, cursed_src ? "gold" : "trap of interest");
+*/
+    browse_map(ter_typ, cursed_src ? "金貨" : "関心のある罠");
 
     map_redisplay();
 }
@@ -1078,12 +1182,18 @@ trap_detect(
     if (!found) {
         char buf[BUFSZ];
 
+/*JP
         Sprintf(buf, "Your %s stop itching.", makeplural(body_part(TOE)));
+*/
+        Sprintf(buf, "あなたの%sのむずむずはおさまった．", makeplural(body_part(TOE)));
         strange_feeling(sobj, buf);
         return 1;
     }
     /* traps exist, but only under me - no separate display required */
+/*JP
     Your("%s itch.", makeplural(body_part(TOE)));
+*/
+    Your("%sはむずむずした．", makeplural(body_part(TOE)));
     return 0;
 }
 
@@ -1148,37 +1258,79 @@ level_distance(d_level *where)
     if (ll < 0) {
         if (ll < (-8 - rn2(3)))
             if (!indun)
+/*JP
                 res = "far away";
+*/
+                res = "はるか彼方に";
             else
+/*JP
                 res = "far below";
+*/
+                res = "はるか下方に";
         else if (ll < -1)
             if (!indun)
+/*JP
                 res = "away below you";
+*/
+                res = "ずっと下方に";
             else
+/*JP
                 res = "below you";
+*/
+                res = "下方に";
         else if (!indun)
+/*JP
             res = "in the distance";
+*/
+            res = "遠くに";
         else
+/*JP
             res = "just below";
+*/
+            res = "真下に";
     } else if (ll > 0) {
         if (ll > (8 + rn2(3)))
             if (!indun)
+/*JP
                 res = "far away";
+*/
+                res = "はるか彼方に";
             else
+/*JP
                 res = "far above";
+*/
+                res = "はるか上方に";
         else if (ll > 1)
             if (!indun)
+/*JP
                 res = "away above you";
+*/
+                res = "ずっと上方に";
             else
+/*JP
                 res = "above you";
+*/
+                res = "上方に";
         else if (!indun)
+/*JP
             res = "in the distance";
+*/
+            res = "遠くに";
         else
+/*JP
             res = "just above";
+*/
+            res = "真上に";
     } else { /* l1 == 0 */
         if (!indun)
+/*JP
             res = "in the distance";
+*/
+            res = "遠くに";
         else
+/*JP
+            res = "near you";
+*/
             res = "near you";
     }
     return res;
@@ -1196,10 +1348,22 @@ static const struct crystalballlevels {
     const char *what;
     d_level *where;
 } level_detects[] = {
+/*JP
     { "Delphi", &oracle_level },
+*/
+    { "デルファイ", &oracle_level },
+/*JP
     { "Medusa's lair", &medusa_level },
+*/
+    { "メデューサの住みか", &medusa_level },
+/*JP
     { "a castle", &stronghold_level },
+*/
+    { "城", &stronghold_level },
+/*JP
     { "the Wizard of Yendor's tower", &wiz1_level },
+*/
+    { "イェンダーの魔法使いの塔", &wiz1_level },
 };
 
 void
@@ -1211,7 +1375,10 @@ use_crystal_ball(struct obj **optr)
     boolean charged = (obj->spe > 0);
 
     if (Blind) {
+/*JP
         pline("Too bad you can't see %s.", the(xname(obj)));
+*/
+        pline("なんてことだ．%sを見ることができない．", the(xname(obj)));
         return;
     }
     oops = is_quest_artifact(obj) ? 8 : obj->blessed ? 16 : 20;
@@ -1220,34 +1387,58 @@ use_crystal_ball(struct obj **optr)
 
         switch (rnd((obj->oartifact || obj->blessed) ? 4 : 5)) {
         case 1:
+/*JP
             pline("%s too much to comprehend!", Tobjnam(obj, "are"));
+*/
+            pline("%sを覗いたが何のことだかさっぱりわからなかった！", xname(obj));
             break;
         case 2:
+/*JP
             pline("%s you!", Tobjnam(obj, "confuse"));
+*/
+            pline("%sを覗いてるとふらついてきた！", xname(obj));
             make_confused((HConfusion & TIMEOUT) + impair, FALSE);
             break;
         case 3:
             if (!resists_blnd(&gy.youmonst)) {
+/*JP
                 pline("%s your vision!", Tobjnam(obj, "damage"));
+*/
+                pline("%sを覗いていると視覚がおかしくなってきた！", xname(obj));
                 make_blinded(BlindedTimeout + impair, FALSE);
                 if (!Blind)
                     Your1(vision_clears);
             } else {
+/*JP
                 pline("%s your vision.", Tobjnam(obj, "assault"));
+*/
+                pline("%sがあなたの視界に迫ってきた．", xname(obj));
+/*JP
                 You("are unaffected!");
+*/
+                pline("しかし，あなたは影響を受けなかった！");
             }
             break;
         case 4:
+/*JP
             pline("%s your mind!", Tobjnam(obj, "zap"));
+*/
+            pline("%sを覗いていると五感がおかしくなってきた！", xname(obj));
             (void) make_hallucinated((HHallucination & TIMEOUT) + impair,
                                      FALSE, 0L);
             break;
         case 5:
+/*JP
             pline("%s!", Tobjnam(obj, "explode"));
+*/
+            pline("%sは爆発した！", xname(obj));
             useup(obj);
             *optr = obj = 0; /* it's gone */
             /* physical damage cause by the shards and force */
+/*JP
             losehp(Maybe_Half_Phys(rnd(30)), "exploding crystal ball",
+*/
+            losehp(Maybe_Half_Phys(rnd(30)), "水晶玉の爆発で",
                    KILLED_BY_AN);
             break;
         }
@@ -1262,31 +1453,55 @@ use_crystal_ball(struct obj **optr)
         gn.nomovemsg = "";
 
         if (!charged) {
+/*JP
             pline("All you see is funky %s haze.", hcolor((char *) 0));
+*/
+            pline("おお！ファンキーモンキーな%sもやが見える．", hcolor((char *)0));
             if (obj->spe < 0)
                 goto implode; /* destroy it when it has been cancelled */
         } else {
             switch (rnd(6)) {
             case 1:
+/*JP
                 You("grok some groovy globs of incandescent lava.");
+*/
+                You("水門の鍵をもった水戸黄門が壁の影に隠れているのが見えた．");
                 break;
             case 2:
+#if 0 /*JP:T*/
                 pline("Whoa!  Psychedelic colors, %s!",
                       poly_gender() == 1 ? "babe" : "dude");
+#else
+                pline("ワーオ！ラリってるかい？%s！",
+                      poly_gender() == 1 ? "ベイビー" : "ユー");
+#endif
                 break;
             case 3:
+/*JP
                 pline_The("crystal pulses with sinister %s light!",
+*/
+                pline("水晶は不吉な%sパルスを発した！", 
                           hcolor((char *) 0));
                 break;
             case 4:
+/*JP
                 You_see("goldfish swimming above fluorescent rocks.");
+*/
+                You("蛍光岩の上を金魚が泳いでいるのを見た．");
                 break;
             case 5:
+#if 0 /*JP:T*/
                 You_see(
                     "tiny snowflakes spinning around a miniature farmhouse.");
+#else
+                    You("小さい雪片がミニチュアの農家の家のまわりを舞ってるのを見た．");
+#endif
                 break;
             default:
+/*JP
                 pline("Oh wow... like a kaleidoscope!");
+*/
+                pline("ワーオ．万華鏡のようだ！");
                 break;
             }
             consume_obj_charge(obj, TRUE);
@@ -1309,13 +1524,19 @@ use_crystal_ball(struct obj **optr)
      *  for help in using the crystal ball.
      */
 
+/*JP
     You("peer into %s...", the(xname(obj)));
+*/
+    You("%sを覗きこんだ．．．", the(xname(obj)));
     nomul(-rnd(charged ? 10 : 2));
     gm.multi_reason = "gazing into a crystal ball";
     gn.nomovemsg = "";
 
     if (!charged) {
+/*JP
         pline_The("vision is unclear.");
+*/
+        pline("映像は不鮮明だった．");
 
         if (obj->spe < 0) { /* destroy ball if used after being cancelled */
  implode:   /* no damage to hero but 'multi' has a small negative value */
@@ -1352,16 +1573,27 @@ use_crystal_ball(struct obj **optr)
             ret = trap_detect((struct obj *) 0);
         } else {
             i = rn2(SIZE(level_detects));
+#if 0 /*JP:T*/
             You_see("%s, %s.", level_detects[i].what,
                     level_distance(level_detects[i].where));
+#else
+                You_see("%sを%s見た．", level_detects[i].what,
+                        level_distance(level_detects[i].where));
+#endif
             ret = 0;
         }
 
         if (ret) {
             if (!rn2(100)) /* make them nervous */
+/*JP
                 You_see("the Wizard of Yendor gazing out at you.");
+*/
+                You("イェンダーの魔法使いがあなたをにらんでいるのを見た．");
             else
+/*JP
                 pline_The("vision is unclear.");
+*/
+                pline("映像は不鮮明になった．");
         }
     }
     return;
@@ -1432,8 +1664,13 @@ do_mapping(void)
     if (!svl.level.flags.hero_memory || unconstrained) {
         flush_screen(1);                 /* flush temp screen */
         /* browse_map() instead of display_nhwindow(WIN_MAP, TRUE) */
+#if 0 /*JP:T*/
         browse_map(TER_DETECT | TER_MAP | TER_TRP | TER_OBJ,
                    "anything of interest");
+#else
+        browse_map(TER_DETECT | TER_MAP | TER_TRP | TER_OBJ,
+                   "関心のあるもの");
+#endif
         map_redisplay(); /* calls reconstrain_map() and docrt() */
     } else {
         /* we only get here when unconstrained is False, so reconstrain_map
@@ -1552,10 +1789,16 @@ do_vicinity_map(
         /* the getpos() prompt from browse_map() is only shown when
            flags.verbose is set, but make this unconditional so that
            not-verbose users become aware of the prompting situation */
+/*JP
         You("sense your surroundings.");
+*/
+        You("まわりのものを感知した．");
         if (extended || glyph_is_monster(glyph_at(u.ux, u.uy)))
             ter_typ |= TER_MON;
+/*JP
         browse_map(ter_typ, "anything of interest");
+*/
+        browse_map(ter_typ, "関心のあるもの");
         refresh = TRUE;
     }
     reconstrain_map();
@@ -1752,9 +1995,15 @@ openone(coordxy zx, coordxy zy, genericptr_t num)
             if (distu(zx, zy) < 3)
                 b_trapped("door", NO_PART);
             else
+#if 0 /*JP:T*/
                 Norep("You %s an explosion!",
                       cansee(zx, zy) ? "see" : (!Deaf ? "hear"
                                                       : "feel the shock of"));
+#else
+                Norep("あなたは爆発%s！",
+                      cansee(zx, zy) ? "を見た" : (!Deaf ? "音を聞いた"
+                                                         : "の衝撃を感じた"));
+#endif
             wake_nearto(zx, zy, 11 * 11);
             levl[zx][zy].doormask = D_NODOOR;
         } else
@@ -1907,9 +2156,15 @@ openit(void)
         if (digests(u.ustuck->data)) {
             /* purple worm */
             if (Blind)
+/*JP
                 pline("Its mouth opens!");
+*/
+                pline("何者かの口が開いた！");
             else
+/*JP
                 pline("%s opens its mouth!", Monnam(u.ustuck));
+*/
+                pline("%sは口を開いた！", Monnam(u.ustuck));
 #if 0   /* expels() will take care of this */
         } else if (enfolds(u.ustuck->data)) {
             /* trapper or lurker above */
@@ -1982,8 +2237,13 @@ mfind0(struct monst *mtmp, boolean via_warning)
                                   || mtmp->data->mlet == S_EEL)) {
             if (via_warning && found_something) {
                 set_msg_xy(x, y);
+#if 0 /*JP:T*/
                 Your("danger sense causes you to take a second %s.",
                      Blind ? "to check nearby" : "look close by");
+#else
+                You("危険を察知して，一瞬周囲を%s．",
+                     Blind ? "確認した" : "見回した");
+#endif
                 display_nhwindow(WIN_MESSAGE, FALSE); /* flush messages */
             }
             mtmp->mundetected = 0;
@@ -2002,10 +2262,17 @@ mfind0(struct monst *mtmp, boolean via_warning)
         if (!canspotmon(mtmp)) {
             map_invisible(x, y);
             set_msg_xy(x, y);
+/*JP
             You_feel("an unseen monster!");
+*/
+            You("見えない怪物の気配を感じた！");
         } else if (!sensemon(mtmp)) {
             set_msg_xy(x, y);
+#if 0 /*JP:T*/
             You("find %s.", mtmp->mtame ? y_monnam(mtmp) : a_monnam(mtmp));
+#else
+            You("%sを見つけた．", mtmp->mtame ? y_monnam(mtmp) : a_monnam(mtmp));
+#endif
         }
         return 1;
     }
@@ -2048,7 +2315,10 @@ dosearch0(int aflag) /* intrinsic autosearch vs explicit searching */
                     nomul(0);
                     feel_location(x, y); /* make sure it shows up */
                     set_msg_xy(x, y);
+/*JP
                     You("find a hidden door.");
+*/
+                    You("隠された扉を見つけた．");
                 } else if (levl[x][y].typ == SCORR) {
                     if (rnl(7 - fund))
                         continue;
@@ -2058,7 +2328,10 @@ dosearch0(int aflag) /* intrinsic autosearch vs explicit searching */
                     nomul(0);
                     feel_newsym(x, y); /* make sure it shows up */
                     set_msg_xy(x, y);
+/*JP
                     You("find a hidden passage.");
+*/
+                    You("隠された通路を見つけた．");
                 } else {
                     /* Be careful not to find anything in an SCORR or SDOOR */
                     if ((mtmp = m_at(x, y)) != 0 && !aflag) {
@@ -2360,7 +2633,10 @@ reveal_terrain(
     boolean full = (which_subset & TER_FULL) != 0; /* show whole map */
 
     if ((Hallucination || Stunned || Confusion) && !full) {
+/*JP
         You("are too disoriented for this.");
+*/
+        You("混乱しているのでそれはできない．");
     } else {
         coordxy x, y;
         int glyph, default_glyph;
@@ -2387,26 +2663,50 @@ reveal_terrain(
            cursor there, and after moving it anywhere '@' moves it back */
         flush_screen(1);
         if (full) {
+/*JP
             Strcpy(buf, "underlying terrain");
+*/
+            Strcpy(buf, "下にある地形");
         } else {
+/*JP
             Strcpy(buf, "known terrain");
+*/
+            Strcpy(buf, "知っている地形");
             if (keep_traps)
+#if 0 /*JP*/
                 Sprintf(eos(buf), "%s traps",
                         (keep_objs || keep_mons) ? "," : " and");
+#else
+                Strcat(buf, "と罠");
+#endif
             if (keep_objs)
+#if 0 /*JP*/
                 Sprintf(eos(buf), "%s%s objects",
                         (keep_traps || keep_mons) ? "," : "",
                         keep_mons ? "" : " and");
+#else
+                Strcat(buf, "と物体");
+#endif
             if (keep_mons)
+#if 0 /*JP*/
                 Sprintf(eos(buf), "%s and monsters",
                         (keep_traps || keep_objs) ? "," : "");
+#else
+                Strcat(buf, "と怪物");
+#endif
         }
+/*JP
         pline("Showing %s only...", buf);
+*/
+        pline("%sだけを見る．．．", buf);
 
         /* allow player to move cursor around and get autodescribe feedback
            based on what is visible now rather than what is on 'real' map */
         which_subset |= TER_MAP; /* guarantee non-zero */
+/*JP
         browse_map(which_subset, "anything of interest");
+*/
+        browse_map(which_subset, "関心のあるもの");
 
         map_redisplay();
     }
