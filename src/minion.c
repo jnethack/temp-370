@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2008. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 /* used to pick among the four basic elementals without worrying whether
@@ -69,7 +74,10 @@ msummon(struct monst *mon)
 
         if (u_wield_art(ART_DEMONBANE) && is_demon(ptr)) {
             if (canseemon(mon))
+/*JP
                 pline("%s looks puzzled for a moment.", Monnam(mon));
+*/
+                pline("%sは少し困惑しているようだ．", Monnam(mon));
             return 0;
         }
 
@@ -173,8 +181,13 @@ msummon(struct monst *mon)
                 const char *cloud = 0,
                            *what = msummon_environ(mtmp->data, &cloud);
 
+#if 0 /*JP:T*/
                 pline("%s appears in a %s of %s!", Amonnam(mtmp),
                       cloud, what);
+#else
+                pline("%sが%sの%sから現れた！", Amonnam(mtmp),
+                      what, cloud);
+#endif
             }
         }
         cnt--;
@@ -241,14 +254,28 @@ summon_minion(aligntyp alignment, boolean talk)
     if (mon) {
         if (talk) {
             if (!Deaf)
+/*JP
                 pline_The("voice of %s booms:", align_gname(alignment));
+*/
+                pline("%sの声が響いた:", align_gname(alignment));
             else
+#if 0 /*JP:T*/
                 You_feel("%s booming voice:",
                          s_suffix(align_gname(alignment)));
+#else
+                You_feel("%sの響く声を感じた:",
+                         s_suffix(align_gname(alignment)));
+#endif
             SetVoice(mon, 0, 80, 0);
+/*JP
             verbalize("Thou shalt pay for thine indiscretion!");
+*/
+            verbalize("汝，無分別なる行いの罰を受けるべし！");
             if (canspotmon(mon))
+/*JP
                 pline("%s appears before you.", Amonnam(mon));
+*/
+                pline("%sがあなたの前に現われた．", Amonnam(mon));
             mon->mstrategy &= ~STRAT_APPEARMSG;
         }
         mon->mpeaceful = FALSE;
@@ -266,7 +293,10 @@ demon_talk(struct monst *mtmp)
 
     if (u_wield_art(ART_EXCALIBUR) || u_wield_art(ART_DEMONBANE)) {
         if (canspotmon(mtmp))
+/*JP
             pline("%s looks very angry.", Amonnam(mtmp));
+*/
+            pline("%sはとても怒っているように見える．", Amonnam(mtmp));
         else
             You_feel("tension building.");
         mtmp->mpeaceful = mtmp->mtame = 0;
@@ -291,17 +321,28 @@ demon_talk(struct monst *mtmp)
 
         mtmp->minvis = mtmp->perminvis = 0;
         if (wasunseen && canspotmon(mtmp)) {
+/*JP
             pline("%s appears before you.", Amonnam(mtmp));
+*/
+            pline("%sが目の前に現われた．", Amonnam(mtmp));
             mtmp->mstrategy &= ~STRAT_APPEARMSG;
         }
         newsym(mtmp->mx, mtmp->my);
     }
     if (gy.youmonst.data->mlet == S_DEMON) { /* Won't blackmail their own. */
         if (!Deaf)
+#if 0 /*JP:T*/
             pline("%s says, \"Good hunting, %s.\"", Amonnam(mtmp),
                   flags.female ? "Sister" : "Brother");
+#else
+        pline("%sは言った「よう兄%s！」．そして消えた．", Amonnam(mtmp),
+              flags.female ? "妹" : "弟");
+#endif
         else if (canseemon(mtmp))
+/*JP
             pline("%s says something.", Amonnam(mtmp));
+*/
+            pline("%sは何かを言った．", Amonnam(mtmp));
         if (!tele_restrict(mtmp))
             (void) rloc(mtmp, RLOC_MSG);
         return 1;
@@ -327,21 +368,41 @@ demon_talk(struct monst *mtmp)
             demand = cash + (long) rn1(1000, 125);
 
         if (!Deaf)
+#if 0 /*JP:T*/
             pline("%s demands %ld %s for safe passage.",
                   Amonnam(mtmp), demand, currency(demand));
+#else
+            pline("%sは通行料として%ld%s要求した．",
+                  Amonnam(mtmp), demand, currency(demand));
+#endif
         else if (canseemon(mtmp))
+/*JP
             pline("%s seems to be demanding something.", Amonnam(mtmp));
+*/
+            pline("%sは何かを要求しているようだ．", Amonnam(mtmp));
         offer = 0L;
         if (!Deaf &&
+/*JP
             ((offer = bribe(mtmp, "How much will you offer?")) >= demand)) {
+*/
+            ((offer = bribe(mtmp, "お金をいくら与える？")) >= demand)) {
+/*JP
             pline("%s vanishes, laughing about cowardly mortals.",
+*/
+            pline("臆病な定命のものを笑いながら，%sは消えた．",
                   Amonnam(mtmp));
         } else if (offer > 0L
                    && (long) rnd(5 * ACURR(A_CHA)) > (demand - offer)) {
+/*JP
             pline("%s scowls at you menacingly, then vanishes.",
+*/
+            pline("%sはあなたを威嚇し，消えた．",
                   Amonnam(mtmp));
         } else {
+/*JP
             pline("%s gets angry...", Amonnam(mtmp));
+*/
+            pline("%sは怒った．．．", Amonnam(mtmp));
             mtmp->mpeaceful = 0;
             set_malign(mtmp);
             return 0;
@@ -371,16 +432,28 @@ bribe(struct monst *mtmp, const char *prompt)
     /*Michael Paddon -- fix for negative offer to monster*/
     /*JAR880815 - */
     if (offer < 0L) {
+/*JP
         You("try to shortchange %s, but fumble.", mon_nam(mtmp));
+*/
+        You("%sをだまそうとしたが，失敗した．", mon_nam(mtmp));
         return 0L;
     } else if (offer == 0L) {
+/*JP
         You("refuse.");
+*/
+        You("拒んだ．");
         return 0L;
     } else if (offer >= umoney) {
+/*JP
         You("give %s all your gold.", mon_nam(mtmp));
+*/
+        You("%sにお金を全て与えた．", mon_nam(mtmp));
         offer = umoney;
     } else {
+/*JP
         You("give %s %ld %s.", mon_nam(mtmp), offer, currency(offer));
+*/
+        You("%sに%ld%s与えた．", mon_nam(mtmp), offer, currency(offer));
     }
     (void) money2mon(mtmp, offer);
     disp.botl = TRUE;
@@ -474,11 +547,20 @@ lose_guardian_angel(
     if (mon) {
         if (canspotmon(mon)) {
             if (!Deaf) {
+/*JP
                 pline("%s rebukes you, saying:", Monnam(mon));
+*/
+                pline("%sはあなたを非難した：", Monnam(mon));
                 SetVoice(mon, 0, 80, 0);
+/*JP
                 verbalize("Since you desire conflict, have some more!");
+*/
+                verbalize("闘争を望んでいるようだから，もっと与えてやろう！");
             } else {
+/*JP
                 pline("%s vanishes!", Monnam(mon));
+*/
+                pline("%sは消えた！", Monnam(mon));
             }
         }
         mongone(mon);
@@ -505,20 +587,38 @@ gain_guardian_angel(void)
                      message will be heard even if that fails) */
     if (Conflict) {
        if (!Deaf)
+/*JP
             pline("A voice booms:");
+*/
+            pline("声が響いた:");
         else
+/*JP
             You_feel("a booming voice:");
+*/
+            You_feel("響く声を感じた:");
         SetVoice((struct monst *) 0, 0, 80, voice_deity);
+/*JP
         verbalize("Thy desire for conflict shall be fulfilled!");
+*/
+        verbalize("汝の闘争への望み，かなえられるべし！");
         /* send in some hostile angels instead */
         lose_guardian_angel((struct monst *) 0);
     } else if (u.ualign.record > 8) { /* fervent */
         if (!Deaf)
+/*JP
             pline("A voice whispers:");
+*/
+            pline("ささやき声が聞こえた:");
         else
+/*JP
             You_feel("a soft voice:");
+*/
+            You_feel("やわらかい声を感じた:");
         SetVoice((struct monst *) 0, 0, 80, voice_deity);
+/*JP
         verbalize("Thou hast been worthy of me!");
+*/
+        verbalize("汝，我が評価を得たり！");
         mm.x = u.ux;
         mm.y = u.uy;
         if (enexto(&mm, mm.x, mm.y, &mons[PM_ANGEL])
@@ -540,9 +640,15 @@ gain_guardian_angel(void)
             /* for 'hilite_pet'; after making tame, before next message */
             newsym(mtmp->mx, mtmp->my);
             if (!Blind)
+/*JP
                 pline("An angel appears near you.");
+*/
+                pline("天使があなたのそばに現われた．");
             else
+/*JP
                 You_feel("the presence of a friendly angel near you.");
+*/
+                You("近くに友好的な天使の存在を感じた．");
             /* make him strong enough vs. endgame foes */
             mtmp->m_lev = rn1(8, 15);
             mtmp->mhp = mtmp->mhpmax =

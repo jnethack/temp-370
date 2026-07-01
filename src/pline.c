@@ -36,9 +36,8 @@ dumplogmsg(const char *line)
 #if 1 /*JP*/
     {
         const char *str = "コマンド？";
-        int len = strlen(str);
-        const char *end = strchr(line, '\0');
-        if (!strcmp(end - len, str))
+        size_t len = strlen(str), line_len = strlen(line);
+        if (line_len >= len && !strcmp(line + line_len - len, str))
             return;
     }
 #endif
@@ -504,7 +503,7 @@ You_hear(const char *line, ...)
     } else {
         Strcat(tmp, line);
     }
-    vpline(tmp, VA_ARGS);
+    vpline(tmp, the_args);
 #endif
     va_end(the_args);
 }
