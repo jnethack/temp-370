@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 #include "mfndpos.h"
@@ -284,13 +289,25 @@ dog_eat(struct monst *mtmp,
                result won't be printed */
             obj_name = distant_name(obj, doname);
             if (tunnels(mtmp->data))
+/*JP
                 pline_mon(mtmp, "%s digs in.", noit_Monnam(mtmp));
+*/
+                pline_mon(mtmp, "%sは掘っている．", noit_Monnam(mtmp));
             else
+#if 0 /*JP:T*/
                 pline_mon(mtmp, "%s %s %s.", noit_Monnam(mtmp),
                       devour ? "devours" : "eats", obj_name);
+#else
+                pline_mon(mtmp, "%sは%sを%sいる．", noit_Monnam(mtmp),
+                      obj_name, devour ? "飲み込んで" : "食べて");
+#endif
         } else if (seeobj) {
             obj_name = distant_name(obj, doname);
+#if 0 /*JP:T*/
             pline("It %s %s.", devour ? "devours" : "eats", obj_name);
+#else
+            pline("それは%sを%sいる．", obj_name, devour ? "飲み込んで" : "食べて");
+#endif
         }
     }
     if (obj->unpaid) {
@@ -306,8 +323,13 @@ dog_eat(struct monst *mtmp,
         if (canseemon(mtmp)) {
             obj_name = distant_name(obj, doname); /* (see above) */
             if (flags.verbose)
+#if 0 /*JP:T*/
                 pline("%s spits %s out in disgust!",
                       Monnam(mtmp), obj_name);
+#else
+                pline("%sは%sをペッと吐き出した！",
+                      Monnam(mtmp), obj_name);
+#endif
         }
     } else {
         /* It's a reward if it's DOGFOOD and the player dropped/threw it.
@@ -333,8 +355,13 @@ dog_eat(struct monst *mtmp,
             /* edible item owned by shop has been thrown or kicked
                by hero and caught by tame or food-tameable monst */
             oprice = unpaid_cost(obj, COST_CONTENTS);
+#if 0 /*JP:T*/
             pline("That %s will cost you %ld %s.", objnambuf, oprice,
                   currency(oprice));
+#else
+            pline("あの%sは%ld%sだ．", objnambuf, oprice,
+                  currency(oprice));
+#endif
             /* m_consume_obj() -> delobj() -> obfree() will handle the shop
                billing update */
         }
@@ -348,12 +375,23 @@ staticfn void
 dog_starve(struct monst *mtmp)
 {
     if (mtmp->mleashed && mtmp != u.usteed)
+/*JP
         Your("leash goes slack.");
+*/
+        Your("紐はたるんだ．");
     else if (cansee(mtmp->mx, mtmp->my))
+/*JP
         pline_mon(mtmp, "%s starves.", Monnam(mtmp));
+*/
+        pline_mon(mtmp, "%sは飢えで死んだ．", Monnam(mtmp));
     else
+#if 0 /*JP:T*/
         You_feel("%s for a moment.",
                     Hallucination ? "bummed" : "sad");
+#else
+                You("%s気分におそわれた．",
+                    Hallucination ? "がっかりした" : "悲しい");
+#endif
     mondied(mtmp);
 }
 
@@ -378,11 +416,17 @@ dog_hunger(struct monst *mtmp, struct edog *edog)
                 return TRUE;
             }
             if (cansee(mtmp->mx, mtmp->my))
+/*JP
                 pline_mon(mtmp, "%s is confused from hunger.", Monnam(mtmp));
+*/
+                pline_mon(mtmp, "%sは空腹のため混乱している．", Monnam(mtmp));
             else if (couldsee(mtmp->mx, mtmp->my))
                 beg(mtmp);
             else
+/*JP
                 You_feel("worried about %s.", y_monnam(mtmp));
+*/
+                You("%sが心配になった．", y_monnam(mtmp));
             stop_occupation();
         } else if (svm.moves > edog->hungrytime + DOG_STARVE
                    || DEADMONSTER(mtmp)) {
@@ -457,8 +501,13 @@ dog_invent(struct monst *mtmp, struct edog *edog, int udist)
                             char *otmpname = distant_name(otmp, doname);
 
                             if (flags.verbose)
+#if 0 /*JP:T*/
                                 pline_xy(omx, omy, "%s picks up %s.",
                                       Monnam(mtmp), otmpname);
+#else
+                                pline_xy(omx, omy, "%sは%sを拾った．",
+                                      Monnam(mtmp), otmpname);
+#endif
                         }
                         obj_extract_self(otmp);
                         newsym(omx, omy);
@@ -1279,8 +1328,13 @@ dog_move(
 
         if (mfp.info[chi] & ALLOW_U) {
             if (mtmp->mleashed) { /* play it safe */
+#if 0 /*JP:T*/
                 pline_mon(mtmp, "%s breaks loose of %s leash!",
                          Monnam(mtmp), mhis(mtmp));
+#else
+                pline_mon(mtmp, "%sは自分についている紐をはずした！",
+                         Monnam(mtmp));
+#endif
                 m_unleash(mtmp, FALSE);
             }
             (void) mattacku(mtmp);
@@ -1304,11 +1358,16 @@ dog_move(
                                ? vobj_at(nix, niy) : 0;
             const char *what = o ? distant_name(o, doname) : something;
 
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s %s reluctantly %s %s.", noit_Monnam(mtmp),
                   vtense((char *) 0, locomotion(mtmp->data, "step")),
                   (is_flyer(mtmp->data) || is_floater(mtmp->data)) ? "over"
                                                                    : "onto",
                   what);
+#else
+            pline_mon(mtmp, "%sは%sの上にいやいや動いた．", noit_Monnam(mtmp),
+                  what);
+#endif
         }
         mon_track_add(mtmp, omx, omy);
         /* We have to know if the pet's going to do a combined eat and
@@ -1529,12 +1588,22 @@ quickmimic(struct monst *mtmp)
             m_unleash(mtmp, FALSE);
         }
         if (glyph_at(mtmp->mx, mtmp->my) != prev_glyph)
+#if 0 /*JP:T*/
             You("%s %s %s where %s was!",
                 seeloc ? "see" : "sense that",
                 (what != something) ? an(what) : what,
                 seeloc ? "appear" : "has appeared", buf);
+#else
+            You("%sがあったところに%sが現れたの%s！",
+                buf,
+                what,
+                seeloc ? "を見た" : "に気づいた");
+#endif
         else
+/*JP
             You("sense that %s feels rather %s-ish.", buf, what);
+*/
+            You("%sが%sっぽくなったような気がした．", buf, what);
 
         display_nhwindow(WIN_MAP, TRUE);
     }

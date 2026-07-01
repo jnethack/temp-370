@@ -5,6 +5,11 @@
 
 /* shknam.c -- initialize a shop */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn boolean stock_room_goodpos(struct mkroom *, int, int, int, int);
@@ -207,7 +212,10 @@ static const char *const shkhealthfoods[] = {
  * generated annotations for #overview.  If Null, the first name gets used.
  */
 const struct shclass shtypes[] = {
+/*JP
     { "general store", NULL,
+*/
+    { "雑貨屋", NULL,
       RANDOM_CLASS,
       42,
       D_SHOP,
@@ -218,7 +226,10 @@ const struct shclass shtypes[] = {
         { 0, 0 },
         { 0, 0 } },
       shkgeneral },
+/*JP
     { "used armor dealership", "armor shop",
+*/
+    { "中古鎧商会", "防具屋",
       ARMOR_CLASS,
       14,
       D_SHOP,
@@ -229,7 +240,10 @@ const struct shclass shtypes[] = {
         { 0, 0 },
         { 0, 0 } },
       shkarmors },
+/*JP
     { "second-hand bookstore", "scroll shop",
+*/
+    { "古書店", "巻物屋",
       SCROLL_CLASS,
       10,
       D_SHOP,
@@ -240,7 +254,10 @@ const struct shclass shtypes[] = {
         { 0, 0 },
         { 0, 0 } },
       shkbooks },
+/*JP
     { "liquor emporium", "potion shop",
+*/
+    { "お酒の百貨店", "薬屋",
       POTION_CLASS,
       10,
       D_SHOP,
@@ -251,7 +268,10 @@ const struct shclass shtypes[] = {
         { 0, 0 },
         { 0, 0 } },
       shkliquors },
+/*JP
     { "antique weapons outlet", "weapon shop",
+*/
+    { "古武器専門小売店", "武器屋",
       WEAPON_CLASS,
       5,
       D_SHOP,
@@ -262,7 +282,10 @@ const struct shclass shtypes[] = {
         { 0, 0 },
         { 0, 0 } },
       shkweapons },
+/*JP
     { "delicatessen", "food shop",
+*/
+    { "食品店", NULL,
       FOOD_CLASS,
       5,
       D_SHOP,
@@ -273,7 +296,10 @@ const struct shclass shtypes[] = {
         { 3, -ICE_BOX },
         { 0, 0 } },
       shkfoods },
+/*JP
     { "jewelers", "ring shop",
+*/
+    { "宝石店", "指輪屋",
       RING_CLASS,
       3,
       D_SHOP,
@@ -284,7 +310,10 @@ const struct shclass shtypes[] = {
         { 0, 0 },
         { 0, 0 } },
       shkrings },
+/*JP
     { "quality apparel and accessories", "wand shop",
+*/
+    { "おシャレな洋品店", "杖屋",
       WAND_CLASS,
       3,
       D_SHOP,
@@ -293,7 +322,10 @@ const struct shclass shtypes[] = {
         { 5, -ELVEN_CLOAK },
         { 0, 0 } },
       shkwands },
+/*JP
     { "hardware store", "tool shop",
+*/
+    { "道具屋", NULL,
       TOOL_CLASS,
       3,
       D_SHOP,
@@ -304,7 +336,10 @@ const struct shclass shtypes[] = {
         { 0, 0 },
         { 0, 0 } },
       shktools },
+/*JP
     { "rare books", "bookstore",
+*/
+    { "稀覯書店", "本屋",
       SPBOOK_CLASS,
       3,
       D_SHOP,
@@ -315,7 +350,10 @@ const struct shclass shtypes[] = {
         { 0, 0 },
         { 0, 0 } },
       shkbooks },
+/*JP
     { "health food store", "vegetarian food shop",
+*/
+    { "健康食品の店", "菜食主義食料店",
       FOOD_CLASS,
       2,
       D_SHOP,
@@ -330,7 +368,10 @@ const struct shclass shtypes[] = {
      * probability of zero.  They are only created via the special level
      * loader.
      */
+/*JP
     { "lighting store", "lighting shop",
+*/
+    { "照明店", NULL,
       TOOL_CLASS,
       0,
       D_SHOP,
@@ -458,8 +499,13 @@ mkshobj_at(const struct shclass *shp, int sx, int sy, boolean mkspecl)
     int atype;
 
     /* 3.6 tribute */
+#if 0 /*JP:T*/
     if (mkspecl && (!strcmp(shp->name, "rare books")
                     || !strcmp(shp->name, "second-hand bookstore"))) {
+#else
+    if (mkspecl && (!strcmp(shp->name, "幻の本屋")
+                    || !strcmp(shp->name, "古書店"))) {
+#endif
         struct obj *novel = mksobj_at(SPE_NOVEL, sx, sy, FALSE, FALSE);
 
         if (novel)
@@ -758,7 +804,10 @@ stock_room(int shp_indx, struct mkroom *sroom)
             n--;
         else if (inside_shop(sx, sy - 1))
             n++;
+/*JP
         Sprintf(buf, "Closed for inventory");
+*/
+        Sprintf(buf, "棚卸しのため閉店");
         make_engr_at(m, n, buf, NULL, 0L, DUST);
         if (levl[m][n].typ != CORR && levl[m][n].typ != ROOM)
             levl[m][n].typ = (Is_special(&u.uz)
