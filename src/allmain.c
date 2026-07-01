@@ -926,10 +926,17 @@ welcome(boolean new_game) /* false => restoring an old game */
      *  message."
      */
     if (new_game || u.ualignbase[A_ORIGINAL] != u.ualignbase[A_CURRENT] || adrift)
+#if 0 /*JP:T*/
         Sprintf(eos(buf), " %s%s",
                 adrift ? "adrift " : "",
                 adrift ? align_str(u.ualign.type)
                        : align_str(u.ualignbase[A_CURRENT]));
+#else
+        Sprintf(eos(buf), "%s%s",
+                adrift ? "さまよっている" : "",
+                adrift ? align_str(u.ualign.type)
+                       : align_str(u.ualignbase[A_CURRENT]));
+#endif
 #endif
     if (!gu.urole.name.f
         && (new_game

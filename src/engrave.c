@@ -376,7 +376,11 @@ read_engr_at(coordxy x, coordxy y)
         case HEADSTONE:
             if (!Blind || can_reach_floor(TRUE)) {
                 sensed = 1;
+#if 0 /*JP:T*/
                 pline("%s is engraved here on the %s.", Something, eloc);
+#else
+                pline("何かの文字が%sに刻まれている．", eloc);
+#endif
             }
             break;
         case BURN:
@@ -394,7 +398,11 @@ read_engr_at(coordxy x, coordxy y)
         case MARK:
             if (!Blind) {
                 sensed = 1;
+#if 0 /*JP:T*/
                 pline("There's some graffiti on the %s here.", eloc);
+#else
+                pline("%sに落書がある．", eloc);
+#endif
             }
             break;
         case ENGR_BLOOD:
@@ -420,7 +428,10 @@ read_engr_at(coordxy x, coordxy y)
             const char *endpunct;
             int maxelen = (int) (sizeof buf
                                  /* sizeof "literal" counts terminating \0 */
+/*JP
                                  - sizeof "You feel the words: \"\"."),
+*/
+                                 - sizeof "あなたは次のように感じた：「」"),
                 elen = (int) strlen(ep->engr_txt[actual_text]),
                 off = (int) (ep->engr_txt[actual_text] - engr_text_space(ep));
 
@@ -440,8 +451,13 @@ read_engr_at(coordxy x, coordxy y)
                      && strchr(".!?", et[elen - 1]))) {
                 endpunct = ".";
             }
+#if 0 /*JP:T*/
             You("%s: \"%s\"%s", (Blind) ? "feel the words" : "read", et,
                 endpunct);
+#else
+            You("%s：「%s」", (Blind) ? "次のように感じた" : "読んだ", et,
+                endpunct);
+#endif
             Strcpy(ep->engr_txt[remembered_text], ep->engr_txt[actual_text]);
             ep->eread = 1;
             ep->erevealed = 1;
@@ -1384,12 +1400,17 @@ doengrave(void)
 
     /* Tell adventurer what is going on */
     if (de->otmp != &hands_obj)
+#if 0 /*JP:T*/
         You("%s the %s with %s%s.", de->everb, de->eloc,
             /* since doname() yields "N items" when quantity is more than
                one, match that by using "1 of" rather than "one of" when
                informing the player that the stack will be split */
             (de->type == ENGRAVE && de->otmp->quan > 1L) ? "1 of " : "",
             doname(de->otmp));
+#else
+        You("%sで%sに%s．", doname(de->otmp), de->everb, 
+            jpast(de->eloc));
+#endif
     else
 #if 0 /*JP:T*/
         You("%s the %s with your %s.",
@@ -1400,8 +1421,13 @@ doengrave(void)
 #endif
 
     /* Prompt for engraving! */
+#if 0 /*JP:T*/
     Sprintf(de->qbuf, "What do you want to %s the %s here?",
             de->everb, de->eloc);
+#else
+    Sprintf(de->qbuf, "%sに何と%sか？",
+            de->eloc, jpolite(de->everb));
+#endif
     getlin(de->qbuf, de->ebuf);
     /* convert tabs to spaces and condense consecutive spaces to one */
     mungspaces(de->ebuf);
@@ -1448,12 +1474,13 @@ doengrave(void)
                                         (excludes ' ' and DEL) */
 #else /*JP:日本語でランダム化 */
             {
-                if(is_kanji1(de->ebuf, sp - de->ebuf))
+                int pos = sp - de->ebuf;
+                if (_iskanji(de->ebuf, pos)) {
+                    sp -= offset_in_kanji(de->ebuf, pos);
                     jrndm_replace(sp);
-                else if(is_kanji2(de->ebuf, sp - de->ebuf))
-                    jrndm_replace(sp-1);
-                else
+                } else {
                     *sp = '!' + rn2(93); /* ASCII-code only */
+                }
             }
 #endif
     }

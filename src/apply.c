@@ -3215,8 +3215,9 @@ fig_transform(anything *arg, long timeout)
                         locomotion(mtmp->data, "drop"), carriedby,
                         and_vanish);
 #else
-                You("%sが%sから%sのを見た！", monnambuf,
-                        carriedby, locomotion(mtmp->data, "落ちる"));
+                You("%sが%sから%sのを見た！%s", monnambuf,
+                        carriedby, locomotion(mtmp->data, "落ちる"),
+                        and_vanish);
 #endif
             }
             break;
@@ -4482,7 +4483,10 @@ use_pole(struct obj *obj, boolean autohit)
         return ECMD_FAIL;
     } else if (distu(cc.x, cc.y) < min_range) {
         if (autohit && u_at(cc.x, cc.y))
+/*JP
             pline("Don't know what to hit.");
+*/
+            pline("何を狙えばいいのかわからない．");
         else
 /*JP
             pline("Too close!");

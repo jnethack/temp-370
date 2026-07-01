@@ -3481,7 +3481,11 @@ take_off(void)
     if (doff->delay > 0)
         doff->delay--;
 
+#if 0 /*JP:T*/
     set_occupation(take_off, doff->disrobing, 0);
+#else
+    set_occupation(take_off, "装備を解く", 0);
+#endif
     return 1; /* get busy */
 }
 
@@ -3523,7 +3527,10 @@ doddoremarm(void)
     int result = 0;
 
     if (svc.context.takeoff.what || svc.context.takeoff.mask) {
+/*JP
         You("continue %s.", svc.context.takeoff.disrobing);
+*/
+        You("装備を解くのを再開した．");
         set_occupation(take_off, svc.context.takeoff.disrobing, 0);
         return ECMD_OK;
     } else if (!uwep && !uswapwep && !uquiver && !uamul && !ublindf

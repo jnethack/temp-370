@@ -347,7 +347,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
                 "set representation of a glyph to a unicode value and color")
     NHOPTB(goldX, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.goldX, Term_False,
-           "classify gold as 不明 or uncursed")
+           "classify gold as unknown or uncursed")
     NHOPTB(guicolor, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.wc2_guicolor, Term_False,
            "use color for UI")

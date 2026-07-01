@@ -379,9 +379,6 @@ dokick.c:
 dokick.c:
                     pline("\"%s, you are a thief!\"", plname);
                     pline("「%sめ，おまえは泥棒だな！」", plname);
-dokick.c:
-        pline("%s %s %s.", obuf, otense(otmp, "fall"), gate_str);
-        pline("%s%s落ちた．", obuf, gate_str);
 dothrow.c:
     if (!canletgo(obj, "throw"))
     if (!canletgo(obj, "投げる"))
@@ -508,9 +505,6 @@ do_wear.c:
 do_wear.c:
         You("no longer have a second weapon readied.");
         You("予備の武器をおさめた．");
-do_wear.c:
-        You("continue %s.", context.takeoff.disrobing);
-        You("装備を解くのを再開した．");
 do_wear.c:
         set_occupation(take_off, context.takeoff.disrobing, 0);
         set_occupation(take_off, "装備を解く", 0);
@@ -832,9 +826,6 @@ dungeon.c:
 dungeon.c:
                 ADDNTOBUF("temple", mptr->feat.ntemple);
                 ADDNTOBUF("寺院", mptr->feat.ntemple);
-dungeon.c:
-        Sprintf(buf, "%sThe castle%s.", PREFIX, tunesuffix(mptr, tmpbuf));
-        Sprintf(buf, "%s城%s．", PREFIX, tunesuffix(mptr, tmpbuf));
 eat.c:
         You("finish eating %s.", food_xname(piece, TRUE));
         You("%sを食べ終えた．",  food_xname(piece, TRUE));
@@ -1010,18 +1001,6 @@ engrave.c:
         what = "rock cavern";
         what = "洞窟の天井";
 engrave.c:
-                pline("%s is engraved here on the %s.", Something,
-                pline("何かの文字が%sに刻まれている．",
-engrave.c:
-                pline("There's some graffiti on the %s here.", surface(x, y));
-                pline("%sに落書がある．", surface(x,y));
-engrave.c:
-                                 - sizeof "You feel the words: \"\".");
-                                 - sizeof "あなたは次のように感じた：「」");
-engrave.c:
-            You("%s: \"%s\".", (Blind) ? "feel the words" : "read", et);
-            You("%s：「%s」", (Blind) ? "次のように感じた" : "読んだ",  et);
-engrave.c:
         You_cant("write in thin air!");
         You("空中には書けない！");
 engrave.c:
@@ -1072,12 +1051,6 @@ engrave.c:
 engrave.c:
         everb = (oep && !eow ? "add to the scrawl on" : "scrawl on");
         everb = (oep && !eow ? "なぐり書きに書き加える" : "なぐり書きする");
-engrave.c:
-        You("%s the %s with %s.", everb, eloc, doname(otmp));
-        You("%sで%sに%s．", doname(otmp), eloc, jpast(everb));
-engrave.c:
-    Sprintf(qbuf, "What do you want to %s the %s here?", everb, eloc);
-    Sprintf(qbuf,"%sに何と%sか？", eloc, jpolite(everb));
 engrave.c:
             nomovemsg = "You finish your weird engraving.";
             nomovemsg = "あなたは奇妙な刻みを終えた．";

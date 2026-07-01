@@ -2380,7 +2380,10 @@ otransit_msg(struct obj *otmp, boolean nodrop, boolean chainthere, long num)
 #endif
         pline("%s%s", obuf, xbuf);
     } else if (!nodrop)
+/*JP
         pline("%s %s %s.", obuf, otense(otmp, "fall"), gg.gate_str);
+*/
+        pline("%s%s落ちた．", obuf, gg.gate_str);
 }
 
 /* migration destination for objects which fall down to next level */

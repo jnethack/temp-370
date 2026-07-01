@@ -527,11 +527,21 @@ panic VA_DECL(const char *, str)
 
 // XXX this may need an update if defined(CRASHREPORT) TBD
         if (sysopt.support)
+#if 0 /*JP:T*/
             raw_printf("To report this error, %s%s", sysopt.support,
                        maybe_rebuild);
+#else
+            raw_printf("エラーを報告するには，%s%s", sysopt.support,
+                       maybe_rebuild);
+#endif
         else if (sysopt.fmtd_wizard_list) /* formatted SYSCF WIZARDS */
+#if 0 /*JP:T*/
             raw_printf("To report this error, contact %s%s",
                        sysopt.fmtd_wizard_list, maybe_rebuild);
+#else
+            raw_printf("エラーを報告するには，%sに連絡してください%s",
+                       sysopt.fmtd_wizard_list, maybe_rebuild);
+#endif
         else
 #if 0 /*JP:T*/
             raw_printf("Report error to \"%s\"%s", WIZARD_NAME,

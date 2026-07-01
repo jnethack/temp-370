@@ -2356,8 +2356,13 @@ print_dungeon(boolean bymenu, schar *rlev, xint16 *rdgn)
                      dptr->depth_start + nlev - 1);
 #endif
         else
+#if 0 /*JP:T*/
             Snprintf(buf, sizeof buf, "%s: %s %d", dptr->dname,
                      descr, dptr->depth_start);
+#else
+            Snprintf(buf, sizeof buf, "%s: %s%d", dptr->dname,
+                     descr, dptr->depth_start);
+#endif
 
         /* Most entrances are uninteresting. */
         if (dptr->entry_lev != 1) {
@@ -3853,15 +3858,23 @@ print_mapseen(
 */
         Sprintf(buf, "%sローディオス砦．", PREFIX);
     } else if (mptr->flags.castle) {
+#if 0 /*JP:T*/
         Snprintf(buf, sizeof buf, "%sThe castle%s.", PREFIX,
                 tunesuffix(mptr, tmpbuf, sizeof tmpbuf));
+#else
+        Snprintf(buf, sizeof buf, "%s城%s.", PREFIX,
+                tunesuffix(mptr, tmpbuf, sizeof tmpbuf));
+#endif
     } else if (mptr->flags.valley) {
 /*JP
         Sprintf(buf, "%sValley of the Dead.", PREFIX);
 */
         Sprintf(buf, "%s死の谷．", PREFIX);
     } else if (mptr->flags.vibrating_square) {
+/*JP
         Sprintf(buf, "%sGateway to Moloch's Sanctum.", PREFIX);
+*/
+        Sprintf(buf, "%sモーロックの聖域への入り口．", PREFIX);
     } else if (mptr->flags.msanctum) {
 /*JP
         Sprintf(buf, "%sMoloch's Sanctum.", PREFIX);

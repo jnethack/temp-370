@@ -136,7 +136,7 @@
     PCHAR2(38, '}',  S_pool,   "pool", "水のたまった場所", CLR_BLUE)
     PCHAR2(39, '.', S_ice, "ice", "氷", CLR_CYAN)
     PCHAR2(40, '}', S_lava, "molten lava", "溶岩", CLR_RED)
-    PCHAR2(41, '}', S_lavawall, "wall of lava", "wall of lava", CLR_ORANGE)
+    PCHAR2(41, '}', S_lavawall, "wall of lava", "溶岩の壁", CLR_ORANGE)
     PCHAR2(42, '.',  S_vodbridge, "vertical open drawbridge",
                                   "降りている跳ね橋", CLR_BROWN)
     PCHAR2(43, '.',  S_hodbridge, "horizontal open drawbridge",
@@ -178,8 +178,8 @@
                                         HI_ZAP)
     PCHAR2(70, '^', S_polymorph_trap, "polymorph trap", "変化の罠", CLR_BRIGHT_GREEN)
     PCHAR2(71, '~', S_vibrating_square, "vibrating square", "振動している場所", CLR_MAGENTA)
-    PCHAR2(72, '^', S_trapped_door, "trapped door", "trapped door", CLR_ORANGE)
-    PCHAR2(73, '^', S_trapped_chest, "trapped chest", "trapped chest", CLR_ORANGE)
+    PCHAR2(72, '^', S_trapped_door, "trapped door", "罠のある扉", CLR_ORANGE)
+    PCHAR2(73, '^', S_trapped_chest, "trapped chest", "罠のある宝箱", CLR_ORANGE)
     /* end traps                                                       */
     /* end cmap B */
     /*                                                                   */
