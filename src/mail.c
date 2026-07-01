@@ -3,6 +3,11 @@
 /*-Copyright (c) Pasi Kallinen, 2018. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 #ifdef MAIL
@@ -274,8 +279,13 @@ md_stop(coord *stopp,  /* stopping position (we fill it in) */
 }
 
 /* Let the mail daemon have a larger vocabulary. */
+#if 0 /*JP:T*/
 staticfn NEARDATA const char *mail_text[] = { "Gangway!", "Look out!",
                                             "Pardon me!" };
+#else
+staticfn NEARDATA const char *mail_text[] = { "どいたどいた！", "気をつけろ！",
+                                            "じゃまするよ！" };
+#endif
 #define md_exclamations() (mail_text[rn2(3)])
 
 /*
@@ -339,7 +349,10 @@ md_rush(struct monst *md,
             if (mon)
                 verbalize1(md_exclamations());
             else if (u_at(fx, fy))
+/*JP
                 verbalize("Excuse me.");
+*/
+                verbalize("ちょっとしつれい．");
         }
 
         if (mon)
@@ -370,7 +383,10 @@ md_rush(struct monst *md,
         newsym(fx, fy);
         if (!Deaf) {
             SetVoice(md, 0, 80, 0);
+/*JP
             verbalize("This place's too crowded.  I'm outta here.");
+*/
+            verbalize("ここは混みすぎ．もう帰るよ．");
         } else {
             pline("%s.", Never_mind);
         }
@@ -415,7 +431,11 @@ newmail(struct mail_info *info)
     message_seen = TRUE;
     if (!Deaf) {
         SetVoice(md, 0, 80, 0);
+#if 0 /*JP*/
         verbalize("%s, %s!  %s.", Hello(md), svp.plname, info->display_txt);
+#else
+        verbalize("%s！%s．", Hello(md), info->display_txt);
+#endif
     } else {
         pline("Message:  %s.", info->display_txt);
     }
@@ -431,15 +451,23 @@ newmail(struct mail_info *info)
         if (!m_next2u(md)) {
             if (!Deaf) {
                 SetVoice(md, 0, 80, 0);
+/*JP
                 verbalize("Catch!");
+*/
+                verbalize("ほらよ！");
             } else {
                 /* don't bother with nonverbal alternative ... */
                 ;
             }
         }
         display_nhwindow(WIN_MESSAGE, FALSE);
+#if 0 /*JP:T*/
         obj = hold_another_object(obj, "Oops!", (const char *) 0,
                                   (const char *) 0);
+#else
+        obj = hold_another_object(obj, "おっと！", (const char *) 0,
+                                  (const char *) 0);
+#endif
         nhUse(obj);
     }
 
@@ -452,7 +480,10 @@ newmail(struct mail_info *info)
  give_up:
     /* deliver some classes of messages even if no daemon ever shows up */
     if (!message_seen && info->message_typ == MSG_OTHER)
+/*JP
         pline("Hark!  \"%s.\"", info->display_txt);
+*/
+        pline("「%s．」と言うことだ！", info->display_txt);
 }
 
 #if !defined(UNIX) && !defined(VMS)
@@ -471,7 +502,10 @@ ckmailstatus(void)
     }
     if (--mustgetmail <= 0) {
         static struct mail_info deliver = {
+/*JP
             MSG_MAIL, "I have some mail for you", 0, 0
+*/
+            MSG_MAIL, "メールを持ってきたよ", 0, 0
         };
         newmail(&deliver);
         mustgetmail = -1;
@@ -490,39 +524,71 @@ readmail(struct obj *otmp UNUSED)
     enum delivery_types delivery = normal_delivery;
     const char *recipient = 0;
     static const char *const junk_templates[] = {
+#if 0 /*JP:T*/
         "%sReport bugs to <%s>.%s", /*** must be first entry ***/
         "Please disregard previous letter.",
         "Welcome to NetHack.",
+#else
+        "%sReport bugs to <%s>.%s", /*** must be first entry ***/
+        "前のメールは忘れてください．",
+        "JNetHackへようこそ．",
+#endif
 #ifdef AMIGA
         "Only Amiga makes it possible.",
         "CATS have all the answers.",
 #endif
+/*JP
         "This mail complies with the Yendorian Anti-Spam Act (YASA)",
+*/
+        "このメールはイェンダースパム対策法(YASA)に準拠しています．",
+/*JP
         "Please find enclosed a small token to represent your Owlbear",
+*/
+        "あなたのアウルベアを表現するために同封した小さいトークンを探してください",
+/*JP
         "**FR33 P0T10N 0F FULL H34L1NG**",
+*/
+        "**完全回復の薬プレゼント**",
+/*JP
         "Please return to sender (Asmodeus)",
+*/
+        "送信者(アスモデウス)に送り返してください",
         /* when enclosed by "It reads:  \"...\"", this is too long
            for an ordinary 80-column display so wraps to a second line
            (suboptimal but works correctly);
            dollar sign and fractional zorkmids are inappropriate within
            nethack but are suitable for typical dysfunctional spam mail */
+#if 0 /*JP:T*/
         ("Buy a potion of gain level for only $19.99! "
          " Guaranteed to be blessed!"),
+#else
+        ("レベルアップの薬がたったの1980円!"
+         "祝福保証!"),
+#endif
         /* DEVTEAM_URL will be substituted for 2nd "%s";
            terminating punctuation (formerly "!") has deliberately been
            omitted so that it can't be mistaken for part of the URL
            (unfortunately that is still followed by a closing quote--in
            the pline below, not the data here) */
+/*JP
         "%sInvitation: Visit the NetHack web site at %s%s"
+*/
+        "%s招待状: JNetHack ウェブサイト %s に来てね!%s"
     };
+/*JP
     const char *const it_reads = "It reads:  \"";
+*/
+    const char *const it_reads = "それを読んだ：\"";
 
     i = rn2(SIZE(junk_templates));
     if (strchr(junk_templates[i], '%')) {
         if (i == 0) {
             recipient = DEVTEAM_EMAIL;
             delivery = subst_delivery;
+/*JP
         } else if (strstri(junk_templates[i], "web site")) {
+*/
+        } else if (strstr(junk_templates[i], "ウェブサイト")) {
             recipient = DEVTEAM_URL;
             delivery = subst_delivery;
         } else {
@@ -531,7 +597,10 @@ readmail(struct obj *otmp UNUSED)
         }
     }
     if (Blind) {
+/*JP
         pline("Unfortunately you cannot see what it says.");
+*/
+        pline("残念ながら何と書いてあるのか見ることができない．");
     } else {
         if (delivery == subst_delivery)
             pline(junk_templates[i], it_reads, recipient, "\"");
@@ -570,10 +639,16 @@ ckmailstatus(void)
         if (nmstat.st_size) {
             static struct mail_info deliver = {
 #ifndef NO_MAILREADER
+/*JP
                 MSG_MAIL, "I have some mail for you",
+*/
+                MSG_MAIL, "メイルを持ってきたよ",
 #else
                 /* suppress creation and delivery of scroll of mail */
+/*JP
                 MSG_OTHER, "You have some mail in the outside world",
+*/
+                MSG_OTHER, "外の世界からのメールだ",
 #endif
                 0, 0
             };
@@ -623,8 +698,13 @@ read_simplemail(const char *mbox, boolean adminmsg)
             fl.l_type = F_UNLCK;
             fcntl(fileno(mb), F_UNLCK, &fl);
 #endif
+#if 0 /*JP:T*/
             There("is a%s message on this scroll.",
                   seen_one_already ? "nother" : "");
+#else
+            pline("この巻物には%sメッセージがある．",
+                  seen_one_already ? "まだ" : "");
+#endif
         }
         msg = strchr(curline, ':');
 
@@ -643,11 +723,21 @@ read_simplemail(const char *mbox, boolean adminmsg)
             endpunct = ".";
 
         if (adminmsg) {
+#if 0 /*JP:T*/
             urgent_pline("The voice of %s booms through the caverns:",
                          curline);
+#else
+            urgent_pline("%sの声が洞窟に響きわたった：",
+                         curline);
+#endif
         } else {
+#if 0 /*JP:T*/
             pline("This message is from '%s'.", curline);
             pline("It reads:");
+#else
+            pline("これは'%s'からのメッセージだ．", curline);
+            pline("それを読んだ：");
+#endif
         }
         pline("\"%s\"%s", msg, endpunct);
 
@@ -676,7 +766,10 @@ read_simplemail(const char *mbox, boolean adminmsg)
  bail:
     /* bail out _professionally_ */
     if (!adminmsg)
+/*JP
         pline("It appears to be all gibberish.");
+*/
+        pline("これはまったくちんぷんかんぷんだ．");
 }
 
 #endif /* SIMPLE_MAIL */
