@@ -2670,7 +2670,8 @@ static const struct {
     { "淡青色の", CLR_BRIGHT_BLUE },
     { "明るいマゼンタ色の", CLR_BRIGHT_MAGENTA },
     { "明るいシアン色の", CLR_BRIGHT_CYAN },
-    { "白い", CLR_WHITE }
+    { "白い", CLR_WHITE },
+    { "無色の", NO_COLOR }
 };
 
 static const char *

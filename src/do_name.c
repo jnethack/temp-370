@@ -449,10 +449,13 @@ oname(
         name = strncpy(buf, name, PL_PSIZ - 1);
         buf[PL_PSIZ - 1] = '\0';
 #else
-        if (is_kanji2(name, lth - 1))
-            --lth;
-        name = strncpy(buf, name, lth - 1);
-        buf[lth - 1] = '\0';
+        {
+            int end = lth - 1;
+            end -= offset_in_kanji((const unsigned char *) name, end);
+            name = strncpy(buf, name, end);
+            buf[end] = '\0';
+            lth = end + 1;
+        }
 #endif
     }
     /* If named artifact exists in the game, do not create another.

@@ -2505,7 +2505,7 @@ canwearobj(struct obj *otmp, long *mask, boolean noisy)
 /*JP
                 already_wearing(an(cloak_simple_name(uarmc)));
 */
-                already_wearing(cloak_simple_name(uarmc), otmp);
+                already_wearing(cloak_simple_name(uarmc), uarmc);
             err++;
         } else
             *mask = W_ARMC;

@@ -2322,7 +2322,7 @@ eatcorpse(struct obj *otmp)
                           KILLED_BY_AN);
 #else
             poison_strdmg(rnd(4), rnd(15),
-                          "毒の死体で",
+                          "毒の死体",
                           KILLED_BY_AN);
 #endif
         } else

@@ -3526,16 +3526,16 @@ dokeylist(void)
 #if 0 /*JP:T*/
     Strcat(buf,
           "+<direction> will run in specified direction until you encounter");
+    putstr(datawin, 0, buf);
+    Sprintf(buf, "%7s %s", "", "an obstacle.");
+    putstr(datawin, 0, buf);
 #else
     Strcat(buf,
-          "+<方向> は、壁にぶつかるか何かがあるまで指定された方向に走る．");  
+          "+<方向> は、壁にぶつかるか何かがあるまで");  
+    putstr(datawin, 0, buf);
+    Sprintf(buf, "%7s %s", "", "指定された方向に走る．");
+    putstr(datawin, 0, buf);
 #endif
-    putstr(datawin, 0, buf);
-/*JP
-    Sprintf(buf, "%7s %s", "", "an obstacle.");
-*/
-    Sprintf(buf, "%7s %s", "", "障害物");
-    putstr(datawin, 0, buf);
 
     putstr(datawin, 0, "");
 /*JP

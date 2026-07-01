@@ -191,7 +191,7 @@ cursed_book(struct obj *bp)
 #else
         poison_strdmg(Poison_resistance ? rn1(2, 1) : rn1(4, 3),
                       rnd(Poison_resistance ? 6 : 10),
-                      "接触毒の魔法書で", KILLED_BY_AN);
+                      "接触毒の魔法書", KILLED_BY_AN);
 #endif
         bp->in_use = was_in_use;
         break;

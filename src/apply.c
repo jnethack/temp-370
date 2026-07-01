@@ -3122,7 +3122,6 @@ fig_transform(anything *arg, long timeout)
 
         /* [m_monnam() yields accurate mon type, overriding hallucination] */
         Sprintf(monnambuf, "%s", an(m_monnam(mtmp)));
-        /*JP:TODO:and_vanishは未処理*/
         and_vanish[0] = '\0';
         if ((mtmp->minvis && !See_invisible)
             || (mtmp->data->mlet == S_MIMIC
@@ -3131,13 +3130,22 @@ fig_transform(anything *arg, long timeout)
 
         if (mtmp->mundetected) {
             if (hides_under(mtmp->data) && mshelter) {
+#if 0 /*JP*/
                 Sprintf(and_vanish, " and %s under %s",
                         locomotion(mtmp->data, "crawl"), doname(mshelter));
+#else
+                Sprintf(and_vanish, "そしてそれは%sの下にかくれた！",
+                        doname(mshelter));
+#endif
             } else if (mtmp->data->mlet == S_MIMIC
                        || mtmp->data->mlet == S_EEL) {
                 suppress_see = TRUE;
             } else
+#if 0 /*JP*/
                 Strcpy(and_vanish, " and vanish");
+#else
+                Strcpy(and_vanish, "そしてそれは消えた！");
+#endif
         }
 
         switch (figurine->where) {
@@ -3155,8 +3163,8 @@ fig_transform(anything *arg, long timeout)
                 You_see("%s %s out of your pack%s!", monnambuf,
                         locomotion(mtmp->data, "drop"), and_vanish);
 #else
-                You("%sがあなたの鞄から%sのを見た！", monnambuf,
-                        jpast(locomotion(mtmp->data,"落ちる")));
+                You("%sがあなたの鞄から%sのを見た！%s", monnambuf,
+                        jpast(locomotion(mtmp->data,"落ちる")), and_vanish);
 #endif
             break;
 
@@ -3173,8 +3181,8 @@ fig_transform(anything *arg, long timeout)
                     You_see("a figurine transform into %s%s!", monnambuf,
                             and_vanish);
 #else
-                    You("人形が突然%sになったのを見た！",
-                            monnambuf);
+                    You("人形が突然%sになったのを見た！%s",
+                            monnambuf, and_vanish);
 #endif
                 redraw = TRUE; /* update figurine's map location */
             }
@@ -3679,7 +3687,11 @@ use_trap(struct obj *otmp)
 */
         what = "くらくらしているので";
     else if (u.uswallow)
+#if 0 /*JP*/
         what = digests(u.ustuck->data) ? "while swallowed" : "while engulfed";
+#else
+        what = digests(u.ustuck->data) ? "飲み込まれている間は" : "巻き込まれている間は";
+#endif
     else if (Underwater)
 /*JP
         what = "underwater";

@@ -137,7 +137,7 @@ do_statusline1(void)
 /*JP
         Sprintf(nb = eos(nb), " S:%ld", botl_score());
 */
-        Sprintf(nb = eos(nb), "%ld点", botl_score());
+        Sprintf(nb = eos(nb), " %ld点", botl_score());
 #endif
     return newbot1;
 }

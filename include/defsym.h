@@ -121,10 +121,10 @@
     PCHAR2(26, '>',  S_dnstair, "down stairs", "下り階段", CLR_GRAY)
     PCHAR2(27, '<',  S_upladder, "up ladder", "上りはしご", CLR_BROWN)
     PCHAR2(28, '>',  S_dnladder, "down ladder", "下りはしご", CLR_BROWN)
-    PCHAR2(29, '<', S_brupstair, "branch staircase up", "branch staircase up", CLR_YELLOW)
-    PCHAR2(30, '>', S_brdnstair, "branch staircase down", "branch staircase down", CLR_YELLOW)
-    PCHAR2(31, '<', S_brupladder, "branch ladder up", "branch ladder up", CLR_YELLOW)
-    PCHAR2(32, '>', S_brdnladder, "branch ladder down", "branch ladder down", CLR_YELLOW)
+    PCHAR2(29, '<', S_brupstair, "branch staircase up", "分岐の上り階段", CLR_YELLOW)
+    PCHAR2(30, '>', S_brdnstair, "branch staircase down", "分岐の下り階段", CLR_YELLOW)
+    PCHAR2(31, '<', S_brupladder, "branch ladder up", "分岐の上りはしご", CLR_YELLOW)
+    PCHAR2(32, '>', S_brdnladder, "branch ladder down", "分岐の下りはしご", CLR_YELLOW)
     /* end cmap A */
     PCHAR2(33, '_', S_altar, "altar", "祭壇", CLR_GRAY)
     /* start cmap B */
