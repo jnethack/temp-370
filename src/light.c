@@ -2,6 +2,10 @@
 /* Copyright (c) Dean Luick, 1994                                       */
 /* NetHack may be freely redistributed.  See license for details.       */
 
+/* JNetHack Copyright */
+/* For 3.6-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 /*
@@ -919,15 +923,30 @@ arti_light_description(struct obj *obj)
     case 4:
         return "radiantly"; /* blessed gold dragon scale mail */
     case 3:
+#if 0 /*JP:T*/
         return "brilliantly"; /* blessed artifact, uncursed gold DSM */
+#else
+        return "キラキラと"; /* blessed artifact, uncursed gold DSM */
+#endif
     case 2:
+#if 0 /*JP:T*/
         return "brightly"; /* uncursed artifact, cursed gold DSM */
+#else
+        return "明るく"; /* uncursed artifact, cursed gold DSM */
+#endif
     case 1:
+#if 0 /*JP:T*/
         return "dimly"; /* cursed artifact, embedded scales */
+#else
+        return "薄暗く"; /* cursed artifact, embedded scales */
+#endif
     default:
         break;
     }
+/*JP
     return "strangely";
+*/
+    return "不思議に";
 }
 
 /* the #lightsources command */

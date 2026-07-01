@@ -2,6 +2,11 @@
 /*      Copyright (C) 1990 by Ken Arromdee                         */
 /* NetHack may be freely redistributed.  See license for details.  */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 /*
  * Monster item usage routines.
  */
@@ -82,11 +87,19 @@ precheck(struct monst *mon, struct obj *obj)
                         pline1(empty);
                 } else {
                     if (vis) {
+#if 0 /*JP:T*/
                         pline(
                             "As %s opens the bottle, an enormous %s emerges!",
                               mon_nam(mon),
                               Hallucination ? rndmonnam(NULL)
                                             : (const char *) "ghost");
+#else
+                        pline(
+                            "%sが瓶を開けると，巨大な%sが出てきた！",
+                              mon_nam(mon),
+                              Hallucination ? rndmonnam(NULL)
+                                            : (const char *)"幽霊");
+#endif
                         pline("%s is frightened to death,"
                               " and unable to move.",
                               Monnam(mon));
@@ -110,18 +123,30 @@ precheck(struct monst *mon, struct obj *obj)
             } else {
                 if (vis)
                     pline_mon(mtmp, "In a cloud of smoke, %s emerges!", a_monnam(mtmp));
+/*JP
                 pline("%s speaks.", vis ? Monnam(mtmp) : Something);
+*/
+                pline("%sは話した．", vis ? Monnam(mtmp) : Something);
                 /* I suspect few players will be upset that monsters */
                 /* can't wish for wands of death here.... */
                 SetVoice(mtmp, 0, 80, 0);
                 if (rn2(2)) {
+/*JP
                     verbalize("You freed me!");
+*/
+                    verbalize("解放してくれたのはお前か！");
                     mtmp->mpeaceful = 1;
                     set_malign(mtmp);
                 } else {
+/*JP
                     verbalize("It is about time.");
+*/
+                    verbalize("さらばだ！");
                     if (vis)
+/*JP
                         pline("%s vanishes.", Monnam(mtmp));
+*/
+                        pline("%sは消えた．", Monnam(mtmp));
                     mongone(mtmp);
                 }
             }
@@ -135,17 +160,28 @@ precheck(struct monst *mon, struct obj *obj)
         /* 3.6.1: no Deaf filter; 'if' message doesn't warrant it, 'else'
            message doesn't need it since You_hear() has one of its own */
         if (vis) {
+#if 0 /*JP:T*/
             pline_mon(mon, "%s zaps %s, which suddenly explodes!", Monnam(mon),
                   an(xname(obj)));
+#else
+            pline_mon(mon, "%sが%sをふりかざすと，それは突然爆発した！", Monnam(mon),
+                  an(xname(obj)));
+#endif
         } else {
             /* same near/far threshold as mzapwand() */
             int range = couldsee(mon->mx, mon->my) /* 9 or 5 */
                            ? (BOLT_LIM + 1) : (BOLT_LIM - 3);
 
             Soundeffect(se_zap_then_explosion, 100);
+#if 0 /*JP:T*/
             You_hear("a zap and an explosion %s.",
                      (mdistu(mon) <= range * range)
                         ? "nearby" : "in the distance");
+#else
+            You_hear("%sくの杖の音と爆発音を聞いた．",
+                     (mdistu(mon) <= range * range)
+                        ? "近" : "遠");
+#endif
         }
         m_useup(mon, obj);
         mon->mhp -= dam;
@@ -180,9 +216,14 @@ mzapwand(
                                  ? "nearby" : "distant");
         unknow_object(otmp); /* hero loses info when unseen obj is used */
     } else if (self) {
+#if 0 /*JP:T*/
         pline("%s with %s!",
               monverbself(mtmp, Monnam(mtmp), "zap", (char *) 0),
               doname(otmp));
+#else
+        pline("%sは自分自身に%sをふりかざした！",
+              Monnam(mtmp), doname(otmp));
+#endif
     } else {
         pline_mon(mtmp, "%s zaps %s!", Monnam(mtmp), an(xname(otmp)));
         stop_occupation();
@@ -204,19 +245,28 @@ mplayhorn(
                        ? (BOLT_LIM + 1) : (BOLT_LIM - 3);
 
         Soundeffect(se_horn_being_played, 50);
+#if 0 /*JP:T*/
         You_hear("a horn being played %s.",
                  (mdistu(mtmp) <= range * range)
                     ? "nearby" : "in the distance");
+#else
+        You_hear("%sくでホルンの音を聞いた．",
+                 (mdistu(mtmp) <= range * range)
+                    ? "近" : "遠");
+#endif
         unknow_object(otmp); /* hero loses info when unseen obj is used */
     } else if (self) {
         observe_object(otmp);
         objnamp = xname(otmp);
         if (strlen(objnamp) >= QBUFSZ)
             objnamp = simpleonames(otmp);
+#if 0 /*JP:T*/
         Sprintf(objbuf, "a %s directed at", objnamp);
         /* "<mon> plays a <horn> directed at himself!" */
         pline("%s!", monverbself(mtmp, Monnam(mtmp), "play", objbuf));
-        makeknown(otmp->otyp); /* (wands handle this slightly differently) */
+#else
+        pline("%sは自分自身に向けて%sを吹いた！", Monnam(mtmp), objnamp);
+#endif        makeknown(otmp->otyp); /* (wands handle this slightly differently) */
     } else {
         observe_object(otmp);
         objnamp = xname(otmp);
@@ -275,17 +325,29 @@ mreadmsg(struct monst *mtmp, struct obj *otmp)
             map_invisible(mtmp->mx, mtmp->my);
         }
 
+#if 0 /*JP:T*/
         Snprintf(blindbuf, sizeof blindbuf, "reading %s", onambuf);
         strsubst(blindbuf, "reading a scroll labeled",
                  mtmp->mconf ? "attempting to incant" : "incant");
         You_hear("%s %s.",
                  x_monnam(mtmp, ARTICLE_A, (char *) 0, mflags, FALSE),
                  blindbuf);
+#else /*JP:TODO:混乱時未処理*/
+        Snprintf(blindbuf, sizeof blindbuf, "%s", onambuf);
+        strsubst(blindbuf, "reading a scroll labeled",
+                 mtmp->mconf ? "attempting to incant" : "incant");
+        You_hear("%sが%sを読んでいる声を聞いた．",
+                 x_monnam(mtmp, ARTICLE_A, (char *) 0, mflags, FALSE),
+                 blindbuf);
+#endif
         if (tpindicator)
             flash_mon(mtmp);
     }
     if (mtmp->mconf) /* (note: won't get if not seen and hero can't hear) */
+/*JP
         pline("Being confused, %s mispronounces the magic words...",
+*/
+        pline("混乱しているので，%sは呪文を間違って唱えてしまった．．．",
               vismon ? mon_nam(mtmp) : mhe(mtmp));
 }
 
@@ -297,7 +359,10 @@ mquaffmsg(struct monst *mtmp, struct obj *otmp)
         pline_mon(mtmp, "%s drinks %s!", Monnam(mtmp), singular(otmp, doname));
     } else if (!Deaf) {
         Soundeffect(se_mon_chugging_potion, 25);
+/*JP
         You_hear("a chugging sound.");
+*/
+        You_hear("ゴクッ！という音を聞いた．");
     }
 }
 
@@ -823,7 +888,10 @@ use_defensive(struct monst *mtmp)
             if (otmp)
                 pline_mon(mtmp, "%s uses a unicorn horn!", Monnam(mtmp));
             else
+/*JP
                 pline_The("tip of %s's horn glows!", mon_nam(mtmp));
+*/
+                pline("%sの角の先端が輝いた！", mon_nam(mtmp));
         }
         if (!mtmp->mcansee) {
             mcureblindness(mtmp, vismon);
@@ -842,7 +910,10 @@ use_defensive(struct monst *mtmp)
             pline_mon(mtmp, "%s plays %s!", Monnam(mtmp), doname(otmp));
         } else if (!Deaf) {
             Soundeffect(se_bugle_playing_reveille, 100);
+/*JP
             You_hear("a bugle playing reveille!");
+*/
+            You_hear("起床ラッパの音を聞いた！");
         }
         awaken_soldiers(mtmp);
         return 2;
@@ -925,7 +996,10 @@ use_defensive(struct monst *mtmp)
             || IS_DRAWBRIDGE(levl[mtmp->mx][mtmp->my].typ)
             || (is_drawbridge_wall(mtmp->mx, mtmp->my) >= 0)
             || stairway_at(mtmp->mx, mtmp->my)) {
+/*JP
             pline_The("digging ray is ineffective.");
+*/
+            pline("掘削光線は効果がない．");
             return 2;
         }
         if (!Can_dig_down(&u.uz) && !levl[mtmp->mx][mtmp->my].candig) {
@@ -934,7 +1008,10 @@ use_defensive(struct monst *mtmp)
             if (t_at(mtmp->mx, mtmp->my)
                 || !(t = maketrap(mtmp->mx, mtmp->my, PIT))) {
                 if (vismon) {
+/*JP
                     pline_The("%s here is too hard to dig in.",
+*/
+                    pline("ここの%sは固くて掘れない．",
                               surface(mtmp->mx, mtmp->my));
                 }
                 return 2;
@@ -955,14 +1032,29 @@ use_defensive(struct monst *mtmp)
         recalc_block_point(mtmp->mx, mtmp->my);
         seetrap(t);
         if (vis) {
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s has made a hole in the %s.", Monnam(mtmp),
                   surface(mtmp->mx, mtmp->my));
+#else
+            pline_mon(mtmp, "%sは%sに穴を開けた．", Monnam(mtmp),
+                  surface(mtmp->mx, mtmp->my));
+#endif
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s %s through...", Monnam(mtmp),
                   is_flyer(mtmp->data) ? "dives" : "falls");
+#else
+            pline_mon(mtmp, "%sは通り抜けて%s．．．", Monnam(mtmp),
+                  is_flyer(mtmp->data) ? "飛びこんだ" : "落ちた");
+#endif
         } else if (!Deaf) {
             Soundeffect(se_crash_through_floor, 100);
+#if 0 /*JP:T*/
             You_hear("%s crash through the %s.", something,
                      surface(mtmp->mx, mtmp->my));
+#else
+            You_hear("何かが%sを通り抜けて落ちる音を聞いた．．．",
+                     surface(mtmp->mx, mtmp->my));
+#endif
         }
         fill_pit(mtmp->mx, mtmp->my);
         /* we made sure that there is a level for mtmp to go to */
@@ -1044,9 +1136,15 @@ use_defensive(struct monst *mtmp)
         m_flee(mtmp);
         t = t_at(gt.trapx, gt.trapy);
         if (vis) {
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s %s into a %s!", Monnam(mtmp),
                   vtense(fakename[0], locomotion(mtmp->data, "jump")),
                   trapname(t->ttyp, FALSE));
+#else
+            pline_mon(mtmp, "%sは%sに%s入った！", Monnam(mtmp),
+                  trapname(t->ttyp, FALSE),
+                  jconj(locomotion(mtmp->data, "飛ぶ"), "て"));
+#endif
         }
         /* if trap was in a concealed niche, it's no longer concealed */
         reveal_trap(t, vis);
@@ -1073,9 +1171,14 @@ use_defensive(struct monst *mtmp)
         if (Inhell && mon_has_amulet(mtmp) && !rn2(4)
             && (dunlev(&u.uz) < dunlevs_in_dungeon(&u.uz) - 3)) {
             if (vismon)
+#if 0 /*JP:T*/
                 pline("As %s climbs the stairs, a mysterious force"
                       " momentarily surrounds %s...",
                       mon_nam(mtmp), mhim(mtmp));
+#else
+                pline("%sが階段をのぼろうとすると奇妙な力が%sをつつんだ．．．",
+                      mon_nam(mtmp), mon_nam(mtmp));
+#endif
             /* simpler than for the player; this will usually be
                the Wizard and he'll immediately go right to the
                upstairs, so there's not much point in having any
@@ -1128,8 +1231,13 @@ use_defensive(struct monst *mtmp)
             return mon_escape(mtmp, vismon);
         }
         if (vismon)
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s escapes %sstairs!", Monnam(mtmp),
                   stway->up ? "up" : "down");
+#else
+            pline_mon(mtmp, "%sは階段を%s逃げた！", Monnam(mtmp),
+                  stway->up ? "のぼって" : "降りて");
+#endif
         /* going from the Valley to Castle (Stronghold) has no sstairs
            to target, but having gs.sstairs.<sx,sy> == <0,0> will work the
            same as specifying MIGR_RANDOM when mon_arrive() eventually
@@ -1141,9 +1249,15 @@ use_defensive(struct monst *mtmp)
         m_flee(mtmp);
         t = t_at(gt.trapx, gt.trapy);
         if (vis) {
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s %s onto a %s!", Monnam(mtmp),
                   vtense(fakename[0], locomotion(mtmp->data, "jump")),
                   trapname(t->ttyp, FALSE));
+#else
+            /* 日本語では全て「飛び込んだ」 */
+            pline_mon(mtmp, "%sは%sに飛び込んだ！", Monnam(mtmp),
+                  trapname(t->ttyp, FALSE));
+#endif
         }
         /* if trap was in a concealed niche, it's no longer concealed */
         reveal_trap(t, vis);
@@ -1613,34 +1727,55 @@ mbhitm(struct monst *mtmp, struct obj *otmp)
                 monstseesu(M_SEEN_MAGR); /* monsters notice hero resisting */
                 shieldeff(u.ux, u.uy);
                 Soundeffect(se_boing, 40);
+/*JP
                 pline("Boing!");
+*/
+                pline("ボイン！");
                 learnit = TRUE;
             } else if (rnd(20) < 10 + u.uac &&
                        !(gb.buzzer && !gb.buzzer->mwandexp)) {
                 monstunseesu(M_SEEN_MAGR); /* mons see hero not resisting */
+/*JP
                 pline_The("wand hits you!");
+*/
+                pline("杖はあなたに命中した！");
                 tmp = d(2, 12);
                 if (Half_spell_damage)
                     tmp = (tmp + 1) / 2;
+/*JP
                 losehp(tmp, "wand", KILLED_BY_AN);
+*/
+                losehp(tmp, "衝撃の杖によって", KILLED_BY_AN);
                 learnit = TRUE;
             } else {
+/*JP
                 pline_The("wand misses you.");
+*/
+                pline("杖ははずれた．");
             }
             stop_occupation();
             nomul(0);
         } else if (resists_magm(mtmp)) {
             shieldeff(mtmp->mx, mtmp->my);
             Soundeffect(se_boing, 40);
+/*JP
             pline("Boing!");
+*/
+            pline("ボイン！");
             learnit = TRUE;
         } else if (rnd(20) < 10 + find_mac(mtmp)) {
             tmp = d(2, 12);
+/*JP
             hit("wand", mtmp, exclam(tmp));
+*/
+            hit("杖", mtmp, exclam(tmp));
             (void) resist(mtmp, otmp->oclass, tmp, TELL);
             learnit = TRUE;
         } else {
+/*JP
             miss("wand", mtmp);
+*/
+            miss("杖", mtmp);
         }
         /* need to see the wand being zapped and also the spot where the
            target is hit; don't have to see the target itself though */
@@ -1899,12 +2034,22 @@ use_offensive(struct monst *mtmp)
         mreadmsg(mtmp, otmp);
         /* Identify the scroll */
         if (canspotmon(mtmp)) {
+#if 0 /*JP:T*/
             pline_The("%s rumbles %s %s!", ceiling(mtmp->mx, mtmp->my),
                       otmp->blessed ? "around" : "above", mon_nam(mtmp));
+#else
+            pline("%sの%sの%sからゴロゴロと音が聞こえてきた．",
+                      mon_nam(mtmp),
+                      otmp->blessed ? "まわり" : "真上",
+                      ceiling(mtmp->mx, mtmp->my));
+#endif
             if (oseen)
                 makeknown(otmp->otyp);
         } else if (cansee(mtmp->mx, mtmp->my)) {
+/*JP
             pline_The("%s rumbles in the middle of nowhere!",
+*/
+            pline_The("どこかの%sからゴロゴロと音が聞こえてきた．",
                       ceiling(mtmp->mx, mtmp->my));
             if (mtmp->minvis)
                 map_invisible(mtmp->mx, mtmp->my);
@@ -1960,13 +2105,19 @@ use_offensive(struct monst *mtmp)
         mreadmsg(mtmp, otmp);
         if (mtmp->mconf) {
             if (vis)
+/*JP
                 pline("Oh, what a pretty fire!");
+*/
+                pline("わぁ，きれいな炎だ！");
         } else {
             struct monst *mtmp2;
             int num;
 
             if (vis)
+/*JP
                 pline_The("scroll erupts in a tower of flame!");
+*/
+                pline("巻物から火柱が立ち昇った！");
             shieldeff(mtmp->mx, mtmp->my);
             pline_mon(mtmp, "%s is uninjured.", Monnam(mtmp));
             (void) destroy_mitem(mtmp, SCROLL_CLASS, AD_FIRE);
@@ -1975,12 +2126,18 @@ use_offensive(struct monst *mtmp)
             ignite_items(mtmp->minvent);
             num = (2 * (rn1(3, 3) + 2 * bcsign(otmp)) + 1) / 3;
             if (Fire_resistance)
+/*JP
                 You("are not harmed.");
+*/
+                You("傷つかなかった．");
             burn_away_slime();
             if (Half_spell_damage)
                 num = (num + 1) / 2;
             else
+/*JP
                 losehp(num, "scroll of fire", KILLED_BY_AN);
+*/
+                losehp(num, "炎の巻物で", KILLED_BY_AN);
             for (mtmp2 = fmon; mtmp2; mtmp2 = mtmp2->nmon) {
                 if (DEADMONSTER(mtmp2))
                     continue;
@@ -2410,9 +2567,15 @@ use_misc(struct monst *mtmp)
                 if (on_level(&tolevel, &u.uz))
                     goto skipmsg;
                 if (vismon) {
+#if 0 /*JP:T*/
                     pline_mon(mtmp, "%s rises up, through the %s!",
                               Monnam(mtmp),
                               ceiling(mtmp->mx, mtmp->my));
+#else
+                    pline_mon(mtmp, "%sは%sを突き抜けた！",
+                              Monnam(mtmp),
+                              ceiling(mtmp->mx, mtmp->my));
+#endif
                     trycall(otmp);
                 }
                 m_useup(mtmp, otmp);
@@ -2451,11 +2614,20 @@ use_misc(struct monst *mtmp)
         mon_set_minvis(mtmp, !otmp->cursed ? FALSE : TRUE);
         if (vismon && mtmp->minvis) { /* was seen, now invisible */
             if (canspotmon(mtmp)) {
+#if 0 /*JP:T*/
                 pline("%s body takes on a %s transparency.",
                       upstart(s_suffix(nambuf)),
                       Hallucination ? "normal" : "strange");
+#else
+                pline("%s%sの体は透過性をもった．",
+                      Hallucination ? "あたりまえなことだが" : "奇妙なことに",
+                      nambuf);
+#endif
             } else {
+/*JP
                 pline("Suddenly you cannot see %s.", nambuf);
+*/
+                pline("%sは突然見えなくなった．", nambuf);
                 if (vis)
                     map_invisible(mtmp->mx, mtmp->my);
             }
@@ -2522,9 +2694,14 @@ use_misc(struct monst *mtmp)
         if (vis || vistrapspot)
             seetrap(t);
         if (vismon || vistrapspot) {
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s deliberately %s onto a %s!", Some_Monnam(mtmp),
                   vtense(fakename[0], locomotion(mtmp->data, "jump")),
                   t->tseen ? trapname(t->ttyp, FALSE) : "hidden trap");
+#else
+            pline_mon(mtmp, "%sはわざと%sに飛びこんだ！", Some_Monnam(mtmp),
+                  t->tseen ? trapname(t->ttyp, FALSE) : "隠れていた罠");
+#endif
             /* note: if mtmp is unseen because it is invisible, its new
                shape will also be invisible and could produce "Its armor
                falls off" messages during the transformation; those make
@@ -2549,7 +2726,10 @@ use_misc(struct monst *mtmp)
     case MUSE_BULLWHIP:
         /* attempt to disarm hero */
         {
+/*JP
             const char *The_whip = vismon ? "The bullwhip" : "A whip";
+*/
+            const char *The_whip = "鞭";
             int where_to = rn2(4);
             struct obj *obj = uwep;
             const char *hand;
@@ -2569,23 +2749,46 @@ use_misc(struct monst *mtmp)
             hand_buf[sizeof hand_buf - 1] = '\0';
 
             if (vismon)
+#if 0 /*JP:T*/
                 pline_mon(mtmp, "%s flicks a bullwhip towards your %s!",
                           Monnam(mtmp), hand_buf);
+#else
+                pline_mon(mtmp, "%sはあなたの%sに向かって鞭を打った！",
+                          Monnam(mtmp), hand_buf);
+#endif
             if (obj->otyp == HEAVY_IRON_BALL) {
+/*JP
                 pline("%s fails to wrap around %s.", The_whip, the_weapon);
+*/
+                pline("%sは%sにはからみつかなかった．", The_whip, the_weapon);
                 return 1;
             }
+#if 0 /*JP:T*/
             urgent_pline("%s wraps around %s you're wielding!", The_whip,
                          the_weapon);
+#else
+            urgent_pline("%sはあなたの装備している%sにからみついた！", The_whip,
+                         the_weapon);
+#endif
             if (welded(obj)) {
+#if 0 /*JP:T*/
                 pline("%s welded to your %s%c",
                       !is_plural(obj) ? "It is" : "They are", hand_buf,
                       !obj->bknown ? '!' : '.');
+#else
+                pline("しかし，それはまだあなたの%sの中にある%s",
+                      hand_buf,
+                      !obj->bknown ? "！" : "．");
+#endif
                 /* obj->bknown = 1; */ /* welded() takes care of this */
                 where_to = 0;
             }
             if (!where_to) {
+#if 0 /*JP:T*/
                 pline_The("whip slips free."); /* not `The_whip' */
+#else
+                pline("鞭はほどけた．");  /* not `The_whip' */
+#endif
                 return 1;
             } else if (where_to == 3 && mon_hates_silver(mtmp)
                        && objects[obj->otyp].oc_material == SILVER) {
@@ -2597,13 +2800,23 @@ use_misc(struct monst *mtmp)
             freeinv(obj);
             switch (where_to) {
             case 1: /* onto floor beneath mon */
+#if 0 /*JP:T*/
                 pline_mon(mtmp, "%s yanks %s from your %s!", Monnam(mtmp),
                           the_weapon, hand_buf);
+#else
+                pline_mon(mtmp, "%sは%sをあなたの%sからぐいとひっぱった！", Monnam(mtmp),
+                          the_weapon, hand_buf);
+#endif
                 place_object(obj, mtmp->mx, mtmp->my);
                 break;
             case 2: /* onto floor beneath you */
+#if 0 /*JP:T*/
                 pline_mon(mtmp, "%s yanks %s to the %s!", Monnam(mtmp),
                           the_weapon, surface(u.ux, u.uy));
+#else
+                pline_mon(mtmp, "%sは%sを%sに引き落した！", Monnam(mtmp),
+                          the_weapon, surface(u.ux, u.uy));
+#endif
                 dropy(obj);
                 break;
             case 3: /* into mon's inventory */
@@ -2630,15 +2843,23 @@ RESTORE_WARNINGS
 staticfn void
 you_aggravate(struct monst *mtmp)
 {
+#if 0 /*JP:T*/
     pline("For some reason, %s presence is known to you.",
           s_suffix(noit_mon_nam(mtmp)));
+#else
+    pline("なぜか，あなたは%sの存在に気がついた．",
+          noit_mon_nam(mtmp));
+#endif
     cls();
 #ifdef CLIPPING
     cliparound(mtmp->mx, mtmp->my);
 #endif
     show_glyph(mtmp->mx, mtmp->my, mon_to_glyph(mtmp, rn2_on_display_rng));
     display_self();
+/*JP
     You_feel("aggravated at %s.", noit_mon_nam(mtmp));
+*/
+    You("%sに腹がたった．", mon_nam(mtmp));
     display_nhwindow(WIN_MAP, TRUE);
     docrt();
     if (unconscious()) {
@@ -2800,19 +3021,28 @@ mon_reflects(struct monst *mon, const char *str)
 
     if (orefl && orefl->otyp == SHIELD_OF_REFLECTION) {
         if (str) {
+/*JP
             pline(str, s_suffix(mon_nam(mon)), "shield");
+*/
+            pline(str, mon_nam(mon), "盾");
             makeknown(SHIELD_OF_REFLECTION);
         }
         return TRUE;
     } else if (arti_reflects(MON_WEP(mon))) {
         /* due to wielded artifact weapon */
         if (str)
+/*JP
             pline(str, s_suffix(mon_nam(mon)), "weapon");
+*/
+            pline(str, mon_nam(mon), "武器");
         return TRUE;
     } else if ((orefl = which_armor(mon, W_AMUL))
                && orefl->otyp == AMULET_OF_REFLECTION) {
         if (str) {
+/*JP
             pline(str, s_suffix(mon_nam(mon)), "amulet");
+*/
+            pline(str, mon_nam(mon), "魔除け");
             makeknown(AMULET_OF_REFLECTION);
         }
         return TRUE;
@@ -2820,13 +3050,19 @@ mon_reflects(struct monst *mon, const char *str)
                && (orefl->otyp == SILVER_DRAGON_SCALES
                    || orefl->otyp == SILVER_DRAGON_SCALE_MAIL)) {
         if (str)
+/*JP
             pline(str, s_suffix(mon_nam(mon)), "armor");
+*/
+            pline(str, mon_nam(mon), "鎧");
         return TRUE;
     } else if (mon->data == &mons[PM_SILVER_DRAGON]
                || mon->data == &mons[PM_CHROMATIC_DRAGON]) {
         /* Silver dragons only reflect when mature; babies do not */
         if (str)
+/*JP
             pline(str, s_suffix(mon_nam(mon)), "scales");
+*/
+            pline(str, mon_nam(mon), "鱗");
         return TRUE;
     }
     return FALSE;
@@ -2838,28 +3074,43 @@ ureflects(const char *fmt, const char *str)
     /* Check from outermost to innermost objects */
     if (EReflecting & W_ARMS) {
         if (fmt && str) {
+/*JP
             pline(fmt, str, "shield");
+*/
+            pline(fmt, str, "盾");
             makeknown(SHIELD_OF_REFLECTION);
         }
         return TRUE;
     } else if (EReflecting & W_WEP) {
         /* Due to wielded artifact weapon */
         if (fmt && str)
+/*JP
             pline(fmt, str, "weapon");
+*/
+            pline(fmt, str, "武器");
         return TRUE;
     } else if (EReflecting & W_AMUL) {
         if (fmt && str) {
+/*JP
             pline(fmt, str, "medallion");
+*/
+            pline(fmt, str, "メダリオン");
             makeknown(AMULET_OF_REFLECTION);
         }
         return TRUE;
     } else if (EReflecting & W_ARM) {
         if (fmt && str)
+/*JP
             pline(fmt, str, uskin ? "luster" : "armor");
+*/
+            pline(fmt, str, uskin ? "つや" : "鎧");
         return TRUE;
     } else if (gy.youmonst.data == &mons[PM_SILVER_DRAGON]) {
         if (fmt && str)
+/*JP
             pline(fmt, str, "scales");
+*/
+            pline(fmt, str, "鱗");
         return TRUE;
     }
     return FALSE;
@@ -2925,15 +3176,28 @@ mon_consume_unstone(
         long save_quan = obj->quan;
 
         obj->quan = 1L;
+#if 0 /*JP:T*/
         pline_mon(mon, "%s %s %s.", Monnam(mon),
               ((obj->oclass == POTION_CLASS) ? "quaffs"
                : (obj->otyp == TIN) ? "opens and eats the contents of"
                  : "eats"),
               distant_name(obj, doname));
+#else
+        pline_mon(mon, "%sは%sを%s．", Monnam(mon),
+              distant_name(obj, doname),
+              ((obj->oclass == POTION_CLASS) ? "飲んだ"
+               : (obj->otyp == TIN) ? "開けて中身を食べた"
+                 : "食べた"));
+#endif
         obj->quan = save_quan;
     } else if (!Deaf)
+#if 0 /*JP:T*/
         You_hear("%s.",
                  (obj->oclass == POTION_CLASS) ? "drinking" : "chewing");
+#else
+        You_hear("%sという音を聞いた．",
+                 (obj->otyp == POT_ACID) ? "ゴクン" : "クチャクチャ");
+#endif
 
     m_useup(mon, obj);
     /* obj is now gone */
@@ -2956,7 +3220,10 @@ mon_consume_unstone(
     }
     if (stoning && vis) {
         if (Hallucination)
+/*JP
             pline("What a pity - %s just ruined a future piece of art!",
+*/
+            pline("なんてことだ！%sは芸術作品になれたかもしれないのに！",
                   mon_nam(mon));
         else
             pline_mon(mon, "%s seems limber!", Monnam(mon));
@@ -3112,8 +3379,13 @@ muse_unslime(
     boolean vis = canseemon(mon), res = TRUE;
 
     if (vis)
+#if 0 /*JP:T*/
         pline_mon(mon, "%s starts turning %s.", Monnam(mon),
               green_mon(mon) ? "into ooze" : hcolor(NH_GREEN));
+#else
+        pline_mon(mon, "%sは%sになりはじめた．", Monnam(mon),
+              green_mon(mon) ? "スライム" : hcolor(NH_GREEN));
+#endif
     /* -4 => sliming, causes quiet loss of enhanced speed */
     mon_adjust_speed(mon, -4, (struct obj *) 0);
 
@@ -3122,8 +3394,12 @@ muse_unslime(
 
         if (mon->mx == trap->tx && mon->my == trap->ty) {
             if (vis)
+#if 0 /*JP:T*/
                 pline("%s triggers %s fire trap!", Mnam,
                       trap->tseen ? "the" : "a");
+#else
+                pline("%sは炎の罠を発動させた！", Mnam);
+#endif
         } else {
             remove_monster(mon->mx, mon->my);
             newsym(mon->mx, mon->my);
@@ -3132,17 +3408,25 @@ muse_unslime(
                 worm_move(mon);
             newsym(mon->mx, mon->my);
             if (vis)
+#if 0 /*JP:T*/
                 pline("%s %s %s %s fire trap!", Mnam,
                       vtense(fakename[0], locomotion(mon->data, "move")),
                       is_floater(mon->data) ? "over" : "onto",
                       trap->tseen ? "the" : "a");
+#else
+                pline("%sは炎の罠に飛び込んだ！", Mnam);
+#endif
         }
         (void) mintrap(mon, FORCETRAP);
     } else if (otyp == STRANGE_OBJECT) {
         /* monster is using fire breath on self */
         if (vis)
+#if 0 /*JP:T*/
             pline_mon(mon, "%s.",
                       monverbself(mon, Monnam(mon), "breath", "fire on"));
+#else
+            pline_mon(mon, "%sは自分自身に火をはいた．", Monnam(mon));
+#endif
         if (!rn2(3))
             mon->mspec_used = rn1(10, 5);
         /* -21 => monster's fire breath; 1 => # of damage dice */
@@ -3151,7 +3435,10 @@ muse_unslime(
         mreadmsg(mon, obj);
         if (mon->mconf) {
             if (cansee(mon->mx, mon->my))
+/*JP
                 pline("Oh, what a pretty fire!");
+*/
+                pline("あら、なんてかわいい火だ！");
             if (vis)
                 trycall(obj);
             m_useup(mon, obj); /* after trycall() */
@@ -3218,11 +3505,19 @@ muse_unslime(
                    for pacifist conduct); xkilled()'s message would say
                    "You killed/destroyed <mon>" so give our own message */
                 if (vis)
+#if 0 /*JP:T*/
                     pline_mon(mon, "%s is %s by the fire!", Monnam(mon),
                           nonliving(mon->data) ? "destroyed" : "killed");
+#else
+                    pline_mon(mon, "%sは火で%sされた！", Monnam(mon),
+                          nonliving(mon->data) ? "倒" : "殺");
+#endif
                 xkilled(mon, XKILL_NOMSG | XKILL_NOCONDUCT);
             } else
+/*JP
                 monkilled(mon, "fire", AD_FIRE);
+*/
+                monkilled(mon, "火", AD_FIRE);
         } else {
             /* non-fatal damage occurred */
             if (vis)
