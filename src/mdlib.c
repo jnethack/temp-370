@@ -58,6 +58,9 @@ static boolean date_via_env = FALSE;
 extern unsigned long md_ignored_features(void);
 extern const char *datamodel(int);
 char *version_id_string(char *, size_t, const char *) NONNULL NONNULLPTRS;
+#if 1 /*JP:T*/
+char *jversion_id_string(char *outbuf, const char *build_date);
+#endif
 char *bannerc_string(char *, size_t, const char *) NONNULL NONNULLPTRS;
 int case_insensitive_comp(const char *, const char *) NONNULLPTRS;
 
@@ -342,6 +345,24 @@ version_id_string(char *outbuf, size_t bufsz, const char *build_date)
              date_via_env ? "revision" : "build", build_date);
     return outbuf;
 }
+
+#if 1 /*JP*/
+char *
+jversion_id_string(char *outbuf, const char *build_date)
+{
+    char subbuf[64], versbuf[64];
+
+    subbuf[0] = '\0';
+#ifdef BETA
+    Strcat(subbuf, " Beta");
+#endif
+
+    Sprintf(outbuf, "%s JNetHack%s Version %s-%d.%d.", PORT_ID,
+            subbuf, mdlib_version_string(versbuf, "."), JVERSION_MAJOR, JVERSION_MINOR,
+            date_via_env ? "revision" : "build", build_date);
+    return outbuf;
+}
+#endif
 
 /* still within #if MAKDEFS_C || FOR_RUNTIME */
 
