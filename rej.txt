@@ -134,12 +134,6 @@ dbridge.c:
             Strcpy(killer.name, "closing drawbridge");
             Strcpy(killer.name, "閉じていく跳ね橋に狭まれて");
 dbridge.c:
-                You_hear("a loud *SPLASH*!");
-                You_hear("大きなバッシャーンという音を聞いた！");
-dbridge.c:
-                You_hear("a loud *SPLASH*!");
-                You_hear("大きなバッシャーンという音を聞いた！");
-dbridge.c:
             You_hear("a loud *CRASH*!");
             You_hear("大きなガシャーンという音を聞いた！");
 dbridge.c:

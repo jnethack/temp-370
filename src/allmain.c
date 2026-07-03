@@ -946,9 +946,15 @@ welcome(boolean new_game) /* false => restoring an old game */
         Sprintf(eos(buf), " %s", genders[currentgend].adj);
 */
         Sprintf(eos(buf), "の%s", genders[currentgend].adj);
+#if 0 /*JP:T*/
     Sprintf(eos(buf), " %s %s", gu.urace.adj,
             (currentgend && gu.urole.name.f) ? gu.urole.name.f
                                              : gu.urole.name.m);
+#else
+    Sprintf(eos(buf), " %s%s", gu.urace.adj,
+            (currentgend && gu.urole.name.f) ? gu.urole.name.f
+                                             : gu.urole.name.m);
+#endif
 
 #if 0 /*JP*/
     pline(new_game ? "%s %s, welcome to NetHack!  You are a%s."

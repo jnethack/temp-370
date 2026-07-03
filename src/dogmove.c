@@ -1594,7 +1594,10 @@ quickmimic(struct monst *mtmp)
                 seeloc ? "を見た" : "に気づいた");
 #endif
         else
+/*JP
             You("sense that %s feels rather %s-ish.", buf, what);
+*/
+            You("%が%sっぽくなったような気がした．", buf, what);
 
         display_nhwindow(WIN_MAP, TRUE);
     }
