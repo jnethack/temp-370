@@ -1010,7 +1010,11 @@ destroy_drawbridge(coordxy x, coordxy y)
                           lava ? hliquid("溶岩") : "堀");
 #endif
             else
+#if 0 /*JP:T*/
                 You_hear("a loud *SPLASH*!");  /* Deaf-aware */
+#else
+                You_hear("大きなバッシャーンという音を聞いた！");  /* Deaf-aware */
+#endif
         } else {
             if (cansee(x, y) || u_at(x, y))
 #if 0 /*JP:T*/
@@ -1021,7 +1025,11 @@ destroy_drawbridge(coordxy x, coordxy y)
                           lava ? hliquid("溶岩") : "堀");
 #endif
             else
+#if 0 /*JP:T*/
                 You_hear("a loud *SPLASH*!");  /* Deaf-aware */
+#else
+                You_hear("大きなバッシャーンという音を聞いた！");  /* Deaf-aware */
+#endif
         }
         lev1->typ = lava ? LAVAPOOL : MOAT;
         lev1->drawbridgemask = 0;

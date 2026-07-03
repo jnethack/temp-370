@@ -213,7 +213,10 @@ do_statusline2(void)
 
     /* time/move counter */
     if (flags.time)
+/*JP
         Sprintf(tmmv, "T:%ld", svm.moves);
+*/
+        Sprintf(tmmv, "歩:%ld", svm.moves);
     else
         tmmv[0] = '\0';
     tln = strlen(tmmv);
@@ -549,7 +552,10 @@ describe_level(
         Sprintf(buf, "%s", svd.dungeons[u.uz.dnum].dname);
         addbranch = FALSE;
     } else if (In_quest(&u.uz)) {
+/*JP
         Sprintf(buf, "Home %d", dunlev(&u.uz));
+*/
+        Sprintf(buf, "故郷 %d", dunlev(&u.uz));
     } else if (In_endgame(&u.uz)) {
         /* [3.6.2: this used to be "Astral Plane" or generic "End Game"] */
         (void) endgamelevelname(buf, depth(&u.uz));
@@ -561,14 +567,25 @@ describe_level(
     } else {
         /* ports with more room may expand this one */
         if (!addbranch)
+#if 0 /*JP:T*/
             Sprintf(buf, "%s:%-2d", /* "Dlvl:n" (grep fodder) */
                     In_tutorial(&u.uz) ? "Tutorial" : "Dlvl", depth(&u.uz));
+#else
+            Sprintf(buf, "%s:%-2d", /* "Dlvl:n" (grep fodder) */
+                    In_tutorial(&u.uz) ? "説明" : "地下", depth(&u.uz));
+#endif
         else
+/*JP
             Sprintf(buf, "level %d", depth(&u.uz));
+*/
+            Sprintf(buf, "地下%d階", depth(&u.uz));
         ret = 0;
     }
     if (addbranch) {
+/*JP
         Sprintf(eos(buf), ", %s", svd.dungeons[u.uz.dnum].dname);
+*/
+        Sprintf(eos(buf), ",%s", svd.dungeons[u.uz.dnum].dname);
         (void) strsubst(buf, "The ", "the ");
     }
     if (addspace)
@@ -845,7 +862,10 @@ static struct istat_s initblstats[MAXBLSTATS] = {
 */
     INIT_BLSTAT("armor-class", " 鎧:%s", ANY_INT, 10, BL_AC),
     INIT_BLSTAT("HD", " HD:%s", ANY_INT, 10, BL_HD),
+/*JP
     INIT_BLSTAT("time", " T:%s", ANY_LONG, 30, BL_TIME),
+*/
+    INIT_BLSTAT("time", " 歩:%s", ANY_LONG, 30, BL_TIME),
     /* hunger used to be 'ANY_UINT'; see note below in bot_via_windowport() */
     INIT_BLSTAT("hunger", " %s", ANY_INT, 20, BL_HUNGER),
 /*JP
@@ -4420,15 +4440,9 @@ status_hilite_menu_add(int origfld)
                  || fld == BL_TITLE) ? "選んで" : "入力して");
 #endif
         if (fld == BL_CAP) {
-#if 0 /*JP*/
             int rv = query_arrayvalue(qry_buf,
                                       enc_stat,
                                       SLT_ENCUMBER, OVERLOADED + 1);
-#else
-            int rv = query_arrayvalue(qry_buf,
-                                      enc_stat_opt,
-                                      SLT_ENCUMBER, OVERLOADED + 1);
-#endif
 
             if (rv < SLT_ENCUMBER)
                 goto choose_behavior;

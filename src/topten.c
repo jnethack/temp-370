@@ -1216,7 +1216,11 @@ outentry(int rank, struct toptenentry *t1, boolean so)
     /* Quit, starved, ascended, and escaped contain no second line */
     if (second_line) {
         bp = eos(linebuf);
+#if 0 /*JP:T*/
         Sprintf(bp, "  %c%s.", highc(*(t1->death)), t1->death + 1);
+#else
+        Sprintf(bp, "%s", t1->death + 1);
+#endif
         /* fix up "Killed by Mr. Asidonhopo; the shopkeeper"; that starts
            with a comma but has it changed to semi-colon to keep the comma
            out of 'record'; change it back for display */

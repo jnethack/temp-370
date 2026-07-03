@@ -2163,7 +2163,7 @@ invoke_create_ammo(struct obj *obj)
                                aobjnam(otmp, "fall"), (char *) 0);
 #else
     otmp = hold_another_object(otmp, "突然%sが落ちた．",
-                                       xname(otmp), 0);
+                               xname(otmp), (char *) 0);
 #endif
     nhUse(otmp);
     return ECMD_TIME;
@@ -2676,7 +2676,6 @@ static const struct {
     { "青い", CLR_BLUE },
     { "マゼンタ色の", CLR_MAGENTA },
     { "シアン色の", CLR_CYAN },
-    { "灰色の", CLR_GRAY },
     { "灰色の", CLR_GRAY },
     { "オレンジ色の", CLR_ORANGE },
     { "淡緑色の", CLR_BRIGHT_GREEN },

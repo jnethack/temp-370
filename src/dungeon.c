@@ -2597,6 +2597,11 @@ query_annotation(d_level *lev)
 #else
         Sprintf(tmpbuf, "現在のメモ「%.30s%s」を何に書き換える？", mptr->custom,
                 strlen(mptr->custom) > 30 ? "..." : "");
+        {
+            int max = 30 - offset_in_kanji((const unsigned char *) mptr->custom, 30);
+            Sprintf(tmpbuf, "現在のメモ「%.*s%s」を何に書き換える？",
+                    max, mptr->custom, strlen(mptr->custom) > (unsigned) max ? "…" : "");
+        }
 #endif
         getlin(tmpbuf, nbuf);
     } else

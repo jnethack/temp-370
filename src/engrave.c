@@ -455,7 +455,7 @@ read_engr_at(coordxy x, coordxy y)
             You("%s: \"%s\"%s", (Blind) ? "feel the words" : "read", et,
                 endpunct);
 #else
-            You("%s：「%s」", (Blind) ? "次のように感じた" : "読んだ", et,
+            You("%s：「%s%s」", (Blind) ? "次のように感じた" : "読んだ", et,
                 endpunct);
 #endif
             Strcpy(ep->engr_txt[remembered_text], ep->engr_txt[actual_text]);
@@ -1408,8 +1408,8 @@ doengrave(void)
             (de->type == ENGRAVE && de->otmp->quan > 1L) ? "1 of " : "",
             doname(de->otmp));
 #else
-        You("%sで%sに%s．", doname(de->otmp), de->everb, 
-            jpast(de->eloc));
+        You("%sで%sに%s．", doname(de->otmp), de->eloc, 
+            jpast(de->everb));
 #endif
     else
 #if 0 /*JP:T*/

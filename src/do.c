@@ -1509,7 +1509,11 @@ dodown(void)
         return ECMD_TIME; /* came out of hiding; need '>' again to go down */
     }
 
+#if 0 /*JP:T*/
     if (u_stuck_cannot_go("down"))
+#else
+    if (u_stuck_cannot_go("下りる"))
+#endif
         return ECMD_TIME;
 
     if (!stairs_down && !ladder_down) {
@@ -1652,7 +1656,11 @@ doup(void)
         return ECMD_OK;
     }
 
+#if 0 /*JP:T*/
     if (u_stuck_cannot_go("up"))
+#else
+    if (u_stuck_cannot_go("上がる"))
+#endif
         return ECMD_TIME;
 
     if (near_capacity() > SLT_ENCUMBER) {

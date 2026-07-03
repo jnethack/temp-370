@@ -1811,6 +1811,7 @@ getobj_hands_txt(const char *action, char *qbuf)
 struct obj *
 getobj(
     const char *word,       /* usually a direct verb such as "drop" */
+/*JP:JNHでも英語のまま受ける*/
     int (*obj_ok)(OBJ_P),   /* callback to classify an object's suitability */
     unsigned int ctrlflags) /* some control to fine-tune the behavior */
 {

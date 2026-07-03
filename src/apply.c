@@ -60,7 +60,10 @@ staticfn boolean get_valid_polearm_position(coordxy, coordxy);
 staticfn boolean find_poleable_mon(coord *);
 
 static const char
+/*JP
     no_elbow_room[] = "don't have enough elbow-room to maneuver.";
+*/
+    no_elbow_room[] = "それをするだけのゆとりがない．";
 
 void
 do_blinding_ray(struct obj *obj)
@@ -934,8 +937,13 @@ m_unleash(struct monst *mtmp, boolean feedback)
 
     if (feedback) {
         if (canseemon(mtmp))
+#if 0 /*JP:T*/
             pline_mon(mtmp, "%s pulls free of %s leash!",
                       Monnam(mtmp), mhis(mtmp));
+#else
+            pline_mon(mtmp, "%sは紐を引っぱって逃れた！",
+                      Monnam(mtmp));
+#endif
         else
 /*JP
             Your("leash falls slack.");
@@ -1234,8 +1242,13 @@ check_leash(coordxy x, coordxy y)
                     if (!DEADMONSTER(mtmp))
                         u.uconduct.killer = save_pacifism;
                 } else {
+#if 0 /*JP:T*/
                     pline_mon(mtmp, "%s is choked by the leash!",
                               Monnam(mtmp));
+#else
+                    pline_mon(mtmp, "%sは紐で首を絞められた！",
+                              Monnam(mtmp));
+#endif
                     /* tameness eventually drops to 1 here (never 0) */
                     if (mtmp->mtame && rn2(mtmp->mtame))
                         mtmp->mtame--;
@@ -1359,7 +1372,10 @@ use_mirror(struct obj *obj)
                         pline("おゎ！あなたは動けなくなった！");
                     if (!Hallucination || !rn2(4)) {
                         nomul(-rnd(MAXULEV + 6 - u.ulevel));
+/*JP
                         gm.multi_reason = "gazing into a mirror";
+*/
+                        gm.multi_reason = "鏡に反射した視線で硬直している間に";
                     }
                     gn.nomovemsg = 0; /* default, "you can move again" */
                 }
@@ -1557,8 +1573,13 @@ use_mirror(struct obj *obj)
 */
                 You("%sからの明らかな反応は識別できなかった．", mon_nam(mtmp));
             else
+#if 0 /*JP:T*/
                 You_feel(
                        "a bit silly gesturing the mirror in that direction.");
+#else
+                You_feel(
+                       "鏡をその方向に向けるのはちょっとおかしな行動だと感じた．");
+#endif
             do_react = FALSE;
         }
         if (do_react) {
@@ -3483,10 +3504,11 @@ use_stone(struct obj *tstone)
         observe_object(tstone);
     known = (tstone->otyp == TOUCHSTONE && tstone->dknown
               && objects[TOUCHSTONE].oc_name_known);
-/*JP
+#if 0 /*JP:T*/
     Sprintf(stonebuf, "rub on the stone%s", plur(tstone->quan));
-*/
+#else /* getobj()の引数なので英語のまま */
     Sprintf(stonebuf, "rub on the stone");
+#endif
     /* when the touchstone is fully known, don't bother listing extra
        junk as likely candidates for rubbing */
     if ((obj = getobj(stonebuf, known ? touchstone_ok : any_obj_ok,

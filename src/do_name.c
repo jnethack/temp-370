@@ -1637,7 +1637,7 @@ static NEARDATA const char *const hcolors[] = {
     "apocyan", "infra-pink", "opalescent", "violant", "tuneless",
     "viridian", "aureolin", "cinnabar", "purpurin", "gamboge", "madder",
     "bistre", "ecru", "fulvous", "tekhelet", "selective yellow",
-    #else /*JP:TODO:追加分は未訳*/
+#else /*JP:TODO:追加分は未訳*/
     "紫外色の", "赤外色の", "青色がかったオレンジ色の", "赤みがかった緑色の", "暗い白色の",
     "明るい黒の", "水色がかったピンク色の", "塩辛い", "甘い", "すっぱい", "苦い",
     "しま模様の", "らせん状の", "波状の", "格子模様状の", "チェック状の", "放射状の", "ペーズリー模様の",
