@@ -1273,14 +1273,24 @@ dig_up_grave(coord *cc)
         break;
     case 2:
         if (!Blind)
+#if 0 /*JP:T*/
             pline("%s!", Hallucination ? "Dude!  The living dead"
                                        : "The grave's owner is very upset");
+#else
+            pline("%s！", Hallucination ? "ゾンビがくるりと輪を描いた"
+                                        : "墓の所有者はとても驚いた");
+#endif
         (void) makemon(mkclass(S_ZOMBIE, 0), dig_x, dig_y, MM_NOMSG);
         break;
     case 3:
         if (!Blind)
+#if 0 /*JP:T*/
             pline("%s!", Hallucination ? "I want my mummy"
                                        : "You've disturbed a tomb");
+#else
+            pline("%s！", Hallucination ? "マミーが必要だ"
+                                       : "墓を荒してしまった");
+#endif
         (void) makemon(mkclass(S_MUMMY, 0), dig_x, dig_y, MM_NOMSG);
         break;
     default:
@@ -1462,8 +1472,14 @@ use_pick_axe2(struct obj *obj)
                 /* you ought to be able to let go; tough luck */
                 /* (maybe `move_into_trap()' would be better) */
                 nomul(-d(2, 2));
+/*JP
                 gm.multi_reason = "stuck in a spider web";
+*/
+                gm.multi_reason = "くもの巣に捕まっている間に";
+/*JP
                 gn.nomovemsg = "You pull free.";
+*/
+                gn.nomovemsg = "ひきはなした．";
             } else if (lev->typ == IRONBARS) {
 /*JP
                 pline("Clang!");
@@ -1471,9 +1487,15 @@ use_pick_axe2(struct obj *obj)
                 pline("ガツン！");
                 wake_nearby(FALSE);
             } else if (IS_WATERWALL(lev->typ)) {
+/*JP
                 pline("Splash!");
+*/
+                pline("バシャッ！");
             } else if (lev->typ == LAVAWALL) {
+/*JP
                 pline("Splash!");
+*/
+                pline("バシャッ！");
                 (void) fire_damage(uwep, FALSE, rx, ry);
             } else if (IS_TREE(lev->typ)) {
 /*JP

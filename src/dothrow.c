@@ -881,7 +881,10 @@ hurtle_step(genericptr_t arg, coordxy x, coordxy y)
 */
             You("鉄の棒にぶちあたった．いてっ！");
         } else if ((obj = sobj_at(BOULDER, x, y)) != 0) {
+/*JP
             why = "bumping into a boulder";
+*/
+            why = "岩にぶちあたって";
 /*JP
             You("bump into a %s.  Ouch!", xname(obj));
 */
@@ -2531,7 +2534,8 @@ thitmonst(
                digests(md) ? "体の" : is_whirly(md) ? "流れの" : "");
         monname = mon_nam(mon);
         pline("%sは%sの%s中へ消えた．", xname(obj), monname, trail);
-#endif    } else {
+#endif
+    } else {
         tmiss(obj, mon, TRUE);
     }
 

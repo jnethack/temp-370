@@ -715,7 +715,7 @@ jrndm_replace(char *c)
           cc[1] = rn2(10) + 0x30;
         else if(cc[1] <= 0x5A) /* Ａ～Ｚ */
           cc[1] = rn2(26) + 0x41;
-        else if(cc[2] <= 0x7A) /* ａ～ｚ */
+        else if(cc[1] <= 0x7A) /* ａ～ｚ */
           cc[1] = rn2(26) + 0x61;
         break;
       case 0x24:

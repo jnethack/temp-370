@@ -1,19 +1,4 @@
 apply.c:
-    "don't have enough elbow-room to maneuver.";
-    "それをするだけのゆとりがない．";
-apply.c:
-            pline("%s pulls free of %s leash!", Monnam(mtmp), mhis(mtmp));
-            pline("%sは紐を引っぱって逃れた！", Monnam(mtmp));
-apply.c:
-                    pline("%s is choked by the leash!", Monnam(mtmp));
-                    pline("%sは紐で首を絞められた！", Monnam(mtmp));
-apply.c:
-                        multi_reason = "gazing into a mirror";
-                        multi_reason = "鏡に反射した視線で硬直している間に";
-apply.c:
-                You_feel("a bit silly gesturing the mirror in that direction.");
-                You_feel("鏡をその方向に向けるのはちょっとおかしな行動だと感じた．");
-apply.c:
     if (yn(safe_qbuf(qbuf, qbuf, "?", otmp, yname, thesimpleoname, "it"))
     if (yn(safe_qbuf(qbuf, qbuf, "に取りつけますか？", otmp, xname, thesimpleoname, "それ"))
 apply.c:
@@ -67,21 +52,6 @@ apply.c:
 apply.c:
     boolean is_fragile = (!strcmp(OBJ_DESCR(objects[obj->otyp]), "balsa"));
     boolean is_fragile = (!strcmp(OBJ_DESCR(objects[obj->otyp]), "バルサの杖"));
-bones.c:
-            if (yn("Bones file already exists.  Replace it?") == 'y') {
-            if (yn("骨ファイルが既に存在してるよ．  置き換える？") == 'y') {
-bones.c:
-                pline("Insufficient space to create bones file.");
-                pline("骨ファイルを生成するための充分な領域がない．");
-bones.c:
-            if (yn("Get bones?") == 'n') {
-            if (yn("骨を拾う？") == 'n') {
-bones.c:
-            Sprintf(errbuf, "This is bones level '%s', not '%s'!", oldbonesid,
-            Sprintf(errbuf, "この骨のレベルは'%s'であって、'%s'ではない！", oldbonesid,
-bones.c:
-        if (yn("Unlink bones?") == 'n') {
-        if (yn("骨を消す？") == 'n') {
 botl.c:
         Sprintf(expr, "Exp:%d", u.ulevel);
         Sprintf(expr, "経験:%d", u.ulevel);
@@ -133,12 +103,6 @@ dbridge.c:
 dbridge.c:
             Strcpy(killer.name, "closing drawbridge");
             Strcpy(killer.name, "閉じていく跳ね橋に狭まれて");
-dbridge.c:
-                You_hear("a loud *SPLASH*!");
-                You_hear("大きなバッシャーンという音を聞いた！");
-dbridge.c:
-                You_hear("a loud *SPLASH*!");
-                You_hear("大きなバッシャーンという音を聞いた！");
 dbridge.c:
             You_hear("a loud *CRASH*!");
             You_hear("大きなガシャーンという音を聞いた！");
@@ -242,26 +206,8 @@ dig.c:
             pline("A hole appears in the %s.", surface_type);
             pline("%sに穴が現われた．", surface_type);
 dig.c:
-            pline(Hallucination ? "Dude!  The living dead!"
-            pline(Hallucination ? "ゾンビがくるりと輪を描いた！"
-dig.c:
-                                : "The grave's owner is very upset!");
-                                : "墓の所有者はとても驚いた！");
-dig.c:
-            pline(Hallucination ? "I want my mummy!"
-            pline(Hallucination ? "マミーが必要だ！"
-dig.c:
-                                : "You've disturbed a tomb!");
-                                : "墓を荒してしまった！");
-dig.c:
         pline_The("grave seems unused.  Strange....");
         pline("この墓は未使用のようだ．奇妙だ．．．");
-dig.c:
-                multi_reason = "stuck in a spider web";
-                multi_reason = "くもの巣に捕まっている間に";
-dig.c:
-                nomovemsg = "You pull free.";
-                nomovemsg = "ひきはなした．";
 dig.c:
                     pline("You clear some debris from between the pits.");
                     pline("あなたは落し穴の間からごみを取りのぞいた．");
@@ -1978,21 +1924,6 @@ music.c:
 music.c:
     return (!strcmp(termtype, "AT386") || !strcmp(termtype, "xterm"));
     return (!strcmp(termtype, "AT386") || !strcmp(termtype, "xterm") || !strcmp(termtype, "kterm"));
-o_init.c:
-        if ((s = OBJ_DESCR(objects[i])) != 0 && !strcmp(s, "snow boots"))
-        if ((s = OBJ_DESCR(objects[i])) != 0 && !strcmp(s, "雪靴"))
-o_init.c:
-    putstr(tmpwin, 0, "Discoveries");
-    putstr(tmpwin, 0, "発見物一覧");
-o_init.c:
-                putstr(tmpwin, iflags.menu_headings, "Unique items");
-                putstr(tmpwin, iflags.menu_headings, "特殊アイテム");
-o_init.c:
-        unique_items[] = "unique items",
-        unique_items[] = "特殊アイテム",
-o_init.c:
-        Sprintf(buf, "Discovered %s", let_to_name(oclass, FALSE, FALSE));
-        Sprintf(buf, "発見した%s", let_to_name(oclass, FALSE, FALSE));
 pager.c:
         Sprintf(race, "%s ", urace.adj);
         Sprintf(race, "%s", urace.adj);
@@ -2575,42 +2506,6 @@ shk.c:
 shk.c:
             pline("%s!", upstart(trapmsg));
             pline("%sた！", trapmsg);
-shknam.c:
-    { "general store",
-    { "雑貨屋",
-shknam.c:
-    { "used armor dealership",
-    { "中古鎧商会",
-shknam.c:
-    { "second-hand bookstore",
-    { "古書店",
-shknam.c:
-    { "liquor emporium",
-    {"お酒の百貨店",
-shknam.c:
-    { "antique weapons outlet",
-    { "古武器専門小売店",
-shknam.c:
-    { "delicatessen",
-    { "食品店",
-shknam.c:
-    { "jewelers",
-    { "宝石店",
-shknam.c:
-    { "quality apparel and accessories",
-    { "おシャレな洋品店",
-shknam.c:
-    { "hardware store",
-    { "道具屋",
-shknam.c:
-    { "rare books",
-    { "幻の本屋",
-shknam.c:
-    { "health food store",
-    { "健康食品の店",
-shknam.c:
-    { "lighting store",
-    { "照明店",
 sit.c:
         You("notice you have no money!");
         You("お金を持ってないことに気がついた！");
@@ -2818,9 +2713,6 @@ timeout.c:
 timeout.c:
             multi_reason = "hiding from thunderstorm";
             multi_reason = "雷の嵐を避けている時に";
-topten.c:
-        Sprintf(eos(linebuf), "  %c%s.", highc(*(t1->death)), t1->death + 1);
-        Sprintf(action, "%s", t1->death);
 trap.c:
         *const action[] = { "smoulder", "rust", "rot", "corrode" },
         *const action[] = { "くすぶった", "錆びた", "腐った", "腐食した" },
@@ -2999,9 +2891,6 @@ trap.c:
             pline("A cloud of noxious gas billows from %s.", the(xname(obj)));
             pline("有毒ガスが%sから渦まいた．", the(xname(obj)));
 trap.c:
-            poisoned("gas cloud", A_STR, "cloud of poison gas", 15, FALSE);
-            poisoned("ガス雲", A_STR, "ガス雲", 15, FALSE);
-trap.c:
                 multi_reason = "frozen by a trap";
                 multi_reason = "罠で硬直している時に";
 trap.c:
@@ -3091,15 +2980,6 @@ uhitm.c:
 uhitm.c:
             fmt = "That gold was %s!";
             fmt = "金貨は%sだった！";
-weapon.c:
-            pline("%s drops %s.", Monnam(mon), distant_name(obj, doname));
-            pline("%sは%sを置いた．", Monnam(mon), distant_name(obj, doname));
-weapon.c:
-                    pline("%s tries to wield %s.", Monnam(mon), doname(obj));
-                    pline("%sは%sを装備しようとした．", Monnam(mon), doname(obj));
-weapon.c:
-            pline("%s wields %s!", Monnam(mon), doname(obj));
-            pline("%sは%sを装備した！", Monnam(mon), doname(obj));
 wield.c:
             You("are empty %s.", body_part(HANDED));
             You("%sを空けた．", body_part(HAND));
@@ -3145,12 +3025,6 @@ worn.c:
 worn.c:
             Sprintf(buf, "falling off %s", an(u.usteed->data->mname));
             Sprintf(buf, "%sから落ちて", u.usteed->data->mname);
-write.c:
-            You("don't know if that %s is blank or not.", typeword);
-            You("%sが白紙かどうかわからない！", typeword);
-write.c:
-                Sprintf(namebuf, "%s was here!", plname);
-                Sprintf(namebuf, "%sはここにあり！", plname);
 zap.c:
     "are blinded by the flash!";
     "まばゆい光で目が見えなくなった！";

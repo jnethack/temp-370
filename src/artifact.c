@@ -2677,7 +2677,6 @@ static const struct {
     { "マゼンタ色の", CLR_MAGENTA },
     { "シアン色の", CLR_CYAN },
     { "灰色の", CLR_GRAY },
-    { "灰色の", CLR_GRAY },
     { "オレンジ色の", CLR_ORANGE },
     { "淡緑色の", CLR_BRIGHT_GREEN },
     { "黄色い", CLR_YELLOW },

@@ -4420,15 +4420,9 @@ status_hilite_menu_add(int origfld)
                  || fld == BL_TITLE) ? "選んで" : "入力して");
 #endif
         if (fld == BL_CAP) {
-#if 0 /*JP*/
             int rv = query_arrayvalue(qry_buf,
                                       enc_stat,
                                       SLT_ENCUMBER, OVERLOADED + 1);
-#else
-            int rv = query_arrayvalue(qry_buf,
-                                      enc_stat_opt,
-                                      SLT_ENCUMBER, OVERLOADED + 1);
-#endif
 
             if (rv < SLT_ENCUMBER)
                 goto choose_behavior;

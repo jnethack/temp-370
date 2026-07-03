@@ -790,7 +790,11 @@ dodiscovered(void) /* free after Robert Viduya */
     sortindx = strchr(disco_order_let, flags.discosort) - disco_order_let;
 
     tmpwin = create_nhwindow(NHW_TEXT);
+#if 0 /*JP:T*/
     Sprintf(buf, "Discoveries, %s", disco_orders_descr[sortindx]);
+#else
+    Sprintf(buf, "発見物一覧：%s", disco_orders_descr[sortindx]);
+#endif
     putstr(tmpwin, 0, buf);
     putstr(tmpwin, 0, "");
 
@@ -808,8 +812,13 @@ dodiscovered(void) /* free after Robert Viduya */
         if (objects[uidx].oc_name_known
             || (objects[uidx].oc_encountered && uidx != AMULET_OF_YENDOR)) {
             if (!dis++)
+#if 0 /*JP:T*/
                 putstr(tmpwin, iflags.menu_headings.attr,
                        "Unique items or Relics");
+#else
+                putstr(tmpwin, iflags.menu_headings.attr,
+                       "特殊アイテム");
+#endif
             ++uniq_ct;
             disco_fmt_uniq(uidx, buf);
             putstr(tmpwin, 0, buf);
@@ -911,7 +920,10 @@ doclassdisco(void)
         havent_discovered_any[] = "haven't discovered any %s yet.",
 */
         havent_discovered_any[] = "まだ何も%sを発見していない．",
+/*JP
         unique_items[] = "unique items or relics",
+*/
+        unique_items[] = "特殊アイテム",
 /*JP
         artifact_items[] = "artifacts";
 */
@@ -1105,10 +1117,17 @@ doclassdisco(void)
         /* this should never happen but has been observed via the fuzzer */
         if (oclass == MAXOCLASSES)
             impossible("doclassdisco: invalid object class '%s'", visctrl(c));
+#if 0 /*JP:T*/
         Sprintf(buf, "Discovered %s in %s", let_to_name(oclass, FALSE, FALSE),
                 (flags.discosort == 'o') ? "order of discovery"
                 : (flags.discosort == 's') ? "'sortloot' order"
                   : "alphabetical order");
+#else
+        Sprintf(buf, "発見した%s：%s", let_to_name(oclass, FALSE, FALSE),
+                (flags.discosort == 'o') ? "発見順"
+                : (flags.discosort == 's') ? "'sortloot'順"
+                  : "辞書順");
+#endif
         putstr(tmpwin, 0, buf); /* skip iflags.menu_headings */
         sorted_ct = 0;
         for (i = svb.bases[(int) oclass]; i <= svb.bases[oclass + 1] - 1;

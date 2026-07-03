@@ -817,7 +817,11 @@ possibly_unwield(struct monst *mon, boolean polyspot)
         mon->weapon_check = NO_WEAPON_WANTED;
         /* if we're going to call distant_name(), do so before extract_self */
         if (cansee(mon->mx, mon->my)) {
+#if 0 /*JP:T*/
             pline_mon(mon, "%s drops %s.", Monnam(mon), distant_name(obj, doname));
+#else
+            pline_mon(mon, "%sは%sを置いた．", Monnam(mon), distant_name(obj, doname));
+#endif
             newsym(mon->mx, mon->my);
         }
         obj_extract_self(obj);
@@ -944,7 +948,10 @@ mon_wield_item(struct monst *mon)
                           xname(obj));
 #endif
                 } else {
+/*JP
                     pline_mon(mon, "%s tries to wield %s.", Monnam(mon), doname(obj));
+*/
+                    pline_mon(mon, "%sは%sを装備しようとした．", Monnam(mon), doname(obj));
 /*JP
                     pline("%s %s!", Yname2(mw_tmp), welded_buf);
 */
@@ -962,9 +969,15 @@ mon_wield_item(struct monst *mon)
             boolean newly_welded;
             const struct throw_and_return_weapon *arw;
 
+#if 0 /*JP:T*/
             pline_mon(mon, "%s wields %s%c",
                       Monnam(mon), doname(obj),
                       exclaim ? '!' : '.');
+#else
+            pline_mon(mon, "%sは%sを装備した%s",
+                      Monnam(mon), doname(obj),
+                      exclaim ? "！" : "．");
+#endif
             if ((arw = autoreturn_weapon(obj)) != 0 && arw->tethered != 0)
                 pline_mon(mon, "%s secures the tether on %s.", Monnam(mon),
                           the(xname(obj)));

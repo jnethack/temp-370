@@ -128,7 +128,11 @@ dowrite(struct obj *pen)
 #endif
     if (Blind) {
         if (!paper->dknown) {
+#if 0 /*JP:T*/
             You("don't know whether that %s is blank or not.", typeword);
+#else
+            You("%sが白紙かどうかわからない．", typeword);
+#endif
             return ECMD_OK;
         } else if (paper->oclass == SPBOOK_CLASS) {
             /* can't write a magic book while blind */
@@ -397,7 +401,10 @@ dowrite(struct obj *pen)
                 Strcpy(namebuf, OBJ_DESCR(objects[new_obj->otyp]));
                 wipeout_text(namebuf, (6 + MAXULEV - u.ulevel) / 6, 0);
             } else
+/*JP
                 Sprintf(namebuf, "%s was here!", svp.plname);
+*/
+                Sprintf(namebuf, "%sはここにあり！", svp.plname);
 /*JP
             You("write \"%s\" and the scroll disappears.", namebuf);
 */

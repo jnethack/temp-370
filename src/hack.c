@@ -2776,7 +2776,11 @@ slippery_ice_fumbling(void)
     struct monst *iceskater = u.usteed ? u.usteed : &gy.youmonst;
 
     if (on_ice) {
+#if 0 /*JP:T*/
         if ((uarmf && objdescr_is(uarmf, "snow boots"))
+#else
+        if ((uarmf && objdescr_is(uarmf, "雪靴"))
+#endif
             || resists_cold(iceskater) || Flying
             || is_floater(iceskater->data) || is_clinger(iceskater->data)
             || is_whirly(iceskater->data)) {

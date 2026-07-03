@@ -423,7 +423,11 @@ savebones(int how, time_t when, struct obj *corpse)
     if (nhfp) {
         close_nhfile(nhfp);
         if (wizard) {
+#if 0 /*JP:T*/
             if (y_n("Bones file already exists.  Replace it?") == 'y') {
+#else
+            if (y_n("骨ファイルが既に存在してるよ．  置き換える？") == 'y') {
+#endif
                 if (delete_bonesfile(&u.uz))
                     goto make_bones;
                 else
@@ -679,7 +683,11 @@ getbones(void)
     } else {
         ok = TRUE;
         if (wizard) {
+#if 0 /*JP:T*/
             if (y_n("Get bones?") == 'n') {
+#else
+            if (y_n("骨を拾う？") == 'n') {
+#endif
                 close_nhfile(nhfp);
                 compress_bonesfile();
                 program_state.reading_bonesfile = 0;
@@ -704,8 +712,13 @@ getbones(void)
         if (strcmp(bonesid, oldbonesid) != 0) {
             char errbuf[BUFSZ];
 
+#if 0 /*JP:T*/
             Sprintf(errbuf, "This is bones level '%s', not '%s'!",
                     oldbonesid, bonesid);
+#else
+            Sprintf(errbuf, "この骨のレベルは'%s'であって、'%s'ではない！",
+                    oldbonesid, bonesid);
+#endif
             if (wizard) {
                 pline1(errbuf);
                 ok = FALSE; /* won't die of trickery */
@@ -748,7 +761,11 @@ getbones(void)
     u.uroleplay.numbones++;
 
     if (wizard) {
+#if 0 /*JP:T*/
         if (y_n("Unlink bones?") == 'n') {
+#else
+        if (y_n("骨を消す？") == 'n') {
+#endif
             compress_bonesfile();
             return ok;
         }

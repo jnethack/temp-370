@@ -1318,7 +1318,10 @@ adjabil(int oldlevel, int newlevel)
                     You("%sような気がした！", abil->losestr);
 /*JP:この条件は満さないはず．*/
                 else if (*(abil->gainstr))
+/*JP
                     You_feel("less %s!", abil->gainstr);
+*/
+                    You("%sような気がした！", abil->gainstr);
             }
         }
         if (prevabil != *(abil->ability)) /* it changed */
