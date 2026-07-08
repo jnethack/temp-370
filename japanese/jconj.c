@@ -375,8 +375,10 @@ jconj_adj(const char *jadj)
     int len;
     static unsigned char tmp[1024];
 
+    len = strlen(jadj);
+    if (len < cl || len > 1000) /* 安全用 */
+        return jadj;
     strcpy((char *)tmp, jadj);
-    len = strlen((char *)tmp);
 
     if(!strcmp((char *)tmp + len - cl, "い")){
         strcpy((char *)tmp + len - cl, "く");
