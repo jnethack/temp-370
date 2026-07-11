@@ -605,16 +605,21 @@ const struct Role roles[NUM_ROLES+1] = {
         { "忍者", "くノ一" }, /* secret society */
         { "城主", 0 },          /* heads a castle */
         { "領主", 0 },         /* has a territory */
-        { "領主", 0 },        /* heads a province */
-        { "大名", "腰元" },         /* a samurai lord */
+        { "国主", 0 },        /* heads a province */
+        { "大名", 0 },         /* a samurai lord */
         { "公家", 0 },           /* Noble of the Court */
-        { "公家", "大奥" } },       /* supreme commander, warlord */
+        { "将軍", 0 } },       /* supreme commander, warlord */
       "_天照大神", "雷神", "須佐之男", /* Japanese */
 #endif
       "Sam",
 #if 0 /*JP:T*/
+#if 0 /*JP:T*/
       "the Castle of the Taro Clan",
       "the Shogun's Castle",
+#else
+      "太郎一族の城",
+      "将軍の城",
+#endif
 #else
       "太郎一族の城",
       "将軍の城",
@@ -2895,7 +2900,11 @@ genl_player_setup(int screenheight)
                     /* pick a random role */
                     k = pick_role(RACE, GEND, ALGN, PICK_RANDOM);
                     if (k < 0) {
+#if 0 /*JP:T*/
                         pline("Incompatible role!");
+#else
+                        pline("選べない職業！");
+#endif
                         k = randrole(FALSE);
                     }
                 } else {
@@ -2979,7 +2988,11 @@ genl_player_setup(int screenheight)
                 if (pick4u == 'y' || pick4u == 'a' || RACE == ROLE_RANDOM) {
                     k = pick_race(ROLE, GEND, ALGN, PICK_RANDOM);
                     if (k < 0) {
+#if 0 /*JP:T*/
                         pline("Incompatible race!");
+#else
+                        pline("選べない種族！");
+#endif
                         k = randrace(ROLE);
                     }
                 } else { /* pick4u == 'n' */
@@ -3070,7 +3083,11 @@ genl_player_setup(int screenheight)
                 if (pick4u == 'y' || pick4u == 'a' || GEND == ROLE_RANDOM) {
                     k = pick_gend(ROLE, RACE, ALGN, PICK_RANDOM);
                     if (k < 0) {
+#if 0 /*JP:T*/
                         pline("Incompatible gender!");
+#else
+                        pline("選べない性別！");
+#endif
                         k = randgend(ROLE, RACE);
                     }
                 } else { /* pick4u == 'n' */
@@ -3161,7 +3178,11 @@ genl_player_setup(int screenheight)
                 if (pick4u == 'y' || pick4u == 'a' || ALGN == ROLE_RANDOM) {
                     k = pick_align(ROLE, RACE, GEND, PICK_RANDOM);
                     if (k < 0) {
+#if 0 /*JP:T*/
                         pline("Incompatible alignment!");
+#else
+                        pline("選べない属性！");
+#endif
                         k = randalign(ROLE, RACE);
                     }
                 } else { /* pick4u == 'n' */
@@ -3291,8 +3312,13 @@ genl_player_setup(int screenheight)
 #endif
         }
         any.a_int = -1;
+#if 0 /*JP:T*/
         add_menu(win, &nul_glyphinfo, &any, 'q', 0,
                  ATR_NONE, clr, "Quit", MENU_ITEMFLAGS_NONE);
+#else
+        add_menu(win, &nul_glyphinfo, &any, 'q', 0,
+                 ATR_NONE, clr, "抜ける", MENU_ITEMFLAGS_NONE);
+#endif
 #if 0 /*JP*/
         Sprintf(pbuf, "Is this ok? [yn%sq]", iflags.renameallowed ? "a" : "");
 #else
@@ -3363,23 +3389,44 @@ reset_role_filtering(void)
     start_menu(win, MENU_BEHAVE_STANDARD);
 
     /* no extra blank line preceding this entry; end_menu supplies one */
+#if 0 /*JP:T*/
     add_menu_str(win, "Unacceptable roles");
+#else
+    add_menu_str(win, "選ばない職業");
+#endif
     setup_rolemenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
     add_menu_str(win, "");
+#if 0 /*JP:T*/
     add_menu_str(win, "Unacceptable races");
+#else
+    add_menu_str(win, "選ばない種族");
+#endif
     setup_racemenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
     add_menu_str(win, "");
+#if 0 /*JP:T*/
     add_menu_str(win, "Unacceptable genders");
+#else
+    add_menu_str(win, "選ばない性別");
+#endif
     setup_gendmenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
     add_menu_str(win, "");
+#if 0 /*JP:T*/
     add_menu_str(win, "Unacceptable alignments");
+#else
+    add_menu_str(win, "選ばない属性");
+#endif
     setup_algnmenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
+#if 0 /*JP:T*/
     Sprintf(filterprompt, "Pick all that apply%s",
             gotrolefilter() ? " and/or unpick any that no longer apply" : "");
+#else
+    Sprintf(filterprompt, "適用するものを全て選ぶ%s",
+            gotrolefilter() ? "か、適用しないものを外す" : "");
+#endif
     end_menu(win, filterprompt);
     n = select_menu(win, PICK_ANY, &selected);
 
@@ -3458,11 +3505,11 @@ plsel_startmenu(int ttyrows, int aspect)
                 (GEND < 0) ? "<gender>" : genders[GEND].adj,
                 (ALGN < 0) ? "<alignment>" : aligns[ALGN].adj);
 #else
-        Sprintf(qbuf, "%.20s%.20s%.20sの%.20s",
-                rolename,
-                (RACE < 0) ? "<種族>" : races[RACE].noun,
+        Sprintf(qbuf, "%.20sの%.20sの%.20sの%.20s",
+                (ALGN < 0) ? "<属性>" : aligns[ALGN].noun,
                 (GEND < 0) ? "<性別>" : genders[GEND].adj,
-                (ALGN < 0) ? "<属性>" : aligns[ALGN].adj);
+                (RACE < 0) ? "<種族>" : races[RACE].noun,
+                rolename);
 #endif
     } else {
         /* "<name> the <alignment> <gender> <race.adjective> <role>" */
@@ -3474,11 +3521,11 @@ plsel_startmenu(int ttyrows, int aspect)
                 races[RACE].adj,
                 rolename);
 #else
-        Sprintf(qbuf, "%.20s, %.20s%.20sの%.20s%.20s",
+        Sprintf(qbuf, "%.20s, %.20sの%.20sの%.20sの%.20s",
                 svp.plname,
-                aligns[ALGN].adj,
+                aligns[ALGN].noun,
                 genders[GEND].adj,
-                races[RACE].adj,
+                races[RACE].noun,
                 rolename);
 #endif
     }

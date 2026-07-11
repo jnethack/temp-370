@@ -41,7 +41,7 @@ jobs:
           replacesArtifacts: true
           prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: package/nethack-370-win-x64.zip
+          artifacts: package/nethack-500-win-x64.zip
 
       - name: notify
         uses: sarisia/actions-status-discord@v1

@@ -115,6 +115,12 @@ VA_DECL(const char *, fmt)
 }
 #endif  /* WIN32CON */
 
+#if 1 /*JP*/
+#ifdef WIN32CON
+extern int orig_icp;
+#endif
+#endif /*JP*/
+
 char
 switchar(void)
 {
@@ -527,6 +533,11 @@ nethack_exit(int code)
     genl_status_finish();
 #ifdef MSWIN_GRAPHICS
     free_winmain_stuff();
+#endif
+#if 1 /*JP*/
+#ifdef WIN32CON
+    SetConsoleCP(orig_icp);
+#endif
 #endif
     exit(code);
 }

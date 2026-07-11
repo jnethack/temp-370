@@ -819,9 +819,6 @@ getret(void)
     getreturn("to continue");
 #else
     HUPSKIP();
-#if 1 /*JP*/
-    jputchar('\0');
-#endif
     xputs("\n");
     if (flags.standout)
         standoutbeg();
@@ -1222,7 +1219,6 @@ dmore(
     xputs(prompt);
     ttyDisplay->curx += strlen(prompt);
 #else
-    jputchar('\0'); /* reset */
     {
       const char *p;
       p = prompt;
@@ -2355,9 +2351,6 @@ tty_putstr(winid window, int attr, const char *str)
     /* Assume there's a real problem if the window is missing --
      * probably a panic message
      */
-#if 1 /*JP*/
-    jputchar('\0');     /* RESET */
-#endif
 
     if (window == WIN_ERR || (cw = wins[window]) == (struct WinDesc *) 0) {
         tty_raw_print(str);
@@ -2588,9 +2581,6 @@ tty_putstr(winid window, int attr, const char *str)
         }
         break;
     }
-#if 1 /*JP*/
-    jputchar('\0');     /* RESET */
-#endif
     return;
 }
 

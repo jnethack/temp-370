@@ -3,7 +3,29 @@
 /*-Copyright (c) Robert Patrick Rankin, 2011. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
+
+#if 1 /*JP*/
+staticfn char *beastname(const char *);
+
+/*JP 「ジャッカル人間」から「ジャッカル」を取り出す */
+staticfn char *
+beastname(const char *name)
+{
+    static char werebuf[BUFSZ];
+    size_t len;
+    Strcpy(werebuf, name);
+    len = strlen(werebuf);
+    if (len >= sizeof "人間")
+        werebuf[len - sizeof "人間"] = '\0';
+    return werebuf;
+}
+#endif
 
 void
 were_change(struct monst *mon)
@@ -22,10 +44,16 @@ were_change(struct monst *mon)
 
                 switch (monsndx(mon->data)) {
                 case PM_WEREWOLF:
+/*JP
                     howler = "wolf";
+*/
+                    howler = "狼";
                     break;
                 case PM_WEREJACKAL:
+/*JP
                     howler = "jackal";
+*/
+                    howler = "ジャッカル";
                     break;
                 default:
                     howler = (char *) 0;
@@ -33,7 +61,10 @@ were_change(struct monst *mon)
                 }
                 if (howler) {
                     Soundeffect(se_canine_howl, 50);
+/*JP
                     You_hear("a %s howling at the moon.", howler);
+*/
+                    You_hear("月夜に%sが吠える声を聞いた．", howler);
                     wake_nearto(mon->mx, mon->my, 4 * 4);
                 }
             }
@@ -111,10 +142,16 @@ new_were(struct monst *mon)
     }
 
     if (canseemon(mon) && !Hallucination)
+#if 0 /*JP:T*/
         pline("%s changes into a %s.", Monnam(mon),
               is_human(&mons[pm]) ? "human"
                                   /* pmname()+4: skip past "were" prefix */
                                   : pmname(&mons[pm], Mgender(mon)) + 4);
+#else
+        pline("%sは%sの姿になった．", Monnam(mon),
+              is_human(&mons[pm]) ? "人間"
+                                 : beastname(pmname(&mons[pm], Mgender(mon))));
+#endif
 
     set_mon_data(mon, &mons[pm]);
     if (helpless(mon)) {
@@ -159,19 +196,28 @@ were_summon(
             typ = rn2(3) ? PM_SEWER_RAT
                          : rn2(3) ? PM_GIANT_RAT : PM_RABID_RAT;
             if (genbuf)
+/*JP
                 Strcpy(genbuf, "rat");
+*/
+                Strcpy(genbuf, "ネズミ");
             break;
         case PM_WEREJACKAL:
         case PM_HUMAN_WEREJACKAL:
             typ = rn2(7) ? PM_JACKAL : rn2(3) ? PM_COYOTE : PM_FOX;
             if (genbuf)
+/*JP
                 Strcpy(genbuf, "jackal");
+*/
+                Strcpy(genbuf, "ジャッカル");
             break;
         case PM_WEREWOLF:
         case PM_HUMAN_WEREWOLF:
             typ = rn2(5) ? PM_WOLF : rn2(2) ? PM_WARG : PM_WINTER_WOLF;
             if (genbuf)
+/*JP
                 Strcpy(genbuf, "wolf");
+*/
+                Strcpy(genbuf, "狼");
             break;
         default:
             continue;
@@ -197,9 +243,14 @@ you_were(void)
     if (Unchanging || u.umonnum == u.ulycn)
         return;
     if (controllable_poly) {
+#if 0 /*JP*/
         /* `+4' => skip "were" prefix to get name of beast */
         Sprintf(qbuf, "Do you want to change into %s?",
                 an(mons[u.ulycn].pmnames[NEUTRAL] + 4));
+#else /* 日本語では専用関数を使う */
+        Sprintf(qbuf, "%sに変化しますか？",
+                beastname(mons[u.ulycn].pmnames[NEUTRAL]));
+#endif
         if (!paranoid_query(ParanoidWerechange, qbuf))
             return;
     } else if (monster_nearby()) {
@@ -215,13 +266,19 @@ you_unwere(boolean purify)
     boolean controllable_poly = Polymorph_control && !(Stunned || Unaware);
 
     if (purify) {
+/*JP
         You_feel("purified.");
+*/
+        You("浄められたような気がした．");
         set_ulycn(NON_PM); /* cure lycanthropy */
     }
     if (!Unchanging && is_were(gy.youmonst.data)
         && !monster_nearby()
         && (!controllable_poly
+/*JP
             || !paranoid_query(ParanoidWerechange, "Remain in beast form?")))
+*/
+            || !paranoid_query(ParanoidWerechange, "獣の姿のままでいる？")))
         rehumanize();
     else if (is_were(gy.youmonst.data) && !u.mtimedone)
         u.mtimedone = rn1(200, 200); /* 40% of initial were change */
