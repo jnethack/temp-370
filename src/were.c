@@ -19,10 +19,10 @@ beastname(const char *name)
 {
     static char werebuf[BUFSZ];
     size_t len;
-    strcpy(werebuf, name);
+    Strcpy(werebuf, name);
     len = strlen(werebuf);
-    if (len >= 4)
-        werebuf[len - 4] = '\0';
+    if (len >= sizeof "人間")
+        werebuf[len - sizeof "人間"] = '\0';
     return werebuf;
 }
 #endif

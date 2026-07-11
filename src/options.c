@@ -203,7 +203,7 @@ static const struct paranoia_opts {
 /*JP
       "y required to pray (supersedes old \"prayconfirm\" option)" },
 */
-      "祈るときにyが必要(古い\"prayconfirm\"オプションを上書きする" },
+      "祈るときにyが必要(古い\"prayconfirm\"オプションを上書きする)" },
     { PARANOID_TRAP, "trap", 1, "move-trap", 1,
       "y required to enter known trap unless considered harmless" },
     { PARANOID_AUTOALL, "Autoall", 2, "autoselect-all", 2,
@@ -3324,7 +3324,7 @@ optfn_pettype(
 /*JP
                 config_error_add("Unrecognized pet type '%s'.", op);
 */
-                pline("'%s'はペットの種類として受け付けられません．", op);
+                config_error_add("'%s'はペットの種類として受け付けられません．", op);
                 return optn_err;
                 break;
             }

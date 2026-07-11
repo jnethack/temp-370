@@ -358,8 +358,9 @@ jversion_id_string(char *outbuf, const char *build_date)
 #endif
 
     Sprintf(outbuf, "%s JNetHack%s Version %s-%d.%d.", PORT_ID,
-            subbuf, mdlib_version_string(versbuf, "."), JVERSION_MAJOR, JVERSION_MINOR);
-        return outbuf;
+            subbuf, mdlib_version_string(versbuf, "."), JVERSION_MAJOR, JVERSION_MINOR,
+            date_via_env ? "revision" : "build", build_date);
+    return outbuf;
 }
 #endif
 

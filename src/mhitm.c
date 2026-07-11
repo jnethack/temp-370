@@ -1534,7 +1534,7 @@ passivemm(
 /*JP
                     Strcat(buf, " gaze is reflected by %s %s.");
 */
-                    Strcat(buf, "のにらみは%sによって%s．");
+                    Strcat(buf, "のにらみは%sの%sによって反射した．");
                     if (mon_reflects(magr,
                                      canseemon(magr) ? buf : (char *) 0))
                         return (mdead | mhit);

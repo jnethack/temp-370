@@ -3363,9 +3363,15 @@ lightdamage(
         if (obj->oclass == SCROLL_CLASS || obj->oclass == SPBOOK_CLASS)
             ordinary = FALSE; /* say blasted rather than zapped */
 #endif
+#if 0 /*JP:T*/
         how = (obj->oclass == SPBOOK_CLASS) ? "spell of light"
               : (!obj->oartifact) ? ansimpleoname(obj)
                 : bare_artifactname(obj);
+#else
+        how = (obj->oclass == SPBOOK_CLASS) ? "光の魔法"
+              : (!obj->oartifact) ? ansimpleoname(obj)
+                : bare_artifactname(obj);
+#endif
 #if 0 /*JP*/
         Sprintf(buf, "%s %sself with %s", ordinary ? "zapped" : "blasted",
                 uhim(), how);
@@ -5132,7 +5138,7 @@ burn_floor_objects(
 #else
                         pline("%ld%sの%sが燃えた．", 
                               delquan, 
-                              obj->oclass == SCROLL_CLASS ? "枚" : "冊",
+                              numeral(obj),
                               buf2);
 #endif
                     else
@@ -7129,10 +7135,17 @@ makewish(void)
     if (otmp->otyp == CORPSE && !u_safe_from_fatal_corpse(otmp, st_all))
         otmp->wishedfor = 1;
 
+#if 0 /*JP:T*/
     const char *verb = ((Is_airlevel(&u.uz) || u.uinwater)
                         ? "slip"
                         : (otmp->otyp == CORPSE && otmp->wishedfor)
                           ? "materialize" : "drop"),
+#else
+    const char *verb = ((Is_airlevel(&u.uz) || u.uinwater)
+                        ? "滑り落ちた"
+                        : (otmp->otyp == CORPSE && otmp->wishedfor)
+                          ? "現れた" : "落ちた"),
+#endif
 #if 0 /*JP*/
                *oops_msg = (u.uswallow
                             ? "Oops!  %s out of your reach!"

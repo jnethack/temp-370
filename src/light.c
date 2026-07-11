@@ -921,7 +921,11 @@ arti_light_description(struct obj *obj)
 {
     switch (arti_light_radius(obj)) {
     case 4:
+#if 0 /*JP:T*/
         return "radiantly"; /* blessed gold dragon scale mail */
+#else
+        return "まぶしく"; /* blessed gold dragon scale mail */
+#endif
     case 3:
 #if 0 /*JP:T*/
         return "brilliantly"; /* blessed artifact, uncursed gold DSM */

@@ -1697,7 +1697,7 @@ level_tele_trap(struct trap *trap, unsigned int trflags)
         Sprintf(verbbuf, "%s onto", u_locomotion("step"));
     You("%s a level teleport trap!", verbbuf);
 #else
-    if ((trflags & VIASITTING) != 0) {
+    if ((trflags & (VIASITTING | FORCETRAP)) != 0) {
         pline("別の階への瞬間移動の罠が発動した！");
         intentional = TRUE;
     } else {

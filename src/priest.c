@@ -329,8 +329,13 @@ priestname(
 
     /* for high priest(ess), "high" (or "grand" for poohbah) will be inserted
        [this was done near the end but we want 'what' to be updated sooner] */
+#if 0 /*JP:T*/
     if (mon->ispriest || aligned_priest || high_priest)
         what = do_hallu ? "poohbah" : mon->female ? "priestess" : "priest";
+#else
+    if (mon->ispriest || aligned_priest || high_priest)
+        what = do_hallu ? "無能官僚" : mon->female ? "尼僧" : "僧侶";
+#endif
 
     *pname = '\0';
     if (article != ARTICLE_NONE && (!do_hallu || !bogon_is_pname(whatcode))) {
@@ -378,7 +383,12 @@ priestname(
 #endif
     if (mon->ispriest || aligned_priest) {
         if (high_priest)
+#if 0 /*JP*/
             Strcat(pname, do_hallu ? "grand " : "high ");
+#else /*頭に付けるのではなく、名前自体を変える*/
+            what = do_hallu ? "無能高級官僚"
+                   : mon->female ? "女法王" : "法王";
+#endif
     } else {
 /*JP
         if (mon->mtame && !strcmpi(what, "Angel"))
@@ -544,7 +554,10 @@ intemple(int roomno)
                 msg1 = "experience %s sense of peace.";
 */
                 msg1 = "%s満ち足りた気持ちになった．";
+/*JP
                 msg2 = (u.ualign.record >= ALGN_DEVOUT) ? "a" : "an unusual";
+*/
+                msg2 = (u.ualign.record >= ALGN_DEVOUT) ? "" : "いつになく";
                 this_time = &epri_p->peaceful_time;
                 other_time = &epri_p->hostile_time;
             }

@@ -105,9 +105,6 @@ lcase(char *s)
     char *p;
 
     for (p = s; *p; p++)
-#if 1 /*JP*//*漢字は小文字化しない*/
-        if (_is_kanji(*p)) p++; else
-#endif
         if ('A' <= *p && *p <= 'Z')
             *p |= 040;
     return s;
@@ -120,9 +117,6 @@ ucase(char *s)
     char *p;
 
     for (p = s; *p; p++)
-#if 1 /*JP*//*漢字は大文字化しない*/
-        if (_is_kanji(*p)) p++; else
-#endif
         if ('a' <= *p && *p <= 'z')
             *p &= ~040;
     return s;

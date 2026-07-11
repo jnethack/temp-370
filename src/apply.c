@@ -1906,8 +1906,13 @@ use_candle(struct obj **optr)
     /*JP:「(ろうそく)を」*/
 #endif
     /* last, format final "attach candles to candelabrum?" query */
+#if 0 /*JP:T*/
     if (y_n(safe_qbuf(qbuf, qbuf, "?", otmp, yname, thesimpleoname, "it"))
         == 'n') {
+#else
+    if (y_n(safe_qbuf(qbuf, qbuf, "に取りつけますか？", otmp, xname, thesimpleoname, "それ"))
+        == 'n') {
+#endif
         use_lamp(obj);
         return;
     } else {
@@ -4291,7 +4296,7 @@ static const char
 /*JP
     where_to_hit[] = "Where do you want to hit?",
 */
-    where_to_hit[] = "どれを狙う？",
+    where_to_hit[] = "どこを狙う？",
 /*JP
     cant_see_spot[] = "won't hit anything if you can't see that spot.",
 */

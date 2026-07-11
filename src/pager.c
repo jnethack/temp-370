@@ -1373,7 +1373,11 @@ add_cmap_descr(
     int idx,            /* cmap index into defsyms[] */
     int glyph,          /* map glyph of screen symbol being described;
                          * anything other than NO_GLYPH implies 'looked' */
+#if 0 /*JP:T*/
     int article,        /* 0: (none), 1: a/an, 2: the */
+#else
+    int article UNUSED, /* 0: (none), 1: a/an, 2: the */
+#endif
     coord cc,           /* map location */
     const char *x_str,  /* description of defsyms[idx] */
     const char *prefix, /* text to insert in front of first match */
@@ -1431,6 +1435,7 @@ add_cmap_descr(
         else if (!strcmp(mbuf, "molten lava"))
             Strcpy(mbuf, "lava");
         x_str = mbuf;
+#if 0 /*JP*/
         /* avoid "an ice" and so forth; "a pool", "a moat", and
            "a wall of ..." are grammatically correct but make
            "a pool or a moat or a wall of water" become too verbose */
@@ -1450,6 +1455,7 @@ add_cmap_descr(
                     /* thawing ice ("solid ice", "thin ice", &c) */
                     || ((p = strchr(x_str, ' ')) != 0 && !strcmpi(p, " ice"))
                     );
+#endif
     }
 
     if (!found) {

@@ -1770,7 +1770,11 @@ dospinweb(void)
             if (i == NATTK)
                 impossible("Swallower has no engulfing attack?");
             else {
+#if 0 /*JP:T*/
                 char sweep[30];
+#else /*日本語だと足りないので増やす*/
+                char sweep[BUFSZ];
+#endif
 
                 sweep[0] = '\0';
                 switch (u.ustuck->data->mattk[i].adtyp) {

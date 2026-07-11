@@ -1811,7 +1811,7 @@ getobj_hands_txt(const char *action, char *qbuf)
 struct obj *
 getobj(
     const char *word,       /* usually a direct verb such as "drop" */
-/*JP:JNHでも英語のまま受ける*/
+/*JP:JNHでも英語のまま受けて、trans_verb()で変換する*/
     int (*obj_ok)(OBJ_P),   /* callback to classify an object's suitability */
     unsigned int ctrlflags) /* some control to fine-tune the behavior */
 {
@@ -4919,7 +4919,10 @@ int
 doprwep(void)
 {
     if (!uwep) {
+/*JP
         You("are %s.", empty_handed());
+*/
+        You("%sい．", empty_handed());
     } else if (!iflags.menu_requested) {
         prinv((char *) 0, uwep, 0L);
         if (u.twoweap)

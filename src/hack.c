@@ -3677,7 +3677,7 @@ pooleffects(
 #if 0 /*JP:T*/
                 You("leave the %s...", hliquid("water")); /* oops! */
 #else
-                You("%s水から抜けだした．．．", hliquid("水"));  /* oops! */
+                You("%sから抜けだした．．．", hliquid("水"));  /* oops! */
 #endif
             } else {
                 back_on_ground(FALSE);

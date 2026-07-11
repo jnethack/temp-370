@@ -1,7 +1,4 @@
 apply.c:
-    if (yn(safe_qbuf(qbuf, qbuf, "?", otmp, yname, thesimpleoname, "it"))
-    if (yn(safe_qbuf(qbuf, qbuf, "に取りつけますか？", otmp, xname, thesimpleoname, "それ"))
-apply.c:
             pline("%s %s light!", Yname2(obj), otense(obj, "catch"));
             pline("%sの明かりがついた！", Yname2(obj));
 apply.c:
@@ -250,9 +247,6 @@ do_wear.c:
 do_wear.c:
         which = "left ";
         which = "左";
-do_wear.c:
-            You("are empty %s.", body_part(HANDED));
-            You("何も%sにしていない．", body_part(HAND));
 do_wear.c:
         You("no longer have a second weapon readied.");
         You("予備の武器をおさめた．");
@@ -593,9 +587,6 @@ invent.c:
         if (query_objlist("Things that are buried here:",
         if (query_objlist("ここに埋められているもの：",
 mcastu.c:
-        pline("%s points %s.", Monnam(mtmp), point_msg);
-        pline("%sは%s指差し，呪いをかけた．", Monnam(mtmp), point_msg);
-mcastu.c:
             pline("%s looks better.", Monnam(mtmp));
             pline("%sは気分がよくなったようだ．", Monnam(mtmp));
 mcastu.c:
@@ -604,9 +595,6 @@ mcastu.c:
 mcastu.c:
         You_feel("as if you need some help.");
         You_feel("助けが必要な気がした．");
-mcastu.c:
-            const char *what = (let == S_SNAKE) ? "snake" : "insect";
-            const char *what = (let == S_SNAKE) ? "ヘビ" : "虫";
 mcastu.c:
                 You_hear("someone summoning %s.", makeplural(what));
                 You_hear("誰かが%sを召喚しているのを聞いた．", what);
@@ -1514,9 +1502,6 @@ potion.c:
             multi_reason = "frozen by a potion";
             multi_reason = "薬で硬直している時に";
 potion.c:
-                const char *riseup = "rise up, through the %s!";
-                const char *riseup ="%sを突き抜けた！";
-potion.c:
                 losehp(d(Fire_resistance ? 1 : 3, 4), "burning potion of oil",
                 losehp(d(Fire_resistance ? 1 : 3, 4), "燃えている油を飲んで",
 potion.c:
@@ -1600,18 +1585,6 @@ pray.c:
 pray.c:
     multi_reason = "trying to turn the monsters";
     multi_reason = "怪物を土に戻そうとしている時に";
-priest.c:
-                what = "poohbah";
-                what = "無能官僚";
-priest.c:
-                what = "priestess";
-                what = "尼僧";
-priest.c:
-                what = "priest";
-                what = "僧侶";
-priest.c:
-                msg2 = (u.ualign.record >= ALGN_PIOUS) ? "a" : "an unusual";
-                msg2 = (u.ualign.record >= ALGN_PIOUS) ? "" : "いつになく";
 priest.c:
             multi_reason = "being terrified of a ghost";
             multi_reason = "幽霊に恐怖している時に";
@@ -1697,17 +1670,8 @@ shk.c:
         pline("onbill: unpaid obj not on bill?");
         pline("勘定：払わない？");
 shk.c:
-        no_money[] = "Moreover, you%s have no money.",
-        no_money[] = "しかも，あなたはお金がない%s．",
-shk.c:
             You("%shave no money.", stashed_gold ? "seem to " : "");
             You("お金がない%s．", stashed_gold ? "ようだ" : "");
-shk.c:
-            pline("%s is after blood, not money!", shkname(shkp));
-            pline("%sは血まみれだ．お金どころじゃない！", Monnam(shkp));
-shk.c:
-            pline("%s is after your hide, not your money!", Shknam(shkp));
-            pline("%sはあなたの命を狙っている，お金どころじゃない！", Shknam(shkp));
 shk.c:
         iprompt = (eshkp->billct > 1 ? ynq("Itemized billing?") : 'y');
         iprompt = (eshkp->billct > 1 ? ynq("個別に勘定しますか？") : 'y');
@@ -2135,14 +2099,8 @@ wield.c:
             You("are empty %s.", body_part(HANDED));
             You("%sを空けた．", body_part(HAND));
 wield.c:
-            You("are already empty %s.", body_part(HANDED));
-            You("何も%sにしていない！", body_part(HAND));
-wield.c:
         You("cannot ready that!");
         You("それは使えない！");
-wield.c:
-        You("are now empty %s.", body_part(HANDED));
-        You("武器を持たなくなった．");
 wield.c:
         You("are no longer wielding two weapons at once.");
         You("二刀流をやめた．");
@@ -2207,9 +2165,6 @@ zap.c:
         You("die.");
         pline("あなたは死にました．");
 zap.c:
-                  : "spell of light";
-                  : "光の魔法";
-zap.c:
         "Some writing vanishes from %s head!";
         "何かの文字が%sの頭から消えた！";
 zap.c:
@@ -2254,6 +2209,3 @@ zap.c:
 zap.c:
             pline("%s resists!", Monnam(mtmp));
             pline("%sは防いだ！", Monnam(mtmp));
-zap.c:
-            *verb = ((Is_airlevel(&u.uz) || u.uinwater) ? "slip" : "drop"),
-            *verb = ((Is_airlevel(&u.uz) || u.uinwater) ? "滑り落ちた" : "落ちた"),

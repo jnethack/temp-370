@@ -1672,7 +1672,10 @@ make_angry_shk(
 }
 
 static const char
+/*JP
         no_money[] = "Moreover, you%s have no gold.",
+*/
+        no_money[] = "しかも，あなたはお金がない%s．",
 /*JP
         not_enough_money[] = "Besides, you don't have enough to interest %s.";
 */
@@ -2061,7 +2064,7 @@ dopay(void)
 /*JP
             pline("%s is too far to receive your payment.", Shknam(mtmp));
 */
-            pline("%sは支払いに興味を示さない．", Shknam(mtmp));
+            pline("%sは遠くにいるので支払えない．", Shknam(mtmp));
             return ECMD_OK;
         }
         shkp = mtmp;
@@ -2103,7 +2106,7 @@ dopay(void)
 /*JP
                 pline("But you have some gold stashed away.");
 */
-                pline("しかし，あなたにはちょっっとしたヘソクリがある．");
+                pline("しかし，あなたにはちょっとしたヘソクリがある．");
         } else {
             if (umoney > ltmp) {
 #if 0 /*JP:T*/
@@ -2155,7 +2158,10 @@ dopay(void)
 */
                 pline(no_money, stashed_gold ? "ようだ" : "");
         } else if (ltmp) {
+/*JP
             pline("%s is after blood, not gold!", shkname(shkp));
+*/
+            pline("%sは金じゃなく血を求めている！", shkname(shkp));
             if (umoney < ltmp / 2L || (umoney < ltmp && stashed_gold)) {
                 if (!umoney)
 /*JP
@@ -2184,7 +2190,10 @@ dopay(void)
         } else {
             /* shopkeeper is angry, but has not been robbed --
              * door broken, attacked, etc. */
+/*JP
             pline("%s is after your hide, not your gold!", Shknam(shkp));
+*/
+            pline("%sはあなたの金じゃなく命を狙っている！", Shknam(shkp));
             if (umoney < 1000L) {
                 if (!umoney)
 /*JP

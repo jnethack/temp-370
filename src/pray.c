@@ -1056,7 +1056,7 @@ gcrownu(void)
                 : "steal souls");
 #else
         what = (((already_exists && !in_hand) || class_gift != STRANGE_OBJECT)
-                ? "生きながらえん"
+                ? "命を奪いしためる"
                 : "魂を奪いしためる");
 #endif
         SetVoice((struct monst *) 0, 0, 80, voice_deity);

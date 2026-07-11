@@ -143,10 +143,8 @@ main(int argc, char *argv[])
         && strcmp(dir, HACKDIR)
 #endif
             ) {
-_pragma_ignore(-Wunused-result)
         (void) setgid(getgid());
         (void) setuid(getuid());
-_pragma_pop
     }
 #endif /* SECURE && !VMS */
 

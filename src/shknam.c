@@ -503,7 +503,7 @@ mkshobj_at(const struct shclass *shp, int sx, int sy, boolean mkspecl)
     if (mkspecl && (!strcmp(shp->name, "rare books")
                     || !strcmp(shp->name, "second-hand bookstore"))) {
 #else
-    if (mkspecl && (!strcmp(shp->name, "幻の本屋")
+    if (mkspecl && (!strcmp(shp->name, "稀覯書店")
                     || !strcmp(shp->name, "古書店"))) {
 #endif
         struct obj *novel = mksobj_at(SPE_NOVEL, sx, sy, FALSE, FALSE);

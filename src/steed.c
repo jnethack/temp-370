@@ -802,7 +802,7 @@ dismount_steed(
 /*JP
                 pline("It felt good to get out of the rain.");
 */
-                pline("雨が降らないのというのはいい気分だった．");
+                pline("雨が降らないというのはいい気分だった．");
         } else
 /*JP
             You("dismount %s.", mon_nam(mtmp));

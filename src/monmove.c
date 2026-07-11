@@ -201,13 +201,13 @@ watch_on_duty(struct monst *mtmp)
 /*JP
                     mon_yells(mtmp, "Halt, thief!  You're under arrest!");
 */
-                    verbalize("待て！ぬすっと！おまえを逮捕する！");
+                    mon_yells(mtmp, "待て！ぬすっと！おまえを逮捕する！");
                     (void) angry_guards(!!Deaf);
                 } else {
 /*JP
                     mon_yells(mtmp, "Hey, stop picking that lock!");
 */
-                    verbalize("おい，鍵を勝手に開けるんじゃない！");
+                    mon_yells(mtmp, "おい，鍵を勝手に開けるんじゃない！");
                     levl[x][y].looted |= D_WARNED;
                 }
                 stop_occupation();

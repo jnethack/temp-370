@@ -3766,7 +3766,11 @@ trapnote(struct trap *trap, boolean noprefix)
         "ソ♯", "ラ",   "シ♭",  "シ",
 #endif
     };
+#if 0 /*JP:T*/
     static char tnbuf[12]; /* result buffer */
+#else
+    static char tnbuf[BUFSZ]; /* result buffer */
+#endif
     const char *tn;
 
     tnbuf[0] = '\0';
@@ -7335,7 +7339,11 @@ openholdingtrap(
                        * otherwise left with its previous value intact */
 {
     struct trap *t, tdummy;
+#if 0 /*JP*/
     char buf[BUFSZ], whichbuf[20];
+#else /*「あなたの仕掛けた」がUTF-8で24バイトになるので増やす*/
+    char buf[BUFSZ], whichbuf[BUFSZ];
+#endif
     const char *trapdescr = 0, *which = 0;
     boolean ishero = (mon == &gy.youmonst);
 

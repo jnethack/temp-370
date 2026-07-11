@@ -549,7 +549,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #else
     NHOPTC(palette, Advanced, 15, opt_in, set_in_game,
                 No, Yes, Yes, No, "hicolor",
-                "パレット (00c/880/-fffはそれぞれ青/黄/反転白を示す))")
+                "パレット (00c/880/-fffはそれぞれ青/黄/反転白を示す)")
 #endif
 #endif
     /* prior to paranoid_confirmation, 'prayconfirm' was a distinct option */

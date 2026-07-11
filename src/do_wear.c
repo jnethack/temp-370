@@ -3327,7 +3327,10 @@ do_takeoff(void)
             if (was_twoweap)
                 You("are no longer wielding either weapon.");
             else
+/*JP
                 You("are %s.", empty_handed());
+*/
+                You("%sい．", empty_handed());
         }
     } else if (doff->what == W_SWAPWEP) {
         setuswapwep((struct obj *) 0);

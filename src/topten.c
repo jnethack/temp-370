@@ -127,14 +127,19 @@ formatkiller(
     buf[0] = '\0'; /* lint suppression */
 #if 1 /*JP*//*前に持ってくる*/
     if (incl_helpless && gm.multi < 0) {
-        if (gm.multi_reason)
+        if (gm.multi_reason
+            && strlen(gm.multi_reason) + sizeof "，" <= siz)
             Sprintf(buf, "%s，", gm.multi_reason);
-        else
+        else if (sizeof "助けを受けられない間に，" <= siz)
             Strcpy(buf, "助けを受けられない間に，");
     }
 #endif
 #if 1 /*JP*//*先に対象をコピー*/
-    strncat(buf, kname, siz - 1);
+    {
+        size_t used = strlen(buf);
+        if (used < siz - 1)
+            strncat(buf, kname, siz - 1 - used);
+    }
     siz -= strlen(buf);
 #endif
     switch (svk.killer.format) {

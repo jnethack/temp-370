@@ -94,7 +94,11 @@ cursetxt(struct monst *mtmp, boolean undirected)
 */
             point_msg = "あなたを";
 
+#if 0 /*JP*/
         pline_mon(mtmp, "%s points %s.", Monnam(mtmp), point_msg);
+#else
+        pline_mon(mtmp, "%sは%s指差し，呪いをかけた．", Monnam(mtmp), point_msg);
+#endif
     } else if ((!(svm.moves % 4) || !rn2(4))) {
         if (!Deaf)
 #if 0 /*JP*/
@@ -830,7 +834,10 @@ mcast_insects(struct monst *mtmp)
 
     /* not canspotmon() which includes unseen things sensed via warning */
     seecaster = canseemon(mtmp) || tp_sensemon(mtmp) || Detect_monsters;
+/*JP
     what = (let == S_SNAKE) ? "snakes" : "insects";
+*/
+    what = (let == S_SNAKE) ? "ヘビ" : "虫";
     if (Hallucination)
         what = makeplural(bogusmon(whatbuf, (char *) 0));
 

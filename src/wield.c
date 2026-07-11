@@ -196,11 +196,17 @@ ready_weapon(struct obj *wep)
     if (!wep) {
         /* No weapon */
         if (uwep) {
+/*JP
             You("are %s.", empty_handed());
+*/
+            You("%sい．", empty_handed());
             setuwep((struct obj *) 0);
             res = ECMD_TIME;
         } else
+/*JP
             You("are already %s.", empty_handed());
+*/
+            You("何も%sい．", empty_handed());
     } else if (wep->otyp == CORPSE && cant_wield_corpse(wep)) {
         /* hero must have been life-saved to get here; use a turn */
         res = ECMD_TIME; /* corpse won't be wielded */
@@ -783,7 +789,10 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
        something we're wielding that's vulnerable to its damage) */
     res = 0;
     if (was_uwep) {
+/*JP
         You("are now %s.", empty_handed());
+*/
+        You("武器を持たなくなった．");
         res = 1;
     } else if (was_twoweap && !u.twoweap) {
         You("%s.", are_no_longer_twoweap);
@@ -1308,7 +1317,7 @@ weldmsg(struct obj *obj)
 #if 0 /*JP*/
     pline("%s welded to your %s!", Yobjnam2(obj, "are"), hand);
 #else
-    You("%sを%sに構えた！", xname(obj), body_part(HAND));
+    pline("%sは%sに貼りついた！", xname(obj), body_part(HAND));
 #endif
     obj->owornmask = savewornmask;
 }

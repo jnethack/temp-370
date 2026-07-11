@@ -2226,7 +2226,7 @@ find_trap(struct trap *trap)
 /*JP
     You("find %s.", an(trapname(trap->ttyp, FALSE)));
 */
-    You("%sを見つけた．", an(trapname(trap->ttyp, FALSE)));
+    You("%sを見つけた．", trapname(trap->ttyp, FALSE));
 
     if (cleared) {
         display_nhwindow(WIN_MAP, TRUE); /* wait */

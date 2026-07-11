@@ -399,7 +399,7 @@ can_blnd(
                 && objdescr_is(o, "visored helmet"))
 #else
             if ((o->owornmask & W_ARMH)
-                && objdescr_is(o, "visored helmet"))
+                && objdescr_is(o, "面頬付きの兜"))
 #endif
                 return FALSE;
     }

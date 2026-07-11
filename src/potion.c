@@ -1343,7 +1343,10 @@ peffect_gain_level(struct obj *otmp)
                     return;
                 }
             }
+/*JP
             You("rise up, through the %s!", ceiling(u.ux, u.uy));
+*/
+            You("%sを突き抜けた！", ceiling(u.ux, u.uy));
             goto_level(&newlevel, FALSE, FALSE, FALSE);
         } else {
 /*JP

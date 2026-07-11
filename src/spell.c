@@ -2421,7 +2421,7 @@ dospellmenu(
                 "Name",
                 "Category");
 #else
-        Sprintf(buf, "%s%-20s     Level  %-12s 成功率",
+        Sprintf(buf, "%s%-20s     Level  %-12s 成功率 記憶",
                 splaction == SPELLMENU_DUMP ? "" : "    ",
                 "名前",
                 "分類");
@@ -2432,7 +2432,7 @@ dospellmenu(
 /*JP
         Sprintf(buf, "Name\tLevel\tCategory\tFail\tRetention");
 */
-        Sprintf(buf, "名前\tレベル\t分類\t成功率");
+        Sprintf(buf, "名前\tレベル\t分類\t成功率\t記憶");
         fmt = "%s\t%-d\t%s\t%-d%%\t%s";
         sep = '\t';
     }

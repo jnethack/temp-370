@@ -33,8 +33,8 @@ static NEARDATA const char *breathwep[] = {
     "strange breath #9"
 #else
     "破片", "炎", "冷気", "睡眠ガス", "分解の息",
-    "稲妻", "毒の息", "酸", "strange breath #8",
-    "strange breath #9"
+    "稲妻", "毒の息", "酸", "謎の息 #8",
+    "謎の息 #9"
 #endif
 };
 

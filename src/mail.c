@@ -386,7 +386,7 @@ md_rush(struct monst *md,
 /*JP
             verbalize("This place's too crowded.  I'm outta here.");
 */
-            verbalize("ここは混みすぎ．ここで待ってるよ．");
+            verbalize("ここは混みすぎ．もう帰るよ．");
         } else {
             pline("%s.", Never_mind);
         }

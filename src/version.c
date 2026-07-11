@@ -37,9 +37,9 @@ version_string(char *buf, size_t bufsz)
 
 #if 1 /*JP*/
 char *
-version_string_j(char *buf)
+version_string_j(char *buf, size_t bufsz)
 {
-    sprintf(buf, "%d.%d", JVERSION_MAJOR, JVERSION_MINOR);
+    Snprintf(buf, bufsz, "%d.%d", JVERSION_MAJOR, JVERSION_MINOR);
     return buf;
 }
 #endif
@@ -176,7 +176,7 @@ doversion(void)
 
     pline("%s", getversionstring(buf, sizeof buf));
 #if 1 /*JP*/
-    pline("%s", version_string_j(buf));
+    pline("%s", version_string_j(buf, sizeof buf));
 #endif
     return ECMD_OK;
 }
@@ -221,7 +221,7 @@ doextversion(void)
     }
 
 #if 1 /*JP*/
-    (void) version_string_j(buf);
+    (void) version_string_j(buf, sizeof buf);
     putstr(win, 0, buf);
 #endif
 
