@@ -602,6 +602,9 @@ struct kinfo {
 #define KILLED_BY_AN 0
 #define KILLED_BY 1
 #define NO_KILLER_PREFIX 2
+#if 1 /*JP*/
+#define KILLED_SUFFIX	 3
+#endif
     char name[BUFSZ]; /* actual killer name */
 };
 
