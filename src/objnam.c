@@ -1673,7 +1673,7 @@ doname_base(
         char *tp;
         preprefix[0] = '\0';
         if((tp = strstri(bp, "名づけられた")) != NULL){
-            tp += 12; /* 「名づけられた」*/
+            tp += strlen("名づけられた");
             strncpy(preprefix, bp, tp - bp);
             preprefix[tp - bp] = '\0';
             bp = tp;
@@ -2781,8 +2781,12 @@ an(const char *str)
         impossible("Alphabet soup: 'an(%s)'.", str ? "\"\"" : "<null>");
         return strcpy(buf, "an []");
     }
+#if 0 /*JP:T*/
     (void) just_an(buf, str);
     return strncat(buf, str, BUFSZ - 1 - Strlen(buf));
+#else /*たんにコピー*/
+    Strcpy(buf, str);
+#endif
 }
 
 char *
@@ -5282,7 +5286,7 @@ readobjnam_postparse1(struct _readobjnam_data *d)
         /*JP 「(怪物名)の塊」は個々にIDがあるので別扱い */
         int l = strlen(d->bp);
         int l2 = strlen("の塊");
-        if (l > 4 && strncmp(d->bp + l - l2, "の塊", l2) == 0) {
+        if (l > l2 && strncmp(d->bp + l - l2, "の塊", l2) == 0) {
             if ((d->mntmp = name_to_mon(d->bp, (int *) 0)) >= PM_GRAY_OOZE
                 && d->mntmp <= PM_BLACK_PUDDING) {
                 d->mntmp = NON_PM; /* lie to ourselves */
@@ -5388,12 +5392,12 @@ readobjnam_postparse1(struct _readobjnam_data *d)
         return 2; /*goto typfnd;*/
     }
 #else /*JP:聖水と不浄な水を別に判定*/
-    if (!BSTRCMPI(d->bp, d->p - 4, "聖水")) {
+    if (!BSTRCMPI(d->bp, d->p - strlen("聖水"), "聖水")) {
         d->typ = POT_WATER;
         d->blessed = 1;
         return 2; /*goto typfnd;*/
     }
-    if (!BSTRCMPI(d->bp, d->p - 8, "不浄な水")) {
+    if (!BSTRCMPI(d->bp, d->p - strlen("不浄な水"), "不浄な水")) {
         d->typ = POT_WATER;
         d->iscursed = 1;
         return 2; /*goto typfnd;*/
@@ -5414,7 +5418,7 @@ readobjnam_postparse1(struct _readobjnam_data *d)
 #if 0 /*JP*/
     if (d->unlabeled && !BSTRCMPI(d->bp, d->p - 6, "scroll")) {
 #else
-    if (d->unlabeled && !BSTRCMPI(d->bp, d->p - 4, "巻物")) {
+    if (d->unlabeled && !BSTRCMPI(d->bp, d->p - strlen("巻物"), "巻物")) {
 #endif
         d->typ = SCR_BLANK_PAPER;
         return 2; /*goto typfnd;*/
@@ -5422,7 +5426,7 @@ readobjnam_postparse1(struct _readobjnam_data *d)
 #if 0 /*JP*/
     if (d->unlabeled && !BSTRCMPI(d->bp, d->p - 9, "spellbook")) {
 #else
-    if (d->unlabeled && !BSTRCMPI(d->bp, d->p - 6, "魔法書")) {
+    if (d->unlabeled && !BSTRCMPI(d->bp, d->p - strlen("魔法書"), "魔法書")) {
 #endif
         d->typ = SPE_BLANK_PAPER;
         return 2; /*goto typfnd;*/
@@ -5444,7 +5448,7 @@ readobjnam_postparse1(struct _readobjnam_data *d)
         || !strcmpi(d->bp, "gold") || !strcmpi(d->bp, "money")
         || !strcmpi(d->bp, "coin") || *d->bp == GOLD_SYM) {
 #else
-    if (!BSTRCMPI(d->bp, d->p - 4, "金貨") || !BSTRCMPI(d->bp, d->p - 8, "ゴールド")
+    if (!BSTRCMPI(d->bp, d->p - strlen("金貨"), "金貨") || !BSTRCMPI(d->bp, d->p - 8, "ゴールド")
         || *d->bp == GOLD_SYM) {
 #endif
         if (d->cnt > 5000 && !wizard)
