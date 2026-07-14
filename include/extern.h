@@ -709,8 +709,10 @@ extern char *Amonnam(struct monst *) NONNULLARG1;
 extern char *a_monnam(struct monst *) NONNULLARG1;
 extern char *distant_monnam(struct monst *, int, char *) NONNULLARG1;
 extern char *mon_nam_too(struct monst *, struct monst *) NONNULLPTRS;
+#if 0 /*JP*//*unused*/
 extern char *monverbself(struct monst *, char *,
                          const char *, const char *) NONNULLARG123;
+#endif
 extern char *minimal_monnam(struct monst *, boolean);
 extern char *bogusmon(char *, char *) NONNULLARG1;
 extern char *rndmonnam(char *);
@@ -1901,6 +1903,9 @@ extern int big_to_little(int);
 extern boolean big_little_match(int, int);
 extern const char *locomotion(const struct permonst *, const char *) NONNULLARG12;
 extern const char *stagger(const struct permonst *, const char *) NONNULLARG12;
+#if 1 /*JP:T*/
+extern const char *jumpedthrough(const struct permonst *, const char *) NONNULLARG12;
+#endif
 extern const char *on_fire(struct permonst *, struct attack *) NONNULLARG12;
 extern const char *msummon_environ(struct permonst *, const char **) NONNULLARG12;
 extern const struct permonst *raceptr(struct monst *) NONNULLARG1;
@@ -4046,7 +4051,10 @@ extern int is_kanji(unsigned int);
 extern void setkcode(int);
 extern unsigned char *e2sj(unsigned char *);
 extern unsigned char *sj2e(unsigned char *);
+extern const char *utf8toic(const char *);
 extern const char *str2ic(const char *);
+extern int charlen(unsigned int c);
+extern int displen(const char *s);
 extern int jbuffer(unsigned int, unsigned int *, void (*)(unsigned int), void (*)(unsigned char *));
 extern int cbuffer(unsigned int);
 extern void cputchar(int);
@@ -4054,7 +4062,7 @@ extern void jputchar(int);
 extern void jputs(const char *);
 extern int is_kanji2(const char *,int);
 extern int is_kanji1(const char *,int);
-extern int offset_in_kanji(const unsigned char *, int);
+extern int offset_in_kanji(const char *, int);
 extern int isspace_8(int);
 extern void split_japanese(char *,char *,char *,int);
 extern void jrndm_replace(char *);
