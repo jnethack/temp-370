@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 #include "dlb.h"
 
@@ -95,18 +100,59 @@ formatkiller(
 {
     static NEARDATA const char *const killed_by_prefix[] = {
         /* DIED, CHOKING, POISONING, STARVING, */
+/*JP
         "killed by ", "choked on ", "poisoned by ", "died of ",
+*/
+        "死んだ", "で窒息した", "の毒で死んだ", "",
         /* DROWNING, BURNING, DISSOLVED, CRUSHING, */
+/*JP
         "drowned in ", "burned by ", "dissolved in ", "crushed to death by ",
+*/
+        "溺死した","焼死した", "溶岩に溶けた", "押し潰された",
         /* STONING, TURNED_SLIME, GENOCIDED, */
+/*JP
         "petrified by ", "turned to slime by ", "killed by ",
+*/
+        "石になった", "にスライムにされた", "虐殺された",
         /* PANICKED, TRICKED, QUIT, ESCAPED, ASCENDED */
         "", "", "", "", ""
     };
+#if 0 /*JP*/
     unsigned l;
     char c, *kname = svk.killer.name;
+#else
+    char *kname = svk.killer.name;
+#endif
 
     buf[0] = '\0'; /* lint suppression */
+#if 1 /*JP*//*前に持ってくる*/
+    if (incl_helpless && gm.multi < 0) {
+        if (gm.multi_reason
+            && strlen(gm.multi_reason) + sizeof "，" <= siz)
+            Sprintf(buf, "%s，", gm.multi_reason);
+        else if (sizeof "助けを受けられない間に，" <= siz)
+            Strcpy(buf, "助けを受けられない間に，");
+    }
+#endif
+#if 1 /*JP*//*先に対象をコピー*/
+    {
+        char *dst = eos(buf);
+        const char *src = kname;
+
+        while (*src && (size_t) (dst - buf) < siz - 1) {
+            char c = *src++;
+            if (c == ',')
+                c = ';';
+            else if (c == '=')
+                c = '_';
+            else if (c == '\t')
+                c = ' ';
+            *dst++ = c;
+        }
+        *dst = '\0';
+    }
+    siz -= strlen(buf);
+#endif
     switch (svk.killer.format) {
     default:
         impossible("bad killer format? (%d)", svk.killer.format);
@@ -115,15 +161,26 @@ formatkiller(
     case NO_KILLER_PREFIX:
         break;
     case KILLED_BY_AN:
+#if 0 /*JP*//*日本語では不要*/
         kname = an(kname);
+#endif
         FALLTHROUGH;
         /*FALLTHRU*/
     case KILLED_BY:
+#if 0 /*JP*/
         (void) strncat(buf, killed_by_prefix[how], siz - 1);
         l = Strlen(buf);
         buf += l, siz -= l;
+#else /*JP:既に対象をコピーしているので単に追加*/
+        (void) strncat(buf, killed_by_prefix[how], siz - 1);
+#endif
         break;
+#if 1 /*JP*/
+    case KILLED_SUFFIX:
+        (void) strncat(buf, "に殺された", siz - 1);
+#endif
     }
+#if 0 /*JP*//*既にコピー済み*/
     /* Copy kname into buf[].
      * Object names and named fruit have already been sanitized, but
      * monsters can have "called 'arbitrary text'" attached to them,
@@ -148,7 +205,9 @@ formatkiller(
         *buf++ = c;
     }
     *buf = '\0';
+#endif
 
+#if 0 /*JP*//*前に持って行く*/
     if (incl_helpless && gm.multi < 0) {
         /* X <= siz: 'sizeof "string"' includes 1 for '\0' terminator */
         if (gm.multi_reason
@@ -159,6 +218,7 @@ formatkiller(
             Strcpy(buf, ", while helpless");
         /* else extra death info won't fit, so leave it out */
     }
+#endif
 }
 
 staticfn void
@@ -363,8 +423,13 @@ writexlentry(FILE *rfile, struct toptenentry *tt, int how)
             buf, /* (already includes separator) */
             XLOG_SEP, svp.plname, XLOG_SEP, tmpbuf);
     if (gm.multi < 0)
+    #if 0 /*JP:T*/
         Fprintf(rfile, "%cwhile=%s", XLOG_SEP,
                 gm.multi_reason ? gm.multi_reason : "helpless");
+#else
+        Fprintf(rfile, "%cwhile=%s", XLOG_SEP,
+                gm.multi_reason ? gm.multi_reason : "無力な間に");
+#endif
     Fprintf(rfile, "%cconduct=0x%lx%cturns=%ld%cachieve=0x%lx", XLOG_SEP,
             encodeconduct(), XLOG_SEP, svm.moves, XLOG_SEP,
             encodeachieve(FALSE));
@@ -728,9 +793,15 @@ topten(int how, time_t when)
                 char pbuf[BUFSZ];
 
                 topten_print("");
+#if 0 /*JP:T*/
                 Sprintf(pbuf,
              "Since you were in %s mode, the score list will not be checked.",
                         wizard ? "wizard" : "discover");
+#else
+                Sprintf(pbuf,
+             "%sモードでプレイしたのでスコアリストには載らない．",
+                        wizard ? "ウィザード" : "探検");
+#endif
                 topten_print(pbuf);
             }
         goto showwin;
@@ -792,7 +863,10 @@ topten(int how, time_t when)
                     char pbuf[BUFSZ];
 
                     Sprintf(pbuf,
+/*JP
                          "You didn't beat your previous score of %ld points.",
+*/
+                         "あなたは以前の%ldポイントのスコアに届かなかった．",
                             t1->points);
                     topten_print(pbuf);
                     topten_print("");
@@ -828,13 +902,22 @@ topten(int how, time_t when)
         if (!done_stopprint)
             if (rank0 > 0) {
                 if (rank0 <= 10) {
+/*JP
                     topten_print("You made the top ten list!");
+*/
+                    topten_print("あなたはトップ10リストに載った！");
                 } else {
                     char pbuf[BUFSZ];
 
+#if 0 /*JP:T*/
                     Sprintf(pbuf,
                             "You reached the %d%s place on the top %d list.",
                             rank0, ordin(rank0), sysopt.entrymax);
+#else
+                    Sprintf(pbuf,
+                            "あなたは，トップ%dリストの%d位に載った．",
+                            sysopt.entrymax, rank0);
+#endif
                     topten_print(pbuf);
                 }
                 topten_print("");
@@ -947,9 +1030,27 @@ outentry(int rank, struct toptenentry *t1, boolean so)
 {
     boolean second_line = TRUE;
     char linebuf[BUFSZ];
+#if 0 /*JP*/
     char *bp, hpbuf[24], linebuf3[BUFSZ];
+#else
+    char *bp, hpbuf[24];
+#endif
     int hppos, lngr;
+#if 1 /*JP*/
+    char who[BUFSZ];
+    char where[BUFSZ];
+    char action[BUFSZ];
+    char car[BUFSZ];
+    char cdr[BUFSZ];
+    const char *jdeath;
+    size_t l;
+#endif
 
+#if 1 /*JP*/
+    who[0] = '\0';
+    where[0] = '\0';
+    action[0] = '\0';
+#endif
     linebuf[0] = '\0';
     if (rank)
         Sprintf(eos(linebuf), "%3d", rank);
@@ -967,25 +1068,73 @@ outentry(int rank, struct toptenentry *t1, boolean so)
      */
     Sprintf(eos(linebuf), "-%s", t1->plgend);
     if (t1->plalign[0] != '?')
+/*JP
         Sprintf(eos(linebuf), "-%s ", t1->plalign);
+*/
+        Sprintf(eos(linebuf), "-%s", t1->plalign);
     else
+/*JP
         Strcat(linebuf, " ");
+*/
+        Strcat(linebuf, "");
+#if 1 /*JP*/
+        Strcat(linebuf, "は");
+/*JP: 日本語では「○○を手に」を先に追加しないと不自然 */
+        jdeath = t1->death;
+        if (!STRNCMPEX(jdeath, "魔除けを手に"))
+            jdeath += l;
+        else if (!STRNCMPEX(jdeath, "天上で恥辱を受け"))
+            jdeath += l;
+        else if (!STRNCMPEX(jdeath, "偽物の魔除けを掴まされ"))
+            jdeath += l;
+#endif
+#if 0 /*JP*/
     if (!strncmp("escaped", t1->death, 7)) {
+#else
+    if (!STRNCMP2(jdeath, "脱出した")
+        || !strncmp("escaped", jdeath, 7)) {
+#endif
+#if 0 /*JP*/
         Sprintf(eos(linebuf), "escaped the dungeon %s[max level %d]",
                 !strncmp(" (", t1->death + 7, 2) ? t1->death + 7 + 2 : "",
                 t1->maxlvl);
         /* fixup for closing paren in "escaped... with...Amulet)[max..." */
         if ((bp = strchr(linebuf, ')')) != 0)
             *bp = (t1->deathdnum == astral_level.dnum) ? '\0' : ' ';
+#else
+        char jbuf[BUFSZ];
+        strncpy(jbuf, t1->death, jdeath - t1->death);
+        jbuf[jdeath - t1->death] = '\0';
+        Sprintf(action, "%s迷宮から脱出した[最大地下%d階]",
+                jbuf, t1->maxlvl);
+#endif
         second_line = FALSE;
+#if 0 /*JP*/
     } else if (!strncmp("ascended", t1->death, 8)) {
+#else
+    } else if (!STRNCMP2(jdeath, "昇天した")
+               || !strncmp("ascended", jdeath, 8)) {
+#endif
+#if 0 /*JP:T*/
         Sprintf(eos(linebuf), "ascended to demigod%s-hood",
                 (t1->plgend[0] == 'F') ? "dess" : "");
+#else
+        Sprintf(action, "昇天し%s神となった",
+                (t1->plgend[0] == 'F') ? "女" : "");
+#endif
         second_line = FALSE;
     } else {
+/*JP
         if (!strncmp(t1->death, "quit", 4)) {
+*/
+        if (!STRNCMP2(jdeath, "抜けた")) {
+#if 0 /*JP*/
             Strcat(linebuf, "quit");
+#else
+            Strcat(action, t1->death);
+#endif
             second_line = FALSE;
+#if 0 /*JP*/
         } else if (!strncmp(t1->death, "died of st", 10)) {
             Strcat(linebuf, "starved to death");
             second_line = FALSE;
@@ -1000,56 +1149,104 @@ outentry(int rank, struct toptenentry *t1, boolean so)
             Strcat(linebuf, "turned to stone");
         } else
             Strcat(linebuf, "died");
+#else
+        }
+#endif /*JP*/
 
         if (t1->deathdnum == astral_level.dnum) {
+#if 0 /*JP*/
             const char *arg, *fmt = " on the Plane of %s";
+#else
+            const char *arg;
+#endif
 
             switch (t1->deathlev) {
             case -5:
+#if 0 /*JP*/
                 fmt = " on the %s Plane";
+#endif
+/*JP
                 arg = "Astral";
+*/
+                arg = "天上界";
                 break;
             case -4:
+/*JP
                 arg = "Water";
+*/
+                arg = "水の精霊界";
                 break;
             case -3:
+/*JP
                 arg = "Fire";
+*/
+                arg = "火の精霊界";
                 break;
             case -2:
+/*JP
                 arg = "Air";
+*/
+                arg = "風の精霊界";
                 break;
             case -1:
+/*JP
                 arg = "Earth";
+*/
+                arg = "地の精霊界";
                 break;
             default:
                 arg = "Void";
                 break;
             }
+#if 0 /*JP*/
             Sprintf(eos(linebuf), fmt, arg);
+#else
+            Sprintf(where, "%sにて", arg);
+#endif
         } else {
+/*JP
             Sprintf(eos(linebuf), " in %s", svd.dungeons[t1->deathdnum].dname);
+*/
+            Sprintf(eos(linebuf), "%s", svd.dungeons[t1->deathdnum].dname);
             if (t1->deathdnum != knox_level.dnum)
+/*JP
                 Sprintf(eos(linebuf), " on level %d", t1->deathlev);
+*/
+                Sprintf(eos(linebuf), "の地下%d階にて", t1->deathlev);
             if (t1->deathlev != t1->maxlvl)
+/*JP
                 Sprintf(eos(linebuf), " [max %d]", t1->maxlvl);
+*/
+                Sprintf(eos(where), "[最大地下%d階]", t1->maxlvl);
         }
 
+#if 0 /*JP*//* 日本語では細工不要 */
         /* kludge for "quit while already on Charon's boat" */
         if (!strncmp(t1->death, "quit ", 5))
             Strcat(linebuf, t1->death + 4);
+#endif
     }
+#if 0 /*JP*/
     Strcat(linebuf, ".");
+#endif
 
     /* Quit, starved, ascended, and escaped contain no second line */
     if (second_line) {
         bp = eos(linebuf);
+#if 0 /*JP:T*/
         Sprintf(bp, "  %c%s.", highc(*(t1->death)), t1->death + 1);
+#else
+        Sprintf(bp, "%s", t1->death + 1);
+#endif
         /* fix up "Killed by Mr. Asidonhopo; the shopkeeper"; that starts
            with a comma but has it changed to semi-colon to keep the comma
            out of 'record'; change it back for display */
         (void) strsubst(bp, "; the ", ", the ");
     }
 
+#if 1 /*JP*/
+    Sprintf(eos(linebuf), "%s%s%s．", who, where, action);
+#endif
     lngr = (int) strlen(linebuf);
     if (t1->hp <= 0)
         hpbuf[0] = '-', hpbuf[1] = '\0';
@@ -1057,6 +1254,26 @@ outentry(int rank, struct toptenentry *t1, boolean so)
         Sprintf(hpbuf, "%d", t1->hp);
     /* beginning of hp column after padding (not actually padded yet) */
     hppos = COLNO - (int) (sizeof "  Hp [max]" - sizeof "");
+#if 1 /*JP*/
+    while (lngr >= hppos) {
+/*JP hpposより前の適当な位置で分割する．*/
+        car[0] = '\0';
+        cdr[0] = '\0';
+        split_japanese(linebuf, car, cdr, hppos);
+        
+        bp = eos(car);
+        if (so) {
+            while (bp < car + (COLNO-1)) *bp++ = ' ';
+            *bp = 0;
+            topten_print_bold(car);
+        } else
+            topten_print(car);
+        
+        Sprintf(linebuf, "%15s %s", "", cdr);
+        lngr = (int)strlen(linebuf);
+    }
+/*JP: 日本語が入ると文字列を後から見ていくことはできないためコメントアウト*/
+#else
     while (lngr >= hppos) {
         for (bp = eos(linebuf); !(*bp == ' ' && bp - linebuf < hppos); bp--)
             ;
@@ -1082,6 +1299,7 @@ outentry(int rank, struct toptenentry *t1, boolean so)
         Snprintf(linebuf, sizeof(linebuf), "%15s %s", "", linebuf3);
         lngr = Strlen(linebuf);
     }
+#endif /*JP*/
     /* beginning of hp column not including padding */
     hppos = COLNO - 7 - (int) strlen(hpbuf);
     bp = eos(linebuf);
@@ -1266,8 +1484,21 @@ prscore(int argc, char **argv)
             players = &player0;
         }
     } else {
+#if 0 /*JP*/
         playerct = --argc;
         players = (const char **) ++argv;
+#else
+        int j;
+        playerct = --argc;
+        ++argv;
+        players = (const char **)alloc(sizeof(char *) * (argc + 1));
+        for (j = 0; j < argc; j++) {
+            char *p = (char *)str2ic(argv[j]);
+            players[j] = (char *)alloc(strlen(p) + 1);
+            strcpy((void *)players[j], p);
+        }
+        players[j] = NULL;
+#endif
     }
     raw_print("");
 
