@@ -116,41 +116,41 @@ static int optfn_##a(int, int, boolean, char *, char *);
      */
     NHOPTC(windowtype, Advanced, WINTYPELEN, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "windowing system to use (should be specified first)")
+                "使用するウィンドウシステム (最初に指定する)")
     NHOPTC(playmode, Advanced, 8, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "normal play, non-scoring explore mode, or debug mode")
+                "通常モード，探検モード，デバッグモードのいずれか")
     NHOPTC(name, Advanced, PL_NSIZ, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "your character's name (e.g., name:Merlin-W)")
+                "あなたの名前 (例 name:マーリン-W)")
     NHOPTC(role, Advanced, PL_CSIZ, opt_in, set_gameview,
                 Yes, Yes, Yes, No, "character",
-                "your starting role (e.g., Barbarian, Valkyrie)")
+                "ゲーム開始時の職業 (例 Barbarian, Valkyrie)")
     NHOPTC(race, Advanced, PL_CSIZ, opt_in, set_gameview,
                 Yes, Yes, Yes, No, NoAlias,
-                "your starting race (e.g., Human, Elf)")
+                "ゲーム開始時の種族 (例 Human, Elf)")
     NHOPTC(gender, Advanced, 8, opt_in, set_gameview,
                 Yes, Yes, Yes, No, NoAlias,
-                "your starting gender (male or female)")
+                "ゲーム開始時の性別(male または female)")
     NHOPTC(alignment, Advanced, 8, opt_in, set_gameview,
                 Yes, Yes, Yes, No, "align",
-                "your starting alignment (lawful, neutral, or chaotic)")
+                "ゲーム開始時の属性 (lawful, neutral, chaoticのいずれか)")
     /* end of special ordering; remainder of entries are in alphabetical order
      */
     NHOPTB(accessiblemsg, Advanced, 0, opt_out, set_in_game,
            Off, Yes, No, No, NoAlias, &a11y.accessiblemsg, Term_False,
-           "add location information to messages")
+           "メッセージに位置情報を加える")
     NHOPTB(acoustics, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.acoustics, Term_False,
-           "can your character hear anything")
+           "キャラクタがなんでも聞こえるか")
  /* NHOPTC(align) -- moved to top */
     NHOPTC(align_message, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, No, Yes, NoAlias, "message window alignment")
+                Yes, Yes, No, Yes, NoAlias, "メッセージウィンドウの揃え")
     NHOPTC(align_status, Advanced, 20, opt_in, set_gameview,
-                No, Yes, No, Yes, NoAlias, "status window alignment")
+                No, Yes, No, Yes, NoAlias, "状況ウィンドウの揃え")
 #ifdef WIN32
     NHOPTC(altkeyhandling, Advanced, 20, opt_in, set_in_game,
-                No, Yes, No, Yes, "altkeyhandler", "alternative key handling")
+                No, Yes, No, Yes, "altkeyhandler", "キーの扱いの代替策")
 #else
     NHOPTC(altkeyhandling, Advanced, 20, opt_in, set_in_config,
                 No, Yes, No, Yes, "altkeyhandler", "(not applicable)")
@@ -166,12 +166,12 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(armorstatus, Advanced, 0, opt_in, set_in_game,
                 Off, Yes, No, No, NoAlias, &flags.armorstatus, Term_False,
-                "summarize currently worn armor in a status field")
+                "ステータスに今着ている鎧のまとめを表示")
     NHOPTB(ascii_map, Advanced, 0, opt_in, set_in_game,
                 ascii_map_Def, Yes, No, No, NoAlias, &iflags.wc_ascii_map,
-                Term_False, "show map as text")
+                Term_False, "地図をテキストで表示")
     NHOPTO("autocompletions", Advanced, o_autocomplete, BUFSZ, opt_in,
-                set_in_game, No, Yes, No, NoAlias, "edit autocompletions")
+                set_in_game, No, Yes, No, NoAlias, "入力自動補完")
     NHOPTB(autodescribe, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.autodescribe, Term_False,
            "describe terrain under cursor")
@@ -216,7 +216,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #ifdef BACKWARD_COMPAT
     NHOPTC(boulder, Advanced, 1, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "deprecated (use S_boulder in sym file instead)")
+                "廃止予定(代わりにシンボルファイルのS_boulderを使う)")
 #endif
     NHOPTC(catname, Advanced, PL_PSIZ, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
@@ -253,7 +253,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #ifdef CURSES_GRAPHICS
     NHOPTC(cursesgraphics, Advanced, 70, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "load curses display symbols into symset")
+                "curses表示シンボルをsymsetに読み込む")
 #endif
     NHOPTB(customcolors, Map, 0, opt_out, set_in_game,
            On, Yes, No, No, "customcolours", &iflags.customcolors,
@@ -270,7 +270,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #ifdef BACKWARD_COMPAT
     NHOPTC(DECgraphics, Advanced, 70, opt_in, set_in_config,
                 Yes, Yes, No, No, NoAlias,
-                "load DECGraphics display symbols into symset")
+                "DECGraphics表示シンボルをsymsetに読み込む")
 #endif
     NHOPTB(debug_hunger, Advanced, 0, opt_in, set_wiznofuz,
            Off, Yes, No, No, NoAlias, &iflags.debug_hunger, Term_False,
@@ -284,7 +284,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
     NHOPTC(disclose, Advanced, sizeof flags.end_disclose * 2,
                 opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "the kinds of information to disclose at end of game")
+                "ゲーム終了時に見る情報の種類")
     NHOPTC(dogname, Advanced, PL_PSIZ, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
                 "name of your starting pet if it is a little dog")
@@ -293,10 +293,10 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "don't autopickup dropped items")
     NHOPTC(dungeon, Advanced, MAXDCHARS + 1,opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use in drawing the dungeon map")
+                "迷宮の地図を描画するシンボル文字列")
     NHOPTC(effects, Advanced, MAXECHARS + 1, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use in drawing special effects")
+                "特殊効果を描画するシンボル文字列")
     NHOPTB(eight_bit_tty, Advanced, 0, opt_in, set_in_game,
                 Off, Yes, No, No, NoAlias, &iflags.wc_eight_bit_input,
            Term_False, "send 8-bit characters directly to terminal")
@@ -313,31 +313,31 @@ static int optfn_##a(int, int, boolean, char *, char *);
            On, Yes, No, No, NoAlias, &flags.invlet_constant, Term_False,
            "inventory items keep their letters")
     NHOPTC(font_map, Advanced, 40, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "font to use in the map window")
+                Yes, Yes, Yes, No, NoAlias, "マップウィンドウに使用するフォント")
     NHOPTC(font_menu, Advanced, 40, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "font to use in menus")
+                Yes, Yes, Yes, No, NoAlias, "メニューに使うフォント")
     NHOPTC(font_message, Advanced, 40, opt_in, set_gameview,
                 Yes, Yes, Yes, No, NoAlias,
-                "font to use in the message window")
+                "メッセージウィンドウに使用するフォント")
     NHOPTC(font_size_map, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the map font")
+                Yes, Yes, Yes, No, NoAlias, "マップフォントのサイズ")
     NHOPTC(font_size_menu, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the menu font")
+                Yes, Yes, Yes, No, NoAlias, "メニューフォントのサイズ")
     NHOPTC(font_size_message, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the message font")
+                Yes, Yes, Yes, No, NoAlias, "メッセージフォントのサイズ")
     NHOPTC(font_size_status, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the status font")
+                Yes, Yes, Yes, No, NoAlias, "状態フォントのサイズ")
     NHOPTC(font_size_text, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the text font")
+                Yes, Yes, Yes, No, NoAlias, "テキストフォントのサイズ")
     NHOPTC(font_status, Advanced, 40, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "font to use in status window")
+                Yes, Yes, Yes, No, NoAlias, "状態ウィンドウに使用するフォント")
     NHOPTC(font_text, Advanced, 40, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "font to use in text windows")
+                Yes, Yes, Yes, No, NoAlias, "テキストウィンドウに使用するフォント")
     NHOPTB(force_invmenu, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.force_invmenu, Term_False,
-           "commands asking for inventory item show a menu")
+           "持ち物一覧メニューを表示するコマンド")
     NHOPTC(fruit, General, PL_FSIZ, opt_in, set_in_game,
-                No, Yes, No, No, NoAlias, "name of a fruit you enjoy eating")
+                No, Yes, No, No, NoAlias, "好物の果物の名前")
     NHOPTB(fullscreen, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &iflags.wc2_fullscreen, Term_False,
            "toggle fullscreen")
@@ -360,7 +360,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #if defined(MACOS9)
     NHOPTC(hicolor, Advanced, 15, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "same as palette, only order is reversed")
+                "パレットが同じとき、指示したものだけ反転させる")
 #endif
     NHOPTB(hilite_pet, Map, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.wc_hilite_pet, Term_False,
@@ -385,7 +385,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #ifdef BACKWARD_COMPAT
     NHOPTC(IBMgraphics, Advanced, 70, opt_in, set_in_config,
                 Yes, Yes, No, No, NoAlias,
-                "load IBMGraphics display symbols into symset")
+                "IBMGraphics表示シンボルをsymsetに読み込む")
 #endif
     NHOPTB(idlecheckpoint, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.idlecheckpoint, Term_Off,
@@ -420,7 +420,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
            On, Yes, No, No, NoAlias, &flags.biff, Term_False,
            "enable the mail daemon")
     NHOPTC(map_mode, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, No, No, NoAlias, "map display mode under Windows")
+                Yes, Yes, No, No, NoAlias, "ウィンドウ表示時のマップの表示モード")
     NHOPTB(mention_decor, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.mention_decor, Term_False,
            "give feedback when walking over interesting features")
@@ -431,23 +431,23 @@ static int optfn_##a(int, int, boolean, char *, char *);
            Off, Yes, No, No, NoAlias, &flags.mention_walls, Term_False,
            "give feedback when walking into walls")
     NHOPTC(menu_deselect_all, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "deselect all items in a menu")
+                No, Yes, No, No, NoAlias, "全てのアイテムを非選択")
     NHOPTC(menu_deselect_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "deselect all items on this page of a menu")
+                "現在表示されているページのアイテムを非選択")
     NHOPTC(menu_first_page, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "jump to the first page in a menu")
+                No, Yes, No, No, NoAlias, "メニューの最初のページへ")
     NHOPTC(menu_headings, Advanced, 4, opt_in, set_in_game,
-                Yes, Yes, No, Yes, NoAlias, "display style for menu headings")
+                Yes, Yes, No, Yes, NoAlias, "メニュー見出しの表示スタイル")
     NHOPTC(menu_invert_all, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "invert all items in a menu")
+                No, Yes, No, No, NoAlias, "全てのアイテムを反転")
     NHOPTC(menu_invert_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "invert all items on this page of a menu")
+                "現在表示されているページのアイテムを反転")
     NHOPTC(menu_last_page, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "jump to the last page in a menu")
+                No, Yes, No, No, NoAlias, "メニューの最後のページへ")
     NHOPTC(menu_next_page, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "go to the next menu page")
+                No, Yes, No, No, NoAlias, "次のメニューのページへ")
     NHOPTC(menu_objsyms, Advanced, 12, opt_in, set_in_game,
            Yes, Yes, No, Yes, "use_menu_glyphs",
            "show object symbols in menus")
@@ -461,14 +461,14 @@ static int optfn_##a(int, int, boolean, char *, char *);
            (char *)0)
 #endif
     NHOPTC(menu_previous_page, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "go to the previous menu page")
+                No, Yes, No, No, NoAlias, "前のメニューのページへ")
     NHOPTC(menu_search, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "search for a menu item")
+                No, Yes, No, No, NoAlias, "メニューの検索")
     NHOPTC(menu_select_all, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "select all items in a menu")
+                No, Yes, No, No, NoAlias, "全てのアイテムを選択")
     NHOPTC(menu_select_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "select all items on this page of a menu")
+                "現在表示されている全てのアイテムを選択")
     NHOPTC(menu_shift_left, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias, "pan current menu page left")
     NHOPTC(menu_shift_right, Advanced, 4, opt_in, set_in_config,
@@ -486,7 +486,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
                 "experimental behavior of menu inverts")
     NHOPTC(menustyle, Advanced, MENUTYPELEN, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "user interface for object selection")
+                "オブジェクトを選択するときのユーザーインタフェース")
     NHOPTO("message types", Advanced, o_message_types, BUFSZ,
                 opt_in, set_in_game,
                 No, Yes, No, NoAlias, "edit message types")
@@ -501,10 +501,10 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "control monster teleport destinations")
     NHOPTC(monsters, Advanced, MAXMCLASSES, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use for monsters")
+                "モンスターに使用されるシンボル文字列")
     NHOPTC(mouse_support, Advanced, 0, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "game receives click info from mouse")
+                "ゲームがマウスからのクリック情報を受け取る")
 #if PREV_MSGS /* tty or curses */
     NHOPTC(msg_window, Advanced, 1, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
@@ -515,7 +515,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTC(msghistory, Advanced, 5, opt_in, set_gameview,
                 Yes, Yes, No, No, NoAlias,
-                "number of top line messages to save")
+                "先頭行に表示されたメッセージ履歴の保存数")
  /* NHOPTC(name) -- moved to top */
 #ifdef NEWS
     NHOPTB(news, Advanced, 0, opt_in, set_in_config,
@@ -534,28 +534,28 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "allow nulls to be sent to terminal")
     NHOPTC(number_pad, General, 1, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "use the number pad for movement")
+                "ナンバーパッドを使用する")
     NHOPTC(objects, Advanced, MAXOCLASSES, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use for objects")
+                "アイテムに使用されるシンボル文字列")
     NHOPTC(packorder, Advanced, MAXOCLASSES, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "the inventory order of the items in your pack")
+                "背負い袋内の物の順番")
 #ifdef CHANGE_COLOR
 #ifndef MACOS9     /* not old Mac OS9 */
     NHOPTC(palette, Advanced, 15, opt_in, set_gameview,
                 No, Yes, Yes, No, "hicolor",
-                "palette (adjust an RGB color in palette (color/R-G-B)")
+                "パレット (パレットのRGB色を調整する (色/R-G-B))")
 #else
     NHOPTC(palette, Advanced, 15, opt_in, set_in_game,
                 No, Yes, Yes, No, "hicolor",
-                "palette (00c/880/-fff is blue/yellow/reverse white)")
+                "パレット (00c/880/-fffはそれぞれ青/黄/反転白を示す)")
 #endif
 #endif
     /* prior to paranoid_confirmation, 'prayconfirm' was a distinct option */
     NHOPTC(paranoid_confirmation, Advanced, 28, opt_in, set_in_game,
                 Yes, Yes, Yes, Yes, "prayconfirm",
-                "extra prompting in certain situations")
+                "一部の状況で追加の確認をする")
     NHOPTB(pauper, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &u.uroleplay.pauper, Term_False,
            "start your character without any items")
@@ -566,13 +566,13 @@ static int optfn_##a(int, int, boolean, char *, char *);
                 Yes, Yes, No, Yes, NoAlias,
                 "what to show in persistent inventory window")
     NHOPTC(petattr, Advanced, 88, opt_in, set_in_game, /* tty/curses only */
-                No, Yes, No, Yes, NoAlias, "attributes for highlighting pets")
+                No, Yes, No, Yes, NoAlias, "ペットをハイライトするための属性")
     /* pettype is ignored for some roles */
     NHOPTC(pettype, Advanced, 4, opt_in, set_gameview,
-                Yes, Yes, No, No, "pet", "your preferred initial pet type")
+                Yes, Yes, No, No, "pet", "あなたの選択した初期ペットの種類")
     NHOPTC(pickup_burden, Advanced, 20, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "maximum burden picked up before prompt")
+                "拾うときに最大荷重になる手前で確認する")
     NHOPTB(pickup_stolen, Behavior, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.pickup_stolen, Term_False,
            "autopickup stolen items")
@@ -581,13 +581,13 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "autopickup thrown items")
     NHOPTC(pickup_types, Behavior, MAXOCLASSES, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "types of objects to pick up automatically")
+                "自動で拾いあげる物のシンボル")
     NHOPTC(pile_limit, Advanced, 24, opt_in, set_in_game,
                 Yes, Yes, No, No, NoAlias,
-                "threshold for \"there are many objects here\"")
+                "「ここにはたくさんのものがある」のしきい値")
     NHOPTC(player_selection, Advanced, 12, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "choose character via dialog or prompts")
+                "キャラクター選択にダイアログや確認画面を使う")
  /* NHOPTC(playmode) -- moved to top */
     NHOPTB(popup_dialog, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.wc_popup_dialog, Term_False,
@@ -625,11 +625,11 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "space bar is bound to the rest-command")
     NHOPTC(roguesymset, Advanced, 70, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "load a set of rogue display symbols from symbols file")
+                "symbolsファイルからローグレベルの表示シンボルの設定を読み込む")
  /* NHOPTC(role) -- moved to top */
     NHOPTC(runmode, Advanced, sizeof "teleport", opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "display frequency when `running' or `travelling'")
+                "トラベルコマンド等での連続移動時の描画頻度")
     NHOPTB(safe_pet, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.safe_dog, Term_False,
            "prevent you from hitting pets")
@@ -641,13 +641,13 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "perform data sanity checks")
     NHOPTC(scores, Advanced, 32, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "the parts of the score list you wish to see")
+                "ゲーム終了時に見るスコアの種類")
     NHOPTC(scroll_amount, Advanced, 20, opt_in, set_gameview,
                 Yes, Yes, No, No, NoAlias,
-                "amount to scroll map when scroll_margin is reached")
+                "scroll_marginに届いたときのマップスクロール量")
     NHOPTC(scroll_margin, Advanced, 20, opt_in, set_gameview,
                 Yes, Yes, No, No, NoAlias,
-                "scroll map when this far from the edge")
+                "マップ端からのマップスクロール開始距離")
     NHOPTB(selectsaved, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &iflags.wc2_selectsaved, Term_False,
            (char *)0)
@@ -683,7 +683,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
                 "preferred order when displaying discovered objects")
     NHOPTC(sortloot, Advanced, 4, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "sort object selection lists by description")
+                "物体選択リストを説明でソートする")
     NHOPTB(sortpack, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.sortpack, Term_False,
            "group inventory items by type")
@@ -716,33 +716,33 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "use standout for --more--")
     NHOPTB(status_updates, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &iflags.status_updates, Term_False,
-           "allow the status lines to update")
+           "ステータス行を更新できるようにする")
     NHOPTO("status condition fields", Status, o_status_cond, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "change status condition highlighting")
+                No, Yes, No, NoAlias, "条件付きステータスハイライトを変更")
 #ifdef STATUS_HILITES
     NHOPTC(statushilites, Advanced, 20, opt_in, set_in_game,
                 Yes, Yes, Yes, No, NoAlias,
-                "0=no status highlighting, N=show highlights for N turns")
+                "0=ステータスハイライトなし，Nターン毎にハイライト表示")
     NHOPTO("status highlight rules", Status, o_status_hilites, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "change status line highlighting")
+                No, Yes, No, NoAlias, "ステータス行ハイライトを変更")
 #else
     NHOPTC(statushilites, Advanced, 20, opt_in, set_in_config,
-                Yes, Yes, Yes, No, NoAlias, "highlight control")
+                Yes, Yes, Yes, No, NoAlias, "ハイライトの制御")
 #endif
     NHOPTC(statuslines, Status, 20, opt_in, set_in_game,
-                No, Yes, No, No, NoAlias, "2 or 3 lines for status display")
+                No, Yes, No, No, NoAlias, "ステータス表示に2,3行使う")
 #ifdef WIN32CON
     NHOPTC(subkeyvalue, Advanced, 7, opt_in, set_in_config,
-                No, Yes, Yes, No, NoAlias, "override keystroke value")
+                No, Yes, Yes, No, NoAlias, "キーマッピングを変更する")
 #endif
     NHOPTC(suppress_alert, Advanced, 8, opt_in, set_in_game,
                 No, Yes, Yes, No, NoAlias,
-                "suppress alerts about version-specific features")
+                "バージョン間の違いに関する警告メッセージの無効化")
     NHOPTC(symset, Map, 70, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "load a set of display symbols from symbols file")
+                "symbolsファイルから表示シンボルの設定を読み込む")
     NHOPTC(term_cols, Advanced, 6, opt_in, set_in_config,
                 No, Yes, No, No, "termcolumns", "number of columns")
     NHOPTC(term_rows, Advanced, 6, opt_in, set_in_config,
@@ -751,11 +751,11 @@ static int optfn_##a(int, int, boolean, char *, char *);
                 Off, Yes, No, No, NoAlias, &flags.terrainstatus, Term_False,
                 "show hero's location as a status field")
     NHOPTC(tile_file, Advanced, 70, opt_in, set_gameview,
-                No, Yes, No, No, NoAlias, "name of tile file")
+                No, Yes, No, No, NoAlias, "タイルファイルの名前")
     NHOPTC(tile_height, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, No, No, NoAlias, "height of tiles")
+                Yes, Yes, No, No, NoAlias, "タイルの高さ")
     NHOPTC(tile_width, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, No, No, NoAlias, "width of tiles")
+                Yes, Yes, No, No, NoAlias, "タイルの幅")
     NHOPTB(tiled_map, Advanced, 0, opt_in, set_in_game,
                 tiled_map_Def, Yes, No, No, NoAlias, &iflags.wc_tiled_map,
            Term_False, (char *)0)
@@ -782,7 +782,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
            "show top scores in window")
     NHOPTC(traps, Advanced, MAXTCHARS + 1, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use in drawing traps")
+                "罠を描画するシンボル文字列")
     NHOPTB(travel, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.travelcmd, Term_False,
            "enable traveling via mouse click")
@@ -809,23 +809,23 @@ static int optfn_##a(int, int, boolean, char *, char *);
            &iflags.use_truecolor, Term_False,
            (char *)0)
     NHOPTC(vary_msgcount, Advanced, 20, opt_in, set_gameview,
-                No, Yes, No, No, NoAlias, "show more old messages at a time")
+                No, Yes, No, No, NoAlias, "一度に表示するメッセージの数")
     NHOPTB(verbose, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.verbose, Term_False,
            (char *)0)
     NHOPTC(versinfo, Advanced, 80, opt_out, set_in_game,
-           No, Yes, No, Yes, NoAlias, "extra information for 'showvers'")
+           No, Yes, No, Yes, NoAlias, "'showvers'のための追加情報")
 #ifdef MSDOS
     NHOPTC(video, Advanced, 20, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "method of video updating")
+                No, Yes, No, No, NoAlias, "使用するビデオモードを設定する")
 #endif
 #ifdef VIDEOSHADES
     NHOPTC(videocolors, Advanced, 40, opt_in, set_gameview,
                 No, Yes, No, No, "videocolours",
-                "color mappings for internal screen routines")
+                "内蔵スクリーンルーチン用のカラーマップを用いる")
     NHOPTC(videoshades, Advanced, 32, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "gray shades to map to black/gray/white")
+                "表示にグレイスケールを用いる")
 #endif
 #ifdef MSDOS
     NHOPTC(video_width, Advanced, 10, opt_in, set_gameview,
@@ -867,10 +867,10 @@ static int optfn_##a(int, int, boolean, char *, char *);
                 "show currently wielded weapon in a status field")
     NHOPTC(whatis_coord, Advanced, 1, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "show coordinates when auto-describing cursor position")
+                "カーソル位置を自動説明するときに座標を表示する")
     NHOPTC(whatis_filter, Advanced, 1, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "filter coordinate locations when targeting next or previous")
+                "次や手前をターゲットするときに座標位置をフィルタする")
     NHOPTB(whatis_menu, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.getloc_usemenu, Term_False,
            "show menu when getting a map location")
@@ -881,11 +881,11 @@ static int optfn_##a(int, int, boolean, char *, char *);
                 Yes, Yes, No, Yes, NoAlias, "0 (off), 1 (on), 2 (auto)")
 #ifdef WINCHAIN
     NHOPTC(windowchain, Advanced, WINTYPELEN, opt_in, set_in_sysconf,
-                No, Yes, No, No, NoAlias, "window processor to use")
+                No, Yes, No, No, NoAlias, "使用するウィンドウプロセッサ")
 #endif
     NHOPTC(windowcolors, Advanced, 80, opt_in, set_gameview,
                 No, Yes, Yes, No, NoAlias,
-                "the foreground/background colors of windows")
+                "ウィンドウを指定した前景色/背景色で表示する")
  /* NHOPTC(windowtype) -- moved to top */
     NHOPTB(wizmgender, Advanced, 0, opt_in, set_wizonly,
            Off, Yes, No, No, NoAlias, &iflags.wizmgender, Term_False,
