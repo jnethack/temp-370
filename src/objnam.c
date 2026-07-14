@@ -691,7 +691,7 @@ xcalled(
     {
         int sfxlen = bufsiz - pfxlen;
         /* 全角の途中で切れそうなときにはその字の先頭まで戻る */
-        sfxlen = sfxlen - offset_in_kanji((const unsigned char *) sfx, sfxlen);
+        sfxlen = sfxlen - offset_in_kanji(sfx, sfxlen);
         /* 変数名を変えることはしないが、sfxが前、pfxが後ろになる */
         Sprintf(eos(buf), "%.*sと呼ばれる%s", sfxlen, sfx, pfx);
     }

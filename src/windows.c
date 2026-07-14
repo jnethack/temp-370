@@ -990,31 +990,70 @@ genl_status_update(
             nb = status_vals[idx];
             *nb = '\0';
             if (cond & BL_MASK_STONE)
+/*JP
                 Strcpy(nb = eos(nb), " Stone");
+*/
+                Strcpy(nb = eos(nb), " 石化");
             if (cond & BL_MASK_SLIME)
+/*JP
                 Strcpy(nb = eos(nb), " Slime");
+*/
+                Strcpy(nb = eos(nb), " どろどろ");
             if (cond & BL_MASK_STRNGL)
+/*JP
                 Strcpy(nb = eos(nb), " Strngl");
+*/
+                Strcpy(nb = eos(nb), " 窒息");
             if (cond & BL_MASK_FOODPOIS)
+/*JP
                 Strcpy(nb = eos(nb), " FoodPois");
+*/
+                Strcpy(nb = eos(nb), " 食毒");
             if (cond & BL_MASK_TERMILL)
+/*JP
                 Strcpy(nb = eos(nb), " TermIll");
+*/
+                Strcpy(nb = eos(nb), " 病気");
             if (cond & BL_MASK_BLIND)
+/*JP
                 Strcpy(nb = eos(nb), " Blind");
+*/
+                Strcpy(nb = eos(nb), " 盲目");
             if (cond & BL_MASK_DEAF)
+/*JP
                 Strcpy(nb = eos(nb), " Deaf");
+*/
+                Strcpy(nb = eos(nb), " 耳聾");
             if (cond & BL_MASK_STUN)
+/*JP
                 Strcpy(nb = eos(nb), " Stun");
+*/
+                Strcpy(nb = eos(nb), " 眩暈");
             if (cond & BL_MASK_CONF)
+/*JP
                 Strcpy(nb = eos(nb), " Conf");
+*/
+                Strcpy(nb = eos(nb), " 混乱");
             if (cond & BL_MASK_HALLU)
+/*JP
                 Strcpy(nb = eos(nb), " Hallu");
+*/
+                Strcpy(nb = eos(nb), " 幻覚");
             if (cond & BL_MASK_LEV)
+/*JP
                 Strcpy(nb = eos(nb), " Lev");
+*/
+                Strcpy(nb = eos(nb), " 浮遊");
             if (cond & BL_MASK_FLY)
+/*JP
                 Strcpy(nb = eos(nb), " Fly");
+*/
+                Strcpy(nb = eos(nb), " 飛行");
             if (cond & BL_MASK_RIDE)
+/*JP
                 Strcpy(nb = eos(nb), " Ride");
+*/
+                Strcpy(nb = eos(nb), " 騎乗");
             break;
         default:
             Sprintf(status_vals[idx],
