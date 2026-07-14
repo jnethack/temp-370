@@ -9,6 +9,11 @@
 #include "win32api.h"
 #endif
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 #include "dlb.h"
 
@@ -657,9 +662,15 @@ create_levelfile(int lev, char errbuf[])
         if (nhfp->fd >= 0)
             svl.level_info[lev].flags |= LFILE_EXISTS;
         else if (errbuf) /* failure explanation */
+#if 0 /*JP:T*/
             Sprintf(errbuf,
                     "Cannot create file \"%s\" for level %d (errno %d).",
                     gl.lock, lev, errno);
+#else
+            Sprintf(errbuf,
+                    "地下%d階のファイル\"%s\"を開けない(errno %d)．",
+                    lev, gl.lock, errno);
+#endif
 #if defined(MSDOS) || defined(WIN32)
         if (nhfp->fd >= 0)
             (void) setmode(nhfp->fd, O_BINARY);
@@ -3169,7 +3180,10 @@ debugcore(const char *filename, boolean wildcards)
 
 #ifndef SFCTOOL
 
+/*JP
 #define SYSCONFFILE "system configuration file"
+*/
+#define SYSCONFFILE "システム設定ファイル"
 
 void
 reveal_paths(int code)
@@ -3183,7 +3197,10 @@ reveal_paths(int code)
 #if defined(SYSCF) || !defined(UNIX) || defined(DLB)
     const char *filep;
 #ifdef SYSCF
+/*JP
     const char *gamename = (gh.hname && *gh.hname) ? gh.hname : "NetHack";
+*/
+    const char *gamename = (gh.hname && *gh.hname) ? gh.hname : "JNetHack";
 #endif
 #endif
 #if defined(PREFIXES_IN_USE)
@@ -3195,7 +3212,10 @@ reveal_paths(int code)
 #ifdef PREFIXES_IN_USE
     int i, maxlen = 0;
 
+/*JP
     raw_print("Variable playground locations:");
+*/
+    raw_print("変更可能なファイル位置:");
     for (i = 0; i < PREFIX_COUNT; i++)
         raw_printf("    [%-10s]=\"%s\"", fqn_prefix_names[i],
                    gf.fqn_prefix[i] ? gf.fqn_prefix[i] : "not set");
@@ -3231,7 +3251,10 @@ reveal_paths(int code)
         skip_sysopt = TRUE;
     }
 #else /* !SYSCF */
+/*JP
     raw_printf("No system configuration file.");
+*/
+    raw_printf("システム設定ファイルなし．");
 #endif /* ?SYSCF */
 
     /* symbols file */
@@ -3244,17 +3267,31 @@ reveal_paths(int code)
 #else
     cstrp = fqn_prefix_names[HACKPREFIX];
 #endif /* WIN32 */
+#if 0 /*JP*/
     maxlen = BUFSZ - sizeof " (in )";
+#else
+    maxlen = BUFSZ - sizeof "(内)";
+#endif
     if (cstrp && (int) strlen(cstrp) < maxlen)
+#if 0 /*JP*/
         Sprintf(buf, " (in %s)", cstrp);
+#else
+        Sprintf(buf, "(%s内)", cstrp);
+#endif
 #endif /* PREFIXES_IN_USE */
+/*JP
     raw_printf("The loadable symbols file%s:", buf);
+*/
+    raw_printf("読み込み可能シンボルファイル%s:", buf);
 #endif /* UNIX */
 
 #ifdef UNIX
     envp = getcwd(cwdbuf, PATH_MAX);
     if (envp) {
+/*JP
         raw_print("The loadable symbols file:");
+*/
+        raw_print("読み込み可能シンボルファイル:");
         raw_printf("    \"%s/%s\"", envp, SYMBOLS);
     }
 #else /* UNIX */
@@ -3276,12 +3313,23 @@ reveal_paths(int code)
     buf[0] = '\0';
 #ifdef PREFIXES_IN_USE
     cstrp = fqn_prefix_names[DATAPREFIX];
+#if 0 /*JP*/
     maxlen = BUFSZ - sizeof " (in )";
+#else
+    maxlen = BUFSZ - sizeof "(内)";
+#endif
     if (cstrp && (int) strlen(cstrp) < maxlen)
+#if 0 /*JP*/
         Sprintf(buf, " (in %s)", cstrp);
+#else
+        Sprintf(buf, "(%s内)", cstrp);
+#endif
 #endif
 #ifdef DLB
+/*JP
     raw_printf("Basic data files%s are collected inside:", buf);
+*/
+    raw_printf("基本データファイル%sは集められているファイル:", buf);
     filep = DLBFILE;
 #ifdef VERSION_IN_DLB_FILENAME
     Strcpy(buf, build_dlb_filename((const char *) 0));
@@ -3297,23 +3345,38 @@ reveal_paths(int code)
     raw_printf("    \"%s\"", filep);
 #endif
 #else /* !DLB */
+/*JP
     raw_printf("Basic data files%s are in many separate files.", buf);
+*/
+    raw_printf("基本データファイル%s は複数のファイルに分かれている．", buf);
 #endif /* ?DLB */
 
     /* dumplog */
 
     fqn = (char *) 0;
 #ifndef DUMPLOG
+/*JP
     nodumpreason = "not supported";
+*/
+    nodumpreason = "非対応";
 #else
+/*JP
     nodumpreason = "disabled";
+*/
+    nodumpreason = "無効";
 #ifdef SYSCF
     if (!skip_sysopt) {
         fqn = sysopt.dumplogfile;
         if (!fqn)
+/*JP
             nodumpreason = "DUMPLOGFILE is not set in " SYSCONFFILE;
+*/
+            nodumpreason = "DUMPLOGFILEは" SYSCONFFILE "に設定がない";
     } else {
+/*JP
         nodumpreason = SYSCONFFILE " is missing; no DUMPLOGFILE setting";
+*/
+        nodumpreason = SYSCONFFILE "が見つからない; DUMPLOGFILE設定がない";
     }
 #else  /* !SYSCF */
 #ifdef DUMPLOG_FILE
@@ -3321,12 +3384,18 @@ reveal_paths(int code)
 #endif
 #endif /* ?SYSCF */
     if (fqn && *fqn) {
+/*JP
         raw_print("Your end-of-game disclosure file:");
+*/
+        raw_print("ゲーム終了時情報ファイル:");
         (void) dump_fmtstr(fqn, buf, FALSE);
         buf[sizeof buf - sizeof "    \"\""] = '\0';
         raw_printf("    \"%s\"", buf);
     } else {
+/*JP
         raw_printf("No end-of-game disclosure file (%s).", nodumpreason);
+*/
+        raw_printf("ゲーム終了時情報ファイルなし(%s)．", nodumpreason);
     }
 #endif /* ?DUMPLOG */
 
@@ -3353,11 +3422,22 @@ reveal_paths(int code)
     buf[0] = '\0';
 #ifdef PREFIXES_IN_USE
     cstrp = fqn_prefix_names[CONFIGPREFIX];
+#if 0 /*JP*/
     maxlen = BUFSZ - sizeof " (in )";
+#else
+    maxlen = BUFSZ - sizeof "(内)";
+#endif
     if (cstrp && (int) strlen(cstrp) < maxlen)
+#if 0 /*JP*/
         Sprintf(buf, " (in %s)", cstrp);
+#else
+        Sprintf(buf, "(%s内)", cstrp);
+#endif
 #endif /* PREFIXES_IN_USE */
+/*JP
     raw_printf("Your personal configuration file%s:", buf);
+*/
+    raw_printf("個人用設定ファイル%s:", buf);
 
 #ifdef UNIX
     buf[0] = '\0';
@@ -3480,7 +3560,10 @@ read_tribute(const char *tribsection, const char *tribtitle,
 
     int scope = 0;
     int linect = 0, passagecnt = 0, targetpassage = 0;
+/*JP
     const char *badtranslation = "an incomprehensible foreign translation";
+*/
+    const char *badtranslation = "不完全な外国語翻訳";
     boolean matchedsection = FALSE, matchedtitle = FALSE;
     winid tribwin = WIN_ERR;
     boolean grasped = FALSE;
@@ -3492,7 +3575,10 @@ read_tribute(const char *tribsection, const char *tribtitle,
     /* check for mandatories */
     if (!tribsection || !tribtitle) {
         if (!nowin_buf)
+/*JP
             pline("It's %s of \"%s\"!", badtranslation, tribtitle);
+*/
+            pline("これは「%s」の%sだ！", tribtitle, badtranslation);
         return grasped;
     }
 
@@ -3503,7 +3589,10 @@ read_tribute(const char *tribsection, const char *tribtitle,
     if (!fp) {
         /* this is actually an error - cannot open tribute file! */
         if (!nowin_buf)
+/*JP
             You_feel("too overwhelmed to continue!");
+*/
+            You_feel("あなたは続けられないほど圧倒された！");
         return grasped;
     }
 
@@ -3639,7 +3728,10 @@ read_tribute(const char *tribsection, const char *tribtitle,
         }
         if (!grasped)
             /* multi-line window, problem */
+/*JP
             pline("It seems to be %s of \"%s\"!", badtranslation, tribtitle);
+*/
+            pline("これは「%s」の%sのようだ！", tribtitle, badtranslation);
     }
     return grasped;
 }

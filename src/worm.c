@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2009. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 #define newseg() (struct wseg *) alloc(sizeof (struct wseg))
@@ -438,10 +443,18 @@ cutworm(struct monst *worm, coordxy x, coordxy y,
         place_worm_seg(worm, x, y); /* place the "head" segment back */
         if (svc.context.mon_moving) {
             if (canspotmon(worm))
+#if 0 /*JP:T*/
                 pline("Part of %s tail has been cut off.",
                       s_suffix(mon_nam(worm)));
+#else
+                pline("%sの尻尾の一部分が切り落とされた．",
+                      mon_nam(worm));
+#endif
         } else
+/*JP
             You("cut part of the tail off of %s.", mon_nam(worm));
+*/
+            You("%sの尻尾の一部分を切った．", mon_nam(worm));
         toss_wsegs(new_tail, TRUE);
         if (worm->mhp > 1)
             worm->mhp /= 2;
@@ -471,9 +484,15 @@ cutworm(struct monst *worm, coordxy x, coordxy y,
     place_wsegs(new_worm, worm);
 
     if (svc.context.mon_moving)
+/*JP
         pline("%s is cut in half.", Monnam(worm));
+*/
+        pline("%sは真っぷたつにされた．", Monnam(worm));
     else
+/*JP
         You("cut %s in half.", mon_nam(worm));
+*/
+        You("%sを真っぷたつにした．", mon_nam(worm));
 }
 
 /*
