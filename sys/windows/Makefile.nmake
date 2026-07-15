@@ -2853,6 +2853,7 @@ spotless: clean
 	if exist $(GAMEDIR)JNetHack.exe del $(GAMEDIR)JNetHack.exe
 	if exist $(GAMEDIR)JNetHackW.exe del $(GAMEDIR)JNetHackW.exe
 	if exist $(GAMEDIR)JNetHack.pdb del $(GAMEDIR)JNetHack.pdb
+	if exist $(GAMEDIR)JNetHackW.pdb del $(GAMEDIR)JNetHackW.pdb
 	if exist $(GAMEDIR)nhdat$(NHV) del $(GAMEDIR)nhdat$(NHV)
 	if exist $(INCL)date.h         del $(INCL)date.h
 	if exist $(INCL)onames.h       del $(INCL)onames.h
