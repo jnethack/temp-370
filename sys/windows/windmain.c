@@ -116,6 +116,12 @@ void windows_raw_print(const char *str);
 extern const char *known_handling[];     /* symbols.c */
 extern const char *known_restrictions[]; /* symbols.c */
 
+#if 1 /*JP*/
+#ifdef WIN32CON
+int orig_icp;
+#endif
+#endif
+
 /* --------------------------------------------------------------------------- */
 
 DISABLE_WARNING_UNREACHABLE_CODE
@@ -146,6 +152,16 @@ int nethackw_main(int, char **);
 #define MAIN main
 #endif
 
+#if 1 /*JP*/
+#ifdef WIN32CON
+static
+void restoreCP(){
+    if (orig_icp)
+        SetConsoleCP(orig_icp);
+}
+#endif /* WIN32CON */
+#endif
+
 int
 MAIN(int argc, char *argv[])
 {
@@ -163,6 +179,18 @@ MAIN(int argc, char *argv[])
 #ifdef _MSC_VER
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
+
+#if 1 /*JP*/
+#ifdef WIN32CON
+    orig_icp = GetConsoleCP();
+#ifdef ICUTF8
+    SetConsoleCP(65001);
+#else
+    SetConsoleCP(932);
+#endif
+    atexit(restoreCP);
+#endif /* WIN32CON */
+#endif /*JP*/
 
     /* setting iflags.colorcount has to be after early_init()
      * because it zeros out all of iflags */
@@ -204,7 +232,11 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
         iflags.colorcount = (bpp >= 16) ? 16777216 : (bpp >= 8) ? 256 : 16;
         ReleaseDC(hwnd, hdc);
     }
+#if 0 /*JP:T*/
     gh.hname = "NetHack"; /* used for syntax messages */
+#else
+    gh.hname = "JNetHack"; /* used for syntax messages */
+#endif
     set_default_prefix_locations(
         argv[0]); /* must be re-done after initoptions_init()
                    * which clears out gp.fqn_prefix[] */
