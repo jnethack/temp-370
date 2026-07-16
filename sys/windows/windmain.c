@@ -116,6 +116,12 @@ void windows_raw_print(const char *str);
 extern const char *known_handling[];     /* symbols.c */
 extern const char *known_restrictions[]; /* symbols.c */
 
+#if 1 /*JP*/
+#ifdef WIN32CON
+int orig_icp;
+#endif
+#endif
+
 /* --------------------------------------------------------------------------- */
 
 DISABLE_WARNING_UNREACHABLE_CODE
@@ -164,6 +170,17 @@ MAIN(int argc, char *argv[])
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
+#if 1 /*JP*/
+#ifdef WIN32CON
+    orig_icp = GetConsoleCP();
+#ifdef ICUTF8
+    SetConsoleCP(65001);
+#else
+    SetConsoleCP(932);
+#endif
+#endif /* WIN32CON */
+#endif /*JP*/
+
     /* setting iflags.colorcount has to be after early_init()
      * because it zeros out all of iflags */
     hwnd = GetDesktopWindow();
@@ -204,7 +221,11 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
         iflags.colorcount = (bpp >= 16) ? 16777216 : (bpp >= 8) ? 256 : 16;
         ReleaseDC(hwnd, hdc);
     }
+#if 0 /*JP:T*/
     gh.hname = "NetHack"; /* used for syntax messages */
+#else
+    gh.hname = "JNetHack"; /* used for syntax messages */
+#endif
     set_default_prefix_locations(
         argv[0]); /* must be re-done after initoptions_init()
                    * which clears out gp.fqn_prefix[] */
@@ -1350,7 +1371,16 @@ void
 stdio_raw_print(const char *str)
 {
     if (str)
+#if 0 /*JP:T*/
         fprintf(stdout, "%s\n", str);
+#else
+/*        jputs(str);*/
+        {
+            FILE *f = fopen("z:/ll2.txt", "a");
+            fprintf(f, "%s\n", str);
+            fclose(f);
+        }
+#endif
     return;
 }
 
@@ -1360,7 +1390,16 @@ void
 stdio_nonl_raw_print(const char *str)
 {
     if (str)
+#if 0 /*JP:T*/
         fprintf(stdout, "%s", str);
+#else
+/*        jputstr(str);*/
+        {
+            FILE *f = fopen("z:/ll2.txt", "a");
+            fprintf(f, "%s", str);
+            fclose(f);
+        }
+#endif
     return;
 }
 
