@@ -116,6 +116,12 @@ void windows_raw_print(const char *str);
 extern const char *known_handling[];     /* symbols.c */
 extern const char *known_restrictions[]; /* symbols.c */
 
+#if 1 /*JP*/
+#ifdef WIN32CON
+int orig_icp;
+#endif
+#endif
+
 /* --------------------------------------------------------------------------- */
 
 DISABLE_WARNING_UNREACHABLE_CODE
@@ -163,6 +169,17 @@ MAIN(int argc, char *argv[])
 #ifdef _MSC_VER
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
+
+#if 1 /*JP*/
+#ifdef WIN32CON
+    orig_icp = GetConsoleCP();
+#ifdef ICUTF8
+    SetConsoleCP(65001);
+#else
+    SetConsoleCP(932);
+#endif
+#endif /* WIN32CON */
+#endif /*JP*/
 
     /* setting iflags.colorcount has to be after early_init()
      * because it zeros out all of iflags */
@@ -1350,7 +1367,11 @@ void
 stdio_raw_print(const char *str)
 {
     if (str)
+#if 0 /*JP:T*/
         fprintf(stdout, "%s\n", str);
+#else
+        jputs(str);
+#endif
     return;
 }
 
@@ -1360,7 +1381,11 @@ void
 stdio_nonl_raw_print(const char *str)
 {
     if (str)
+#if 0 /*JP:T*/
         fprintf(stdout, "%s", str);
+#else
+        jputstr(str);
+#endif
     return;
 }
 
@@ -1368,7 +1393,12 @@ stdio_nonl_raw_print(const char *str)
 void
 stdio_raw_print_bold(const char *str)
 {
+#if 0 /*JP:T*/
     stdio_raw_print(str);
+#else
+    if (str)
+        jputs(str);
+#endif
     return;
 }
 
