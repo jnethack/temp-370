@@ -972,7 +972,7 @@ can_twoweapon(void)
 /*JP
         You_cant("use two weapons while wearing a shield.");
 */
-        You("盾を持っている間は両手持ちできない．");
+        You("盾を持っている間は二刀流できない．");
     } else if (uswapwep->oartifact) {
 #if 0 /*JP:T*/
         pline("%s being held second to another weapon!",
@@ -1150,7 +1150,7 @@ chwepon(struct obj *otmp, int amount)
                         Yobjnam2(uwep, "glow"), an(hcolor(NH_AMBER)));
 #else
                 Sprintf(buf, "%sは%sオーラにつつまれた．",
-                        xname(uwep), hcolor(NH_AMBER));
+                        xname(uwep), hcolor_adv(NH_AMBER));
 #endif
                 uwep->bknown = !Hallucination; /* ok to bypass set_bknown() */
             } else {

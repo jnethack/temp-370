@@ -834,7 +834,7 @@ intervene(void)
 /*JP
             You("notice a %s glow surrounding you.", hcolor(NH_BLACK));
 */
-            pline("%s光があなたをとりまいているのに気がついた．", hcolor(NH_BLACK));
+            pline("%s光があなたをとりまいているのに気がついた．", hcolor_adv(NH_BLACK));
         rndcurse();
         break;
     case 3:

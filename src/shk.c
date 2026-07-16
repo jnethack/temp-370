@@ -925,7 +925,7 @@ u_entered_shop(char *enterstring)
             pline("%s is combing through %s inventory list.",
                   Shknam(shkp), noit_mhis(shkp));
 #else
-            pline("%sは%sの持ち物一覧に結合された．",
+            pline("%sは%sの持ち物一覧を確認している．",
                   Shknam(shkp), noit_mhis(shkp));
 #endif
         }
@@ -6479,7 +6479,7 @@ shk_chat(struct monst *shkp)
                       Hello(shkp), svp.plname, eshk->customer);
 #else
                 verbalize("%s！私は%sを探しています．",
-                      Hello(shkp), svp.plname, eshk->customer);
+                      Hello(shkp), eshk->customer);
 #endif
             }
             eshk->following = 0;

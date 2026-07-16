@@ -955,7 +955,7 @@ mon_wield_item(struct monst *mon)
 /*JP
                     pline("%s %s!", Yname2(mw_tmp), welded_buf);
 */
-                    pline("%sは%sを手にした！", Monnam(mon), xname(mw_tmp));
+                    pline("%sは%sの%sに貼り付いた！", xname(mw_tmp), mon_nam(mon), mon_hand);
                 }
                 mw_tmp->bknown = 1;
             }

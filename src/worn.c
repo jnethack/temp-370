@@ -1347,7 +1347,7 @@ mon_break_armor(struct monst *mon, boolean polyspot)
                     pline_mon(mon, "%s seeps right through %s shirt!",
                               Monnam(mon), ppronoun);
 #else
-                    pline_mon(mon, "%sは自分のシャツにしみ込んだ！",
+                    pline_mon(mon, "%sは自分のシャツを通り抜けた！",
                               Monnam(mon));
 #endif
                 else

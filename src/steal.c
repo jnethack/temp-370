@@ -711,7 +711,7 @@ mpickobj(struct monst *mtmp, struct obj *otmp)
 /*JP
             pline("%s out.", Tobjnam(otmp, "go"));
 */
-            pline("%sは飛びだした．", xname(otmp));
+            pline("%sは消えた．", xname(otmp));
         snuff_otmp = TRUE;
     }
     /* for hero owned object on shop floor, mtmp is taking possession

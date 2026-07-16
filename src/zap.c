@@ -5110,6 +5110,9 @@ burn_floor_objects(
                 if (!rn2(3))
                     delquan++;
             if (delquan) {
+#if 1 /*JP*/
+                boolean objdel = FALSE;
+#endif
                 /* save name before potential delobj() */
                 if (give_feedback) {
                     obj->quan = 1L;
@@ -5129,7 +5132,11 @@ burn_floor_objects(
                     obj->quan -= delquan;
                     obj->owt = weight(obj);
                 } else
+#if 0 /*JP*/
                     delobj(obj);
+#else /*objを後で使うのでここではフラグだけ*/
+                    objdel = TRUE;
+#endif
                 cnt += delquan;
                 if (give_feedback) {
                     if (delquan > 1L)
@@ -5147,6 +5154,10 @@ burn_floor_objects(
 */
                         pline("%sは燃えた．", buf1);
                 }
+#if 1 /*JP*/
+                if (objdel)
+                    delobj(obj);
+#endif
             }
         }
     }
@@ -5887,7 +5898,7 @@ zap_over_floor(
 /*JP
                         Norep("The %s freezes.", hliquid("water"));
 */
-                        Norep("%sは凍った．", hliquid("氷"));
+                        Norep("%sは凍った．", hliquid("水"));
                     newsym(x, y);
                 } else if (!lava) {
 /*JP

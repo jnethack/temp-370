@@ -1236,7 +1236,7 @@ outentry(int rank, struct toptenentry *t1, boolean so)
 #if 0 /*JP:T*/
         Sprintf(bp, "  %c%s.", highc(*(t1->death)), t1->death + 1);
 #else
-        Sprintf(bp, "%s", t1->death + 1);
+        Sprintf(bp, "%s", t1->death);
 #endif
         /* fix up "Killed by Mr. Asidonhopo; the shopkeeper"; that starts
            with a comma but has it changed to semi-colon to keep the comma
