@@ -78,9 +78,6 @@ struct Jitem {
     ((ptr) < base || strncmpi((ptr), str, num))
 #define Strcasecpy(dst, src) (void) strcasecpy(dst, src)
 #define Strncat(dst, src, cnt) (void) strncat(dst, src, cnt)
-#if 1 /*JP*/
-#define STRNCMPEX(x, y) strncmp(x, y, l = strlen(y))
-#endif
 
 /* Concat(): append text to base, adjusted by delta, with bounds checking
    via a pair of behind-the-scenes variables; delta is either 0 for normal
@@ -691,7 +688,7 @@ xcalled(
     {
         int sfxlen = bufsiz - pfxlen;
         /* 全角の途中で切れそうなときにはその字の先頭まで戻る */
-        sfxlen = sfxlen - offset_in_kanji((const unsigned char *) sfx, sfxlen);
+        sfxlen = sfxlen - offset_in_kanji(sfx, sfxlen);
         /* 変数名を変えることはしないが、sfxが前、pfxが後ろになる */
         Sprintf(eos(buf), "%.*sと呼ばれる%s", sfxlen, sfx, pfx);
     }
