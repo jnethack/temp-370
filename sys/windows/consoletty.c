@@ -850,12 +850,14 @@ back_buffer_flip(void)
 #endif
                 *front = *back;
             }
+#if 1 /*JP*/
             if (back->iskanji == 1) {
                 back++;
                 front++;
                 pos.X++;
                 *front = *back;
             }
+#endif
             back++;
             front++;
         }
@@ -1307,7 +1309,7 @@ xputc2_core(const unsigned char *str)
         1);
 
     if (ret == 0) {
-        impossible("xputc_core: %s", str);
+        panic("xputc_core: %s", str);
     }
 
     /* 左側にワイド文字情報を詰める */
