@@ -146,7 +146,7 @@ genl_outrip(winid tmpwin, int how, time_t when)
                 {
                     i0 = 0;
                     while(i0 < jstone_line){
-                        i0 += charlen(dpx + i0);
+                        i0 += charlen((unsigned char) dpx[i0]);
                     }
                 }
 #endif

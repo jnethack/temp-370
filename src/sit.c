@@ -706,10 +706,11 @@ dosit(void)
 */
                 (void) water_damage(uarm, "鎧", TRUE);
             if (!rn2(10) && uarmf && uarmf->otyp != WATER_WALKING_BOOTS)
-/*JP
+#if 0 /*JP*/
                 (void) water_damage(uarm, "armor", TRUE);
-*/
-                (void) water_damage(uarm, "鎧", TRUE);
+#else /*JP:FIXED:靴でないとおかしい*/
+                (void) water_damage(uarmf, boots_simple_name(uarmf), TRUE);
+#endif
         }
     } else if (IS_SINK(typ)) {
         You(sit_message, defsyms[S_sink].explanation);

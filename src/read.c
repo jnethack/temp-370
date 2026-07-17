@@ -734,7 +734,7 @@ doread(void)
 #if 0 /*JP:T*/
         pline("The wrapper reads: \"%s\".", wrapper);
 #else
-        pline("包み紙の文字を読んだ：「%s」.", wrapper);
+        pline("包み紙の文字を読んだ：「%s」", wrapper);
 #endif
         if (!u.uconduct.literate++)
             livelog_printf(LL_CONDUCT,

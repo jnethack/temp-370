@@ -377,14 +377,14 @@ convert_line(const char *in_line, char *out_line)
 #if 0 /*JP*/
                     Strcat(cc, An(gc.cvt_buf));
                     cc += strlen(cc);
-#endif
                     continue; /* for */
+#endif
                 case 'a':
 #if 0 /*JP*/
                     Strcat(cc, an(gc.cvt_buf));
                     cc += strlen(cc);
-#endif
                     continue; /* for */
+#endif
 
                 /* capitalize */
                 case 'C':

@@ -1721,7 +1721,7 @@ doremove(void)
             pline_The("ball and chain are buried firmly in the %s.",
                       surface(u.ux, u.uy));
 #else
-            pline_The("球と鎖は%sにしっかりと埋まっている．.",
+            pline_The("球と鎖は%sにしっかりと埋まっている．",
                       surface(u.ux, u.uy));
 #endif
             return ECMD_OK;

@@ -937,8 +937,8 @@ u_entered_shop(char *enterstring)
                       eshkp->visitct++ ? " again" : "",
                       s_suffix(shkname(shkp)), shtypes[rt - SHOPBASE].name);
 #else
-            verbalize("%s！%sの%sに%s！", Hello(shkp),
-                      svp.plname, shtypes[rt - SHOPBASE].name,
+            verbalize("%s，%s！%sの%sに%s！", Hello(shkp),
+                      svp.plname, shkname(shkp), shtypes[rt - SHOPBASE].name,
                       eshkp->visitct++ ? "また来ましたね" : "ようこそ");
 #endif
         } else {
@@ -4657,7 +4657,7 @@ sellobj(
             Sprintf(qbuf, "Will you accept %ld %s in credit for ", tmpcr,
                     currency(tmpcr));
 #else
-            Sprintf(qbuf, "について%ld%sの預け金を受けいれますか？", tmpcr,
+            Sprintf(qsfx, "について%ld%sの預け金を受けいれますか？", tmpcr,
                     currency(tmpcr));
 #endif
             record_price_quote(obj->otyp, tmpcr / obj->quan, FALSE);
@@ -4665,7 +4665,7 @@ sellobj(
             c = ynaq(safe_qbuf(qbuf, qbuf, "?", obj, doname, thesimpleoname,
                                (obj->quan == 1L) ? "that" : "those"));
 #else
-            c = ynaq(safe_qbuf(qbuf, qbuf, "?", obj, doname, thesimpleoname,
+            c = ynaq(safe_qbuf(qbuf, "", qsfx, obj, doname, thesimpleoname,
                                "それ"));
 #endif
             if (c == 'a') {
@@ -6411,7 +6411,7 @@ static const char *Izchak_speaks[] = {
 /*JP
     "%s says: 'I don't like poofy coffee... give me Colombian Supremo.'",
 */
-    "%s曰く『ホモっぽいコーヒは好きじゃない．．．コロンビアン・スプレモをたのむ．』",
+    "%s曰く『軟弱なコーヒーは好きじゃない．．．コロンビアン・スプレモをたのむ．』",
 /*JP
     "%s says that getting the devteam's agreement on anything is difficult.",
 */

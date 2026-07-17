@@ -1487,10 +1487,6 @@ level_tele(void)
             You("plummet a few thousand feet to your death.");
 */
             pline("数千フィートの死のダイビングだ！");
-            Sprintf(svk.killer.name,
-                    "teleported out of the dungeon and fell to %s death",
-                    uhis());
-            svk.killer.format = NO_KILLER_PREFIX;
 #if 0 /*JP*/
             Sprintf(svk.killer.name,
                     "teleported out of the dungeon and fell to %s death",

@@ -3378,7 +3378,7 @@ potion_dip(struct obj *obj, struct obj *potion)
                           more_than_one ? " that you dipped into" : "",
                           newbuf);
 #else
-                pline_The("%s%s薬は%sになった．.",
+                pline_The("%s%s薬は%sになった．",
                           more_than_one ? "浸した" : "",
                           oldbuf, newbuf);
 #endif

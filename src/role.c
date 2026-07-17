@@ -2084,7 +2084,7 @@ build_plselection_prompt(
 /*JP
     Strcat(buf, " for you? [ynaq] ");
 */
-    Strcat(buf, "を適当に選んでよろしいですか？[ynq] ");
+    Strcat(buf, "を適当に選んでよろしいですか？[ynaq] ");
     return buf;
 }
 
@@ -2462,10 +2462,14 @@ role_menu_extra(int which, winid where, boolean preselect)
         add_menu(where, &nul_glyphinfo, &any, RS_menu_let[which], 0,
                  ATR_NONE, clr, buf, MENU_ITEMFLAGS_NONE);
     } else if (which == RS_filter) {
+#if 0 /*JP*/
         char setfiltering[40];
+#else
+        char setfiltering[BUFSZ];
+#endif
 
         any.a_int = RS_menu_arg(RS_filter);
-#if 0 /*JP:T*/
+#if 0 /*JP*/
         Sprintf(setfiltering, "%s role/race/&c filtering",
                 gotrolefilter() ? "Reset" : "Set");
 #else

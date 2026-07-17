@@ -1932,7 +1932,7 @@ offer_real_amulet(struct obj *otmp, aligntyp altaralign)
 /*JP
         pline("An invisible choir chants, and you are bathed in darkness...");
 */
-        pline("どこからともなく聖歌隊の歌が聞こえ，あなたは光に包まれた．．．");
+        pline("どこからともなく聖歌隊の歌が聞こえ，あなたは闇に包まれた．．．");
         /*[apparently shrug/snarl can be sensed without being seen]*/
 #if 0 /*JP:T*/
         pline("%s shrugs and retains dominion over %s,", Moloch, u_gname());

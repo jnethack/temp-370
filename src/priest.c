@@ -1022,7 +1022,7 @@ ghod_hitsu(struct monst *priest)
         pline("%s voice booms:  \"How darest thou harm my servant!\"",
               s_suffix(a_gname_at(ax, ay)));
 #else
-        pline("%sの声が響いた：「よくもわが下僕を傷つけた付けたな！」",
+        pline("%sの声が響いた：「よくもわが下僕を傷つけたな！」",
               a_gname_at(ax, ay));
 #endif
         break;

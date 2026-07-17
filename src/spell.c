@@ -2467,7 +2467,7 @@ dospellmenu(
                 "Name",
                 "Category");
 #else
-        Sprintf(buf, "%s%-20s     レベル %-12s 成功率 記憶",
+        Sprintf(buf, "%s%-20s     レベル %-12s 失敗率 記憶",
                 splaction == SPELLMENU_DUMP ? "" : "    ",
                 "名前",
                 "分類");
