@@ -230,7 +230,7 @@ str2ic(const char *s)
         buf[sizeof(buf) - 1] = '\0';
         return (char *)buf;
     }
-#else /*WIN32*/
+#elif defined(WIN32)
     {
         wchar_t wbuf[1024];
         memset(buf, 0, 1024);
@@ -252,6 +252,8 @@ str2ic(const char *s)
             NULL);
         return (char *)buf;
     }
+#else
+#error POSIX_ICONVかWIN32が必要
 #endif
 }
 
