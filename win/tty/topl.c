@@ -255,21 +255,24 @@ folding_japanese(
      const char *str,
      int pos)
 {
-  char ss[1024],s1[1024],s2[1024];
-  static char newstr[1024];             /* may be enough */
+    char ss[1024], s1[1024], s2[1024];
+    static char newstr[1024];             /* may be enough */
 
-  newstr[0] = '\0';
-  Strcpy(ss, str);
-  while(1){
-    split_japanese(ss, s1, s2, pos);
-    Strcat(newstr, s1);
-    if(!*s2)
-      break;
-    Strcat(newstr, "\n");
-    Strcpy(ss,s2);
-  }
+    if (strlen(str) > BUFSZ) /*安全のため*/
+        return str;
 
-  return newstr;
+    newstr[0] = '\0';
+    Strcpy(ss, str);
+    while(1){
+        split_japanese(ss, s1, s2, pos);
+        Strcat(newstr, s1);
+        if(!*s2)
+            break;
+        Strcat(newstr, "\n");
+        Strcpy(ss,s2);
+    }
+
+    return newstr;
 }
 #endif
 

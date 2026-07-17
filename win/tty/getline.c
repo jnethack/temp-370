@@ -359,10 +359,10 @@ tty_get_ext_cmd(void)
               : extcmds_match(buf, ECM_IGNOREAC | ECM_EXACTMATCH, &ecmatches);
     if (nmatches != 1) {
         if (nmatches != -1)
-#if 0 /*JP*/
+#if 0 /*JP:T*/
             pline("%s%.60s: unknown extended command.",
 #else
-            pline("%s:拡張コマンドエラー",
+            pline("%s%.60s:拡張コマンドエラー",
 #endif
                   visctrl(extcmd_char[0]), buf);
         return -1;
