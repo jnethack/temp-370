@@ -341,7 +341,7 @@
     MONSYM(40, 'N', NAGA, S_NAGA, "ナーガ")
     MONSYM(41, 'O', OGRE, S_OGRE, "オーガ")
     MONSYM(42, 'P', PUDDING, S_PUDDING, "プリンまたはウーズ")
-    MONSYM(43, 'Q', QUANTMECH, S_QUANTMECH, "量子場")
+    MONSYM(43, 'Q', QUANTMECH, S_QUANTMECH, "量子物理学者")
     MONSYM(44, 'R', RUSTMONST, S_RUSTMONST, "錆の怪物または吸魔の怪物")
     MONSYM(45, 'S', SNAKE, S_SNAKE, "ヘビ")
     MONSYM(46, 'T', TROLL, S_TROLL, "トロル")
