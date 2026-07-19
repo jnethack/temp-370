@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2011. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn boolean clear_fcorr(struct monst *, boolean) NONNULLARG1;
@@ -105,13 +110,19 @@ clear_fcorr(struct monst *grd, boolean forceshow)
         egrd->fcbeg++;
     }
     if (sawcorridor && !silently)
+/*JP
         pline_The("corridor disappears.");
+*/
+        pline("通路は消えた．");
     /* only give encased message if hero is still alive (might get here
        via paygd() -> mongone() -> grddead() when game is over;
        died: no message, quit: message) */
     if (IS_OBSTRUCTED(levl[u.ux][u.uy].typ) && (Upolyd ? u.mh : u.uhp) > 0
         && !silently)
+/*JP
         You("are encased in rock.");
+*/
+        You("石につつまれた．");
     return TRUE;
 }
 
@@ -266,7 +277,10 @@ uleftvault(struct monst *grd)
         && um_dist(grd->mx, grd->my, 1)) {
         if (grd->mpeaceful) {
             if (canspotmon(grd)) /* see or sense via telepathy */
+/*JP
                 pline("%s becomes irate.", Monnam(grd));
+*/
+                pline("%sは激怒した．", Monnam(grd));
             grd->mpeaceful = 0; /* bypass setmangry() */
         }
         /* if arriving outside guard's temporary corridor, give the
@@ -442,11 +456,18 @@ invault(void)
         }
         spotted = canspotmon(guard);
         if (spotted) {
+#if 0 /*JP:T*/
             pline("Suddenly one of the Vault's %s enters!",
                   makeplural(pmname(guard->data, Mgender(guard))));
+#else
+            pline("突然，倉庫の番兵が入ってきた！");
+#endif
             newsym(guard->mx, guard->my);
         } else {
+/*JP
             pline("Someone else has entered the Vault.");
+*/
+            pline("誰かが倉庫に入ってきた．");
             /* make sure that hero who can't see the guard knows where the
                wall is breeched, otherwise we couldn't follow the guard out;
                the breech isn't necessarily adjacent to the hero */
@@ -457,10 +478,16 @@ invault(void)
             /* can't interrogate hero, don't interrogate engulfer */
             if (!Deaf) {
                 SetVoice(guard, 0, 80, 0);
+/*JP
                 verbalize("What's going on here?");
+*/
+                verbalize("ここで何をしているんだ？");
             }
             if (!spotted)
+/*JP
                 pline_The("other presence vanishes.");
+*/
+                pline("他人の気配は消えた．");
             mongone(guard);
             return;
         }
@@ -469,11 +496,19 @@ invault(void)
                 && gy.youmonst.mappearance != GOLD_PIECE)
                 if (!Deaf) {
                     SetVoice(guard, 0, 80, 0);
+#if 0 /*JP:T*/
                     verbalize("Hey!  Who left that %s in here?",
                               mimic_obj_name(&gy.youmonst));
+#else
+                    verbalize("おい！だれがこの%sをここに置いて行ったんだ？",
+                              mimic_obj_name(&gy.youmonst));
+#endif
                 }
             /* You're mimicking some object or you're hidden. */
+/*JP
             pline("Puzzled, %s turns around and leaves.", mhe(guard));
+*/
+            pline("%sは困惑しながら，向き直って去っていった．", mhe(guard));
             mongone(guard);
             return;
         }
@@ -482,10 +517,16 @@ invault(void)
                been given in order to vary it upon repeat visits, but
                discarding the monster and its egd data renders that hard] */
             if (Deaf) {
+/*JP
                 pline("%s huffs and turns to leave.", noit_Monnam(guard));
+*/
+                pline("%sは不機嫌になって，去っていった．", noit_Monnam(guard));
             } else {
                 SetVoice(guard, 0, 80, 0);
+/*JP
                 verbalize("I'll be back when you're ready to speak to me!");
+*/
+                verbalize("話せるようになったら戻ってきてやる！");
             }
             mongone(guard);
             return;
@@ -499,8 +540,13 @@ invault(void)
         buf[0] = '\0';
         trycount = 5;
         do {
+#if 0 /*JP:T*/
             getlin(Deaf ? "You are required to supply your name. -"
                         : "\"Hello stranger, who are you?\" -", buf);
+#else
+            getlin(Deaf ? "名前を言うように求められた．-"
+                        : "「見ない顔だな，おまえは誰だ？」-", buf);
+#endif
             (void) mungspaces(buf);
         } while (!buf[0] && --trycount > 0);
 
@@ -510,28 +556,50 @@ invault(void)
             adjalign(-1); /* Liar! */
         }
 
+#if 0 /*JP:T*/
         if (!strcmpi(buf, "Croesus") || !strcmpi(buf, "Kroisos")
             || !strcmpi(buf, "Creosote")) { /* Discworld */
+#else
+        if (!strcmpi(buf, "Croesus") || !strcmpi(buf, "Kroisos")
+            || !strcmpi(buf, "Creosote") /* Discworld */
+            || !strcmp(buf, "クロイソス") || !strcmp(buf, "クレオソート")) {
+#endif
             if (!svm.mvitals[PM_CROESUS].died) {
                 if (Deaf) {
                     if (!Blind)
+/*JP
                         pline("%s waves goodbye.", noit_Monnam(guard));
+*/
+                        pline("%sはさよならと手を振った．", noit_Monnam(guard));
                 } else {
                     SetVoice(guard, 0, 80, 0);
                     verbalize(
+/*JP
                          "Oh, yes, of course.  Sorry to have disturbed you.");
+*/
+                         "いや，こりゃ，えーと，お騒がせしました．");
                 }
                 mongone(guard);
             } else {
                 setmangry(guard, FALSE);
                 if (Deaf) {
                    if (!Blind)
+#if 0 /*JP:T*/
                         pline("%s mouths something and looks very angry!",
                               noit_Monnam(guard));
+#else
+                        pline("%sは何かを言っている．とても怒っているようだ！",
+                              noit_Monnam(guard));
+#endif
                 } else {
                    SetVoice(guard, 0, 80, 0);
+#if 0 /*JP:T*/
                    verbalize(
                            "Back from the dead, are you?  I'll remedy that!");
+#else
+                   verbalize(
+                           "ほう！死の世界から戻ってきたのか？うそなら上手につけ！");
+#endif
                 }
                 /* don't want guard to waste next turn wielding a weapon */
                 if (!MON_WEP(guard)) {
@@ -542,44 +610,79 @@ invault(void)
             return;
         }
         if (Deaf) {
+#if 0 /*JP:T*/
             pline("%s doesn't %srecognize you.", noit_Monnam(guard),
                     (Blind) ? "" : "appear to ");
+#else
+            pline("%sはあなたのことが分からないようだ．", noit_Monnam(guard));
+#endif
         } else {
             SetVoice(guard, 0, 80, 0);
+/*JP
             verbalize("I don't know you.");
+*/
+            verbalize("知らんな．");
         }
         umoney = money_cnt(gi.invent);
         if (!umoney && !hidden_gold(TRUE)) {
             if (Deaf) {
+#if 0 /*JP:T*/
                 pline("%s stomps%s.", noit_Monnam(guard),
                       (Blind) ? "" : " and beckons");
+#else
+                pline("%sは足を踏み鳴らし%sた．", noit_Monnam(guard),
+                      (Blind) ? "" : "て手招きし");
+#endif
             } else {
                 SetVoice(guard, 0, 80, 0);
+/*JP
                 verbalize("Please follow me.");
+*/
+                verbalize("私の後についてきなさい．");
             }
         } else {
             if (!umoney) {
                 if (Deaf) {
                     if (!Blind)
+#if 0 /*JP:T*/
                         pline("%s glares at you%s.", noit_Monnam(guard),
                               gi.invent ? "r stuff" : "");
+#else
+                        pline("%sはあなた%sをにらみつけた．", noit_Monnam(guard),
+                              gi.invent ? "の持ち物" : "");
+#endif
                 } else {
                    SetVoice(guard, 0, 80, 0);
+/*JP
                    verbalize("You have hidden gold.");
+*/
+                   verbalize("まだ金貨を隠してるな．");
                 }
             }
             if (Deaf) {
                 if (!Blind)
+#if 0 /*JP:T*/
                     pline(
                        "%s holds out %s palm and beckons with %s other hand.",
                           noit_Monnam(guard), noit_mhis(guard),
                           noit_mhis(guard));
+#else
+                    pline(
+                       "%sは片手を差し出し，もう片手で手招きした．",
+                          noit_Monnam(guard));
+#endif
             } else {
                 SetVoice(guard, 0, 80, 0);
                 verbalize(
+/*JP
                     "Most likely all your gold was stolen from this vault.");
+*/
+                    "倉庫から盗んだ金貨があるだろう．");
                 SetVoice(guard, 0, 80, 0);
+/*JP
                 verbalize("Please drop that gold and follow me.");
+*/
+                verbalize("それをそっくり戻してから，私の後についてきなさい．");
             }
             EGD(guard)->dropgoldcnt++;
         }
@@ -720,13 +823,25 @@ wallify_vault(struct monst *grd)
 
     if (movedgold || fixed) {
         if (in_fcorridor(grd, grd->mx, grd->my) || cansee(grd->mx, grd->my))
+/*JP
             pline("%s whispers an incantation.", noit_Monnam(grd));
+*/
+            pline("%sは呪文をささやいた．", noit_Monnam(grd));
         else
+/*JP
             You_hear("a distant chant.");
+*/
+            You_hear("遠方での呪文を聞いた．");
         if (movedgold)
+/*JP
             pline("A mysterious force moves the gold into the vault.");
+*/
+            pline("不思議な力が金貨を倉庫へ運んだ．");
         if (fixed)
+/*JP
             pline_The("damaged vault's walls are magically restored!");
+*/
+            pline("傷ついた倉庫の壁は魔法で復元された！");
     }
 }
 
@@ -738,7 +853,10 @@ gd_mv_monaway(struct monst *grd, int nx, int ny)
     if (mtmp && mtmp != grd) {
         if (!Deaf) {
             SetVoice(grd, 0, 80, 0);
+/*JP
             verbalize("Out of my way, scum!");
+*/
+            verbalize("目の前から消えろ，クソったれ！");
         }
         if (!rloc(mtmp, RLOC_ERR | RLOC_MSG) || MON_AT(nx, ny))
             m_into_limbo(mtmp);
@@ -814,10 +932,17 @@ gd_pick_corridor_gold(struct monst *grd, int goldx, int goldy)
     }
 
     if (see_it) { /* cansee(goldx, goldy) */
+#if 0 /*JP:T*/
         pline("%s%s picks up the gold%s.", Some_Monnam(grd),
               (grd->mpeaceful && EGD(grd)->warncnt > 5)
                  ? " calms down and" : "",
               under_u ? " from beneath you" : "");
+#else
+        pline("%sは%s%s金貨を拾った．", Some_Monnam(grd),
+              (grd->mpeaceful && EGD(grd)->warncnt > 5)
+                 ? "怒りを静め" : "",
+              under_u ? "あなたの足元の" : "");
+#endif
     }
 
     /* if guard was moved to get the gold, move him back */
@@ -859,7 +984,10 @@ gd_move_cleanup(
                 grd->isgd ? " attempt" : "");
     if (!semi_dead && (in_fcorridor(grd, u.ux, u.uy) || cansee(x, y))) {
         if (!disappear_msg_seen && see_guard)
+/*JP
             pline("Suddenly, %s disappears.", noit_mon_nam(grd));
+*/
+            pline("突然，%sは消えた．", noit_mon_nam(grd));
         return 1;
     }
     return -2;
@@ -869,16 +997,30 @@ staticfn void
 gd_letknow(struct monst *grd)
 {
     if (!cansee(grd->mx, grd->my) || !mon_visible(grd))
+#if 0 /*JP:T*/
         You_hear("%s.",
                     m_carrying(grd, TIN_WHISTLE)
                         ? "the shrill sound of a guard's whistle"
                         : "angry shouting");
+#else
+                    You_hear("%sを聞いた．",
+                             m_carrying(grd, TIN_WHISTLE)
+                                 ? "番兵の鋭い笛の音"
+                                 : "怒りの叫び");
+#endif
     else
+#if 0 /*JP:T*/
         You(um_dist(grd->mx, grd->my, 2)
                 ? "see %s approaching."
                 : "are confronted by %s.",
             /* "an angry guard" */
             x_monnam(grd, ARTICLE_A, "angry", 0, FALSE));
+#else
+                    You(um_dist(grd->mx, grd->my, 2)
+                        ? "%sが近づいてくるのを見た．"
+                        : "%sと対峙した．",
+                        x_monnam(grd, ARTICLE_A, "怒った", 0, FALSE));
+#endif
 }
 
 /*
@@ -933,8 +1075,13 @@ gd_move(struct monst *grd)
     if (egrd->witness) {
         if (!Deaf) {
             SetVoice(grd, 0, 80, 0);
+#if 0 /*JP:T*/
             verbalize("How dare you %s that gold, scoundrel!",
                       (egrd->witness & GD_EATGOLD) ? "consume" : "destroy");
+#else
+            verbalize("よくもまあ金を%sものだ，悪党め！",
+                      (egrd->witness & GD_EATGOLD) ? "使った" : "壊した");
+#endif
         }
         egrd->witness = 0;
         grd->mpeaceful = 0;
@@ -948,13 +1095,24 @@ gd_move(struct monst *grd)
             if (egrd->warncnt == 3 && !Deaf) {
                 char buf[BUFSZ];
 
+#if 0 /*JP:T*/
                 Sprintf(buf, "%sfollow me!",
                         u_carry_gold ? (!umoney ? "drop that hidden gold and "
                                                 : "drop that gold and ")
                                      : "");
+#else
+                Sprintf(buf, "%s私についてこい！",
+                        u_carry_gold ? (!umoney ? "隠し持ってる金を置いて"
+                                                : "金を置いて")
+                                     : "");
+#endif
                 SetVoice(grd, 0, 80, 0);
                 if (egrd->dropgoldcnt || !u_carry_gold)
+#if 0 /*JP:T*/
                     verbalize("I repeat, %s", buf);
+#else
+                    verbalize("繰り返す！%s", buf);
+#endif
                 else
                     verbalize("%s", upstart(buf));
                 if (u_carry_gold)
@@ -965,7 +1123,10 @@ gd_move(struct monst *grd)
                 n = grd->my;
                 if (!Deaf) {
                     SetVoice(grd, 0, 80, 0);
+/*JP
                     verbalize("You've been warned, knave!");
+*/
+                    verbalize("警告はしたぞ，悪党め！");
                 }
                 grd->mpeaceful = 0;
                 mnexto(grd, RLOC_NOMSG);
@@ -998,7 +1159,10 @@ gd_move(struct monst *grd)
             } else {
                 if (!Deaf) {
                     SetVoice(grd, 0, 80, 0);
+/*JP
                     verbalize("Well, begone.");
+*/
+                    verbalize("立ち去れ．");
                 }
                 egrd->gddone = 1;
                 return gd_move_cleanup(grd, semi_dead, FALSE);
@@ -1011,7 +1175,10 @@ gd_move(struct monst *grd)
             && !egrd->gddone && !in_fcorridor(grd, u.ux, u.uy)
             && (levl[egrd->fakecorr[0].fx][egrd->fakecorr[0].fy].typ
                 == egrd->fakecorr[0].ftyp)) {
+/*JP
             pline("%s, confused, disappears.", noit_Monnam(grd));
+*/
+            pline("%sは混乱し，消えた．", noit_Monnam(grd));
             return gd_move_cleanup(grd, semi_dead, TRUE);
         }
         if (u_carry_gold && (in_fcorridor(grd, u.ux, u.uy)
@@ -1025,21 +1192,37 @@ gd_move(struct monst *grd)
                 egrd->warncnt = 6;
                 if (Deaf) {
                     if (!Blind)
+#if 0 /*JP:T*/
                         pline("%s holds out %s palm demandingly!",
                               noit_Monnam(grd), noit_mhis(grd));
+#else
+                        pline("%sは厳しい調子で手のひらを差し出した！",
+                              noit_Monnam(grd));
+#endif
                 } else {
                     SetVoice(grd, 0, 80, 0);
+/*JP
                     verbalize("Drop all your gold, scoundrel!");
+*/
+                    verbalize("金を全部置いてゆけ，ならずもの！");
                 }
                 return 0;
             } else {
                 if (Deaf) {
                     if (!Blind)
+#if 0 /*JP:T*/
                         pline("%s rubs %s hands with enraged delight!",
                               noit_Monnam(grd), noit_mhis(grd));
+#else
+                        pline("%sは怒りながら手をすりあわせた！",
+                              noit_Monnam(grd));
+#endif
                 } else {
                     SetVoice(grd, 0, 80, 0);
+/*JP
                     verbalize("So be it, rogue!");
+*/
+                    verbalize("盗人め！");
                 }
                 grd->mpeaceful = 0;
                 return -1;
@@ -1067,7 +1250,10 @@ gd_move(struct monst *grd)
         if (!egrd->gddone && !rn2(10) && !Deaf && !u.uswallow
             && !(u.ustuck && !sticks(gy.youmonst.data))) {
             SetVoice(grd, 0, 80, 0);
+/*JP
             verbalize("Move along!");
+*/
+            verbalize("離れるな！");
         }
         restfakecorr(grd);
         return 0; /* didn't move */
@@ -1174,7 +1360,10 @@ gd_move(struct monst *grd)
         /* We're stuck, so try to find a new destination. */
         if (!find_guard_dest(grd, &egrd->gdx, &egrd->gdy)
             || (egrd->gdx == ggx && egrd->gdy == ggy)) {
+/*JP
             pline("%s, confused, disappears.", Monnam(grd));
+*/
+            pline("%sは混乱し，消えた．", Monnam(grd));
             return gd_move_cleanup(grd, semi_dead, TRUE);
         } else
             goto nextpos;
@@ -1193,7 +1382,10 @@ gd_move(struct monst *grd)
            it and give an inappropriate message */
         mpickgold(grd);
         if (canspotmon(grd))
+/*JP
             pline("%s picks up some gold.", Monnam(grd));
+*/
+            pline("%sは金を拾った．", Monnam(grd));
     } else
         newsym(grd->mx, grd->my);
     restfakecorr(grd);
@@ -1215,8 +1407,13 @@ paygd(boolean silently)
 
     if (u.uinvault) {
         if (!silently)
+#if 0 /*JP:T*/
             Your("%ld %s goes into the Magic Memory Vault.",
                  umoney, currency(umoney));
+#else
+            Your("%ld%sは魔法の記念倉庫に入った．",
+                 umoney, currency(umoney));
+#endif
         gdx = u.ux;
         gdy = u.uy;
     } else {
@@ -1225,12 +1422,21 @@ paygd(boolean silently)
 
         mnexto(grd, RLOC_NOMSG);
         if (!silently)
+/*JP
             pline("%s remits your gold to the vault.", Monnam(grd));
+*/
+            pline("%sはあなたの金貨を倉庫に送った．", Monnam(grd));
         gdx = svr.rooms[EGD(grd)->vroom].lx + rn2(2);
         gdy = svr.rooms[EGD(grd)->vroom].ly + rn2(2);
+#if 0 /*JP:T*/
         Sprintf(buf, "To Croesus: here's the gold recovered from %s the %s.",
                 svp.plname,
                 pmname(&mons[u.umonster], flags.female ? FEMALE : MALE));
+#else
+        Sprintf(buf, "クロイソスへ: ここに%sの%sから取り戻した金貨を送る．",
+                pmname(&mons[u.umonster], flags.female ? FEMALE : MALE),
+                svp.plname);
+#endif
         make_grave(gdx, gdy, buf);
     }
     for (coins = gi.invent; coins; coins = nextcoins) {
