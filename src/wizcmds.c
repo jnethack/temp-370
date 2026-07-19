@@ -450,7 +450,10 @@ wiz_level_change(void)
     int ret;
 
     buf[0] = '\0'; /* in case EDIT_GETLIN is enabled */
+/*JP
     getlin("To what experience level do you want to be set?", buf);
+*/
+    getlin("経験レベルをいくつに設定しますか？", buf);
     (void) mungspaces(buf);
     if (buf[0] == '\033' || buf[0] == '\0')
         ret = 0;
@@ -462,10 +465,16 @@ wiz_level_change(void)
         return ECMD_OK;
     }
     if (newlevel == u.ulevel) {
+/*JP
         You("are already that experienced.");
+*/
+        You("すでにその経験レベルだ．");
     } else if (newlevel < u.ulevel) {
         if (u.ulevel == 1) {
+/*JP
             You("are already as inexperienced as you can get.");
+*/
+            You("すでに可能な限りの最低の経験レベルだ．");
             return ECMD_OK;
         }
         if (newlevel < 1)
@@ -474,7 +483,10 @@ wiz_level_change(void)
             losexp("#levelchange");
     } else {
         if (u.ulevel >= MAXULEV) {
+/*JP
             You("are already as experienced as you can get.");
+*/
+            You("すでに可能な限りの最大の経験レベルだ．");
             return ECMD_OK;
         }
         if (newlevel > MAXULEV)
@@ -538,8 +550,13 @@ wiz_panic(void)
         u.uen = u.uenmax = 1000;
         return ECMD_OK;
     }
+#if 0 /*JP:T*/
     if (paranoid_query(TRUE,
                        "Do you want to call panic() and end your game?"))
+#else
+    if (paranoid_query(TRUE,
+                       "panic()関数を呼び出してゲームを終了させますか？"))
+#endif
         panic("Crash test (#panic).");
     return ECMD_OK;
 }
