@@ -3559,7 +3559,7 @@ get_table_objtype(lua_State *L)
 #if 0 /*JP*/
     int ret = find_objtype(L, s, oclass);
 #else
-    int ret = find_objtype(L, utf8toic(s), oclass);
+    int ret = find_objtype(L,  s ? utf8toic(s) : s, oclass);
 #endif
 
     Free(s);
