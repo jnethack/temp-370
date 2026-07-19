@@ -218,6 +218,7 @@ qtext_pronoun(
      * For %o, treat all artifacts as neuter; some have plural names,
      * which genders[] doesn't handle; cvt_buf[] already contains name.
      */
+#if 0 /*JP:T*/
     if (who == 'o'
         && (strstri(gc.cvt_buf, "Eyes ")
             || strcmpi(gc.cvt_buf, makesingular(gc.cvt_buf)))) {
@@ -225,6 +226,9 @@ qtext_pronoun(
                 : (lwhich == 'i') ? "them"
                 : (lwhich == 'j') ? "their" : "?";
     } else {
+#else
+    {
+#endif
         godgend = (who == 'd') ? svq.quest_status.godgend
             : (who == 'l') ? svq.quest_status.ldrgend
             : (who == 'n') ? svq.quest_status.nemgend
@@ -660,7 +664,7 @@ com_pager_core(
 #if 0 /*JP*/
         convert_line(in_line, out_line);
 #else
-        convert_line(utf8toic(in_line), out_line);
+        convert_line((char *)utf8toic(in_line), out_line);
 #endif
         /* bypass message delivery but be available for ^P recall */
         putmsghistory(out_line, FALSE);
