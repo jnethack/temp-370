@@ -660,7 +660,7 @@ com_pager_core(
 #if 0 /*JP*/
         convert_line(in_line, out_line);
 #else
-        convert_line(utf8toic(in_line), out_line);
+        convert_line((char *)utf8toic(in_line), out_line);
 #endif
         /* bypass message delivery but be available for ^P recall */
         putmsghistory(out_line, FALSE);
