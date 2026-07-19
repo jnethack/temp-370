@@ -1,171 +1,3 @@
-apply.c:
-            pline("%s %s light!", Yname2(obj), otense(obj, "catch"));
-            pline("%sの明かりがついた！", Yname2(obj));
-apply.c:
-            pline("%slamp is now off.", Shk_Your(buf, obj));
-            pline("%sランプの灯は消えた．", Shk_Your(buf, obj));
-apply.c:
-            Your("lamp has run out of power.");
-            Your("ランプの電力を使い切ってしまった．");
-apply.c:
-            pline("%slamp is now on.", Shk_Your(buf, obj));
-            pline("%sランプに灯が灯った．", Shk_Your(buf, obj));
-apply.c:
-            You("pull free from %s.", mon_nam(u.ustuck));
-            You("%sから離れた．", mon_nam(u.ustuck));
-apply.c:
-        multi_reason = "jumping around";
-        multi_reason = "跳ね回っている時に";
-apply.c:
-                pline("Nothing seems to happen.");
-                pline("何も起きなかったようだ．");
-apply.c:
-        pline("Nothing seems to happen.");
-        pline("何も起きなかったようだ．");
-apply.c:
-            pline("You feel something shatter.");
-            You("何かが粉々になるのを感じた．");
-apply.c:
-            is_animal(u.ustuck->data) ? "while swallowed" : "while engulfed";
-            is_animal(u.ustuck->data) ? "飲み込まれている間は" : "巻き込まれている間は";
-apply.c:
-                    You("drop %s!",
-                    You("%sを落とした！",
-apply.c:
-    You("begin setting %s%s.", shk_your(buf, otmp),
-    You("%s%sを仕掛けはじめた．", shk_your(buf, otmp),
-apply.c:
-            You("finish arming %s.",
-            You("%sを仕掛け終えた．",
-apply.c:
-                wrapped_what = "a boulder";
-                wrapped_what = "岩";
-apply.c:
-            pline("A monster is there that you couldn't see.");
-            pline("見えない怪物がいる．");
-apply.c:
-            pline("Thump!  Your blow bounces harmlessly off the statue.");
-            pline("ゴツン！彫像は傷つかなかった．");
-apply.c:
-    boolean is_fragile = (!strcmp(OBJ_DESCR(objects[obj->otyp]), "balsa"));
-    boolean is_fragile = (!strcmp(OBJ_DESCR(objects[obj->otyp]), "バルサの杖"));
-do_name.c:
-    putstr(tmpwin, 0, "Or enter a background symbol (ex. '<').");
-    putstr(tmpwin, 0, "背景のシンボルを入力するとその位置に移動する(例：'<')．");
-do_name.c:
-        putstr(tmpwin, 0, "Type Space or Escape when you're done.");
-        putstr(tmpwin, 0, "スペースまたはエスケープで終了．");
-do_name.c:
-        Sprintf(buf, "here");
-        Sprintf(buf, "ここ");
-do_name.c:
-    const char *firstmatch = "unknown";
-    const char *firstmatch = "不明";
-do_name.c:
-        const char *firstmatch = "unknown";
-        const char *firstmatch = "不明";
-do_name.c:
-        goal = "desired location";
-        goal = "目的地";
-do_name.c:
-            pline("Move cursor to %s:", goal);
-            pline("カーソルを%sに動かしてください:", goal);
-do_name.c:
-            pline("%s.", view_filters[iflags.getloc_filter]);
-            pline("%s．", view_filters[iflags.getloc_filter]);
-do_name.c:
-                    pline("Can't find dungeon feature '%c'.", c);
-                    pline("'%c'？", c);
-do_name.c:
-                        Strcpy(note, "aborted");
-                        Strcpy(note, "中断した");
-do_name.c:
-                    pline("Unknown direction: '%s' (%s).", visctrl((char) c),
-                    pline("その方向はない：'%s' (%s)", visctrl((char) c),
-do_name.c:
-            pline("Done.");
-            pline("以上．");
-do_name.c:
-        pline_The("artifact seems to resist the attempt.");
-        pline("聖器は名づけを拒否しているようだ．");
-do_name.c:
-        Strcpy(buf, "it");
-        Strcpy(buf, "何者か");
-do_name.c:
-        pm_name = mtmp->female ? "priestess" : "priest";
-        pm_name = mtmp->female ? "尼僧" : "僧侶";
-do_name.c:
-        pm_name = "high priestess";
-        pm_name = "法王";
-do_wear.c:
-            You("sure are noisy.");
-            Your("足音は大きくなった．");
-do_wear.c:
-        multi_reason = "disrobing";
-        multi_reason = "脱いでいる時に";
-do_wear.c:
-            Sprintf(offdelaybuf, "You finish taking off your %s.", what);
-            Sprintf(offdelaybuf, "あなたは%sを脱ぎおえた．", what);
-do_wear.c:
-            multi_reason = "dressing up";
-            multi_reason = "装備している時に";
-do_wear.c:
-            nomovemsg = "You finish your dressing maneuver.";
-            nomovemsg = "装備し終えた．";
-do_wear.c:
-        You("no longer have a second weapon readied.");
-        You("予備の武器をおさめた．");
-do_wear.c:
-        Your("%s crumbles and turns to dust!", cloak_simple_name(uarmc));
-        Your("%sは粉々になった！", cloak_simple_name(uarmc));
-do_wear.c:
-        Your("armor turns to dust and falls to the %s!", surface(u.ux, u.uy));
-        Your("鎧は塵となり%sに落ちた！", surface(u.ux,u.uy));
-do_wear.c:
-        Your("shirt crumbles into tiny threads and falls apart!");
-        Your("シャツはズタズタに裂け，小さな糸屑となり落ちた！");
-do_wear.c:
-        Your("%s turns to dust and is blown away!", helm_simple_name(uarmh));
-        Your("%sは塵となり吹きとんだ！", helm_simple_name(uarmh));
-do_wear.c:
-        Your("gloves vanish!");
-        Your("小手は消えた！");
-do_wear.c:
-        Your("boots disintegrate!");
-        Your("靴は粉々に砕けた！");
-do_wear.c:
-        Your("shield crumbles away!");
-        Your("盾は砕け散った！");
-eat.c:
-            Sprintf(killer.name, "tasting %s meat", mons[pm].mname);
-            Sprintf(killer.name, "%sの肉を食べ", mons[pm].mname);
-eat.c:
-            You_feel("that eating the %s was a bad idea.", mons[pm].mname);
-            pline("%sを食べるのはよくない気がした．", mons[pm].mname);
-eat.c:
-            multi_reason = "pretending to be a pile of gold";
-            multi_reason = "金貨の山の真似をしている時に";
-eat.c:
-            You_feel("a change coming over you.");
-            pline("変化が訪れた．");
-eat.c:
-                Sprintf(eos(buf), "%s", mons[mnum].mname);
-                Sprintf(eos(buf), "%s", mons[mnum].mname);
-eat.c:
-        b_trapped("tin", 0);
-        b_trapped("缶", 0);
-eat.c:
-    pline("Blecch!  Rotten %s!", foodword(obj));
-    pline("ゲェ！腐った%sだ！", foodword(obj));
-eat.c:
-        multi_reason = "unconscious from rotten food";
-        multi_reason = "腐った食べ物で意識を失っている間に";
-eat.c:
-        nomovemsg = "You are conscious again.";
-        nomovemsg = "あなたはまた正気づいた．";
-eat.c:
-        Sprintf(buf, "%s unfamiliar to you.  %s", foodsmell, eat_it_anyway);
-        Sprintf(buf, "%sはあなたになじまないようなにおいがする．%s", foodsmell, eat_it_anyway);
 engrave.c:
         You_cant("write in thin air!");
         You("空中には書けない！");
@@ -356,71 +188,17 @@ invent.c:
         if (query_objlist("Things that are buried here:",
         if (query_objlist("ここに埋められているもの：",
 mhitm.c:
-                pline_mon(mdef, "It turns into %s.", a_monnam(mdef));
-                pline_mon(mdef, "それは%sになった．", a_monnam(mdef));
-mhitm.c:
-            pline_mon(mdef, "%s is regurgitated!", Monnam(mdef));
-            pline_mon(mdef, "%sは吐き戻された！", Monnam(mdef));
-mhitm.c:
-        pline_mon(magr, "%s explodes!", Monnam(magr));
-        pline_mon(magr, "%sは爆発した！", Monnam(magr));
-mhitm.c:
-                pline_mon(magr, "%s turns to stone!", Monnam(magr));
-                pline_mon(magr, "%sは石になった！", Monnam(magr));
-mhitm.c:
-                You(brief_feeling, "queasy");
-                You(brief_feeling, "不安な");
-mhitm.c:
-            verbalize("Burrrrp!");
-            verbalize("げっぷ！");
-mhitm.c:
-            pline_mon(mdef, "%s is %s!", Monnam(mdef), on_fire(pd, mattk));
-            pline_mon(mdef, "%sは%s！", Monnam(mdef), on_fire(pd, mattk));
-mhitm.c:
-                pline_mon(mdef, "%s burns completely!", Monnam(mdef));
-                pline_mon(mdef, "%sは灰になった！", Monnam(mdef));
-mhitm.c:
-                pline_mon(mdef, "May %s roast in peace.", mon_nam(mdef));
-                pline_mon(mdef, "%sよ，安らかに燃えん事を．", mon_nam(mdef));
-mhitm.c:
-                pline_The("fire doesn't seem to burn %s!", mon_nam(mdef));
-                pline_mon(mdef, "%sは炎で燃えないようだ！", mon_nam(mdef));
-mhitm.c:
-            pline_mon(mdef, "%s is covered in frost!", Monnam(mdef));
-            pline_mon(mdef, "%sは氷で覆われた！", Monnam(mdef));
-mhitm.c:
-                pline_The("frost doesn't seem to chill %s!", mon_nam(mdef));
-                pline_mon(mdef, "氷は%sを凍らせることができないようだ！", mon_nam(mdef));
-mhitm.c:
-            pline_mon(mdef, "%s gets zapped!", Monnam(mdef));
-            pline_mon(mdef, "%sは衝撃をくらった！", Monnam(mdef));
-mhitm.c:
-                pline_The("zap doesn't shock %s!", mon_nam(mdef));
-                pline_mon(mdef, "衝撃は%sに影響を与えない！", mon_nam(mdef));
-mhitm.c:
-            pline_mon(mdef, "%s is covered in %s!", Monnam(mdef), hliquid("acid"));
-            pline_mon(mdef, "%sは%sにつつまれた！", Monnam(mdef), hliquid("酸"));
-mhitm.c:
             pline_mon(mdef, "It burns %s!", mon_nam(mdef));
             pline_mon(mdef, "%sは焼かれた！", mon_nam(mdef));
 mhitm.c:
                 pline_mon(mdef, "%s falls to pieces!", Monnam(mdef));
                 pline_mon(mdef, "%sはバラバラになった！", Monnam(mdef));
 mhitm.c:
-                pline_mon(mdef, "May %s rust in peace.", mon_nam(mdef));
-                pline_mon(mdef, "%sよ，安らかに錆びん事を．", mon_nam(mdef));
-mhitm.c:
                 pline_mon(mdef, "%s falls to pieces!", Monnam(mdef));
                 pline_mon(mdef, "%sはバラバラになった！", Monnam(mdef));
 mhitm.c:
-                pline_mon(mdef, "May %s rot in peace.", mon_nam(mdef));
-                pline_mon(mdef, "%sよ，安らかに腐らん事を．", mon_nam(mdef));
-mhitm.c:
                 pline_mon(mdef, "%s turns to stone!", Monnam(mdef));
                 pline_mon(mdef, "%sは石になった！", Monnam(mdef));
-mhitm.c:
-                You(brief_feeling, "peculiarly sad");
-                You(brief_feeling, "もの悲しい");
 mhitm.c:
                 pline("%s suddenly disappears!", mdef_Monnam);
                 pline("%sは突然消えた！", mdef_Monnam);
@@ -475,9 +253,6 @@ mhitm.c:
 mhitm.c:
                 pline_mon(mdef, "%s doesn't seem harmed.", Monnam(mdef));
                 pline_mon(mdef, "%sは傷ついたようには見えない．", Monnam(mdef));
-mhitm.c:
-        pline_mon(mon, "%s grip relaxes.", s_suffix(Monnam(mon)));
-        pline_mon(mon, "%sの握る力が弱くなった．", Monnam(mon));
 mhitu.c:
         pline("%s pretends to be friendly.", Monnam(mtmp));
         pline("%sは友好的なふりをしている．",Monnam(mtmp));
@@ -559,15 +334,6 @@ mhitu.c:
 mhitu.c:
             losexp("life drainage");
             losexp("生命力を吸収されて");
-mhitu.c:
-        const char *sidestr = (side == RIGHT_SIDE) ? "right" : "left",
-        const char *sidestr = (side == RIGHT_SIDE) ? "右" : "左",
-mhitu.c:
-            pline("%s tries to reach your %s %s!", Monst_name, sidestr, leg);
-            pline("%sはあなたの%s%sに攻撃しようとした！", Monst_name, sidestr, leg);
-mhitu.c:
-                pline("%s pricks your %s %s!", Monst_name, sidestr, leg);
-                pline("%sはあなたの%s%sをちくりと刺した！", Monst_name, sidestr, leg);
 mhitu.c:
                     You_hear("a cough from %s!", mon_nam(mtmp));
                     You_hear("%sがゴホッゴホッという音を聞いた！", mon_nam(mtmp));
@@ -1019,9 +785,6 @@ read.c:
     "This seems to be junk mail addressed to the finder of the Eye of Larn.");
     "Eye of Larnの発見者に宛てられたゴミメイルのようだ．");
 read.c:
-            pline("You're not carrying anything to be identified.");
-            pline("あなたは識別できるものをなにも持っていない．");
-read.c:
           "As your mind turns inward on itself, you forget everything else.");
           "あなたの心は内側に向き，全てを忘れてしまった．");
 read.c:
@@ -1241,9 +1004,6 @@ uhitm.c:
     You("engulf %s!", mon_nam(mdef));
     You("%sを飲み込んだ！", mon_nam(mdef));
 uhitm.c:
-            You("engulf it, then expel it.");
-            You("飲み込んで，吐き出した．");
-uhitm.c:
                 pline("It turns into %s.", a_monnam(mdef));
                 pline("それは%sになった．", a_monnam(mdef));
 uhitm.c:
@@ -1273,78 +1033,3 @@ uhitm.c:
 uhitm.c:
             fmt = "That gold was %s!";
             fmt = "金貨は%sだった！";
-zap.c:
-    "are blinded by the flash!";
-    "まばゆい光で目が見えなくなった！";
-zap.c:
-                    pline("%s turns to flesh!", name);
-                    pline("%sの石化が解けた！", name);
-zap.c:
-                    pline("%s looks rather fleshy for a moment.", name);
-                    pline("%sは一瞬石化が解けた．", name);
-zap.c:
-                pline("%s%s suddenly comes alive!", owner, corpse);
-                pline("%s%sは突然生命を帯びた！", owner, corpse);
-zap.c:
-                    pline("%s gets angry!", Monnam(shkp));
-                    pline("%sは激怒した！", Monnam(shkp));
-zap.c:
-                Norep("%s is furious!", Monnam(shkp));
-                Norep("%sは怒った！", Monnam(shkp));
-zap.c:
-                You("speed up.");
-                You("動きが速くなった．");
-zap.c:
-                Your("quickness feels more natural.");
-                You("速さに慣れてきた．");
-zap.c:
-        You("irradiate yourself with pure energy!");
-        You("エネルギーを自分自身に照射した．");
-zap.c:
-        You("die.");
-        pline("あなたは死にました．");
-zap.c:
-        "Some writing vanishes from %s head!";
-        "何かの文字が%sの頭から消えた！";
-zap.c:
-            You("probe beneath the %s.", surface(x, y));
-            You("下方の%sを調べた．", surface(x,y));
-zap.c:
-        pline("%s %s it.", The(str), vtense(str, "hit"));
-        pline("%sは何かに命中した．", str);
-zap.c:
-                            hit(fltxt, mon, ".");
-                            hit(fltxt, mon, "．");
-zap.c:
-                            hit(fltxt, mon, ".");
-                            hit(fltxt, mon, "．");
-zap.c:
-                pline("%s hits you!", The(fltxt));
-                pline("%sはあなたに命中した！", fltxt);
-zap.c:
-                pline("%s whizzes by you!", The(fltxt));
-                pline("%sはあなたのそばをかすめた！", fltxt);
-zap.c:
-                    pline_The("%s vanishes into the aether!", fltxt);
-                    pline_The("%sはエーテル空間に消えた！", fltxt);
-zap.c:
-                    pline_The("%s bounces!", fltxt);
-                    pline_The("%sは反射した！", fltxt);
-zap.c:
-                    pline_The("%s freezes for a moment.", hliquid("water"));
-                    pline_The("%sは一瞬凍った．", hliquid("水"));
-zap.c:
-                        Norep("The %s cools and solidifies.", hliquid("lava"));
-                        Norep("%sは冷え固まった．", hliquid("lava"));
-zap.c:
-                    Norep("The %s corrode somewhat but remain intact.",
-                    Norep("%sは少し痛んだがまだしっかりしている．",
-zap.c:
-                    Norep("The %s melt.", defsyms[S_bars].explanation);
-                    Norep("%sが溶けた．", defsyms[S_bars].explanation);
-zap.c:
-            sense_txt = "feel cold.";
-            sense_txt = "冷気を感じた．";
-zap.c:
-            pline("%s resists!", Monnam(mtmp));
-            pline("%sは防いだ！", Monnam(mtmp));
