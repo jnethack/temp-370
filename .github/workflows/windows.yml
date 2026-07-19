@@ -31,16 +31,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: release
-        uses: ncipollo/release-action@v1 #https://github.com/ncipollo/release-action/tree/main
-        with:
-          name: "latest"
-          allowUpdates: true
-          tag: latest
-          commit: jnh
-          replacesArtifacts: true
-          prerelease: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: package/nethack-500-win-x64.zip
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view latest --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            gh release edit latest --title "latest" --prerelease --repo "${{ github.repository }}"
+            gh release upload latest package/nethack-500-win-x64.zip --clobber --repo "${{ github.repository }}"
+          else
+            gh release create latest package/nethack-500-win-x64.zip --title "latest" --prerelease --repo "${{ github.repository }}"
+          fi
 
       - name: notify
         uses: sarisia/actions-status-discord@v1
