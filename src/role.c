@@ -605,10 +605,10 @@ const struct Role roles[NUM_ROLES+1] = {
         { "忍者", "くノ一" }, /* secret society */
         { "城主", 0 },          /* heads a castle */
         { "領主", 0 },         /* has a territory */
-        { "領主", 0 },        /* heads a province */
-        { "大名", "腰元" },         /* a samurai lord */
+        { "国主", 0 },        /* heads a province */
+        { "大名", 0 },         /* a samurai lord */
         { "公家", 0 },           /* Noble of the Court */
-        { "公家", "大奥" } },       /* supreme commander, warlord */
+        { "将軍", 0 } },       /* supreme commander, warlord */
       "_天照大神", "雷神", "須佐之男", /* Japanese */
 #endif
       "Sam",
@@ -2084,7 +2084,7 @@ build_plselection_prompt(
 /*JP
     Strcat(buf, " for you? [ynaq] ");
 */
-    Strcat(buf, "を適当に選んでよろしいですか？[ynq] ");
+    Strcat(buf, "を適当に選んでよろしいですか？[ynaq] ");
     return buf;
 }
 
@@ -2462,10 +2462,14 @@ role_menu_extra(int which, winid where, boolean preselect)
         add_menu(where, &nul_glyphinfo, &any, RS_menu_let[which], 0,
                  ATR_NONE, clr, buf, MENU_ITEMFLAGS_NONE);
     } else if (which == RS_filter) {
+#if 0 /*JP*/
         char setfiltering[40];
+#else
+        char setfiltering[BUFSZ];
+#endif
 
         any.a_int = RS_menu_arg(RS_filter);
-#if 0 /*JP:T*/
+#if 0 /*JP*/
         Sprintf(setfiltering, "%s role/race/&c filtering",
                 gotrolefilter() ? "Reset" : "Set");
 #else
@@ -3416,10 +3420,10 @@ reset_role_filtering(void)
     setup_algnmenu(win, FALSE, ROLE_NONE, ROLE_NONE, ROLE_NONE);
 
 #if 0 /*JP:T*/
-    Sprintf(filterprompt, "適用するものを全て選ぶ%s",
+    Sprintf(filterprompt, "Pick all that apply%s",
             gotrolefilter() ? " and/or unpick any that no longer apply" : "");
 #else
-    Sprintf(filterprompt, "Pick all that apply%s",
+    Sprintf(filterprompt, "適用するものを全て選ぶ%s",
             gotrolefilter() ? "か、適用しないものを外す" : "");
 #endif
     end_menu(win, filterprompt);
