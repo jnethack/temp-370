@@ -36,9 +36,8 @@ dumplogmsg(const char *line)
 #if 1 /*JP*/
     {
         const char *str = "コマンド？";
-        int len = strlen(str);
-        const char *end = strchr(line, '\0');
-        if (!strcmp(end - len, str))
+        size_t len = strlen(str), line_len = strlen(line);
+        if (line_len >= len && !strcmp(line + line_len - len, str))
             return;
     }
 #endif
@@ -502,9 +501,10 @@ You_hear(const char *line, ...)
         strcat(tmp, adj);
         strcat(tmp, p);
     } else {
+        Strcat(tmp, adj);
         Strcat(tmp, line);
     }
-    vpline(tmp, VA_ARGS);
+    vpline(tmp, the_args);
 #endif
     va_end(the_args);
 }
@@ -692,9 +692,16 @@ impossible(const char *s, ...)
 */
         Strcat(pbuf2, "  (保存して再読み込みすれば問題解決するかもしれない．)");
     pline("%s", pbuf2);
+#if 0 /*JP:T*/
     pline("Please report these messages to %s.", DEVTEAM_EMAIL);
+#else /*現在連絡用メールアドレスはないのでWebを指定*/
+    pline("これらのメッセージを%sに報告してください．", DEVTEAM_URL);
+#endif
     if (sysopt.support) {
+/*JP
         pline("Alternatively, contact local support: %s", sysopt.support);
+*/
+        pline("またはローカルサポートに連絡してください: %s", sysopt.support);
     }
 
 #ifdef CRASHREPORT
