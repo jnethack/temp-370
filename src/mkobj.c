@@ -747,7 +747,7 @@ static const char *const alteration_verbs[] = {
     "degrade", "dilute", "erase", "burn", "neutralize", "destroy", "splatter",
     "bite", "open", "break the lock on", "rust", "rot", "tarnish", "crack",
 #else
-    "無効化した", "劣化させた", "放出させた", "祝福を解いた", "呪いを解いた", "魔力を減らした",
+    "無効化した", "生命力を吸い取った", "放出させた", "祝福を解いた", "呪いを解いた", "魔力を減らした",
     "劣化させた", "薄めた", "消した", "燃やした", "無毒化した", "壊した", "使った",
     "食べた", "開けた", "鍵を壊した", "錆びさせた", "腐らせた", "傷つけた", "ひびを入れた",
 #endif

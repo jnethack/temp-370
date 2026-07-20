@@ -3103,13 +3103,12 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
                    && is_fld_arrayvalues(s[sidx], enc_stat,
                                          SLT_ENCUMBER, OVERLOADED + 1,
                                          &kidx)) {
-            txt = enc_stat[kidx];
 #else
                    && is_fld_arrayvalues(s[sidx], enc_stat_opt,
                                          SLT_ENCUMBER, OVERLOADED + 1,
                                          &kidx)) {
-            txt = enc_stat_opt[kidx];
 #endif
+            txt = enc_stat[kidx];
             txtval = TRUE;
         } else if (fld == BL_ALIGN
                    && is_fld_arrayvalues(s[sidx], aligntxt, 0, 3, &kidx)) {

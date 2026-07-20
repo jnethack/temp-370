@@ -111,7 +111,8 @@ thitu(
             || !strncmpi(name, "a ", 2))
             kprefix = KILLED_BY;
 #else /* 日本語ではそのまま */
-        knm = strcpy(knmbuf, name);
+        if (strlen(knmbuf) + strlen("に当たって") < sizeof knmbuf)
+            Strcat(knmbuf, "に当たって");
 #endif
     }
 #if 1 /*JP*/
@@ -1036,8 +1037,13 @@ return_from_mtoss(
             static long do_not_annoy = 0;
 
             if (!do_not_annoy || (svm.moves - do_not_annoy) > 500L) {
+#if 0 /*JP:T*/
                 pline("%s to %s %s!", Tobjnam(otmp, "return"),
                       s_suffix(mon_nam(magr)), mbodypart(magr, HAND));
+#else
+                pline("%sは%sの%sに戻ってきた！", xname(otmp),
+                      mon_nam(magr), mbodypart(magr, HAND));
+#endif
                 do_not_annoy = svm.moves;
             }
             if (otmp) {
@@ -1055,22 +1061,44 @@ return_from_mtoss(
             dmg = rn2(2);
             if (!dmg) {
                 if (canseemon(magr)) {
+#if 0 /*JP:T*/
                     pline("%s back to %s, landing %s %s %s.",
                           Tobjnam(otmp, "return"), mon_nam(magr),
                           mlevitating ? "beneath" : "at", mhis(magr),
                           makeplural(mbodypart(magr, FOOT)));
+#else
+                    pline("%sは戻ってきて，%sの%sの%sに落ちた．",
+                          xname(otmp), mon_nam(magr),
+                          mbodypart(magr, FOOT),
+                          mlevitating ? "下" : "そば"
+                        );
+#endif
                 } else if (!Deaf) {
+/*JP
                     You_hear("%s land near %s.", Something, mon_nam(magr));
+*/
+                    You_hear("%sが%sの近くに落ちる音を聞いた．", Something, mon_nam(magr));
                 }
             } else {
                 dmg += rnd(3);
                 if (canseemon(magr)) {
+#if 0 /*JP:T*/
                     pline("%s back toward %s, hitting %s %s!",
                           Tobjnam(otmp, "fly"), mon_nam(magr),
                           mhis(magr), body_part(ARM));
+#else
+                    pline("%sは%sの方に戻ってきて，その%sに命中した！",
+                          xname(otmp), mon_nam(magr),
+                          body_part(ARM));
+#endif
                 } else if (!Deaf) {
+#if 0 /*JP:T*/
                     You_hear("%s hit %s with a thud!", something,
                              mon_nam(magr));
+#else
+                    You_hear("ドスンという音と共に%sが%sに命中した音を聞いた！", something,
+                             mon_nam(magr));
+#endif
                 }
                 hits_thrower = TRUE;
             }
@@ -1109,7 +1137,10 @@ return_from_mtoss(
                 /* Some sound effects when item lands in water or lava */
                 if (is_pool(x, y) || (is_lava(x, y) && !is_flammable(otmp))) {
                     Soundeffect(se_splash, 50);
+/*JP
                     pline((weight(otmp) > 9) ? "Splash!" : "Plop!");
+*/
+                    pline((weight(otmp) > 9) ? "バシャッ！" : "ポチャン！");
                 }
             }
             if (obj_sheds_light(otmp))

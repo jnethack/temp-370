@@ -1133,7 +1133,11 @@ basics_enlightenment(int mode UNUSED, int final)
 #endif
         if (costly_spot(u.ux, u.uy)) {
             /* being in a shop inhibits autopickup, even 'pickup_thrown' */
+#if 0 /*JP*/
             Strcat(buf, ", but temporarily disabled while inside the shop");
+#else
+            Strcpy(buf, "オン，しかし店の中では一時的にオフ");
+#endif
         } else {
             oc_to_str(flags.pickup_types, ocl);
 #if 0 /*JP*/
@@ -1154,10 +1158,10 @@ basics_enlightenment(int mode UNUSED, int final)
                 Strcat(buf, ", with exceptions");
 */
                 Strcat(buf, "(例外あり)");
-        }
 #if 1 /*JP*/
-        Strcat(buf, "に対してオン");
+            Strcat(buf, "に対してオン");
 #endif
+        }
     } else
 /*JP
         Strcpy(buf, "off");

@@ -9815,7 +9815,7 @@ static const char *opt_intro[] = {
     ("Boolean options (which can be negated by prefixing them"
      " with '!' or \"no\"):"),
 #else
-    "真偽値オプション (否定の値を指定する場合，'!'もしくは\"no\"を先頭に付加します",
+    "真偽値オプション (否定の値を指定する場合，'!'もしくは\"no\"を先頭に付加します)",
 #endif
     (char *) 0
 };

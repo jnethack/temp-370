@@ -689,7 +689,7 @@ eat_brains(
                   (mdef == &gy.youmonst) ? "Your" : s_suffix(Monnam(mdef)));
 #else
             pline("%sの脳は無事だった．",
-                  (mdef == &gy.youmonst) ? "あなた" : s_suffix(Monnam(mdef)));
+                  (mdef == &gy.youmonst) ? "あなた" : Monnam(mdef));
 #endif
         return M_ATTK_MISS; /* side-effects can't occur */
     } else if (magr == &gy.youmonst) {

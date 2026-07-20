@@ -890,7 +890,7 @@ extcmd_via_menu(void)
                     && (strlen(prompt) + strlen("または") + strlen(choices[i]->ef_txt)
                         >= sizeof prompt
                     || displen(prompt) + displen("または") + displen(choices[i]->ef_txt)
-                        >= COLNO)
+                        >= COLNO - 6)
                     )) {
 #endif
                 if (acount) {

@@ -147,7 +147,7 @@ mon_yells(struct monst *mon, const char *shout)
 /*JP
             You_hear("someone yell:");
 */
-            pline("何者かは叫んだ：");
+            You_hear("何者かが叫んだのを聞いた：");
         }
         SetVoice(mon, 0, 80, 0);
         verbalize1(shout);

@@ -246,7 +246,10 @@ getpos_help(boolean force, const char *goal)
             visctrl(cmd_from_func(do_run)),
             visctrl(cmd_from_func(do_rush)));
     putstr(tmpwin, 0, sbuf);
+/*JP
     putstr(tmpwin, 0, "Or enter a background symbol (ex. '<').");
+*/
+    putstr(tmpwin, 0, "背景のシンボルを入力するとその位置に移動する(例：'<')．");
 #if 0 /*JP:T*/
     Sprintf(sbuf, "Use '%s' to move the cursor on yourself.",
 #else

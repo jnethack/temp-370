@@ -3054,7 +3054,10 @@ glibr(void)
             hand = makeplural(hand);
         } else if (wastwoweap) {
             /* preceding msg was about non-dominant hand */
+/*JP
             which = URIGHTY ? "right " : "left ";
+*/
+            which = URIGHTY ? "右" : "左";
         }
 #if 0 /*JP:T*/
         pline("%s %s%s %s%s from your %s%s.",

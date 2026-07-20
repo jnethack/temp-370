@@ -62,9 +62,6 @@ do_wear.c:
             nomovemsg = "You finish your dressing maneuver.";
             nomovemsg = "装備し終えた．";
 do_wear.c:
-        which = "left ";
-        which = "左";
-do_wear.c:
         You("no longer have a second weapon readied.");
         You("予備の武器をおさめた．");
 do_wear.c:

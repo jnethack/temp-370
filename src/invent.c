@@ -4985,8 +4985,12 @@ noarmor(boolean report_uskin)
         if ((p = strstri(uskinname, " dragon ")) != 0)
             while ((p[1] = p[8]) != '\0')
                 ++p;
-#else /*「<色>ドラゴンの鱗」を「<色>の鱗」にする*/
-        if ((p = strstri(uskinname, "ドラゴンの鱗")) != 0)
+#else 
+        /*「<色>ドラゴンの鱗鎧」を「<色>の鱗鎧」にする*/
+        if ((p = strstri(uskinname, "ドラゴンの鱗鎧")) != 0)
+            strcpy(p, "の鱗鎧");
+        /*「<色>ドラゴンの鱗」を「<色>の鱗」にする*/
+        else if ((p = strstri(uskinname, "ドラゴンの鱗")) != 0)
             strcpy(p, "の鱗");
 #endif
 
@@ -5071,10 +5075,14 @@ doprring(void)
         if (ct > 1 || iflags.menu_requested)
             use_inuse_mode = TRUE;
 
+#if 0 /*JP:T*/
         (void) dispinv_with_action(lets, use_inuse_mode,
                                    /* note; alternate label will be ignored
                                       if 'use_inuse_mode' is False */
                                    (ct == 1) ? "Ring" : "Rings");
+#else
+        (void) dispinv_with_action(lets, use_inuse_mode, "指輪");
+#endif
     }
     return ECMD_OK;
 }
@@ -5096,7 +5104,10 @@ dopramulet(void)
            in order to perform a context-sensitive item action */
         lets[0] = obj_to_let(uamul), lets[1] = '\0';
 
+/*JP
         (void) dispinv_with_action(lets, TRUE, "Amulet");
+*/
+        (void) dispinv_with_action(lets, TRUE, "魔除け");
     }
     return ECMD_OK;
 }
