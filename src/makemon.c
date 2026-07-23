@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 /* this assumes that a human quest leader or nemesis is an archetype
@@ -2124,13 +2129,20 @@ grow_up(struct monst *mtmp, struct monst *victim)
 
         if (svm.mvitals[newtype].mvflags & G_GENOD) { /* allow G_EXTINCT */
             if (canspotmon(mtmp))
+#if 0 /*JP:T*/
                 pline("As %s grows up into %s, %s %s!", mon_nam(mtmp),
                       an(pmname(ptr, Mgender(mtmp))), mhe(mtmp),
                       nonliving(ptr) ? "expires" : "dies");
+#else
+                pline("%sが成長して%sになると%sしまった！", mon_nam(mtmp),
+                      pmname(ptr, Mgender(mtmp)),
+                      nonliving(ptr) ? "消えて" : "死んで");
+#endif
             set_mon_data(mtmp, ptr); /* keep svm.mvitals[] accurate */
             mondied(mtmp);
             return (struct permonst *) 0;
         } else if (canspotmon(mtmp)) {
+#if 0 /*JP*/
             char buf[BUFSZ];
 
             /* 3.6.1:
@@ -2149,6 +2161,11 @@ grow_up(struct monst *mtmp, struct monst *victim)
                                             : humanoid(ptr) ? "becomes"
                                                             : "grows up into",
                       an(buf));
+#else /* 日本語ではとりあえずそこまではしない */
+            pline_mon(mtmp, "%sは%sに%s．", Monnam(mtmp),
+                  pmname(ptr, fem),
+                  humanoid(ptr) ? "なった" : "成長した");
+#endif
         }
         set_mon_data(mtmp, ptr);
         if (mtmp->cham == oldtype && is_shapeshifter(ptr))
@@ -2562,7 +2579,10 @@ bagotricks(
         impossible("bad bag o' tricks");
     } else if (bag->spe < 1) {
         /* if tipping known empty bag, give normal empty container message */
+/*JP
         pline1((tipping && bag->cknown) ? "It's empty." : nothing_happens);
+*/
+        pline1((tipping && bag->cknown) ? "それは空だ．" : nothing_happens);
         /* now known to be empty if sufficiently discovered */
         if (bag->dknown && objects[bag->otyp].oc_name_known) {
             bag->cknown = 1;
