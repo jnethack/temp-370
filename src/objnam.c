@@ -15,7 +15,7 @@
 #define PREFIX 80 /* (56) */
 #else
 /* 「呪われていない油の塗られた食べかけのクロマティック・ドラゴン(の死体)」*/
-#define PREFIX 100
+#define PREFIX 200
 #endif
 #define SCHAR_LIM 127
 #define NUMOBUF 12
@@ -78,9 +78,6 @@ struct Jitem {
     ((ptr) < base || strncmpi((ptr), str, num))
 #define Strcasecpy(dst, src) (void) strcasecpy(dst, src)
 #define Strncat(dst, src, cnt) (void) strncat(dst, src, cnt)
-#if 1 /*JP*/
-#define STRNCMPEX(x, y) strncmp(x, y, l = strlen(y))
-#endif
 
 /* Concat(): append text to base, adjusted by delta, with bounds checking
    via a pair of behind-the-scenes variables; delta is either 0 for normal
@@ -294,7 +291,7 @@ obj_typename(int otyp)
 /*JP
             Strcpy(buf, !nn ? "book" : "novel");
 */
-            Strcpy(buf, !nn ? "本" : "小説");
+            Strcat(buf, !nn ? "本" : "小説");
             nn = 0;
         }
         break;
@@ -318,16 +315,16 @@ obj_typename(int otyp)
 #else
         if (nn)
             Strcat(buf, actualn);
-        else if(un)
+        else
             Strcat(buf, "魔除け");
         break;
 #endif
 #if 1 /*JP*/
     case GEM_CLASS:
         if(nn)
-          Strcat(buf, actualn);
-        else if(un)
-          Strcat(buf, "宝石");
+            Strcat(buf, actualn);
+        else
+            Strcat(buf, "宝石");
         break;
 #endif
     case ARMOR_CLASS:
@@ -383,7 +380,7 @@ obj_typename(int otyp)
         else
             Sprintf(eos(buf), " of %s", actualn);
 #else
-        Strcpy(buf, actualn);
+        Strcat(buf, actualn);
 #endif
     }
 #if 0 /*JP*/
@@ -691,7 +688,7 @@ xcalled(
     {
         int sfxlen = bufsiz - pfxlen;
         /* 全角の途中で切れそうなときにはその字の先頭まで戻る */
-        sfxlen = sfxlen - offset_in_kanji((const unsigned char *) sfx, sfxlen);
+        sfxlen = sfxlen - offset_in_kanji(sfx, sfxlen);
         /* 変数名を変えることはしないが、sfxが前、pfxが後ろになる */
         Sprintf(eos(buf), "%.*sと呼ばれる%s", sfxlen, sfx, pfx);
     }
@@ -820,9 +817,15 @@ xname_flags(
             Strcat(buf, "魔除け");  
         else if (typ == AMULET_OF_YENDOR || typ == FAKE_AMULET_OF_YENDOR)
             /* each must be identified individually */
+/*JP
             Strcpy(buf, known ? actualn : dn);
+*/
+            Strcat(buf, known ? actualn : dn);
         else if (nn)
+/*JP
             Strcpy(buf, actualn);
+*/
+            Strcat(buf, actualn);
         else if (un)
 /*JP
             xcalled(buf, BUFSZ - PREFIX, "amulet", un);
@@ -839,7 +842,7 @@ xname_flags(
 /*JP
             Strcpy(buf, "poisoned ");
 */
-            Strcpy(buf, "毒の塗られた");
+            Strcat(buf, "毒の塗られた");
         FALLTHROUGH;
         /*FALLTHRU*/
     case VENOM_CLASS:
@@ -854,12 +857,12 @@ xname_flags(
 /*JP
             Strcpy(buf, "pair of ");
 */
-            Strcpy(buf, "一対の");
+            Strcat(buf, "一対の");
         else if (is_wet_towel(obj))
 /*JP
             Strcpy(buf, (obj->spe < 3) ? "moist " : "wet ");
 */
-            Strcpy(buf, (obj->spe < 3) ? "湿った" : "濡れた");
+            Strcat(buf, (obj->spe < 3) ? "湿った" : "濡れた");
 
         if (!dknown)
             Strcat(buf, dn);
@@ -891,7 +894,7 @@ xname_flags(
 /*JP
             Sprintf(buf, "set of %s", actualn);
 */
-            Sprintf(buf, "%s一式", actualn);
+            Sprintf(eos(buf), "%s一式", actualn);
             break;
         } else if (is_boots(obj) || is_gloves(obj)) {
 /*JP
@@ -930,12 +933,18 @@ xname_flags(
 
             if (!f) {
                 impossible("Bad fruit #%d?", obj->spe);
+/*JP
                 Strcpy(buf, "fruit");
+*/
+                Strcat(buf, "fruit");
             } else {
                 /* fruit name is limited in length to PL_FSIZ; converting
                    to/from singular/plural might increase the length a
                    little but not enough to pose a risk of overflowing buf */
+/*JP
                 Strcpy(buf, f->fname);
+*/
+                Strcat(buf, f->fname);
                 if (pluralize) {
                     /* ick: already pluralized fruit names are allowed--we
                        want to try to avoid adding a redundant plural suffix;
@@ -1031,7 +1040,8 @@ xname_flags(
 #if 0 /*JP:T*/
             Strcat(strcpy(buf, "next "), actualn); /* "next boulder" */
 #else
-            Strcat(strcpy(buf, "次の"), actualn); /* "next boulder" */
+            Strcat(buf, "次の");
+            Strcat(buf, actualn); /* "next boulder" */
 #endif
             /* once "next boulder" occurs, subsequent messages should just
                use ordinary "boulder" */
@@ -1091,8 +1101,10 @@ xname_flags(
             }
         } else {
             Strcat(buf, dn);
-#if 0 /*JP*//*不確定名に「薬」は付いている*/
+#if 0 /*JP*/
             Strcat(buf, " potion");
+#else
+            Strcat(buf, "薬");
 #endif
        }
         break;
@@ -1160,9 +1172,12 @@ xname_flags(
 /*JP
                 Strcpy(buf, "book");
 */
-                Strcpy(buf, "本");
+                Strcat(buf, "本");
             else if (nn)
+/*JP
                 Strcpy(buf, actualn);
+*/
+                Strcat(buf, actualn);
             else if (un)
 /*JP
                 xcalled(buf, BUFSZ - PREFIX, "novel", un);
@@ -1172,7 +1187,7 @@ xname_flags(
 /*JP
                 Sprintf(buf, "%s book", dn);
 */
-                Sprintf(buf, "%s本", dn);
+                Sprintf(eos(buf), "%s本", dn);
             break;
             /* end of tribute */
         } else if (!dknown) {
@@ -1240,7 +1255,10 @@ xname_flags(
 */
                 Strcat(buf, dn);
         } else {
+/*JP
             Strcpy(buf, actualn);
+*/
+            Strcat(buf, actualn);
 #if 0 /*JP*/
             if (GemStone(typ))
                 Strcat(buf, " stone");
@@ -1522,7 +1540,7 @@ add_erosion_words(struct obj *obj, char *prefix)
 #else
         Strcat(prefix, is_rustprone(obj) ? "錆びた"
                        : is_crackable(obj) ? "傷ついた"
-                         : "傷ついた");
+                         : "焦げた");
 #endif
     }
     if (obj->oeroded2 && !iscrys) {
@@ -1622,7 +1640,7 @@ doname_base(
     char *bp_eos, *bp_end;
     size_t bpspaceleft;
 #if 1 /*JP*/
-    char preprefix[PREFIX]; /*順序入れ替えに使う*/
+    char preprefix[BUFSZ]; /*順序入れ替えに使う*/
     int l = 0;
 #endif
 
@@ -1740,7 +1758,7 @@ doname_base(
 /*JP
         Strcat(prefix, "empty ");
 */
-        Strcat(prefix, "空の");
+        Strcat(prefix, "空っぽの");
 
     if (bknown && obj->oclass != COIN_CLASS
         && (obj->otyp != POT_WATER || !objects[POT_WATER].oc_name_known
@@ -1970,7 +1988,7 @@ doname_base(
 /*JP
                 Concat(bp, 0, " (lit)");
 */
-                Concat(bp, 0, " (lit)");
+                Concat(bp, 0, " (光っている)");
             break;
         }
         if (objects[obj->otyp].oc_charged)
@@ -4764,7 +4782,9 @@ readobjnam_preparse(struct _readobjnam_data *d)
         } else if (!STRNCMPEX(d->bp, "錆びない")
                    || !STRNCMPEX(d->bp, "腐食しない")
                    || !STRNCMPEX(d->bp, "安定した")
-                   || !STRNCMPEX(d->bp, "燃えない")) {
+                   || !STRNCMPEX(d->bp, "燃えない")
+                   || !STRNCMPEX(d->bp, "腐らない")
+                   || !STRNCMPEX(d->bp, "強化された")) {
 #endif
             d->erodeproof = 1;
 #if 0 /*JP:T*/
@@ -4894,7 +4914,8 @@ readobjnam_preparse(struct _readobjnam_data *d)
                    || !strncmpi(d->bp, "cracked ", l = 8)) {
 #else
         } else if (!STRNCMPEX(d->bp, "錆びた")
-                   || !STRNCMPEX(d->bp, "燃えた")) {
+                   || !STRNCMPEX(d->bp, "焦げた")
+                   || !STRNCMPEX(d->bp, "傷ついた")) {
 #endif
             d->eroded = 1 + d->very;
             d->very = 0;
@@ -4945,7 +4966,7 @@ readobjnam_preparse(struct _readobjnam_data *d)
 /*JP
             if (strncmpi(d->bp + l, "glob", 4) && !strstri(d->bp + l, " glob"))
 */
-            if (strncmpi(d->bp + l, "の塊", 4))
+            if (!strstr(d->bp + l, "の塊"))
                 break;
             d->gsize = 1;
 #if 0 /*JP:T*/
@@ -4967,7 +4988,10 @@ readobjnam_preparse(struct _readobjnam_data *d)
             /* "large" might be part of monster name (dog, cat, kobold,
                mimic) or object name (box, round shield) rather than
                prefix for glob size */
+/*JP
             if (strncmpi(d->bp + l, "glob", 4) && !strstri(d->bp + l, " glob"))
+*/
+            if (!strstr(d->bp + l, "の塊"))
                 break;
             /* "very large " had "very " peeled off on previous iteration */
             d->gsize = (d->very != 1) ? 3 : 4;
@@ -5300,7 +5324,12 @@ readobjnam_postparse1(struct _readobjnam_data *d)
             /*JP:「(怪物名)の(アイテム)」対応 */
             if ((d->mntmp = name_to_mon(d->bp, (int *) 0)) >= LOW_PM) {
                 const char *mp = mons[d->mntmp].pmnames[NEUTRAL];
-                d->bp = strstri(d->bp, mp) + strlen(mp) + strlen("の");
+                char *tmp_bp = strstri(d->bp, mp);
+                if (tmp_bp != NULL) {
+                    d->bp = tmp_bp + strlen(mp);
+                    if (!strncmp(d->bp, "の", strlen("の")))
+                        d->bp += strlen("の");
+                }
             }
         }
     }
