@@ -51,8 +51,12 @@ ldrname(void)
 {
     int i = gu.urole.ldrnum;
 
+#if 0 /*JP*/
     Sprintf(gn.nambuf, "%s%s", type_is_pname(&mons[i]) ? "" : "the ",
             mons[i].pmnames[NEUTRAL]);
+#else
+    Strcpy(gn.nambuf, mons[i].pmnames[NEUTRAL]);
+#endif
     return gn.nambuf;
 }
 
@@ -125,8 +129,12 @@ neminame(void)
 {
     int i = gu.urole.neminum;
 
+#if 0 /*JP*/
     Sprintf(gn.nambuf, "%s%s", type_is_pname(&mons[i]) ? "" : "the ",
             mons[i].pmnames[NEUTRAL]);
+#else
+    Strcpy(gn.nambuf, mons[i].pmnames[NEUTRAL]);
+#endif
     return gn.nambuf;
 }
 
@@ -210,6 +218,7 @@ qtext_pronoun(
      * For %o, treat all artifacts as neuter; some have plural names,
      * which genders[] doesn't handle; cvt_buf[] already contains name.
      */
+#if 0 /*JP:T*/
     if (who == 'o'
         && (strstri(gc.cvt_buf, "Eyes ")
             || strcmpi(gc.cvt_buf, makesingular(gc.cvt_buf)))) {
@@ -217,6 +226,9 @@ qtext_pronoun(
                 : (lwhich == 'i') ? "them"
                 : (lwhich == 'j') ? "their" : "?";
     } else {
+#else
+    {
+#endif
         godgend = (who == 'd') ? svq.quest_status.godgend
             : (who == 'l') ? svq.quest_status.ldrgend
             : (who == 'n') ? svq.quest_status.nemgend
@@ -226,9 +238,11 @@ qtext_pronoun(
                 : (lwhich == 'j') ? genders[godgend].his : "?";
     }
     Strcpy(gc.cvt_buf, pnoun);
+#if 0 /*JP*/
     /* capitalize for H,I,J */
     if (lwhich != which)
         gc.cvt_buf[0] = highc(gc.cvt_buf[0]);
+#endif
     return;
 }
 
@@ -252,10 +266,16 @@ convert_arg(char c)
         str = rank_of(MIN_QUEST_LEVEL, Role_switch, flags.female);
         break;
     case 's':
+/*JP
         str = (flags.female) ? "sister" : "brother";
+*/
+        str = (flags.female) ? "妹" : "弟";
         break;
     case 'S':
+/*JP
         str = (flags.female) ? "daughter" : "son";
+*/
+        str = (flags.female) ? "娘" : "息子";
         break;
     case 'l':
         str = ldrname();
@@ -266,6 +286,7 @@ convert_arg(char c)
     case 'O':
     case 'o':
         str = the(artiname(gu.urole.questarti));
+#if 0 /*JP*/
         if (c == 'O') {
             /* shorten "the Foo of Bar" to "the Foo"
                (buffer returned by the() is modifiable) */
@@ -274,6 +295,7 @@ convert_arg(char c)
             if (p)
                 *p = '\0';
         }
+#endif
         break;
     case 'n':
         str = neminame();
@@ -300,16 +322,28 @@ convert_arg(char c)
         str = align_gname(A_LAWFUL);
         break;
     case 'C':
+/*JP
         str = "chaotic";
+*/
+        str = "混沌";
         break;
     case 'N':
+/*JP
         str = "neutral";
+*/
+        str = "中立";
         break;
     case 'L':
+/*JP
         str = "lawful";
+*/
+        str = "秩序";
         break;
     case 'x':
+/*JP
         str = Blind ? "sense" : "see";
+*/
+        str = Blind ? "感じ" : "見";
         break;
     case 'Z':
         str = svd.dungeons[0].dname;
@@ -344,17 +378,23 @@ convert_line(char *in_line, char *out_line)
                 switch (*(++c)) {
                 /* insert "a"/"an" prefix */
                 case 'A':
+#if 0 /*JP*/
                     Strcat(cc, An(gc.cvt_buf));
                     cc += strlen(cc);
                     continue; /* for */
+#endif
                 case 'a':
+#if 0 /*JP*/
                     Strcat(cc, an(gc.cvt_buf));
                     cc += strlen(cc);
                     continue; /* for */
+#endif
 
                 /* capitalize */
                 case 'C':
+#if 0 /*JP*/
                     gc.cvt_buf[0] = highc(gc.cvt_buf[0]);
+#endif
                     break;
 
                 /* replace name with pronoun;
@@ -373,29 +413,39 @@ convert_line(char *in_line, char *out_line)
 
                 /* pluralize */
                 case 'P':
+#if 0 /*JP*/
                     gc.cvt_buf[0] = highc(gc.cvt_buf[0]);
+#endif
                     FALLTHROUGH;
                     /*FALLTHRU*/
                 case 'p':
+#if 0 /*JP*/
                     Strcpy(gc.cvt_buf, makeplural(gc.cvt_buf));
+#endif
                     break;
 
                 /* append possessive suffix */
                 case 'S':
+#if 0 /*JP*/
                     gc.cvt_buf[0] = highc(gc.cvt_buf[0]);
+#endif
                     FALLTHROUGH;
                     /*FALLTHRU*/
                 case 's':
+#if 0 /*JP*/
                     Strcpy(gc.cvt_buf, s_suffix(gc.cvt_buf));
+#endif
                     break;
 
                 /* strip any "the" prefix */
                 case 't':
+#if 0 /*JP*/
                     if (!strncmpi(gc.cvt_buf, "the ", 4)) {
                         Strcat(cc, &gc.cvt_buf[4]);
                         cc += strlen(cc);
                         continue; /* for */
                     }
+#endif
                     break;
 
                 default:
@@ -590,9 +640,17 @@ com_pager_core(
     }
 
     if (output == 0 || output == 1)
+#if 0 /*JP*/
         deliver_by_pline(text);
+#else
+        deliver_by_pline(utf8toic(text));
+#endif
     else
+#if 0 /*JP*/
         deliver_by_window(text, (output == 3) ? NHW_MENU : NHW_TEXT);
+#else
+        deliver_by_window(utf8toic(text), (output == 3) ? NHW_MENU : NHW_TEXT);
+#endif
 
     if (synopsis) {
         char in_line[BUFSZ], out_line[BUFSZ];
@@ -603,7 +661,11 @@ com_pager_core(
 #else
         Strcpy(in_line, synopsis);
 #endif
+#if 0 /*JP*/
         convert_line(in_line, out_line);
+#else
+        convert_line((char *)utf8toic(in_line), out_line);
+#endif
         /* bypass message delivery but be available for ^P recall */
         putmsghistory(out_line, FALSE);
     }
