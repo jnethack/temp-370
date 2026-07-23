@@ -125,7 +125,11 @@ static boolean ignore_errors_on_unmatched = FALSE,
 /* used for messaging. Also used in options.c */
 static const char *default_configfile =
 #ifdef UNIX
+#if 0 /*JP*/
     ".nethackrc";
+#else
+    ".jnethackrc";
+#endif
 #else
 #if defined(MACOS9) || defined(__BEOS__)
     "NetHack Defaults";
@@ -319,9 +323,15 @@ fopen_config_file(const char *filename, int src)
 #else /* should be only UNIX left */
     envp = nh_getenv("HOME");
     if (!envp)
+/*JP
         Strcpy(tmp_config, ".nethackrc");
+*/
+        Strcpy(tmp_config, default_configfile);
     else
+/*JP
         Sprintf(tmp_config, "%s/%s", envp, ".nethackrc");
+*/
+        Sprintf(tmp_config, "%s/%s", envp, default_configfile);
 
     set_configfile_name(tmp_config);
     if ((fp = fopen(configfile, "r")) != (FILE *) 0)
