@@ -3,6 +3,11 @@
 /*-Copyright (c) Robert Patrick Rankin, 2009. */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 /* KMH -- Differences between the three weapon slots.
@@ -77,9 +82,15 @@ staticfn void finish_splitting(struct obj *);
      ? !(is_launcher(obj) || is_ammo(obj) || is_missile(obj))   \
      : is_weptool(obj))
 
+#if 0 /*JP:T*/
 static const char
     are_no_longer_twoweap[] = "are no longer using two weapons at once",
     can_no_longer_twoweap[] = "can no longer wield two weapons at once";
+#else
+static const char
+    are_no_longer_twoweap[] = "二刀流をやめた",
+    can_no_longer_twoweap[] = "もう２つの武器を同時に使用することはできない";
+#endif
 
 /*** Functions that place a given item in a slot ***/
 /* Proper usage includes:
@@ -115,7 +126,10 @@ setuwep(struct obj *obj)
     if (uwep == obj && artifact_light(olduwep) && olduwep->lamplit) {
         end_burn(olduwep, FALSE);
         if (!Blind)
+/*JP
             pline("%s shining.", Tobjnam(olduwep, "stop"));
+*/
+            pline("%sは輝きを止めた．", xname(olduwep));
     }
     if (uwep == obj
         && (u_wield_art(ART_OGRESMASHER)
@@ -144,10 +158,19 @@ cant_wield_corpse(struct obj *obj)
         return FALSE;
 
     /* Prevent wielding cockatrice when not wearing gloves --KAA */
+#if 0 /*JP:T*/
     You("wield %s in your bare %s.",
         corpse_xname(obj, (const char *) 0, CXN_PFX_THE),
         makeplural(body_part(HAND)));
+#else
+    You("%sを%sにした．",
+        corpse_xname(obj, (const char *) 0, CXN_PFX_THE),
+        body_part(HAND));
+#endif
+/*JP
     Sprintf(kbuf, "wielding %s bare-handed", killer_xname(obj));
+*/
+    Sprintf(kbuf, "%sを素手で手にして", killer_xname(obj));
     instapetrify(kbuf);
     return TRUE;
 }
@@ -157,12 +180,16 @@ cant_wield_corpse(struct obj *obj)
 const char *
 empty_handed(void)
 {
+#if 0 /*JP*/
     return uarmg ? "empty handed" /* gloves imply hands */
            : humanoid(gy.youmonst.data)
              /* hands but no weapon and no gloves */
              ? "bare handed"
                /* alternate phrasing for paws or lack of hands */
                : "not wielding anything";
+#else
+    return "武器を装備していな";
+#endif
 }
 
 staticfn int
@@ -175,18 +202,30 @@ ready_weapon(struct obj *wep)
     if (!wep) {
         /* No weapon */
         if (uwep) {
+/*JP
             You("are %s.", empty_handed());
+*/
+            You("%sい．", empty_handed());
             setuwep((struct obj *) 0);
             res = ECMD_TIME;
         } else
+/*JP
             You("are already %s.", empty_handed());
+*/
+            You("何も%sい．", empty_handed());
     } else if (wep->otyp == CORPSE && cant_wield_corpse(wep)) {
         /* hero must have been life-saved to get here; use a turn */
         res = ECMD_TIME; /* corpse won't be wielded */
     } else if (uarms && bimanual(wep)) {
+#if 0 /*JP:T*/
         You("cannot wield a two-handed %s while wearing a shield.",
             is_sword(wep) ? "sword" : wep->otyp == BATTLE_AXE ? "axe"
                                                               : "weapon");
+#else
+        pline("盾を装備しているときに両手持ちの%sを装備できない．",
+              is_sword(wep) ? "剣" : wep->otyp == BATTLE_AXE ? "斧"
+                                                             : "武器");
+#endif
         res = ECMD_FAIL;
     } else if (!retouch_object(&wep, FALSE)) {
         res = ECMD_TIME; /* takes a turn even though it doesn't get wielded */
@@ -194,18 +233,25 @@ ready_weapon(struct obj *wep)
         /* Weapon WILL be wielded after this point */
         res = ECMD_TIME;
         if (will_weld(wep)) {
+#if 0 /*JP*//*使わない*/
             const char *tmp = xname(wep), *thestr = "The ";
 
             if (strncmp(tmp, thestr, 4) && !strncmp(The(tmp), thestr, 4))
                 tmp = thestr;
             else
                 tmp = "";
+#endif
+#if 0 /*JP*/
             pline("%s%s %s to your %s%s!", tmp, aobjnam(wep, "weld"),
                   (wep->quan == 1L) ? "itself" : "themselves", /* a3 */
                   bimanual(wep) ? "" :
                       (URIGHTY ? "dominant right " : "dominant left "),
                   bimanual(wep) ? (const char *) makeplural(body_part(HAND))
                                 : body_part(HAND));
+#else
+            pline("%sは勝手にあなたの%sに装備された．",
+                  xname(wep), body_part(HAND));
+#endif
             set_bknown(wep, 1);
         } else {
             /* The message must be printed before setuwep (since
@@ -222,7 +268,10 @@ ready_weapon(struct obj *wep)
 
             wep->owornmask |= W_WEP;
             if (wep->otyp == AKLYS && (wep->owornmask & W_WEP) != 0)
+/*JP
                 You("secure the tether.");
+*/
+                You("ひもをしっかりと固定した．");
             prinv((char *) 0, wep, 0L);
             wep->owornmask = dummy;
         }
@@ -232,9 +281,15 @@ ready_weapon(struct obj *wep)
             /* skip this message if we already got "empty handed" one above;
                also, Null is not safe for neither TWOWEAPOK() or bimanual() */
             if (uwep)
+#if 0 /*JP:T*/
                 You("%s.", ((TWOWEAPOK(uwep) && !bimanual(uwep))
                             ? are_no_longer_twoweap
                             : can_no_longer_twoweap));
+#else
+                You("%s．", ((TWOWEAPOK(uwep) && !bimanual(uwep))
+                            ? are_no_longer_twoweap
+                            : can_no_longer_twoweap));
+#endif
         }
 
         /* KMH -- Talking artifacts are finally implemented */
@@ -245,15 +300,23 @@ ready_weapon(struct obj *wep)
         if (artifact_light(wep) && !wep->lamplit) {
             begin_burn(wep, FALSE);
             if (!Blind)
+#if 0 /*JP:T*/
                 pline("%s to shine %s!", Tobjnam(wep, "begin"),
                       arti_light_description(wep));
+#else
+                pline("%sは%s輝きはじめた！", xname(wep),
+                      arti_light_description(wep));
+#endif
         }
 #if 0
         /* we'll get back to this someday, but it's not balanced yet */
         if (Race_if(PM_ELF) && !wep->oartifact
             && objects[wep->otyp].oc_material == IRON) {
             /* Elves are averse to wielding cold iron */
+/*JP
             You("have an uneasy feeling about wielding cold iron.");
+*/
+            You("冷たい鉄を装備することに不安な気持になった.");
             change_luck(-1);
         }
 #endif
@@ -262,8 +325,13 @@ ready_weapon(struct obj *wep)
 
             if ((this_shkp = shop_keeper(inside_shop(u.ux, u.uy)))
                 != (struct monst *) 0) {
+#if 0 /*JP:T*/
                 pline("%s says \"You be careful with my %s!\"",
                       shkname(this_shkp), xname(wep));
+#else
+                pline("%sは述べた「%sの扱いは気をつけてくれよ！」",
+                      shkname(this_shkp), xname(wep));
+#endif
             }
         }
     }
@@ -361,7 +429,10 @@ dowield(void)
     /* May we attempt this? */
     gm.multi = 0;
     if (cantwield(gy.youmonst.data)) {
+/*JP
         pline("Don't be ridiculous!");
+*/
+        pline("ばかばかしい！");
         return ECMD_FAIL;
     }
     /* Keep going even if inventory is completely empty, since wielding '-'
@@ -375,7 +446,10 @@ dowield(void)
         return ECMD_CANCEL;
     } else if (wep == uwep) {
  already_wielded:
+/*JP
         You("are already wielding that!");
+*/
+        You("もうそれを%sにしている！", body_part(HAND));
         if (is_weptool(wep) || is_wet_towel(wep))
             gu.unweapon = FALSE; /* [see setuwep()] */
         return ECMD_FAIL;
@@ -410,8 +484,13 @@ dowield(void)
         /* offer to split stack if multiple are quivered */
         if (uquiver->quan > 1L && inv_cnt(FALSE) < invlet_basic
                                     && splittable(uquiver)) {
+#if 0 /*JP:T*/
             Sprintf(qbuf, "You have %ld %s readied.  Wield one?",
                     uquiver->quan, simpleonames(uquiver));
+#else
+            Sprintf(qbuf, "あなたはすでに%ld%sの%sを準備している．一つを装備する？",
+                    uquiver->quan, numeral(uquiver), simpleonames(uquiver));
+#endif
             switch (ynq(qbuf)) {
             case 'q':
                 return ECMD_OK;
@@ -423,25 +502,40 @@ dowield(void)
             default:
                 break;
             }
+/*JP
             Strcpy(qbuf, "Wield all of them instead?");
+*/
+            Strcpy(qbuf, "代わりにそれら全てを装備する？");
         } else {
             boolean use_plural = (is_plural(uquiver) || pair_of(uquiver));
 
+#if 0 /*JP:T*/
             Sprintf(qbuf, "You have %s readied.  Wield %s instead?",
                     !use_plural ? "that" : "those",
                     !use_plural ? "it" : "them");
+#else
+            Strcpy(qbuf, "あなたはすでにそれを準備している．代わりにそれを装備する？");
+#endif
         }
         /* require confirmation to wield the quivered weapon */
         if (ynq(qbuf) != 'y') {
             (void) Shk_Your(qbuf, uquiver); /* replace qbuf[] contents */
+#if 0 /*JP:T*/
             pline("%s%s %s readied.", qbuf,
                   simpleonames(uquiver), otense(uquiver, "remain"));
+#else
+            pline("%s%sを準備状態のままにした．", qbuf,
+                  simpleonames(uquiver));
+#endif
             return ECMD_OK;
         }
         /* wielding whole readied stack, so no longer quivered */
         setuqwep((struct obj *) 0);
     } else if (wep->owornmask & (W_ARMOR | W_ACCESSORY | W_SADDLE)) {
+/*JP
         You("cannot wield that!");
+*/
+        You("それを装備できない！");
         return ECMD_FAIL;
     }
 
@@ -466,7 +560,10 @@ doswapweapon(void)
     /* May we attempt this? */
     gm.multi = 0;
     if (cantwield(gy.youmonst.data)) {
+/*JP
         pline("Don't be ridiculous!");
+*/
+        pline("ばかばかしい！");
         return ECMD_FAIL;
     }
     if (welded(uwep)) {
@@ -491,7 +588,10 @@ doswapweapon(void)
         if (uswapwep)
             prinv((char *) 0, uswapwep, 0L);
         else
+/*JP
             You("have no secondary weapon readied.");
+*/
+            You("予備の武器の用意をやめた．");
     }
 
     if (u.twoweap && !can_twoweapon())
@@ -522,7 +622,10 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
     if (!gi.invent) {
         /* could accept '-' to empty quiver, but there's no point since
            inventory is empty so uquiver is already Null */
+/*JP
         You("have nothing to ready for firing.");
+*/
+        You("発射の準備をするものを何も持っていない．");
         return ECMD_OK;
     }
 
@@ -537,11 +640,17 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
     } else if (newquiver == &hands_obj) { /* no object */
         /* Explicitly nothing */
         if (uquiver) {
+/*JP
             You("now have no ammunition readied.");
+*/
+            pline("装填するための矢弾がなくなった．");
             /* skip 'quivering: prinv()' */
             setuqwep((struct obj *) 0);
         } else {
+/*JP
             You("already have no ammunition readied!");
+*/
+            pline("装填するための矢弾がない．");
         }
         return ECMD_OK;
     } else if (newquiver->o_id == svc.context.objsplit.child_oid) {
@@ -553,17 +662,26 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
             goto already_quivered;
         } else if (newquiver->oclass == COIN_CLASS) {
             /* don't allow splitting a stack of coins into quiver */
+/*JP
             You("can't ready only part of your gold.");
+*/
+            You("お金の一部だけを準備することはできない．");
             unsplitobj(newquiver);
             return ECMD_OK;
         }
         finish_splitting(newquiver);
     } else if (newquiver == uquiver) {
  already_quivered:
+/*JP
         pline("That ammunition is already readied!");
+*/
+        pline("もう装填されている！");
         return ECMD_OK;
     } else if (newquiver->owornmask & (W_ARMOR | W_ACCESSORY | W_SADDLE)) {
+/*JP
         You("cannot %s that!", verb);
+*/
+        You("それは使えない！");
         return ECMD_OK;
     } else if (newquiver == uwep) {
         int weld_res = !uwep->bknown;
@@ -576,8 +694,14 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
         /* offer to split stack if wielding more than 1 */
         if (uwep->quan > 1L && inv_cnt(FALSE) < invlet_basic
                                     && splittable(uwep)) {
+#if 0 /*JP:T*/
             Sprintf(qbuf, "You are wielding %ld %s.  Ready %ld of them?",
                     uwep->quan, simpleonames(uwep), uwep->quan - 1L);
+#else
+            Sprintf(qbuf, "あなたは%ld%sの%sを装備している．そのうち%ld%sを準備する？",
+                    uwep->quan, numeral(uwep), simpleonames(uwep),
+                    uwep->quan - 1L, numeral(uwep));
+#endif
             switch (ynq(qbuf)) {
             case 'q':
                 return ECMD_OK;
@@ -589,19 +713,31 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
             default:
                 break;
             }
+/*JP
             Strcpy(qbuf, "Ready all of them instead?");
+*/
+            Strcpy(qbuf, "代わりにこれら全部を準備する？");
         } else {
+#if 0 /*JP*/
             boolean use_plural = (is_plural(uwep) || pair_of(uwep));
 
             Sprintf(qbuf, "You are wielding %s.  Ready %s instead?",
                     !use_plural ? "that" : "those",
                     !use_plural ? "it" : "them");
+#else /* 不自然だけどとりあえずこれでよしとする */
+            Strcpy(qbuf, "あなたはそれを装備している．代わりにそれを準備する？");
+#endif
         }
         /* require confirmation to ready the main weapon */
         if (ynq(qbuf) != 'y') {
             (void) Shk_Your(qbuf, uwep); /* replace qbuf[] contents */
+#if 0 /*JP:T*/
             pline("%s%s %s wielded.", qbuf,
                   simpleonames(uwep), otense(uwep, "remain"));
+#else
+            pline("%s%sを装備したままにした．", qbuf,
+                  simpleonames(uwep));
+#endif
             return ECMD_OK;
         }
         /* quivering main weapon, so no longer wielding it */
@@ -611,11 +747,19 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
     } else if (newquiver == uswapwep) {
         if (uswapwep->quan > 1L && inv_cnt(FALSE) < invlet_basic
             && splittable(uswapwep)) {
+#if 0 /*JP*/
             Sprintf(qbuf, "%s %ld %s.  Ready %ld of them?",
                     u.twoweap ? "You are dual wielding"
                               : "Your alternate weapon is",
                     uswapwep->quan, simpleonames(uswapwep),
                     uswapwep->quan - 1L);
+#else
+            Sprintf(qbuf, "あなた%sは%ld%sの%sだ．そのうち%ld%sを準備する？",
+                    u.twoweap ? "が二刀流で装備しているの"
+                              : "の予備の武器",
+                    uswapwep->quan, numeral(uswapwep), simpleonames(uswapwep),
+                    uswapwep->quan - 1L, numeral(uswapwep));
+#endif
             switch (ynq(qbuf)) {
             case 'q':
                 return ECMD_OK;
@@ -627,21 +771,35 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
             default:
                 break;
             }
+/*JP
             Strcpy(qbuf, "Ready all of them instead?");
+*/
+            Strcpy(qbuf, "代わりにこれら全部を準備する？");
         } else {
+#if 0 /*JP*/
             boolean use_plural = (is_plural(uswapwep) || pair_of(uswapwep));
 
             Sprintf(qbuf, "%s your %s weapon.  Ready %s instead?",
                     !use_plural ? "That is" : "Those are",
                     u.twoweap ? "second" : "alternate",
                     !use_plural ? "it" : "them");
+#else
+            Sprintf(qbuf, "それは%s武器だ．代わりにそれを準備する？",
+                    u.twoweap ? "二番目の" : "予備の");
+#endif
         }
         /* require confirmation to ready the alternate weapon */
         if (ynq(qbuf) != 'y') {
             (void) Shk_Your(qbuf, uswapwep); /* replace qbuf[] contents */
+#if 0 /*JP:T*/
             pline("%s%s %s %s.", qbuf,
                   simpleonames(uswapwep), otense(uswapwep, "remain"),
                   u.twoweap ? "wielded" : "as secondary weapon");
+#else
+            pline("%s%sを%sままにした．", qbuf,
+                  simpleonames(uswapwep),
+                  u.twoweap ? "装備した" : "二番目の武器の");
+#endif
             return ECMD_OK;
         }
         /* quivering alternate weapon, so no more uswapwep */
@@ -658,7 +816,10 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
     } else { /* verb=="fire", manually refilling quiver during 'f'ire */
         /* prefix item with description of action, so don't want that to
            include "(at the ready)" */
+/*JP
         prinv("You ready:", newquiver, 0L);
+*/
+        prinv("準備：", newquiver, 0L);
         setuqwep(newquiver);
     }
 
@@ -669,10 +830,16 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
        something we're wielding that's vulnerable to its damage) */
     res = 0;
     if (was_uwep) {
+/*JP
         You("are now %s.", empty_handed());
+*/
+        You("武器を持たなくなった．");
         res = 1;
     } else if (was_twoweap && !u.twoweap) {
+/*JP
         You("%s.", are_no_longer_twoweap);
+*/
+        You("%s．", are_no_longer_twoweap);
         res = 1;
     }
     return res ? ECMD_TIME : ECMD_OK;
@@ -683,25 +850,34 @@ boolean
 wield_tool(struct obj *obj,
            const char *verb) /* "rub",&c */
 {
+#if 0 /*JP*/
     const char *what;
     boolean more_than_1;
+#endif
 
     if (uwep && obj == uwep)
         return TRUE; /* nothing to do if already wielding it */
 
+#if 0 /*JP*/
     if (!verb)
         verb = "wield";
     what = xname(obj);
     more_than_1 = (obj->quan > 1L || strstri(what, "pair of ") != 0
                    || strstri(what, "s of ") != 0);
+#endif
 
     if (obj->owornmask & (W_ARMOR | W_ACCESSORY)) {
+#if 0 /*JP:T*/
         You_cant("%s %s while wearing %s.", verb, yname(obj),
                  more_than_1 ? "them" : "it");
+#else
+        pline("身につけたままでは%sは使えない．", yname(obj));
+#endif
         return FALSE;
     }
     if (uwep && welded(uwep)) {
         if (flags.verbose) {
+#if 0 /*JP*/
             const char *hand = body_part(HAND);
 
             if (bimanual(uwep))
@@ -711,19 +887,33 @@ wield_tool(struct obj *obj,
             pline(
                "Since your weapon is welded to your %s, you cannot %s %s %s.",
                   hand, verb, more_than_1 ? "those" : "that", xname(obj));
+#else
+            pline("武器が貼り付いているので，%sを使えない．", xname(obj));
+#endif
         } else {
+/*JP
             You_cant("do that.");
+*/
+            pline("それはできない．");
         }
         return FALSE;
     }
     if (cantwield(gy.youmonst.data)) {
+/*JP
         You_cant("hold %s strongly enough.", more_than_1 ? "them" : "it");
+*/
+        You("それを持つほど力がない．");
         return FALSE;
     }
     /* check shield */
     if (uarms && bimanual(obj)) {
+#if 0 /*JP:T*/
         You("cannot %s a two-handed %s while wearing a shield.", verb,
             (obj->oclass == WEAPON_CLASS) ? "weapon" : "tool");
+#else
+        pline("盾を装備したまま両手持ちの%sを装備できない．",
+              (obj->oclass == WEAPON_CLASS) ? "武器" : "道具");
+#endif
         return FALSE;
     }
 
@@ -741,7 +931,10 @@ wield_tool(struct obj *obj,
             /* hope none of ready_weapon()'s early returns apply here... */
             (void) ready_weapon(obj);
         } else {
+/*JP
             You("now wield %s.", doname(obj));
+*/
+            You("%sを装備した．", doname(obj));
             setuwep(obj);
         }
         if (flags.pushweapon && oldwep && uwep != oldwep)
@@ -764,33 +957,62 @@ can_twoweapon(void)
 
     if (!could_twoweap(gy.youmonst.data)) {
         if (Upolyd)
+/*JP
             You_cant("use two weapons in your current form.");
+*/
+            pline("現在の姿では二刀流は使えない．");
         else
+/*JP
             pline("%s aren't able to use two weapons at once.",
+*/
+            pline("%sは二つの武器を同時に扱えない．",
                   makeplural((flags.female && gu.urole.name.f)
                              ? gu.urole.name.f : gu.urole.name.m));
     } else if (!uwep || !uswapwep) {
+#if 0 /*JP*/
         const char *hand_s = body_part(HAND);
 
         if (!uwep && !uswapwep)
             hand_s = makeplural(hand_s);
+#endif
+#if 0 /*JP*/
         /* "your hands are empty" or "your {left|right} hand is empty" */
         Your("%s%s %s empty.", uwep ? "left " : uswapwep ? "right " : "",
              hand_s, vtense(hand_s, "are"));
+#else
+        Your("%s%sは空っぽだ．", uwep ? "左の" : uswapwep ? "右の" : "",
+             body_part(HAND));
+#endif
     } else if (!TWOWEAPOK(uwep) || !TWOWEAPOK(uswapwep)) {
         otmp = !TWOWEAPOK(uwep) ? uwep : uswapwep;
+#if 0 /*JP*/
         pline("%s %s suitable %s weapon%s.", Yname2(otmp),
               is_plural(otmp) ? "aren't" : "isn't a",
               (otmp == uwep) ? "primary" : "secondary",
               plur(otmp->quan));
+#else
+        pline("%sは%s武器として適切じゃない．", Yname2(otmp),
+              (otmp == uwep) ? "" : "予備の");
+#endif
     } else if (bimanual(uwep) || bimanual(uswapwep)) {
         otmp = bimanual(uwep) ? uwep : uswapwep;
+/*JP
         pline("%s isn't one-handed.", Yname2(otmp));
+*/
+        pline("%sは片手持ちの武器じゃない．", Yname2(otmp));
     } else if (uarms) {
+/*JP
         You_cant("use two weapons while wearing a shield.");
+*/
+        You("盾を持っている間は二刀流できない．");
     } else if (uswapwep->oartifact) {
+#if 0 /*JP:T*/
         pline("%s being held second to another weapon!",
               Yobjnam2(uswapwep, "resist"));
+#else
+        pline("%sは予備の武器として扱われることを拒んだ！",
+              Yname2(uswapwep));
+#endif
     } else if (uswapwep->otyp == CORPSE && cant_wield_corpse(uswapwep)) {
         /* [Note: !TWOWEAPOK() check prevents ever getting here...] */
         ; /* must be life-saved to reach here; return FALSE */
@@ -815,18 +1037,33 @@ drop_uswapwep(void)
        dual-wielded, or to get this far attempting to achieve that,
        uswapwep must be one-handed; since it's secondary, the hand must
        be the left one */
+/*JP
     Sprintf(left_hand, "left %s", body_part(HAND));
+*/
+    Sprintf(left_hand, "左%s", body_part(HAND));
     if (!obj->cursed)
         /* attempting to two-weapon while Glib */
+/*JP
         pline("%s from your %s!", Yobjnam2(obj, "slip"), left_hand);
+*/
+        pline("%sの%sを落とした！", left_hand, xname(obj));
     else if (!u.twoweap)
         /* attempting to two-weapon when uswapwep is cursed */
+#if 0 /*JP:T*/
         pline("%s your grasp and %s from your %s!",
               Yobjnam2(obj, "evade"), otense(obj, "drop"), left_hand);
+#else
+        pline("つかもうとすると%sが避けて，%sから落とした！",
+              xname(obj), left_hand);
+#endif
     else
         /* already two-weaponing but can't anymore because uswapwep has
            become cursed */
+#if 0 /*JP:T*/
         Your("%s spasms and drops %s!", left_hand, yobjnam(obj, (char *) 0));
+#else
+        Your("%sがけいれんして%sを落とした！", left_hand, xname(obj));
+#endif
     dropx(obj);
 }
 
@@ -846,7 +1083,10 @@ dotwoweapon(void)
 {
     /* You can always toggle it off */
     if (u.twoweap) {
+/*JP
         You("switch to your primary weapon.");
+*/
+        You("一つの武器で戦闘することにした．");
         set_twoweap(FALSE); /* u.twoweap = FALSE */
         update_inventory();
         return ECMD_OK;
@@ -855,7 +1095,10 @@ dotwoweapon(void)
     /* May we use two weapons? */
     if (can_twoweapon()) {
         /* Success! */
+/*JP
         You("begin two-weapon combat.");
+*/
+        You("二刀流で戦闘することにした．");
         set_twoweap(TRUE); /* u.twoweap = TRUE */
         update_inventory();
         return (rnd(20) > ACURR(A_DEX)) ? ECMD_TIME : ECMD_OK;
@@ -876,7 +1119,10 @@ uwepgone(void)
         if (artifact_light(uwep) && uwep->lamplit) {
             end_burn(uwep, FALSE);
             if (!Blind)
+/*JP
                 pline("%s shining.", Tobjnam(uwep, "stop"));
+*/
+                pline("%sは輝きを止めた．", xname(uwep));
         }
         setworn((struct obj *) 0, W_WEP);
         gu.unweapon = TRUE;
@@ -917,7 +1163,11 @@ untwoweapon(void)
 int
 chwepon(struct obj *otmp, int amount)
 {
+#if 0 /*JP*/
     const char *color = hcolor((amount < 0) ? NH_BLACK : NH_BLUE);
+#else
+    const char *color = hcolor_adv((amount < 0) ? NH_BLACK : NH_BLUE);
+#endif
     const char *xtime, *wepname = "";
     boolean multiple;
     int otyp = STRANGE_OBJECT;
@@ -927,18 +1177,31 @@ chwepon(struct obj *otmp, int amount)
 
         if (amount >= 0 && uwep && will_weld(uwep)) { /* cursed tin opener */
             if (!Blind) {
+#if 0 /*JP:T*/
                 Sprintf(buf, "%s with %s aura.",
                         Yobjnam2(uwep, "glow"), an(hcolor(NH_AMBER)));
+#else
+                Sprintf(buf, "%sは%sオーラにつつまれた．",
+                        xname(uwep), hcolor(NH_AMBER));
+#endif
                 uwep->bknown = !Hallucination; /* ok to bypass set_bknown() */
             } else {
                 /* cursed tin opener is wielded in right hand */
+/*JP
                 Sprintf(buf, "Your right %s tingles.", body_part(HAND));
+*/
+                Sprintf(buf, "あなたの右%sはちくちくした．", body_part(HAND));
             }
             uncurse(uwep);
             update_inventory();
         } else {
+#if 0 /*JP:T*/
             Sprintf(buf, "Your %s %s.", makeplural(body_part(HAND)),
                     (amount >= 0) ? "twitch" : "itch");
+#else
+            Sprintf(buf, "あなたの%sは%s．", makeplural(body_part(HAND)),
+                    (amount >= 0) ? "ひきつった" : "ムズムズした");
+#endif
         }
         strange_feeling(otmp, buf); /* pline()+docall()+useup() */
         exercise(A_DEX, (boolean) (amount >= 0));
@@ -951,8 +1214,13 @@ chwepon(struct obj *otmp, int amount)
     if (uwep->otyp == WORM_TOOTH && amount >= 0) {
         multiple = (uwep->quan > 1L);
         /* order: message, transformation, shop handling */
+#if 0 /*JP:T*/
         Your("%s %s much sharper now.", simpleonames(uwep),
              multiple ? "fuse, and become" : "is");
+#else
+        Your("%sは%sより鋭さを増したようだ．", simpleonames(uwep),
+             multiple ? "融合して，" : "");
+#endif
         uwep->otyp = CRYSKNIFE;
         uwep->oerodeproof = 0;
         if (multiple) {
@@ -972,8 +1240,13 @@ chwepon(struct obj *otmp, int amount)
     } else if (uwep->otyp == CRYSKNIFE && amount < 0) {
         multiple = (uwep->quan > 1L);
         /* order matters: message, shop handling, transformation */
+#if 0 /*JP:T*/
         Your("%s %s much duller now.", simpleonames(uwep),
              multiple ? "fuse, and become" : "is");
+#else
+        Your("%sは%sより鈍くなってしまったようだ．", simpleonames(uwep),
+             multiple ? "融合して，" : "");
+#endif
         costly_alteration(uwep, COST_DEGRD); /* DECHNT? other? */
         uwep->otyp = WORM_TOOTH;
         uwep->oerodeproof = 0;
@@ -992,27 +1265,47 @@ chwepon(struct obj *otmp, int amount)
         wepname = ONAME(uwep);
     if (amount < 0 && uwep->oartifact && restrict_name(uwep, wepname)) {
         if (!Blind)
+/*JP
             pline("%s %s.", Yobjnam2(uwep, "faintly glow"), color);
+*/
+            Your("%sはわずかに%s輝いた．", xname(uwep), color);
         return 1;
     }
     /* there is a (soft) upper and lower limit to uwep->spe */
     if (((uwep->spe > 5 && amount >= 0) || (uwep->spe < -5 && amount < 0))
         && rn2(3)) {
         if (!Blind)
+#if 0 /*JP:T*/
             pline("%s %s for a while and then %s.",
                   Yobjnam2(uwep, "violently glow"), color,
                   otense(uwep, "evaporate"));
+#else
+            Your("%sはしばらく激しく%s輝き，蒸発した．",
+                 xname(uwep), color);
+#endif
         else
+/*JP
             pline("%s.", Yobjnam2(uwep, "evaporate"));
+*/
+            Your("%sは蒸発した．", xname(uwep));
 
         useupall(uwep); /* let all of them disappear */
         return 1;
     }
     if (!Blind) {
+/*JP
         xtime = (amount * amount == 1) ? "moment" : "while";
+*/
+        xtime = (amount*amount == 1) ? "一瞬" : "しばらくの間";
+#if 0 /*JP:T*/
         pline("%s %s for a %s.",
               Yobjnam2(uwep, amount == 0 ? "violently glow" : "glow"), color,
               xtime);
+#else
+        Your("%sは%s%s%s輝いた．",
+             xname(uwep), xtime, 
+             amount == 0 ? "激しく" : "", color);
+#endif
         if (otyp != STRANGE_OBJECT && uwep->known
             && (amount > 0 || (amount < 0 && otmp->bknown)))
             makeknown(otyp);
@@ -1034,15 +1327,24 @@ chwepon(struct obj *otmp, int amount)
      * spe dependent.  Give an obscure clue here.
      */
     if (u_wield_art(ART_MAGICBANE) && uwep->spe >= 0) {
+#if 0 /*JP:T*/
         Your("right %s %sches!", body_part(HAND),
              (((amount > 1) && (uwep->spe > 1)) ? "flin" : "it"));
+#else
+        Your("右%sは%s！",
+             body_part(HAND),
+             (((amount > 1) && (uwep->spe > 1)) ? "ひりひりした" : "ムズムズした"));
+#endif
     }
 
     /* an elven magic clue, cookie@keebler */
     /* elven weapons vibrate warningly when enchanted beyond a limit */
     if ((uwep->spe > 5)
         && (is_elven_weapon(uwep) || uwep->oartifact || !rn2(7)))
+/*JP
         pline("%s unexpectedly.", Yobjnam2(uwep, "suddenly vibrate"));
+*/
+        Your("%sは突然震えだした．", xname(uwep));
 
     return 1;
 }
@@ -1061,15 +1363,21 @@ void
 weldmsg(struct obj *obj)
 {
     long savewornmask;
+#if 0 /*JP*/
     const char *hand = body_part(HAND);
 
     if (bimanual(obj))
         hand = makeplural(hand);
+#endif
     savewornmask = obj->owornmask;
     obj->owornmask = 0L; /* suppress doname()'s "(weapon in hand)";
                           * Yobjnam2() doesn't actually need this because
                           * it is based on xname() rather than doname() */
+#if 0 /*JP*/
     pline("%s welded to your %s!", Yobjnam2(obj, "are"), hand);
+#else
+    pline("%sは%sに貼りついた！", xname(obj), body_part(HAND));
+#endif
     obj->owornmask = savewornmask;
 }
 
