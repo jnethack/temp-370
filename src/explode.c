@@ -2,6 +2,11 @@
 /*      Copyright (C) 1990 by Ken Arromdee */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn int explosionmask(struct monst *, uchar, char) NONNULLARG1;
@@ -122,59 +127,113 @@ engulfer_explosion_msg(uchar adtyp, char olet)
     if (digests(u.ustuck->data)) {
         switch (adtyp) {
         case AD_FIRE:
+/*JP
             adj = "heartburn";
+*/
+            adj = "燃えた";
             break;
         case AD_COLD:
+/*JP
             adj = "chilly";
+*/
+            adj = "凍らされた";
             break;
         case AD_DISN:
             if (olet == WAND_CLASS)
+/*JP
                 adj = "irradiated by pure energy";
+*/
+                adj = "浄化の力を浴びた";
             else
+/*JP
                 adj = "perforated";
+*/
+                adj = "穴をあけられた";
             break;
         case AD_ELEC:
+/*JP
             adj = "shocked";
+*/
+            adj = "電撃をくらった";
             break;
         case AD_DRST:
+/*JP
             adj = "poisoned";
+*/
+            adj = "毒をくらった";
             break;
         case AD_ACID:
+/*JP
             adj = "an upset stomach";
+*/
+            adj = "酸をくらった";
             break;
         default:
+/*JP
             adj = "fried";
+*/
+            adj = "パリパリになった";
             break;
         }
+/*JP
         pline("%s gets %s!", Monnam(u.ustuck), adj);
+*/
+        pline("%sは%s！", Monnam(u.ustuck), adj);
     } else {
         switch (adtyp) {
         case AD_FIRE:
+/*JP
             adj = "toasted";
+*/
+            adj = "焦げた";
             break;
         case AD_COLD:
+/*JP
             adj = "chilly";
+*/
+            adj = "凍った";
             break;
         case AD_DISN:
             if (olet == WAND_CLASS)
+/*JP
                 adj = "overwhelmed by pure energy";
+*/
+                adj = "浄化の力を浴びた";
             else
+/*JP
                 adj = "perforated";
+*/
+                adj = "穴をあけられた";
             break;
         case AD_ELEC:
+/*JP
             adj = "shocked";
+*/
+            adj = "電撃をくらった";
             break;
         case AD_DRST:
+/*JP
             adj = "intoxicated";
+*/
+            adj = "毒をくらった";
             break;
         case AD_ACID:
+/*JP
             adj = "burned";
+*/
+            adj = "酸をくらった";
             break;
         default:
+/*JP
             adj = "fried";
+*/
+            adj = "パリパリになった";
             break;
         }
+/*JP
         pline("%s gets slightly %s!", Monnam(u.ustuck), adj);
+*/
+        pline("%sは少しだけ%s！", Monnam(u.ustuck), adj);
     }
 }
 
@@ -213,8 +272,13 @@ explode(
     uchar adtyp;
     int explmask[3][3]; /* 0=normal explosion, 1=do shieldeff, 2=do nothing */
     coordxy xx, yy;
+#if 0 /*JP*//*do_halluの処理はとりあえず外す*/
     boolean shopdamage = FALSE, generic = FALSE,
             do_hallu = FALSE, inside_engulfer, grabbed, grabbing;
+#else
+    boolean shopdamage = FALSE, generic = FALSE,
+            inside_engulfer, grabbed, grabbing;
+#endif
     coord grabxy;
     char hallu_buf[BUFSZ], killr_buf[BUFSZ];
     short exploding_wand_typ = 0;
@@ -299,9 +363,11 @@ explode(
         /* when explode() is called recursively, svk.killer.name might change
            so retain a copy of the current value for this explosion */
         str = strcpy(killr_buf, svk.killer.name);
+#if 0 /*JP*//*do_halluの処理はとりあえず外す*/
         do_hallu = (Hallucination
                     && (strstri(str, "'s explosion")
                         || strstri(str, "s' explosion")));
+#endif
     }
     if (type == PHYS_EXPL_TYPE) {
         /* currently only gas spores */
@@ -313,34 +379,58 @@ explode(
 
         switch (abs(type) % 10) {
         case 0:
+/*JP
             adstr = "magical blast";
+*/
+            adstr = "魔法の風";
             adtyp = AD_MAGM;
             break;
         case 1:
+#if 0 /*JP:T*/
             adstr = (olet == BURNING_OIL) ? "burning oil"
                      : (olet == SCROLL_CLASS) ? "tower of flame" : "fireball";
+#else
+            adstr = (olet == BURNING_OIL) ? "燃えている油"
+                     : (olet == SCROLL_CLASS) ? "火柱" : "火の玉";
+#endif
             /* fire damage, not physical damage */
             adtyp = AD_FIRE;
             break;
         case 2:
+/*JP
             adstr = "ball of cold";
+*/
+            adstr = "氷の玉";
             adtyp = AD_COLD;
             break;
         case 4:
+#if 0 /*JP:T*/
             adstr = (olet == WAND_CLASS) ? "death field"
                                          : "disintegration field";
+#else
+            adstr = (olet == WAND_CLASS) ? "死の風" : "分解の風";
+#endif
             adtyp = AD_DISN;
             break;
         case 5:
+/*JP
             adstr = "ball of lightning";
+*/
+            adstr = "雷玉";
             adtyp = AD_ELEC;
             break;
         case 6:
+/*JP
             adstr = "poison gas cloud";
+*/
+            adstr = "毒の雲";
             adtyp = AD_DRST;
             break;
         case 7:
+/*JP
             adstr = "splash of acid";
+*/
+            adstr = "酸のしぶき";
             adtyp = AD_ACID;
             break;
         default:
@@ -438,18 +528,27 @@ explode(
         tmp_at(DISP_END, 0); /* clear the explosion */
     } else {
         if (olet == MON_EXPLODE || olet == TRAP_EXPLODE) {
+/*JP
             str = "explosion";
+*/
+            str = "爆発";
             generic = TRUE;
         }
         if (!Deaf && olet != SCROLL_CLASS) {
             Soundeffect(se_blast, 75);
+/*JP
             You_hear("a blast.");
+*/
+            You_hear("爆発音を聞いた．");
             didmsg = TRUE;
         }
     }
 
     if (!Deaf && !didmsg)
+/*JP
         pline("Boom!");
+*/
+        pline("ドーン！");
 
     /* apply effects to monsters and floor objects first, in case the
        damage to the hero is fatal and leaves bones */
@@ -487,6 +586,7 @@ explode(
                     mtmp = u.usteed;
                 if (!mtmp)
                     continue;
+#if 0 /*JP*//*do_halluの処理はとりあえず外す*/
                 if (do_hallu) {
                     int tryct = 0;
 
@@ -500,12 +600,16 @@ explode(
                     } while (*hallu_buf != lowc(*hallu_buf) && ++tryct < 20);
                     str = hallu_buf;
                 }
+#endif
                 if (engulfing_u(mtmp)) {
                     engulfer_explosion_msg(adtyp, olet);
                 } else if (cansee(xx, yy)) {
                     if (mtmp->m_ap_type)
                         seemimic(mtmp);
+/*JP
                     pline("%s is caught in the %s!", Monnam(mtmp), str);
+*/
+                    pline("%sは%sにつつまれた！", Monnam(mtmp), str);
                 }
 
                 itemdmg = destroy_items(mtmp, (int) adtyp, dam);
@@ -534,7 +638,10 @@ explode(
                     if (resist(mtmp, olet, 0, FALSE)) {
                         /* inside_engulfer: <xx,yy> == <u.ux,u.uy> */
                         if (cansee(xx, yy) || inside_engulfer)
+/*JP
                             pline("%s resists the %s!", Monnam(mtmp), str);
+*/
+                            pline("%sは%sに抵抗した！", Monnam(mtmp), str);
                         mdam = (dam + 1) / 2;
                     }
                     /* if grabber is reaching into hero's spot and
@@ -569,10 +676,17 @@ explode(
                          * would be "you killed <mdef>" so give our own.
                          */
                         if (cansee(mtmp->mx, mtmp->my) || canspotmon(mtmp))
+#if 0 /*JP:T*/
                             pline("%s is %s!", Monnam(mtmp),
                                   xkflg ? "burned completely"
                                         : nonliving(mtmp->data) ? "destroyed"
                                                                 : "killed");
+#else
+                            pline("%sは%s！", Monnam(mtmp),
+                                  xkflg ? "燃えつきた"
+                                        : nonliving(mtmp->data) ? "倒された"
+                                                                : "殺された");
+#endif
                         xkilled(mtmp, XKILL_NOMSG | XKILL_NOCONDUCT | xkflg);
                     } else {
                         if (xkflg)
@@ -592,6 +706,7 @@ explode(
         /* give message for any monster-induced explosion
            or player-induced one other than scroll of fire */
         if (flags.verbose && (type < 0 || olet != SCROLL_CLASS)) {
+#if 0 /*JP*//*do_halluの処理はとりあえず外す*/
             if (do_hallu) { /* (see explanation above) */
                 do {
                     Sprintf(hallu_buf, "%s explosion",
@@ -599,7 +714,11 @@ explode(
                 } while (*hallu_buf != lowc(*hallu_buf));
                 str = hallu_buf;
             }
+#endif
+/*JP
             You("are caught in the %s!", str);
+*/
+            You("%sにつつまれた！", str);
             iflags.last_msg = PLNMSG_CAUGHT_IN_EXPLOSION;
         }
         /* do property damage first, in case we end up leaving bones */
@@ -607,7 +726,10 @@ explode(
             burn_away_slime();
         if (Invulnerable) {
             damu = 0;
+/*JP
             You("are unharmed!");
+*/
+            You("傷つかない！");
         } else if (adtyp == AD_PHYS || adtyp == AD_ACID)
             damu = Maybe_Half_Phys(damu);
         if (adtyp == AD_FIRE) {
@@ -648,28 +770,57 @@ explode(
                     else if (str != svk.killer.name && str != hallu_buf)
                         Strcpy(svk.killer.name, str);
                     svk.killer.format = KILLED_BY_AN;
+#if 1 /*JP*/
+                    Strcat(svk.killer.name, "で");
+#endif
                 } else if (olet == TRAP_EXPLODE) {
+#if 0 /*JP:T*/
                     svk.killer.format = NO_KILLER_PREFIX;
                     Snprintf(svk.killer.name, sizeof svk.killer.name,
                              "caught %sself in a %s", uhim(),
                              str);
+#else
+                    svk.killer.format = KILLED_BY;
+                    Snprintf(svk.killer.name, sizeof svk.killer.name,
+                             "%sにつつまれて",
+                             str);
+#endif
                 } else if (type >= 0 && olet != SCROLL_CLASS) {
+#if 0 /*JP:T*/
                     svk.killer.format = NO_KILLER_PREFIX;
                     Snprintf(svk.killer.name, sizeof svk.killer.name,
                              "caught %sself in %s own %s", uhim(),
                              uhis(), str);
+#else
+                    svk.killer.format = KILLED_BY;
+                    Snprintf(svk.killer.name, sizeof svk.killer.name,
+                             "自分自身の%sにつつまれて",
+                             str);
+#endif
                 } else {
+#if 0 /*JP*//* an をつけるかどうかは関係ない */
                     svk.killer.format = (!strcmpi(str, "tower of flame")
                                      || !strcmpi(str, "fireball"))
                                         ? KILLED_BY_AN
                                         : KILLED_BY;
                     Strcpy(svk.killer.name, str);
+#else
+                    svk.killer.format = KILLED_BY;
+                    Strcpy(svk.killer.name, str);
+                    Strcat(svk.killer.name, "で");
+#endif
                 }
                 if (iflags.last_msg == PLNMSG_CAUGHT_IN_EXPLOSION
                     || iflags.last_msg == PLNMSG_TOWER_OF_FLAME) /*seffects()*/
+/*JP
                     pline("It is fatal.");
+*/
+                    pline("それは致命的だ．");
                 else
+/*JP
                     pline_The("%s is fatal.", str);
+*/
+                    pline_The("%sは致命的だ．", str);
                 /* Known BUG: BURNING suppresses corpse in bones data,
                    but done does not handle killer reason correctly */
                 done((adtyp == AD_FIRE) ? BURNING : DIED);
@@ -679,11 +830,21 @@ explode(
     }
 
     if (shopdamage) {
+#if 0 /*JP:T*/
         pay_for_damage((adtyp == AD_FIRE) ? "burn away"
                           : (adtyp == AD_COLD) ? "shatter"
                              : (adtyp == AD_DISN) ? "disintegrate"
                                 : "destroy",
                        FALSE);
+#else
+        pay_for_damage(adtyp == AD_FIRE
+                           ? "燃やす"
+                           : adtyp == AD_COLD
+                                 ? "粉々にする"
+                                 : adtyp == AD_DISN ? "粉砕する"
+                                                    : "破壊する",
+                       FALSE);
+#endif
     }
 
     /* explosions are noisy */
@@ -752,7 +913,10 @@ scatter(
             boolean waschain = (otmp == uchain);
 
             Soundeffect(se_chain_shatters, 25);
+/*JP
             pline_The("chain shatters!");
+*/
+            pline("鎖はばらばらになった！");
             unpunish();
             if (waschain)
                 continue;
@@ -775,10 +939,16 @@ scatter(
             && rn2(10)) {
             if (otmp->otyp == BOULDER) {
                 if (cansee(sx, sy)) {
+/*JP
                     pline("%s apart.", Tobjnam(otmp, "break"));
+*/
+                    pline("%sは一部分が砕けた．",xname(otmp));
                 } else {
                     Soundeffect(se_stone_breaking, 100);
+/*JP
                     You_hear("stone breaking.");
+*/
+                    You_hear("石が砕ける音を聞いた．");
                 }
                 fracture_rock(otmp);
                 place_object(otmp, sx, sy);
@@ -793,13 +963,21 @@ scatter(
                 if ((trap = t_at(sx, sy)) && trap->ttyp == STATUE_TRAP)
                     deltrap(trap);
                 if (cansee(sx, sy)) {
+/*JP
                     pline("%s.", Tobjnam(otmp, "crumble"));
+*/
+                    pline("%sはこなごなになった．",xname(otmp));
                 } else {
                     Soundeffect(se_stone_crumbling, 100);
+/*JP
                     You_hear("stone crumbling.");
+*/
+                    You_hear("石がこなごなになる音を聞いた．");
                 }
                 (void) break_statue(otmp);
+#ifndef FIX_BUG_C340_2
                 place_object(otmp, sx, sy); /* put fragments on floor */
+#endif
             }
             newsym(sx, sy); /* in case it's beyond radius of 'farthest' */
             used_up = TRUE;
@@ -908,7 +1086,10 @@ scatter(
                 total += stmp->obj->quan;
                 obj_left_shop = (shop_origin && !costly_spot(x, y));
             }
+/*JP
             if (!flooreffects(stmp->obj, x, y, "land")) {
+*/
+            if (!flooreffects(stmp->obj, x, y, "落ちる")) {
                 if (obj_left_shop
                     && strchr(u.urooms, *in_rooms(u.ux, u.uy, SHOPBASE))) {
                     /* At the moment this only takes on gold. While it is
@@ -1055,8 +1236,13 @@ mon_explodes(
 
     /* This might end up killing you, too; you never know...
      * also, it is used in explode() messages */
+#if 0 /*JP:T*/
     Sprintf(svk.killer.name, "%s explosion",
             s_suffix(pmname(mon->data, Mgender(mon))));
+#else
+    Sprintf(svk.killer.name, "%sの爆発で",
+            pmname(mon->data, Mgender(mon)));
+#endif
     svk.killer.format = KILLED_BY_AN;
 
     explode(mon->mx, mon->my, type, dmg, MON_EXPLODE,
