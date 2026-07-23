@@ -78,9 +78,6 @@ struct Jitem {
     ((ptr) < base || strncmpi((ptr), str, num))
 #define Strcasecpy(dst, src) (void) strcasecpy(dst, src)
 #define Strncat(dst, src, cnt) (void) strncat(dst, src, cnt)
-#if 1 /*JP*/
-#define STRNCMPEX(x, y) strncmp(x, y, l = strlen(y))
-#endif
 
 /* Concat(): append text to base, adjusted by delta, with bounds checking
    via a pair of behind-the-scenes variables; delta is either 0 for normal
@@ -294,7 +291,7 @@ obj_typename(int otyp)
 /*JP
             Strcpy(buf, !nn ? "book" : "novel");
 */
-            Strcpy(buf, !nn ? "本" : "小説");
+            Strcat(buf, !nn ? "本" : "小説");
             nn = 0;
         }
         break;
@@ -691,7 +688,7 @@ xcalled(
     {
         int sfxlen = bufsiz - pfxlen;
         /* 全角の途中で切れそうなときにはその字の先頭まで戻る */
-        sfxlen = sfxlen - offset_in_kanji((const unsigned char *) sfx, sfxlen);
+        sfxlen = sfxlen - offset_in_kanji(sfx, sfxlen);
         /* 変数名を変えることはしないが、sfxが前、pfxが後ろになる */
         Sprintf(eos(buf), "%.*sと呼ばれる%s", sfxlen, sfx, pfx);
     }
@@ -1522,7 +1519,7 @@ add_erosion_words(struct obj *obj, char *prefix)
 #else
         Strcat(prefix, is_rustprone(obj) ? "錆びた"
                        : is_crackable(obj) ? "傷ついた"
-                         : "傷ついた");
+                         : "焦げた");
 #endif
     }
     if (obj->oeroded2 && !iscrys) {
@@ -1622,7 +1619,7 @@ doname_base(
     char *bp_eos, *bp_end;
     size_t bpspaceleft;
 #if 1 /*JP*/
-    char preprefix[PREFIX]; /*順序入れ替えに使う*/
+    char preprefix[BUFSZ]; /*順序入れ替えに使う*/
     int l = 0;
 #endif
 
@@ -1970,7 +1967,7 @@ doname_base(
 /*JP
                 Concat(bp, 0, " (lit)");
 */
-                Concat(bp, 0, " (lit)");
+                Concat(bp, 0, " (光っている)");
             break;
         }
         if (objects[obj->otyp].oc_charged)
@@ -4945,7 +4942,7 @@ readobjnam_preparse(struct _readobjnam_data *d)
 /*JP
             if (strncmpi(d->bp + l, "glob", 4) && !strstri(d->bp + l, " glob"))
 */
-            if (strncmpi(d->bp + l, "の塊", 4))
+            if (STRNCMP2(d->bp + l, "の塊"))
                 break;
             d->gsize = 1;
 #if 0 /*JP:T*/
@@ -4967,7 +4964,10 @@ readobjnam_preparse(struct _readobjnam_data *d)
             /* "large" might be part of monster name (dog, cat, kobold,
                mimic) or object name (box, round shield) rather than
                prefix for glob size */
+/*JP
             if (strncmpi(d->bp + l, "glob", 4) && !strstri(d->bp + l, " glob"))
+*/
+            if (STRNCMP2(d->bp + l, "の塊"))
                 break;
             /* "very large " had "very " peeled off on previous iteration */
             d->gsize = (d->very != 1) ? 3 : 4;
@@ -5300,7 +5300,12 @@ readobjnam_postparse1(struct _readobjnam_data *d)
             /*JP:「(怪物名)の(アイテム)」対応 */
             if ((d->mntmp = name_to_mon(d->bp, (int *) 0)) >= LOW_PM) {
                 const char *mp = mons[d->mntmp].pmnames[NEUTRAL];
-                d->bp = strstri(d->bp, mp) + strlen(mp) + strlen("の");
+                char *tmp_bp = strstri(d->bp, mp);
+                if (tmp_bp != NULL) {
+                    d->bp = tmp_bp + strlen(mp);
+                    if (!strncmp(d->bp, "の", strlen("の")))
+                        d->bp += strlen("の");
+                }
             }
         }
     }
