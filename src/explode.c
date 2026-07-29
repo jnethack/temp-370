@@ -1240,7 +1240,7 @@ mon_explodes(
     Sprintf(svk.killer.name, "%s explosion",
             s_suffix(pmname(mon->data, Mgender(mon))));
 #else
-    Sprintf(svk.killer.name, "%sの爆発で",
+    Sprintf(svk.killer.name, "%sの爆発",
             pmname(mon->data, Mgender(mon)));
 #endif
     svk.killer.format = KILLED_BY_AN;

@@ -1640,9 +1640,9 @@ postmov(
                               (ptr == &mons[PM_FOG_CLOUD]
                                || ptr->mlet == S_LIGHT) ? "flows" : "oozes");
 #else
-                    pline_mon(mtmp, "%sは扉の下から%sでた．", YMonnam(mtmp),
+                    pline_mon(mtmp, "%sは扉の下から%s．", YMonnam(mtmp),
                               (ptr == &mons[PM_FOG_CLOUD]
-                               || ptr->mlet == S_LIGHT) ? "流れ" : "にじみ");
+                               || ptr->mlet == S_LIGHT) ? "流れ出た" : "にじみ出た");
 #endif
             } else if ((here->doormask & D_LOCKED) != 0 && can_unlock) {
                 /* like the vampshift hack, there are sequencing

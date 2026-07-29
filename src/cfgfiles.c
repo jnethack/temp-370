@@ -323,9 +323,9 @@ fopen_config_file(const char *filename, int src)
 #else /* should be only UNIX left */
     envp = nh_getenv("HOME");
     if (!envp)
-        Strcpy(tmp_config, ".nethackrc");
+        Strcpy(tmp_config, default_configfile);
     else
-        Sprintf(tmp_config, "%s/%s", envp, ".nethackrc");
+        Sprintf(tmp_config, "%s/%s", envp, default_configfile);
 
     set_configfile_name(tmp_config);
     if ((fp = fopen(configfile, "r")) != (FILE *) 0)

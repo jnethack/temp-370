@@ -370,11 +370,11 @@ static const menu_cmd_t default_menu_cmd_info[] = {
 */
     { "menu_last_page",     MENU_LAST_PAGE,     "最終ページに移動" },
     { "menu_select_all",    MENU_SELECT_ALL,
-                            "Select all items in entire menu" },
+                            "全メニューの項目を選択" },
     { "menu_invert_all",    MENU_INVERT_ALL,
-                            "Invert selection for all items" },
+                            "全ての項目の選択を反転" },
     { "menu_deselect_all",  MENU_UNSELECT_ALL,
-                            "Unselect all items in entire menu" },
+                            "全メニューの項目を選択解除" },
     { "menu_select_page",   MENU_SELECT_PAGE,
 /*JP
                             "Select all items on current page" },
@@ -396,9 +396,9 @@ static const menu_cmd_t default_menu_cmd_info[] = {
 */
                             "検索してマッチングした項目を反転" },
     { "menu_shift_right",   MENU_SHIFT_RIGHT,
-                            "Pan current page to right (perm_invent only)" },
+                            "現在のページを右にパン (perm_inventのみ)" },
     { "menu_shift_left",    MENU_SHIFT_LEFT,
-                            "Pan current page to left (perm_invent only)" },
+                            "現在のページを左にパン (perm_inventのみ)" },
     { (char *) 0, '\0', (char *) 0 }
 };
 
@@ -5241,46 +5241,47 @@ pfxfn_font(int optidx, int req, boolean negated, char *opts, char *op)
         return optn_ok;
     }
     if (req == get_val || req == get_cnf_val) {
+        const char *defval = (req == get_cnf_val) ? "default" : defopt;
         if (optidx == opt_font_map) {
             Sprintf(opts, "%s",
-                    iflags.wc_font_map ? iflags.wc_font_map : defopt);
+                    iflags.wc_font_map ? iflags.wc_font_map : defval);
         } else if (optidx == opt_font_message) {
             Sprintf(opts, "%s",
-                iflags.wc_font_message ? iflags.wc_font_message : defopt);
+                iflags.wc_font_message ? iflags.wc_font_message : defval);
         } else if (optidx == opt_font_status) {
             Sprintf(opts, "%s",
-                iflags.wc_font_status ? iflags.wc_font_status : defopt);
+                iflags.wc_font_status ? iflags.wc_font_status : defval);
         } else if (optidx == opt_font_menu) {
             Sprintf(opts, "%s",
-                iflags.wc_font_menu ? iflags.wc_font_menu : defopt);
+                iflags.wc_font_menu ? iflags.wc_font_menu : defval);
         } else if (optidx == opt_font_text) {
             Sprintf(opts, "%s",
-                iflags.wc_font_text ? iflags.wc_font_text : defopt);
+                iflags.wc_font_text ? iflags.wc_font_text : defval);
         } else if (optidx == opt_font_size_map) {
             if (iflags.wc_fontsiz_map)
                 Sprintf(opts, "%d", iflags.wc_fontsiz_map);
             else
-                Strcpy(opts, defopt);
+                Strcpy(opts, defval);
         } else if (optidx == opt_font_size_message) {
             if (iflags.wc_fontsiz_message)
                 Sprintf(opts, "%d", iflags.wc_fontsiz_message);
             else
-                Strcpy(opts, defopt);
+                Strcpy(opts, defval);
         } else if (optidx == opt_font_size_status) {
             if (iflags.wc_fontsiz_status)
                 Sprintf(opts, "%d", iflags.wc_fontsiz_status);
             else
-                Strcpy(opts, defopt);
+                Strcpy(opts, defval);
         } else if (optidx == opt_font_size_menu) {
             if (iflags.wc_fontsiz_menu)
                 Sprintf(opts, "%d", iflags.wc_fontsiz_menu);
             else
-                Strcpy(opts, defopt);
+                Strcpy(opts, defval);
         } else if (optidx == opt_font_size_text) {
             if (iflags.wc_fontsiz_text)
                 Sprintf(opts, "%d", iflags.wc_fontsiz_text);
             else
-                Strcpy(opts, defopt);
+                Strcpy(opts, defval);
         }
         return optn_ok;
     }
@@ -9134,7 +9135,7 @@ doset(void) /* changing options via menu by Per Liboriussen */
     add_menu_heading(tmpwin,
                      "Compounds (selecting will prompt for new value):");
 #else
-    add_menu_heading(tmpwin, "文字列オプション (選択すると新しい値の入力を求めます)：");
+    add_menu_heading(tmpwin, "複合オプション (選択すると新しい値の入力を求めます)：");
 #endif
 
     for (pass = startpass; pass <= endpass; pass++)
@@ -9353,10 +9354,10 @@ show_menu_controls(winid win, boolean dolist)
         const char *key, *desc;
     };
     static const struct xtra_cntrls hardcoded[] = {
-        { "Return", "Accept current choice(s) and dismiss menu" },
-        { "Enter",  "Same as Return" },
-        { "Space",  "If not on last page, advance one page;" },
-        { "     ",  "when on last page, treat like Return" },
+        { "Return", "現在の選択を確定してメニューを閉じる" },
+        { "Enter",  "Returnと同じ" },
+        { "Space",  "最終ページ以外では次のページに進む；" },
+        { "     ",  "最終ページではReturnと同じ" },
 /*JP
         { "Escape", "Cancel menu without making any choice(s)" },
 */
@@ -9830,12 +9831,12 @@ static const char *const opt_epilog[] = {
     "those items will not be selectable in the 'O' command's menu.",
 */
     "それらは'O'コマンドのメニューでは選択することができません．",
-    "Some options are stored in a game's save file, and will keep saved",
-    "values when restoring that game even if you have updated your config-",
-    "uration file to change them.  Such changes will matter for new games.",
-    "The \"other settings\" can be set with 'O', but when set within the",
-    "configuration file they use their own directives rather than OPTIONS.",
-    "See NetHack's \"Guidebook\" for details.",
+    "一部のオプションはゲームのセーブファイルに保存され，設定ファイルを",
+    "更新してもゲームを再開するときには保存された値が維持されます．",
+    "設定変更は新しいゲームで反映されます．",
+    "「その他の設定」は'O'コマンドで設定できますが，設定ファイル内では",
+    "OPTIONSではなく独自のディレクティブを使用します．",
+    "詳細はNetHackの「Guidebook」を参照してください．",
     (char *) 0
 };
 
@@ -9877,7 +9878,7 @@ option_help(void)
 /*JP
     putstr(datawin, 0, "Compound options:");
 */
-    putstr(datawin, 0, "文字列オプション:");
+    putstr(datawin, 0, "複合オプション:");
     for (i = 0; allopt[i].name; i++) {
         if (allopt[i].opttyp != CompOpt
             || (allopt[i].setwhere == set_wizonly && !wizard))

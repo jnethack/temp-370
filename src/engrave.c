@@ -1066,7 +1066,7 @@ doengrave_sfx_item(struct _doengrave_ctx *de)
                 pline("%s %s.", Yobjnam2(de->otmp, "get"),
                       de->frosted ? "frosty" : "dusty");
 #else
-                pline("%s %s.",  xname(de->otmp),
+                pline("%sは%sになった．", xname(de->otmp),
                       de->frosted ? "霜だらけ" : "ほこりまみれ");
 #endif
             }

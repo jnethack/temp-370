@@ -253,7 +253,7 @@ hooked_tty_getlin(
     ttyDisplay->inread--;
     clear_nhwindow(WIN_MESSAGE); /* clean up after ourselves */
 #if 1 /*JP*/
-    Strcpy(bfp, str2ic(tmp));
+    copynchars(bfp, str2ic(tmp), BUFSZ - 1);
 #endif
 
     if (suppress_history) {
