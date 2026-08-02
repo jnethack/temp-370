@@ -202,10 +202,16 @@ mswings(
     boolean bash)       /* True: polearm used at too close range */
 {
     if (flags.verbose && !Blind && mon_visible(mtmp)) {
+#if 0 /*JP*/
         pline_mon(mtmp, "%s %s %s%s %s.", Monnam(mtmp),
                   mswings_verb(otemp, bash),
                   (otemp->quan > 1L) ? "one of " : "",
                   mhis(mtmp), xname(otemp));
+#else
+        pline_mon(mtmp, "%sは%s%sの%s%s", Monnam(mtmp),
+                  (otemp->quan > 1L) ? "複数ある" : "",
+                  mhis(mtmp), xname(otemp), mswings_verb(otemp, bash));
+#endif
     }
 }
 
@@ -1756,7 +1762,7 @@ gulpmu(struct monst *mtmp, struct attack *mattk)
             You("are %s!", enfolds(mtmp->data) ? "being squashed"
                                                : "pummeled with debris");
 #else
-            You("are %s!", enfolds(mtmp->data) ? "押しつぶされた"
+            You("%s！", enfolds(mtmp->data) ? "押しつぶされた"
                                                : "瓦礫で痛めつけられた");
 #endif
             exercise(A_STR, FALSE);

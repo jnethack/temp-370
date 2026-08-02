@@ -4537,7 +4537,7 @@ look_here(
 /*JP
         if (dfeature && !strncmp(dfeature, "altar ", 6)) {
 */
-        if (dfeature && !STRNCMP2(dfeature, "祭壇")) {
+        if (dfeature && strstr(dfeature, "祭壇")) {
             /* don't say "altar" twice, dfeature has more info */
 /*JP
             You("try to feel what is here.");
@@ -5065,7 +5065,7 @@ noarmor(boolean report_uskin)
 /*JP
         You("are not wearing armor but have %s embedded in your skin.",
 */
-        You("は鎧を着ていないが，%sが肌に埋め込まれている．",
+        You("鎧を着ていないが，%sが肌に埋め込まれている．",
             uskinname);
     }
 }

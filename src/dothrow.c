@@ -3021,10 +3021,12 @@ throw_gold(struct obj *obj)
     if (u.uswallow) {
 #if 0 /*JP:T*/
         const char *swallower = mon_nam(u.ustuck);
+        char swallowerbuf[BUFSZ];
 
-        if (digests(u.ustuck->data))
-            /* note: s_suffix() returns a modifiable buffer */
-            swallower = strcat(s_suffix(swallower), " entrails");
+        if (digests(u.ustuck->data)) {
+            Sprintf(swallowerbuf, "%s entrails", s_suffix(swallower));
+            swallower = swallowerbuf;
+        }
         pline_The("gold disappears into %s.", swallower);
 #else
         const char *swallower = mon_nam(u.ustuck);

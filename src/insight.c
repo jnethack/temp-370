@@ -1733,7 +1733,7 @@ status_enlightenment(int mode, int final)
     /* status line doesn't show hunger when state is "not hungry", we do;
        needed for wizard mode's reveal of u.uhunger but add it for everyone */
     if (!*buf)
-        Strcpy(buf, "not hungry");
+        Strcpy(buf, "空腹でない");
     if (*buf) { /* (since "not hungry" was added, this will always be True) */
 #if 0 /*JP*/
         *buf = lowc(*buf); /* override capitalization */
@@ -3026,7 +3026,7 @@ youhiding(boolean via_enlghtmt, /* enlightenment line vs topl message */
         Strcat(buf, "のふりをし");
 #endif
     } else if (u.uundetected) {
-        bp = eos(buf); /* points past "hiding" */
+        bp = buf; /* overwrite initial "hiding" text */
         if (gy.youmonst.data->mlet == S_EEL) {
             if (is_pool(u.ux, u.uy))
 /*JP

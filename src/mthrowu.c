@@ -500,12 +500,15 @@ ohitmon(
             /* note: extra silver damage is handled by dmgval() */
             if (vis) {
                 char *m_name = mon_nam(mtmp);
+                char namebuf[BUFSZ];
 
-                if (flesh) /* s_suffix returns a modifiable buffer */
+                if (flesh) {
 /*JP
-                    m_name = strcat(s_suffix(m_name), " flesh");
+                    Sprintf(namebuf, "%s flesh", s_suffix(m_name));
 */
-                    m_name = strcat(s_suffix(m_name), "の体");
+                    Sprintf(namebuf, "%sの体", s_suffix(m_name));
+                    m_name = namebuf;
+                }
 /*JP
                 pline_The("silver sears %s!", m_name);
 */

@@ -802,6 +802,7 @@ tty_askname(void)
         const char *converted = str2ic(ptmpname);
         size_t siz = sizeof svp.plname;
         (void) strncpy(svp.plname, converted, siz);
+        svp.plname[siz - 1] = '\0'; /* ensure NUL termination */
         if (strlen(converted) >= siz) {
             int back = offset_in_kanji(svp.plname, siz - 1);
             svp.plname[siz - 1 - back] = '\0';
@@ -2473,7 +2474,9 @@ tty_putstr(winid window, int attr, const char *str)
                 kchar2 = KANJI2;
                 /* Kanji char must be checked as 2-bytes pair. */
                 /* check i to prevent putting only kanji 1st byte at last. */
-                if ((*nb != *ob || *(nb+1) != *(ob+1)) && i < n0-1)
+                /* Also check bounds: ensure both ob+1 and nb+1 are valid */
+                if (i < n0-1 && (i - cw->curx) < cw->cols - 1
+                    && (*nb != *ob || *(nb+1) != *(ob+1)))
                 {
                     tty_putsym(WIN_STATUS, i, cw->cury, *nb);
                     kchar2 |= KUPDATE;  /* must do update */
@@ -2485,7 +2488,7 @@ tty_putstr(winid window, int attr, const char *str)
 #endif
             if (*ob != *nb)
                 tty_putsym(WIN_STATUS, i, cw->cury, *nb);
-            if (*ob)
+            if (*ob && (i - cw->curx + 1) < cw->cols)
                 ob++;
         }
 

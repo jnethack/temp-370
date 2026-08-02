@@ -1213,10 +1213,12 @@ obstructed(coordxy x, coordxy y, boolean quietly)
             goto objhere;
         if (!quietly) {
             char *Mn = Some_Monnam(mtmp); /* Monnam, Someone or Something */
+            char tailbuf[BUFSZ];
 
-            if ((mtmp->mx != x || mtmp->my != y) && canspotmon(mtmp))
-                /* s_suffix() returns a modifiable buffer */
-                Mn = strcat(s_suffix(Mn), " tail");
+            if ((mtmp->mx != x || mtmp->my != y) && canspotmon(mtmp)) {
+                Sprintf(tailbuf, "%s tail", s_suffix(Mn));
+                Mn = tailbuf;
+            }
 
 #if 0 /*JP:T*/
             pline("%s blocks the way!", Mn);

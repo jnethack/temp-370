@@ -2008,8 +2008,8 @@ nhl_meta_u_index(lua_State *L)
     } else if (!strcmp(tkey, "role")) {
 #if 0 /*JP*/
         lua_pushstring(L, gu.urole.name.m);
-#else /* 英語名を渡す */
-        lua_pushstring(L, gu.urole.opt.m);
+#else /* 日本語名を渡す */
+        lua_pushstring(L, gu.urole.name.m);
 #endif
         return 1;
     } else if (!strcmp(tkey, "moves")) {

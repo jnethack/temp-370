@@ -358,8 +358,16 @@ char *
 s_suffix(const char *s)
 {
     static char buf[BUFSZ];
+    size_t len;
 
-    Strcpy(buf, s);
+    len = strlen(s);
+    if (len >= BUFSZ - 3) { /* reserve space for suffix */
+        (void) strncpy(buf, s, BUFSZ - 4);
+        buf[BUFSZ - 4] = '\0';
+        len = BUFSZ - 4;
+    } else {
+        Strcpy(buf, s);
+    }
 #if 0 /*JP*/
     if (!strcmpi(buf, "it")) /* it -> its */
         Strcat(buf, "s");
@@ -370,7 +378,10 @@ s_suffix(const char *s)
     else /* X -> X's */
         Strcat(buf, "'s");
 #else /* X -> Xの */
-    Strcat(buf, "の");
+    /* Append "の" (UTF-8: 3 bytes) with bounds checking */
+    if (len + 3 < BUFSZ) {
+        Strcat(buf, "の");
+    }
 #endif
     return buf;
 }

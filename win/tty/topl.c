@@ -255,10 +255,13 @@ folding_japanese(
      const char *str,
      int pos)
 {
-    char ss[1024], s1[1024], s2[1024];
-    static char newstr[1024];             /* may be enough */
+    char ss[BUFSZ], s1[BUFSZ], s2[BUFSZ];
+    static char newstr[BUFSZ];
 
-    if (strlen(str) > BUFSZ) /*安全のため*/
+    if (strlen(str) >= BUFSZ) /* input too long */
+        return str;
+
+    if (pos <= 0) /* invalid position, skip folding */
         return str;
 
     newstr[0] = '\0';
@@ -404,8 +407,22 @@ topl_putsym(char c)
 void
 putsyms(const char *str)
 {
+#if 1 /*JP*/
+    /* Handle full-width (multi-byte) characters as atomic units for wrapping */
+    while (*str) {
+        unsigned char uc = (unsigned char)*str;
+        /* Check if this is a multi-byte lead byte */
+        if (uc & 0x80) {
+            /* Full-width character: ensure both bytes fit before CO-2 */
+            if (ttyDisplay->curx >= CO - 2)
+                topl_putsym('\n');
+        }
+        topl_putsym(*str++);
+    }
+#else
     while (*str)
         topl_putsym(*str++);
+#endif
 }
 
 static void

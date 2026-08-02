@@ -4490,7 +4490,7 @@ status_hilite_menu_add(int origfld)
                 goto choose_behavior;
 
             hilite.rel = TXT_VALUE;
-            Strcpy(hilite.textmatch, enc_stat[rv]);
+            Strcpy(hilite.textmatch, enc_stat_opt[rv]);
         } else if (fld == BL_ALIGN) {
             static const char *const aligntxt[] = {
 /*JP

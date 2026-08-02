@@ -1538,8 +1538,6 @@ use_mirror(struct obj *obj)
     } else if (monable && (mlet == S_NYMPH
                            || mtmp->data == &mons[PM_AMOROUS_DEMON])) {
         if (vis) {
-            char buf[BUFSZ]; /* "She" or "He" */
-
 #if 0 /*JP*/
             pline("%s in your %s.", /* "<mon> admires self in your mirror " */
                   monverbself(mtmp, Monnam(mtmp), "admire", (char *) 0),
@@ -1550,7 +1548,7 @@ use_mirror(struct obj *obj)
 /*JP
             pline("%s takes it!", upstart(strcpy(buf, mhe(mtmp))));
 */
-            pline("%sはそれを奪った！", upstart(strcpy(buf, mhe(mtmp))));
+            pline("%sはそれを奪った！", Monnam(mtmp));
         } else
 /*JP
             pline("It steals your %s!", mirror);
@@ -4634,7 +4632,7 @@ use_pole(struct obj *obj, boolean autohit)
                Note:  we only do this when a statue is displayed here,
                because the player is probably attempting to attack it;
                other statues obscured by anything are just ignored. */
-            pline(thump, "statue");
+            pline(thump, "彫像");
             wake_nearto(gb.bhitpos.x, gb.bhitpos.y, 25);
         }
     } else {
@@ -4643,7 +4641,7 @@ use_pole(struct obj *obj, boolean autohit)
 
         if (glyph_to_obj(glyph) == BOULDER
             && sobj_at(BOULDER, gb.bhitpos.x, gb.bhitpos.y)) {
-            pline(thump, "boulder");
+            pline(thump, "岩");
             wake_nearto(gb.bhitpos.x, gb.bhitpos.y, 25);
         } else if (!accessible(gb.bhitpos.x, gb.bhitpos.y)
                    || IS_FURNITURE(levl[gb.bhitpos.x][gb.bhitpos.y].typ)) {

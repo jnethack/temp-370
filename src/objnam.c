@@ -2306,7 +2306,13 @@ doname_base(
 #if 0 /*JP*/
     bp = strprepend(bp, prefix);
 #else /*JP:「名付けられた」を戻す*/
-    Strcat(preprefix, prefix);
+    /* bounded append to prevent overflow */
+    if (strlen(preprefix) + strlen(prefix) < PREFIX) {
+        Strcat(preprefix, prefix);
+    } else {
+        (void) strncat(preprefix, prefix, PREFIX - strlen(preprefix) - 1);
+        preprefix[PREFIX - 1] = '\0';
+    }
     bp = strprepend(bp, preprefix);
 #endif
 

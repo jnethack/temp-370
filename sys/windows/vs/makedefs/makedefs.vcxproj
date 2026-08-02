@@ -77,6 +77,7 @@
     <ClCompile Include="$(SrcDir)monst.c" />
     <ClCompile Include="$(SrcDir)objects.c" />
     <ClCompile Include="$(SrcDir)alloc.c" />
+    <ClCompile Include="$(SrcDir)mdlib.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(IncDir)config.h" />
