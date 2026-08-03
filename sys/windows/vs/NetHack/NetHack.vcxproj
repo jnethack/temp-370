@@ -69,7 +69,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>/Gs /Oi- /w44774 /w45262 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Gs /Oi- /w44774 /w45262 /source-charset:utf-8 /execution-charset:shift-jis %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings Condition="'$(Platform)'=='ARM64'">4100;4244;4245;4310;4706;4820;4324</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Platform)'!='ARM64'">4244;4245;4310;4706;4820;4324</DisableSpecificWarnings>
       <Optimization>Disabled</Optimization>
