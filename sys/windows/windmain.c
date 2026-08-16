@@ -1393,12 +1393,7 @@ stdio_nonl_raw_print(const char *str)
 void
 stdio_raw_print_bold(const char *str)
 {
-#if 0 /*JP:T*/
     stdio_raw_print(str);
-#else
-    if (str)
-        jputs(str);
-#endif
     return;
 }
 
