@@ -4569,7 +4569,11 @@ status_hilite_menu_add(int origfld)
                 goto choose_behavior;
 
             hilite.rel = TXT_VALUE;
+#if 0 /*JP:T*/
             Strcpy(hilite.textmatch, enc_stat[rv]);
+#else
+            Strcpy(hilite.textmatch, enc_stat_opt[rv]);
+#endif
         } else if (fld == BL_ALIGN) {
             static const char *const aligntxt[] = {
 /*JP
@@ -4599,11 +4603,7 @@ status_hilite_menu_add(int origfld)
                 goto choose_behavior;
 
             hilite.rel = TXT_VALUE;
-#if 0 /*JP:T*/
             Strcpy(hilite.textmatch, hutxt[rv]);
-#else
-            Strcpy(hilite.textmatch, hu_stat[rv]);
-#endif
         } else if (fld == BL_TITLE) {
             const char *rolelist[3 * 9 + 1];
             char mbuf[MAXVALWIDTH], fbuf[MAXVALWIDTH], obuf[MAXVALWIDTH];

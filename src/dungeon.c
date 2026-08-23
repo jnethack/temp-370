@@ -359,7 +359,7 @@ parent_dnum(
         if ((i -= pd->tmpdungeon[pdnum].branches) < 0)
             return pdnum;
 
-    panic("parent_dnum: couldn't resolve branch.");
+    panic("parent_dnum: couldn't resolve branch.:%s", s);
     /*NOT REACHED*/
     return (xint16) 0;
 }
@@ -890,7 +890,10 @@ init_dungeon_branches(
         lua_pushinteger(L, f + 1);
         lua_gettable(L, -2);
         if (lua_type(L, -1) == LUA_TTABLE) {
+/*JP
             br_name = get_table_str(L, "name");
+*/
+            br_name = utf8toic(get_table_str(L, "name"));
             br_chain = get_table_str_opt(L, "chainlevel", NULL);
             br_base = get_table_int(L, "base");
             br_range = get_table_int_opt(L, "range", 0);
@@ -1003,6 +1006,9 @@ init_dungeon_dungeons(
     char *dgn_themerms;
     int dgn_base, dgn_range, dgn_align, dgn_entry, dgn_chance, dgn_flags;
 
+/*JP
+    dgn_name = get_table_str(L, "name");
+*/
     dgn_name = utf8toic(get_table_str(L, "name"));
     /* TODO: accept single char or "none" for bonetag */
     dgn_bonetag = get_table_str_opt(L, "bonetag", emptystr);
@@ -1177,7 +1183,10 @@ fixup_level_locations(void)
     tower_dnum = dname_to_dnum("Vlad's Tower");
 */
     tower_dnum = dname_to_dnum("ヴラド侯の塔");
+/*JP
     tutorial_dnum = dname_to_dnum("The Tutorial");
+*/
+    tutorial_dnum = dname_to_dnum("チュートリアル");
 
     /* one special fixup for dummy surface level */
     if ((x = find_level("dummy")) != 0) {

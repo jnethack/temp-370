@@ -1585,6 +1585,9 @@ g_pututf8(uint8 *sequence)
     cell.color256idx =console.color256idx ? console.color256idx : 0;
     Snprintf((char *) cell.utf8str, sizeof cell.utf8str, "%s",
              (char *) sequence);
+#if 1 /*JP*//*常に1バイト文字*/
+    cell.iskanji = 0;
+#endif
     buffer_write(console.back_buffer, &cell, console.cursor);
 #endif /* UTF8_FROM_CORE */
 #endif
