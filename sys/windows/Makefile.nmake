@@ -15,10 +15,10 @@
 #   This is used for building two distinct executables of NetHack:
 #
 #   A tty port utilizing the Win32 Console I/O subsystem, Console
-#       NetHack.exe
+#       JNetHack.exe
 #
 #   A Win32 native port built on the Windows API, Graphical NetHack or
-#       NetHackW.exe
+#       JNetHackW.exe
 #
 #   If you have any questions about building NetHack for the Windows platform
 #   please read sys/windows/Install.windows file included in the distribution.
@@ -56,11 +56,11 @@ SOUND_LIBRARIES = windsound
 #
 # Do you want console curses included?
 
-CURSES_CONSOLE = Y
+CURSES_CONSOLE = N
 
 # Do you want graphical curses included?
 
-CURSES_GRAPHICAL = Y
+CURSES_GRAPHICAL = N
 
 #
 #------------------------------------------------------------------------------
@@ -108,6 +108,14 @@ GIT_AVAILABLE = N
 #TARGET_CPU=x64
 #TARGET_CPU=x86
 #TARGET_CPU=arm64
+
+IC_UTF8 = N
+
+!IF "$(IC_UTF8)" == "Y"
+CC_J=/source-charset:utf-8 /execution-charset:utf-8 -DICUTF8
+!ELSE
+CC_J=/source-charset:utf-8 /execution-charset:shift-jis
+!ENDIF
 
 #==============================================================================
 #======================== End of Modification Section =========================
@@ -189,6 +197,7 @@ R_BinDir    = ..\binary
 R_PkgDir    = ..\package
 R_SOUNDDIR  = ..\sound
 #R_GAMEDIR is user option up near the top
+JP      = ..\japanese    # JP
 
 #!MESSAGE $(R_SRC)
 #!MESSAGE $(R_GAMEDIR)
@@ -850,6 +859,8 @@ VVOBJTTY  = $(OTTY)version.o
 
 SOBJTTY   = $(OTTY)windmain.o $(OTTY)windsys.o $(OTTY)win10.o
 
+JOBJTTY   = $(OTTY)jlib.o     $(OTTY)jconj.o
+
 TTYOBJTTY = $(OTTY)topl.o $(OTTY)getline.o  $(OTTY)wintty.o
 
 COREOBJTTY = \
@@ -887,7 +898,7 @@ COREOBJTTY = \
 
 OBJSTTY = $(MDLIBTTY) $(COREOBJTTY) $(REGEXTTY) $(RANDOMTTY)
 
-ALLOBJTTY  = $(SOBJTTY) $(DLBOBJTTY) $(OBJSTTY) $(VVOBJTTY) $(LUAOBJTTY)
+ALLOBJTTY  = $(SOBJTTY) $(DLBOBJTTY) $(OBJSTTY) $(VVOBJTTY) $(LUAOBJTTY) $(JOBJTTY)
 
 #
 # - GUI
@@ -908,8 +919,9 @@ REGEXGUI  = $(OGUI)cppregex.o
 LUAOBJGUI = $(OGUI)nhlua.o    $(OGUI)nhlsel.o   $(OGUI)nhlobj.o
 VVOBJGUI  = $(OGUI)version.o
 
-SOBJGUI   = $(OGUI)windmain.o $(OGUI)windsys.o $(OGUI)win10.o
+JOBJGUI   = $(OGUI)jlib.o     $(OGUI)jconj.o
 
+SOBJGUI   = $(OGUI)windmain.o $(OGUI)windsys.o $(OGUI)win10.o
 GUIOBJ	= $(OGUI)mhaskyn.o $(OGUI)mhdlg.o \
 	$(OGUI)mhfont.o $(OGUI)mhinput.o $(OGUI)mhmain.o $(OGUI)mhmap.o \
 	$(OGUI)mhmenu.o $(OGUI)mhmsgwnd.o $(OGUI)mhrip.o $(OGUI)mhsplash.o \
@@ -950,7 +962,7 @@ COREOBJGUI = \
 
 OBJSGUI   = $(MDLIBGUI) $(COREOBJGUI) $(REGEXGUI) $(RANDOMGUI)
 
-ALLOBJGUI  = $(SOBJGUI) $(DLBOBJGUI) $(OBJSGUI) $(VVOBJGUI) $(LUAOBJGUI)
+ALLOBJGUI  = $(SOBJGUI) $(DLBOBJGUI) $(OBJSGUI) $(VVOBJGUI) $(LUAOBJGUI) $(JOBJGUI)
 
 #
 # - other
@@ -1252,7 +1264,7 @@ ccommon= -c -nologo -D"_CRT_NONSTDC_NO_DEPRECATE" -D"_CRT_SECURE_NO_DEPRECATE" \
 	-DCRTAPI1=_cdecl -DCRTAPI2=_cdecl -D"NDEBUG" -D"YY_NO_UNISTD_H" \
 	-DHAS_STDINT_H -DHAS_INLINE $(RUNTIMEOPTDEF) \
 	-EHsc -fp:precise -Gd -GF -GS -Gy \
-	$(CL_RECENT) -WX- -Zc:forScope -Zc:wchar_t -Zi
+	$(CL_RECENT) -WX- -Zc:forScope -Zc:wchar_t -Zi $(CC_J)
 cdebug= -analyze- -D"_DEBUG" -MTd -RTC1 -Od $(ASAN)
 crelease= -analyze- -D"_MBCS" -errorReport:prompt -MT -O2 -Ot -Ox -Oy
 
@@ -1405,6 +1417,15 @@ DLB =
 	$(Q)$(CC) $(CFLAGS) $(GUIDEF) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
 
 {$(R_SRC)}.c{$(R_OBJUTIL)}.o:
+	$(Q)$(CC) $(CFLAGS) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
+
+{$(JP)}.c{$(R_OBJTTY)}.o:
+	$(Q)$(CC) $(CFLAGS) $(TTYDEF) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
+
+{$(JP)}.c{$(R_OBJGUI)}.o:
+	$(Q)$(CC) $(CFLAGS) $(GUIDEF) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
+
+{$(JP)}.c{$(R_OBJUTIL)}.o:
 	$(Q)$(CC) $(CFLAGS) $(CROSSCOMPILE) $(CROSSCOMPILE_TARGET) -Fo$@ $<
 
 #==========================================
@@ -1676,7 +1697,7 @@ GAMEOBJ=$(GAMEOBJ:^ =^
 #--------
 #
 
-$(GAMEDIR)NetHack.exe : gamedir.tag $(OTTY)consoletty.o \
+$(GAMEDIR)JNetHack.exe : gamedir.tag $(OTTY)consoletty.o \
 			$(ALLOBJTTY) $(CURSESWINCONOBJS) \
 			$(TTYSOUNDOBJS) $(OTTY)date.o $(OTTY)console.res \
 			$(LUALIB) $(TTYOBJTTY) $(PDCTXTLIB) $(PDCTXTOBJS) $(OTTYHACKLIB)
@@ -1699,7 +1720,7 @@ $(GAMEDIR)NetHack.exe : gamedir.tag $(OTTY)consoletty.o \
 # NetHackW
 #---------
 #
-$(GAMEDIR)NetHackW.exe : gamedir.tag $(OGUI)tile.o \
+$(GAMEDIR)JNetHackW.exe : gamedir.tag $(OGUI)tile.o \
 			$(ALLOBJGUI) $(GAMEOBJGUI) $(GUIOBJ) $(GUISOUNDOBJS) \
 			$(CURSESWINGUIOBJS) $(OGUI)date.o \
 			$(OGUI)NetHackW.res \
@@ -1734,8 +1755,8 @@ binary.tag: 	$(DAT)data $(DAT)rumors $(DAT)oracles $(DLB) \
 	if exist $(DOC)guidebook.txt copy $(DOC)guidebook.txt $(GAMEDIR)Guidebook.txt
 	if exist $(DOC)nethack.txt copy $(DOC)nethack.txt $(GAMEDIR)NetHack.txt
 #	if exist $(UTIL)sfctool.pdb copy $(UTIL)sfctool.pdb $(GAMEDIR)sfctool.pdb
-	@if exist $(GAMEDIR)NetHack.PDB echo NOTE: You may want to remove $(U_GAMEDIR)/NetHack.PDB to conserve space
-	@if exist $(GAMEDIR)NetHackW.PDB echo NOTE: You may want to remove $(U_GAMEDIR)/NetHackW.PDB to conserve space
+	@if exist $(GAMEDIR)JNetHack.PDB echo NOTE: You may want to remove $(U_GAMEDIR)/JNetHack.PDB to conserve space
+	@if exist $(GAMEDIR)JNetHackW.PDB echo NOTE: You may want to remove $(U_GAMEDIR)/JNetHackW.PDB to conserve space
 	-if exist $(MSWSYS)nethackrc.template copy $(MSWSYS)nethackrc.template   $(R_GAMEDIR)
 	-if not exist $(GAMEDIR)record. goto>$(GAMEDIR)record.
 ! IF ("$(USE_DLB)" == "Y")
@@ -2784,16 +2805,16 @@ $(SndWavDir)sa2_xplevelup.wav: $(SndWavDir)sa2_xplevelup.uu $(U)uudecode.exe
 # packaging
 #===============================================================================
 
-PKGFILES = nethackrc.template Guidebook.txt license NetHack.exe NetHack.txt \
-	 NetHackW.exe opthelp nhdat370 record symbols \
+PKGFILES = nethackrc.template Guidebook.txt license JNetHack.exe NetHack.txt \
+	 JNetHackW.exe opthelp nhdat$(NHV) record symbols \
 	 sysconf.template $(SFCTOOLBASENAM)
 FILESTOZIP = $(BinDir)nethackrc.template $(BinDir)Guidebook.txt $(BinDir)license \
-	$(BinDir)NetHack.exe $(BinDir)NetHack.txt $(BinDir)NetHackW.exe \
-	$(BinDir)opthelp $(BinDir)nhdat370 $(BinDir)record \
+	$(BinDir)JNetHack.exe $(BinDir)NetHack.txt $(BinDir)JNetHackW.exe \
+	$(BinDir)opthelp $(BinDir)nhdat$(NHV) $(BinDir)record \
 	$(BinDir)symbols $(BinDir)sysconf.template $(SFCTOOLPKG)
 
-DBGSYMS = NetHack.PDB NetHackW.PDB $(SFCTOOLPDBNAM)
-PDBTOZIP = $(BinDir)NetHack.PDB $(BinDir)NetHackW.PDB $(SFCTOOLPDBBIN)
+DBGSYMS = JNetHack.PDB JNetHackW.PDB $(SFCTOOLPDBNAM)
+PDBTOZIP = $(BinDir)JNetHack.PDB $(BinDir)JNetHackW.PDB $(SFCTOOLPDBBIN)
 MAINZIP = $(PkgDir)nethack-$(NHV)-win-$(TARGET_CPU).zip
 DBGSYMZIP = $(PkgDir)nethack-$(NHV)-win-$(TARGET_CPU)-debugsymbols.zip
 
@@ -2813,8 +2834,8 @@ binary:  envchk.tag libdir.tag ottydir$(TARGET_CPU).tag \
 		$(LUASRC)lua.h $(PDCDEP) \
 		$(INCL)nhlua.h $(OUTL)utility.tag \
 		$(DAT)data $(DAT)rumors $(DAT)oracles $(DAT)engrave \
-		$(DAT)epitaph $(DAT)bogusmon $(GAMEDIR)NetHack.exe \
-		$(GAMEDIR)NetHackW.exe $(SFCTOOLPKG) $(GAMEDIRDLLS) binary.tag
+		$(DAT)epitaph $(DAT)bogusmon $(GAMEDIR)JNetHack.exe \
+		$(GAMEDIR)JNetHackW.exe $(SFCTOOLPKG) $(GAMEDIRDLLS) binary.tag
 	@echo NetHack is up to date.
 
 #===============================================================================
@@ -2822,13 +2843,14 @@ binary:  envchk.tag libdir.tag ottydir$(TARGET_CPU).tag \
 #===============================================================================
 
 spotless: clean
-	if exist $(GAMEDIR)NetHack.exe  del $(GAMEDIR)NetHack.exe
-	if exist $(GAMEDIR)NetHackW.exe del $(GAMEDIR)NetHackW.exe
-	if exist $(GAMEDIR)NetHack.pdb  del $(GAMEDIR)NetHack.pdb
-	if exist $(GAMEDIR)nhdat$(NHV)  del $(GAMEDIR)nhdat$(NHV)
-	if exist $(INCL)date.h          del $(INCL)date.h
-	if exist $(INCL)onames.h        del $(INCL)onames.h
-	if exist $(INCL)pm.h            del $(INCL)pm.h
+	if exist $(GAMEDIR)JNetHack.exe del $(GAMEDIR)JNetHack.exe
+	if exist $(GAMEDIR)JNetHackW.exe del $(GAMEDIR)JNetHackW.exe
+	if exist $(GAMEDIR)JNetHack.pdb del $(GAMEDIR)JNetHack.pdb
+	if exist $(GAMEDIR)JNetHackW.pdb del $(GAMEDIR)JNetHackW.pdb
+	if exist $(GAMEDIR)nhdat$(NHV) del $(GAMEDIR)nhdat$(NHV)
+	if exist $(INCL)date.h         del $(INCL)date.h
+	if exist $(INCL)onames.h       del $(INCL)onames.h
+	if exist $(INCL)pm.h           del $(INCL)pm.h
 	if exist $(U)*.lnk              del $(U)*.lnk
 	if exist $(U)*.map              del $(U)*.map
 	if exist $(DAT)data             del $(DAT)data
@@ -3373,6 +3395,8 @@ $(OTTY)worm.o: worm.c $(HACK_H)
 $(OTTY)worn.o: worn.c $(HACK_H)
 $(OTTY)write.o: write.c $(HACK_H)
 $(OTTY)zap.o: zap.c $(HACK_H)
+$(OTTY)jlib.o:    $(JP)\jlib.c $(HACK_H)
+$(OTTY)jconj.o:   $(JP)\jconj.c
 #
 #$(OGUI)cppregex.o: ..\sys\share\cppregex.cpp $(CONFIG_H)
 #	$(TARGET_CXX) $(TARGET_CXXFLAGS) -Fo$@ ..\sys\share\cppregex.cpp
@@ -3752,6 +3776,8 @@ $(OGUI)worn.o: worn.c $(HACK_H)
 $(OGUI)write.o: write.c $(HACK_H)
 $(OGUI)zap.o: zap.c $(HACK_H)
 
+$(OGUI)jlib.o:    $(JP)\jlib.c $(HACK_H)
+$(OGUI)jconj.o:   $(JP)\jconj.c
 
 qt_kde0.moc: $(QTn_H) ..\win\Qt\qt_kde0.h
 	$(MOCPATH) ..\win\Qt\qt_kde0.h

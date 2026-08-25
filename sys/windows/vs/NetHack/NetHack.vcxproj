@@ -69,7 +69,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>/Gs /Oi- /w44774 /w45262 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Gs /Oi- /w44774 /w45262 /source-charset:utf-8 /execution-charset:shift-jis %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings Condition="'$(Platform)'=='ARM64'">4100;4244;4245;4310;4706;4820;4324</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Platform)'!='ARM64'">4244;4245;4310;4706;4820;4324</DisableSpecificWarnings>
       <Optimization>Disabled</Optimization>
@@ -88,6 +88,14 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\japanese\jconj.c" />
+    <ClCompile Include="..\..\..\..\japanese\jlib.c" />
+    <ClCompile Include="@(Lua)">
+      <DisableSpecificWarnings>4701;4702;4244;4310;4774</DisableSpecificWarnings>
+      <AdditionalOptions>%(AdditionalOptions) /wd4774</AdditionalOptions>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4701;4702;4244;4310;4774;4324</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4701;4702;4244;4310;4774;4324</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="$(SrcDir)allmain.c" />
     <ClCompile Include="$(SrcDir)alloc.c" />
     <ClCompile Include="$(SrcDir)apply.c" />

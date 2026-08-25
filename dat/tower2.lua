@@ -29,30 +29,30 @@ des.door("locked",10,04)
 des.door("locked",09,07)
 des.monster("&",place[10])
 des.monster("&",place[1])
-des.monster("hell hound pup",place[2])
-des.monster("hell hound pup",place[3])
-des.monster("winter wolf",place[4])
-des.object({ id = "chest", coord = place[5],
+des.monster("ヘルハウンドの仔",place[2])
+des.monster("ヘルハウンドの仔",place[3])
+des.monster("冬狼",place[4])
+des.object({ id = "宝箱", coord = place[5],
              contents = function()
-                des.object("amulet of life saving")
+                des.object("命の魔除け")
              end
 });
-des.object({ id = "chest", coord = place[6],
+des.object({ id = "宝箱", coord = place[6],
              contents = function()
-                des.object("amulet of strangulation")
+                des.object("絞殺の魔除け")
              end
 });
-des.object("water walking boots",place[7])
-des.object("crystal plate mail",place[8])
+des.object("水上歩行の靴",place[7])
+des.object("水晶の鎧",place[8])
 
 local spbooks = {
-   "spellbook of invisibility",
-   "spellbook of cone of cold",
-   "spellbook of create familiar",
-   "spellbook of clairvoyance",
-   "spellbook of charm monster",
-   "spellbook of stone to flesh",
-   "spellbook of polymorph"
+   "透明の魔法書",
+   "冷気の魔法書",
+   "造魔の魔法書",
+   "千里眼の魔法書",
+   "魅了の魔法書",
+   "軟化の魔法書",
+   "変化の魔法書"
 }
 shuffle(spbooks);
 des.object(spbooks[1],place[9])
