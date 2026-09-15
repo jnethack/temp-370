@@ -46,6 +46,9 @@
 #else
 #include "patchlevel.h"
 #endif
+#if 1 /*JP*/
+#include "../japanese/jpatchlevel.h"
+#endif
 
 
 /* Windowing systems...
@@ -320,7 +323,9 @@
  *      won't necessarily work as intended within nethack but at least
  *      makedefs wouldn't reject them.)
  */
+#if 0 /*JP*//*日本語版では非ASCIIを通す*/
 #define MAKEDEFS_FILTER_NONASCII
+#endif
 
 /*
  *      PERSMAX, POINTSMIN, ENTRYMAX, PERS_IS_UID:

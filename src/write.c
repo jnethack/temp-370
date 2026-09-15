@@ -1,6 +1,11 @@
 /* NetHack 5.0	write.c	$NHDT-Date: 1702023275 2023/12/08 08:14:35 $  $NHDT-Branch: NetHack-3.7 $:$NHDT-Revision: 1.41 $ */
 /* NetHack may be freely redistributed.  See license for details. */
 
+/* JNetHack Copyright */
+/* (c) Issei Numata, Naoki Hamada, Shigehiro Miyashita, 1994-2000  */
+/* For 3.4-, Copyright (c) SHIRAKATA Kentaro, 2002-                */
+/* JNetHack may be freely redistributed.  See license for details. */
+
 #include "hack.h"
 
 staticfn int cost(struct obj *) NONNULLARG1;
@@ -74,7 +79,11 @@ int
 dowrite(struct obj *pen)
 {
     struct obj *paper;
+#if 0 /*JP*/
     char namebuf[BUFSZ] = DUMMY, *nm, *bp;
+#else
+    char namebuf[BUFSZ] = DUMMY, *nm;
+#endif
     struct obj *new_obj;
     int basecost, actualcost;
     int curseval;
@@ -85,11 +94,19 @@ dowrite(struct obj *pen)
     int spell_knowledge;
 
     if (nohands(gy.youmonst.data)) {
+/*JP
         You("need hands to be able to write!");
+*/
+        You("書くためには手が必要だ！");
         return ECMD_OK;
     } else if (Glib) {
+#if 0 /*JP:T*/
         pline("%s from your %s.", Tobjnam(pen, "slip"),
               fingers_or_gloves(FALSE));
+#else
+        pline("%sが%sから滑りおちた．", xname(pen),
+              fingers_or_gloves(FALSE));
+#endif
         dropx(pen);
         return ECMD_TIME;
     }
@@ -100,35 +117,55 @@ dowrite(struct obj *pen)
         return ECMD_CANCEL;
     /* can't write on a novel (unless/until it's been converted into a blank
        spellbook), but we want messages saying so to avoid "spellbook" */
+#if 0 /*JP:T*/
     typeword = (paper->otyp == SPE_NOVEL) ? "book"
                : (paper->oclass == SPBOOK_CLASS) ? "spellbook"
                  : "scroll";
+#else
+    typeword = (paper->otyp == SPE_NOVEL) ? "本"
+               : (paper->oclass == SPBOOK_CLASS) ? "魔法書"
+                 : "巻物";
+#endif
     if (Blind) {
         if (!paper->dknown) {
+#if 0 /*JP:T*/
             You("don't know whether that %s is blank or not.", typeword);
+#else
+            You("%sが白紙かどうかわからない．", typeword);
+#endif
             return ECMD_OK;
         } else if (paper->oclass == SPBOOK_CLASS) {
             /* can't write a magic book while blind */
+/*JP
             pline("%s can't create braille text.",
+*/
+            pline("%sでは点字を作れない．",
                   upstart(ysimple_name(pen)));
             return ECMD_OK;
         }
     }
     observe_object(paper);
     if (paper->otyp != SCR_BLANK_PAPER && paper->otyp != SPE_BLANK_PAPER) {
+/*JP
         pline("That %s is not blank!", typeword);
+*/
+        pline("%sは白紙じゃない！", typeword);
         exercise(A_WIS, FALSE);
         return ECMD_TIME;
     }
     makeknown(SCR_BLANK_PAPER);
 
     /* what to write */
+/*JP
     Sprintf(qbuf, "What type of %s do you want to write?", typeword);
+*/
+    Sprintf(qbuf, "どの種類の%sを書きますか？", typeword);
     getlin(qbuf, namebuf);
     (void) mungspaces(namebuf); /* remove any excess whitespace */
     if (namebuf[0] == '\033' || !namebuf[0])
         return ECMD_TIME;
     nm = namebuf;
+#if 0 /*JP*//*日本語では不要*/
     if (!strncmpi(nm, "scroll ", 7))
         nm += 7;
     else if (!strncmpi(nm, "spellbook ", 10))
@@ -140,6 +177,7 @@ dowrite(struct obj *pen)
         memcpy(bp, " armor ", 7);
         (void) mungspaces(bp + 1);        /* remove the extra space */
     }
+#endif
 
     deferred = real = 0; /* not any scroll or book */
     deferralchance = 0;  /* incremented for each oc_uname match */
@@ -204,40 +242,73 @@ dowrite(struct obj *pen)
         goto found;
     }
 
+/*JP
     There("is no such %s!", typeword);
+*/
+    pline("そのような%sはない！", typeword);
     return ECMD_TIME;
  found:
 
     if (i == SCR_BLANK_PAPER || i == SPE_BLANK_PAPER) {
+/*JP
         You_cant("write that!");
+*/
+        pline("白紙に白紙を書く？！");
+/*JP
         pline("It's obscene!");
+*/
+        pline("そういうやりかたはちょっと不愉快だな！");
         return ECMD_TIME;
     } else if (i == SPE_NOVEL) {
         boolean fanfic = !rn2(3), tearup = !rn2(3);
 
         if (!fanfic) {
+#if 0 /*JP:T*/
             You("%s to write the Great Yendorian Novel, but %s inspiration.",
                 !tearup ? "prepare" : "try",
                 !Hallucination ? "lack" : "have too much");
+#else
+            You("偉大なるイェンダー小説を%sたが，インスピレーションが%s．",
+                !tearup ? "書くことに備え" : "書こうとし",
+                !Hallucination ? "足りない" : "多すぎる");
+#endif
         } else {
+#if 0 /*JP:T*/
             You("%sproduce really %s fan-fiction.",
                 !tearup ? "start to " : "",
                 !Hallucination ? "lame" : "awesome");
+#else
+            You("本当に%s二次創作を作%s．",
+                !Hallucination ? "つまらない" : "すばらしい",
+                !tearup ? "りはじめた" : "った");
+#endif
         }
         if (!tearup) {
+/*JP
             You("give up on the idea.");
+*/
+            You("この考えをあきらめた．");
         } else {
+/*JP
             You("tear it up.");
+*/
+            You("それを破り捨てた．");
             useup(paper);
         }
         return ECMD_TIME;
     } else if (i == SPE_BOOK_OF_THE_DEAD) {
+/*JP
         pline("No mere dungeon adventurer could write that.");
+*/
+        pline("一介の迷宮冒険家には書けるものではない．");
         return ECMD_TIME;
     } else if (by_descr && paper->oclass == SPBOOK_CLASS
                && !objects[i].oc_name_known) {
         /* can't write unknown spellbooks by description */
+/*JP
         pline("Unfortunately you don't have enough information to go on.");
+*/
+        pline("残念ながらそれを書くだけの十分な知識がない．");
         return ECMD_TIME;
     }
 
@@ -255,7 +326,10 @@ dowrite(struct obj *pen)
     /* see if there's enough ink */
     basecost = cost(new_obj);
     if (pen->spe < basecost / 2) {
+/*JP
         Your("marker is too dry to write that!");
+*/
+        Your("マーカは乾きすぎておりうまく書けなかった！");
         obfree(new_obj, (struct obj *) 0);
         return ECMD_TIME;
     }
@@ -268,13 +342,22 @@ dowrite(struct obj *pen)
     /* dry out marker */
     if (pen->spe < actualcost) {
         pen->spe = 0;
+/*JP
         Your("marker dries out!");
+*/
+        pline("書いている途中でマーカは乾ききった！");
         /* scrolls disappear, spellbooks don't */
         if (paper->oclass == SPBOOK_CLASS) {
+/*JP
             pline_The("spellbook is left unfinished and your writing fades.");
+*/
+            pline_The("魔法書には書ききれなかった．そして書いた文字は消えてしまった．");
             update_inventory(); /* pen charges */
         } else {
+/*JP
             pline_The("scroll is now useless and disappears!");
+*/
+            pline_The("巻物は使いものにならなくなって消滅した！");
             useup(paper);
         }
         obfree(new_obj, (struct obj *) 0);
@@ -319,19 +402,31 @@ dowrite(struct obj *pen)
         && rnl(((Role_if(PM_WIZARD) && paper->oclass != SPBOOK_CLASS)
                 || spell_knowledge == spe_GoingStale)
                ? 5 : 15)) {
+/*JP
         You("%s to write that.", by_descr ? "fail" : "don't know how");
+*/
+        You("%s！", by_descr ? "書くのに失敗した" : "どうやって書くのか知らない");
         /* scrolls disappear, spellbooks don't */
         if (paper->oclass == SPBOOK_CLASS) {
             You(
+/*JP
       "write in your best handwriting:  \"My Diary\", but it quickly fades.");
+*/
+      "丁寧に書いた：「我が日記」．しかしあっと言う間に消えてしまった．");
             update_inventory(); /* pen charges */
         } else {
             if (by_descr) {
                 Strcpy(namebuf, OBJ_DESCR(objects[new_obj->otyp]));
                 wipeout_text(namebuf, (6 + MAXULEV - u.ulevel) / 6, 0);
             } else
+/*JP
                 Sprintf(namebuf, "%s was here!", svp.plname);
+*/
+                Sprintf(namebuf, "%sはここにあり！", svp.plname);
+/*JP
             You("write \"%s\" and the scroll disappears.", namebuf);
+*/
+            You("「%s」と書いた．すると巻物は消えてしまった．", namebuf);
             useup(paper);
         }
         obfree(new_obj, (struct obj *) 0);
@@ -345,7 +440,10 @@ dowrite(struct obj *pen)
            have passed the write-an-unknown scroll test
            above we can still fail this one, so it's doubly
            hard to write an unknown scroll while blind */
+/*JP
         You("fail to write the scroll correctly and it disappears.");
+*/
+        You("巻物に正しく書くのに失敗した．巻物は消えた．");
         useup(paper);
         obfree(new_obj, (struct obj *) 0);
         return ECMD_TIME;
@@ -357,8 +455,13 @@ dowrite(struct obj *pen)
     /* success */
     if (new_obj->oclass == SPBOOK_CLASS) {
         /* acknowledge the change in the object's description... */
+#if 0 /*JP:T*/
         pline_The("spellbook warps strangely, then turns %s.",
                   new_book_description(new_obj->otyp, namebuf));
+#else
+        pline("魔法書は妙に反りかえり，そして%sになった．",
+                  new_book_description(new_obj->otyp, namebuf));
+#endif
     }
     new_obj->blessed = (curseval > 0);
     new_obj->cursed = (curseval < 0);
@@ -377,9 +480,15 @@ dowrite(struct obj *pen)
     if (objects[new_obj->otyp].oc_name_known || by_descr)
         observe_object(new_obj);
 
+#if 0 /*JP*/
     new_obj = hold_another_object(new_obj, "Oops!  %s out of your grasp!",
                                   The(aobjnam(new_obj, "slip")),
                                   (const char *) 0);
+#else
+    new_obj =
+        hold_another_object(new_obj, "おっと！%sはあなたの手から滑り落ちた！",
+                            xname(new_obj), (const char *) 0);
+#endif
     nhUse(new_obj); /* try to avoid complaint about dead assignment */
     return ECMD_TIME;
 }
@@ -394,6 +503,7 @@ dowrite(struct obj *pen)
 staticfn char *
 new_book_description(int booktype, char *outbuf)
 {
+#if 0 /*JP*//*日本語では不要*/
     /* subset of description strings from objects.c; if it grows
        much, we may need to add a new flag field to objects[] instead */
     static const char *const compositions[] = {
@@ -414,6 +524,9 @@ new_book_description(int booktype, char *outbuf)
             break;
 
     Sprintf(outbuf, "%s%s", *comp_p ? "into " : "", descr);
+#else /*JP:単純にコピー*/
+    Strcpy(outbuf, OBJ_DESCR(objects[booktype]));
+#endif
     return outbuf;
 }
 

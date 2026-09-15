@@ -63,7 +63,7 @@ themeroom_fills = {
       contents = function(rm)
          local fog = selection.room();
          for i = 1, (fog:numpoints() / 4) do
-            des.monster({ id = "fog cloud", asleep = true });
+            des.monster({ id = "霧の雲", asleep = true });
          end
          des.gas_cloud({ selection = fog });
       end,
@@ -76,7 +76,7 @@ themeroom_fills = {
          local locs = selection.room():percentage(30);
          local func = function(x,y)
             if (percent(50)) then
-               des.object("boulder", x, y);
+               des.object("岩", x, y);
             else
                des.trap("rolling boulder", x, y);
             end
@@ -120,7 +120,7 @@ themeroom_fills = {
          local s = selection.room();
          local npts = (s:numpoints() / 6);
          for i = 1, npts do
-            des.monster({ id = "wood nymph", asleep = true });
+            des.monster({ id = "木のニンフ", asleep = true });
             if (percent(30)) then
                des.feature("fountain");
             end
@@ -133,7 +133,7 @@ themeroom_fills = {
    {
       name = "Buried treasure",
       contents = function(rm)
-         des.object({ id = "chest", buried = true, contents = function(otmp)
+         des.object({ id = "宝箱", buried = true, contents = function(otmp)
             local xobj = otmp:totable();
             -- keep track of the last buried treasure
             if (xobj.NO_OBJ == nil) then
@@ -152,16 +152,16 @@ themeroom_fills = {
       contents = function(rm)
          local diff = nh.level_difficulty()
          -- start with [1..4] for low difficulty
-         local zombifiable = { "kobold", "gnome", "orc", "dwarf" };
+         local zombifiable = { "コボルド", "ノーム", "オーク", "ドワーフ" };
          if diff > 3 then          -- medium difficulty
-            zombifiable[5], zombifiable[6] = "elf", "human";
+            zombifiable[5], zombifiable[6] = "エルフ", "人間";
             if diff > 6 then       -- high difficulty (relatively speaking)
-               zombifiable[7], zombifiable[8] = "ettin", "giant";
+               zombifiable[7], zombifiable[8] = "エティン", "巨人";
             end
          end
          for i = 1, (rm.width * rm.height) / 2 do
             shuffle(zombifiable);
-            local o = des.object({ id = "corpse", montype = zombifiable[1],
+            local o = des.object({ id = "死体", montype = zombifiable[1],
                                  buried = true });
             o:stop_timer("rot-corpse");
             o:start_timer("zombify-mon", math.random(990, 1010));
@@ -172,18 +172,18 @@ themeroom_fills = {
    {
       name = "Massacre",
       contents = function(rm)
-         local mon = { "apprentice", "warrior", "ninja", "thug",
-                     "hunter", "acolyte", "abbot", "page",
-                     "attendant", "neanderthal", "chieftain",
-                     "student", "wizard", "valkyrie", "tourist",
-                     "samurai", "rogue", "ranger", "priestess",
-                     "priest", "monk", "knight", "healer",
-                     "cavewoman", "caveman", "barbarian",
-                     "archeologist" };
-         local idx = math.random(#mon);
+         local mon = { "実習生", "戦士", "忍者", "ちんぴら",
+                     "ハンター", "侍者", "師範", "小姓",
+                     "随行員", "ネアンデルタール人", "首領",
+                     "学生", "魔法使い", "ワルキューレ", "観光客",
+                     "侍", "盗賊", "レンジャー", "尼僧",
+                     "僧侶", "武闘家", "騎士", "薬師",
+                     "洞窟人", "洞窟人", "野蛮人",
+                     "考古学者" };
+          local idx = math.random(#mon);
          for i = 1, d(5,5) do
             if (percent(10)) then idx = math.random(#mon); end
-            des.object({ id = "corpse", montype = mon[idx] });
+            des.object({ id = "死体", montype = mon[idx] });
          end
       end,
    },
@@ -192,7 +192,7 @@ themeroom_fills = {
       name = "Statuary",
       contents = function(rm)
          for i = 1, d(5,5) do
-            des.object({ id = "statue" });
+            des.object({ id = "像" });
          end
          for i = 1, d(3) do
             des.trap("statue");
@@ -205,7 +205,7 @@ themeroom_fills = {
       name = "Light source",
       eligible = function(rm) return rm.lit == false; end,
       contents = function(rm)
-         des.object({ id = "oil lamp", lit = true });
+         des.object({ id = "オイルランプ", lit = true });
       end
    },
 
@@ -222,17 +222,17 @@ themeroom_fills = {
       name = "Ghost of an Adventurer",
       contents = function(rm)
          local loc = selection.room():rndcoord(0);
-         des.monster({ id = "ghost", asleep = true, waiting = true,
+         des.monster({ id = "幽霊", asleep = true, waiting = true,
                        coord = loc });
          if percent(65) then
-            des.object({ id = "dagger", coord = loc, buc = "not-blessed" });
+            des.object({ id = "短剣", coord = loc, buc = "not-blessed" });
          end
          if percent(55) then
             des.object({ class = ")", coord = loc, buc = "not-blessed" });
          end
          if percent(45) then
-            des.object({ id = "bow", coord = loc, buc = "not-blessed" });
-            des.object({ id = "arrow", coord = loc, buc = "not-blessed" });
+            des.object({ id = "弓", coord = loc, buc = "not-blessed" });
+            des.object({ id = "矢", coord = loc, buc = "not-blessed" });
          end
          if percent(65) then
             des.object({ class = "[", coord = loc, buc = "not-blessed" });
@@ -252,9 +252,9 @@ themeroom_fills = {
          local locs = selection.room():percentage(30);
          local func = function(x,y)
             if (percent(25)) then
-               des.object("chest");
+               des.object("宝箱");
             else
-               des.monster({ class = "m", appear_as = "obj:chest" });
+               des.monster({ class = "m", appear_as = "obj:宝箱" });
             end
          end;
          locs:iterate(func);
@@ -430,7 +430,7 @@ themerooms = {
                                        shuffle(mons);
                                        des.monster({ class = mons[1], x=0,y=0, waiting = 1 });
                                     else
-                                       des.object({ id = "corpse", montype = "@", coord = {0,0} });
+                                       des.object({ id = "死体", montype = "@", coord = {0,0} });
                                     end
                                     if (percent(20)) then
                                        des.door({ state="secret", wall="all" });
@@ -795,16 +795,16 @@ xx|.....|xx
             local box
             if itmcls[ "material" ] == "glass" then
                   -- explicitly force chest to be unlocked
-                  box = des.object({ id = "chest", coord = chest_spots[1],
+                  box = des.object({ id = "宝箱", coord = chest_spots[1],
                                     olocked = "no" });
             else
                   -- accept random locked/unlocked state
-                  box = des.object({ id = "chest", coord = chest_spots[1] });
+                  box = des.object({ id = "宝箱", coord = chest_spots[1] });
             end;
             box:addcontent(itm);
 
             for i = 2, #chest_spots do
-                  des.object({ id = "chest", coord = chest_spots[i] });
+                  des.object({ id = "宝箱", coord = chest_spots[i] });
             end
 
             shuffle(nasty_undead);
