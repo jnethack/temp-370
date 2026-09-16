@@ -1,4 +1,4 @@
-Mon Sep 10 2026  Kentaro Shirakata  <argrath@ub32.org>
+Thu Sep 10 2026  Kentaro Shirakata  <argrath@ub32.org>
 
 	* 次の問題を修正
 	  * 厄介者の召喚で怪物が召喚されない (OSDN:47879)

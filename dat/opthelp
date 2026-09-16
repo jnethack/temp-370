@@ -144,8 +144,8 @@ montelecontrol let player choose destination for teleported monsters
 travel_debug   show state of travel pathfinding algorithm on the map
 wizweight      include item weights in inventory display
 
-任意の真偽オプションはcan be set to True by including it among options being
-set, or negated (set to False) '!'や'no'をつけることにより．
+任意の真偽オプションはオプションを書くことにより真になり，
+その前に'!'や'no'をつけることにより偽になる．
 Alternatively, the compound option syntax can be used: 'optname:true' and
 'optname:false'.
 
@@ -372,7 +372,7 @@ pettype    あなたの好きなペットの種類 (cat, dog, horse, random,    
 playmode   通常(normal)プレイかスコアの残らない探索(explore)モード  [normal]
 race       ゲーム開始時の種族 (例 race:Human, race:Elf)             [random]
            ほとんどの職業は種族の選択に制限を与える．
-role       ゲーム開始時の職業 (例 race:Barbarian, role: Valk)       [random]
+role       ゲーム開始時の職業 (例 role:Barbarian, role: Valk)       [random]
            最初の一文字を指定するだけでよいが，単に最初にマッチした
            職業を選ぶだけである．完全に識別可能な文字を記述すること
            をお薦めする．名前の後に職業を指定することも可能であるが，
