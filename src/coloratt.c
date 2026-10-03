@@ -399,7 +399,11 @@ query_attr(const char *prompt, int dflt_attr)
     anything any;
     int i, pick_cnt;
     menu_item *picks = (menu_item *) 0;
+#if 0 /*JP*/
     boolean allow_many = (prompt && !strncmpi(prompt, "Choose", 6));
+#else
+    boolean allow_many = (prompt && strstri(prompt, "選んでください"));
+#endif
     int clr = NO_COLOR;
 
     tmpwin = create_nhwindow(NHW_MENU);

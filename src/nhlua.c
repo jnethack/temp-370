@@ -819,7 +819,11 @@ nhl_text(lua_State *L)
         start_menu(tmpwin, MENU_BEHAVE_STANDARD);
 
         while (lua_gettop(L) > 0) {
+#if 0 /*JP:T*/
             char *ostr = dupstr(luaL_checkstring(L, 1));
+#else
+            char *ostr = dupstr(utf8toic(luaL_checkstring(L, 1)));
+#endif
             char *ptr, *str = ostr;
             char *lstr = str + strlen(str) - 1;
 
@@ -2006,7 +2010,11 @@ nhl_meta_u_index(lua_State *L)
         nhl_push_obj(L, gi.invent);
         return 1;
     } else if (!strcmp(tkey, "role")) {
+#if 0 /*JP*/
         lua_pushstring(L, gu.urole.name.m);
+#else /* 英語名を渡す */
+        lua_pushstring(L, gu.urole.opt.m);
+#endif
         return 1;
     } else if (!strcmp(tkey, "moves")) {
         lua_pushinteger(L, svm.moves);

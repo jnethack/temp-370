@@ -57,12 +57,12 @@ local wiz3 = des.map({ halign = "center", valign = "center", map = [[
    des.non_passwall(selection.area(06,12,16,12))
    --
    des.monster("L", 10, 07)
-   des.monster("vampire lord", 12, 07)
+   des.monster("吸血鬼の貴族", 12, 07)
    -- Some surrounding horrors
-   des.monster("kraken", 08, 05)
-   des.monster("giant eel", 08, 08)
-   des.monster("kraken", 14, 05)
-   des.monster("giant eel", 14, 08)
+   des.monster("クラーケン", 08, 05)
+   des.monster("巨大ウナギ", 08, 08)
+   des.monster("クラーケン", 14, 05)
+   des.monster("巨大ウナギ", 14, 08)
    -- Other monsters
    des.monster("L")
    des.monster("D")

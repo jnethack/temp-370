@@ -26,8 +26,8 @@ des.room({ type = "ordinary",
               des.object()
               des.trap()
               des.object()
-              des.monster("xorn")
-              des.monster("earth elemental")
+              des.monster("ゾーン")
+              des.monster("土の精")
            end
 })
 
@@ -37,7 +37,7 @@ des.room({ type = "ordinary",
               des.object()
               des.trap()
               des.monster({ class = "E", peaceful=0 })
-              des.monster("earth elemental")
+              des.monster("土の精")
            end
 })
 
@@ -54,7 +54,7 @@ des.room({ type = "ordinary",
            contents = function()
               des.object()
               des.trap()
-              des.monster("earth elemental")
+              des.monster("土の精")
            end
 })
 

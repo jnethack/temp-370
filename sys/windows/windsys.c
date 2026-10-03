@@ -115,6 +115,12 @@ VA_DECL(const char *, fmt)
 }
 #endif  /* WIN32CON */
 
+#if 1 /*JP*/
+#ifdef WIN32CON
+extern int orig_icp;
+#endif
+#endif /*JP*/
+
 char
 switchar(void)
 {
@@ -966,7 +972,11 @@ build_known_folder_path(const KNOWNFOLDERID *folder_id, char *path,
     if (!get_known_folder_path(folder_id, path, path_size))
         return FALSE;
 
+#if 0 /*JP:T*/
     strcat(path, "\\NetHack\\");
+#else
+    strcat(path, "\\JNetHack\\");
+#endif
     create_directory(path);
     if (versioned) {
         Sprintf(eos(path), "%d.%d\\", VERSION_MAJOR, VERSION_MINOR);
