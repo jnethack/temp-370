@@ -1540,7 +1540,9 @@ use_mirror(struct obj *obj)
     } else if (monable && (mlet == S_NYMPH
                            || mtmp->data == &mons[PM_AMOROUS_DEMON])) {
         if (vis) {
+#if 0 /*JP*//*unused*/
             char buf[BUFSZ]; /* "She" or "He" */
+#endif
 
 #if 0 /*JP*/
             pline("%s in your %s.", /* "<mon> admires self in your mirror " */

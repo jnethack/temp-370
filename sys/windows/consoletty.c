@@ -2054,6 +2054,7 @@ consoletty_preference_update(const char *pref)
 void
 tty_utf8graphics_fixup(void)
 {
+#if 0 /*JP*/
     CONSOLE_FONT_INFOEX console_font_info;
     if ((tty_procs.wincap2 & WC2_U_UTF8STR) && SYMHANDLING(H_UTF8)) {
         char *localestr = 0;
@@ -2110,6 +2111,7 @@ tty_utf8graphics_fixup(void)
         console.out_cmode &= ~ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 #endif
     }
+#endif
 }
 #endif
 #endif /* UTF8_FROM_CORE */
@@ -2122,6 +2124,7 @@ tty_utf8graphics_fixup(void)
 void
 tty_ibmgraphics_fixup(void)
 {
+#if 0 /*JP*/
 #ifdef VIRTUAL_TERMINAL_SEQUENCES
     char buf[BUFSZ], *bp, *localestr;
 
@@ -2146,6 +2149,7 @@ tty_ibmgraphics_fixup(void)
         GetConsoleMode(console.hConOut, &console.out_cmode);
     }
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
+#endif
 }
 
 #ifdef PORT_DEBUG
@@ -2378,6 +2382,7 @@ clean_up:
 void
 set_known_good_console_font(void)
 {
+#if 0 /*JP*/
     CONSOLE_FONT_INFOEX console_font_info;
     console_font_info.cbSize = sizeof(console_font_info);
     BOOL success = GetCurrentConsoleFontEx(console.hConOut, FALSE,
@@ -2407,6 +2412,7 @@ set_known_good_console_font(void)
     if (success)
         console.font_info = console_font_info;
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
+#endif
 }
 
 /* restore_original_console_font will restore the console font and code page
@@ -2415,6 +2421,7 @@ set_known_good_console_font(void)
 void
 restore_original_console_font(void)
 {
+#if 0 /*JP*/
 #ifdef VIRTUAL_TERMINAL_SEQUENCES
     char *tmplocalestr;
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
@@ -2446,6 +2453,7 @@ restore_original_console_font(void)
 
         console.font_changed = FALSE;
     }
+#endif
 }
 
 /* set_cp_map() creates a mapping of every possible character of a code
@@ -2727,12 +2735,14 @@ void nethack_enter_consoletty(void)
         console.localestr = dupstr(localestr);
     }
     console.code_page = console.orig_code_page;
+#if 0 /*JP*/
     if (console.has_unicode) {
         if (console.code_page != 437)
             apisuccess = SetConsoleOutputCP(437);
     } else if (console.code_page != 1252) {
         apisuccess = SetConsoleOutputCP(1252);
     }
+#endif
     console.code_page = GetConsoleOutputCP();
 #endif /* VIRTUAL_TERMINAL_SEQUENCES */
 
@@ -2854,12 +2864,16 @@ VA_DECL(const char *, fmt)
 #if 0 /*JP*/
         xputs(buf);
 #else
-        set_console_cursor(ttyDisplay->curx, ttyDisplay->cury);
-        {
-            char *str = buf;
-            while(*str){
-                jbuffer(*(str++), (void (__cdecl *)(unsigned int))xputc_core, (void (__cdecl *)(unsigned char *))xputc2_core);
+        if (ttyDisplay) {
+            set_console_cursor(ttyDisplay->curx, ttyDisplay->cury);
+            {
+                char *str = buf;
+                while(*str){
+                    jbuffer(*(str++), (void (__cdecl *)(unsigned int))xputc_core, (void (__cdecl *)(unsigned char *))xputc2_core);
+                }
             }
+        } else {
+            printf("%s", buf);
         }
 #endif
         if (ttyDisplay)

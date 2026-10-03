@@ -171,7 +171,11 @@ christen_monst(struct monst *mtmp, const char *name)
 staticfn boolean
 alreadynamed(struct monst *mtmp, char *monnambuf, char *usrbuf)
 {
+#if 0 /*JP*//*unused*/
     char pronounbuf[10], *p;
+#else
+    char *p;
+#endif
 
     if (!*usrbuf) { /* attempt to erase existing name */
         boolean name_not_title = (has_mgivenname(mtmp)
@@ -981,9 +985,18 @@ x_monnam(
     const char *pm_name;
     boolean do_hallu, do_invis, do_it, do_saddle, do_mappear,
             do_exact, do_name, augment_it;
+#if 0 /*JP*//*unused*/
     boolean name_at_start, has_adjectives, insertbuf2,
             mappear_as_mon = (M_AP_TYPE(mtmp) == M_AP_MONSTER);
+#else
+    boolean name_at_start,
+            mappear_as_mon = (M_AP_TYPE(mtmp) == M_AP_MONSTER);
+#endif
+#if 0 /*JP*//*unused*/
     char *bp, buf2[BUFSZ];
+#else
+    char buf2[BUFSZ];
+#endif
 
     if (mtmp == &gy.youmonst)
         return strcpy(buf, "you"); /* ignore article, "invisible", &c */

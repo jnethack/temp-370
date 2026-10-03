@@ -1,3 +1,13 @@
+2026-09-23  SHIRAKATA Kentaro  <argrath@ub32.org>
+
+	* 次の問題を修正
+	  * 地図上の位置を指定しようとすると落ちる (#31)
+	  * 外部ファイルを表示すると落ちる (#32)
+
+2026-09-20  Kentaro Shirakata  <argrath@ub32.org>
+
+	* NetHack-5.0.0ベース JNetHackテストリリース(5.0.0-0.1)
+
 2026-09-10  Kentaro Shirakata  <argrath@ub32.org>
 
 	* 次の問題を修正

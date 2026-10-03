@@ -9,12 +9,13 @@
 
 #if 1 /*JP*/
 #include <windows.h>
+#define SKIP_BOOLEAN /* already defined */
 static std::wstring s2w(const char *s) {
   std::string src = std::string(s);
   auto const dest_size = ::MultiByteToWideChar(CP_ACP, 0U, src.data(), -1, nullptr, 0U);
   std::vector<wchar_t> dest(dest_size, L'\0');
   if (::MultiByteToWideChar(CP_ACP, 0U, src.data(), -1, dest.data(), dest.size()) == 0) {
-    return std::wstring(L""); /* not happen */
+    return std::wstring(L""); /* should not happen */
   }
   dest.resize(std::char_traits<wchar_t>::length(dest.data()));
   dest.shrink_to_fit();

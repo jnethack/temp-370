@@ -377,8 +377,12 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
                                  windowprocs.wincap2)) {
         /* current symset handling and windowtype are
            not compatible, feature-wise. Use IBM defaults */
+#if 0 /*JP:T*/
             load_symset("IBMGraphics_2", PRIMARYSET);
             load_symset("RogueEpyx", ROGUESET);
+#else
+            load_symset("default", PRIMARYSET);
+#endif
     }
     /* Has the callback for the symset been invoked? Config file processing to
        load a symset runs too early to accomplish that because

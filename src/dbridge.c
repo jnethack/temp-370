@@ -385,6 +385,7 @@ E_phrase(struct entity *etmp, const char *verb)
         Strcat(wholebuf, vtense((char *) 0, verb));
     return wholebuf;
 #else /*ここでは主語だけを返し、動詞は呼び出し元が自力で扱う*/
+    nhUse(verb);
     Strcpy(wholebuf, is_u(etmp) ? "あなた" : Monnam(etmp->emon));
     return wholebuf;
 #endif

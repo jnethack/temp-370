@@ -430,27 +430,53 @@ fmt_elapsed_time(char *outbuf, int final)
     edays = etim / 24L;
     fieldcnt = !!edays + !!ehours + !!eminutes + !!eseconds;
 
+#if 0 /*JP:T*/
     Strcpy(outbuf, fieldcnt ? "" : " none"); /* 'none' should never happen */
+#else
+    Strcpy(outbuf, fieldcnt ? "" : "なし"); /* 'none' should never happen */
+#endif
     if (edays) {
+#if 0 /*JP:T*/
         Sprintf(eos(outbuf), " %ld day%s", edays, plur(edays));
+#else
+        Sprintf(eos(outbuf), "%ld日", edays);
+#endif
+#if 0 /*JP:T*/
         if (fieldcnt > 1) /* hours and/or minutes and/or seconds to follow */
             Strcat(outbuf, (fieldcnt == 2) ? " and" : ",");
+#endif
         --fieldcnt; /* edays has been processed */
     }
     if (ehours) {
+#if 0 /*JP:T*/
         Sprintf(eos(outbuf), " %ld hour%s", ehours, plur(ehours));
+#else
+        Sprintf(eos(outbuf), "%ld時間", ehours);
+#endif
+#if 0 /*JP:T*/
         if (fieldcnt > 1) /* minutes and/or seconds to follow */
             Strcat(outbuf, (fieldcnt == 2) ? " and" : ",");
+#endif
         --fieldcnt; /* ehours has been processed */
     }
     if (eminutes) {
+#if 0 /*JP:T*/
         Sprintf(eos(outbuf), " %ld minute%s", eminutes, plur(eminutes));
+#else
+        Sprintf(eos(outbuf), "%ld分", eminutes);
+#endif
+#if 0 /*JP:T*/
         if (fieldcnt > 1) /* seconds to follow */
             Strcat(outbuf, " and");
         /* eminutes has been processed but no need to decrement fieldcnt */
+#endif
     }
     if (eseconds)
+#if 0 /*JP:T*/
         Sprintf(eos(outbuf), " %ld second%s", eseconds, plur(eseconds));
+#else
+        Sprintf(eos(outbuf), "%ld秒", eseconds);
+#endif
     return outbuf;
 }
 
@@ -581,7 +607,11 @@ enlightenment(
         }
     }
     (void) fmt_elapsed_time(buf, final);
+#if 0 /*JP:T*/
     enl_msg("Total elapsed playing time ", "is", "was", buf, "");
+#else
+    enl_msg("合計経過時間は", "である", "であった", buf, "");
+#endif
 
     if (!ge.en_via_menu) {
         display_nhwindow(ge.en_win, TRUE);
@@ -813,9 +843,15 @@ background_enlightenment(int unused_mode UNUSED, int final)
 
     /* "You are left-handed." won't work well if polymorphed into something
        without hands; use "You are normally left-handed." in that situation */
+#if 0 /*JP:T*/
     Sprintf(buf, "%s%s-handed",
             !strcmp(body_part(HANDED), "handed") ? "" : "normally ",
             URIGHTY ? "right" : "left");
+#else
+    Sprintf(buf, "%s%s利き",
+            !strcmp(body_part(HANDED), "手にする") ? "" : "通常",
+            URIGHTY ? "右" : "左");
+#endif
     you_are(buf, "");
 
     /* As of 3.6.2: dungeon level, so that ^X really has all status info as

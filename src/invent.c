@@ -943,7 +943,11 @@ merged(struct obj **potmp, struct obj **pobj)
         if (discovered && otmp->where == OBJ_INVENT
             && obj->how_lost != LOST_THROWN
             && otmp->how_lost != LOST_THROWN) {
-            pline("You learn more about your items by comparing them.");
+#if 0 /*JP*/
+                pline("You learn more about your items by comparing them.");
+#else
+                pline("あなたは持物を比べることでより多くの知識を得た．");
+#endif
         }
 
         obfree(obj, otmp); /* free(obj), bill->otmp */
@@ -1042,7 +1046,11 @@ addinv_core2(struct obj *obj)
         obj->otyp != SCR_BLANK_PAPER && !Blind &&
         !objects[obj->otyp].oc_name_known) {
         observe_object(obj);
+#if 0 /*JP:T*/
         pline("You decipher the label on %s.", yname(obj));
+#else
+        pline("あなたは%sのラベルを解読した．", yname(obj));
+#endif
         makeknown(obj->otyp);
 
         /* conduct: this is avoidable via not picking up / wishing for
